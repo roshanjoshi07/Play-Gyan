@@ -3,9 +3,9 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>रामायण — Animated Book</title>
+<title>रामायण — Animated Story Book</title>
 
 <style>
 *{
@@ -15,139 +15,137 @@
 }
 
 body{
-    font-family:"Noto Serif Devanagari", Georgia, serif;
-    background:#20150d;
-    color:#33200f;
+    font-family:"Noto Serif Devanagari",Georgia,serif;
+    background:#1c1008;
+    color:#35200f;
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 
 header{
-    min-height:290px;
+    min-height:280px;
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
     text-align:center;
-    padding:30px 20px;
-    color:#fff4d5;
+    color:#fff1c9;
+    padding:30px 15px;
 
     background:
-    radial-gradient(circle at center,
-    #c88628,
-    #603411 48%,
-    #190b05 100%);
+    radial-gradient(circle at 50% 35%,
+    #e2a33e 0%,
+    #8b4c18 42%,
+    #210e05 100%);
 }
 
 .om{
-    font-size:70px;
-    margin-bottom:5px;
+    font-size:65px;
 }
 
 header h1{
-    font-size:clamp(40px,8vw,70px);
-    text-shadow:0 5px 20px #000;
+    font-size:clamp(42px,8vw,72px);
+    text-shadow:0 5px 15px #000;
 }
 
 header p{
-    margin-top:10px;
+    margin-top:8px;
+    font-size:18px;
 }
 
-/* ================= BOOK ================= */
+/* MAIN */
 
 .book-area{
-    width:min(1000px,94%);
+    width:min(1050px,94%);
     margin:30px auto 70px;
 }
 
-/* ================= CHAPTER MENU ================= */
+/* CHAPTER MENU */
 
 .chapter-menu{
-    background:#3c2410;
+    background:#3a220e;
     padding:18px;
     border-radius:18px;
-    box-shadow:0 10px 30px #0008;
+    box-shadow:0 10px 35px #0009;
     margin-bottom:25px;
 }
 
 .chapter-menu h2{
-    color:#ffd98b;
+    color:#ffd98c;
     text-align:center;
     margin-bottom:15px;
 }
 
 .chapter-buttons{
     display:flex;
-    gap:9px;
     flex-wrap:wrap;
     justify-content:center;
+    gap:9px;
 }
 
 .chapter-buttons button{
     border:0;
-    padding:10px 15px;
+    padding:10px 16px;
     border-radius:25px;
     cursor:pointer;
-    background:#d49a45;
+    background:#ce913e;
     color:#251406;
     font-weight:bold;
 }
 
 .chapter-buttons button.active{
-    background:#ffe1a1;
+    background:#ffe5ad;
 }
 
-/* ================= PAPER ================= */
+/* PAPER */
 
 .paper{
     background:#fff8e8;
-    min-height:700px;
     padding:clamp(25px,6vw,70px);
     position:relative;
-    box-shadow:0 20px 70px #000b;
+    box-shadow:0 25px 80px #000c;
 }
 
 .paper:before{
     content:"";
     position:absolute;
     inset:15px;
-    border:2px solid #d5ad69;
+    border:2px solid #d4a765;
     pointer-events:none;
 }
 
 .chapter-label{
     text-align:center;
-    color:#a46618;
+    color:#a26518;
     font-weight:bold;
     letter-spacing:2px;
-    margin-bottom:15px;
+    margin-bottom:12px;
 }
 
 .paper h2{
-    color:#703b0b;
     text-align:center;
+    color:#713d0b;
     font-size:clamp(28px,6vw,46px);
     margin-bottom:10px;
 }
 
 .subtitle{
     text-align:center;
-    color:#927453;
-    margin-bottom:30px;
-    font-style:italic;
+    color:#957553;
+    margin-bottom:28px;
 }
 
-/* ================= ANIMATION ================= */
+/* ANIMATION */
 
 .animation-box{
     position:relative;
     width:100%;
-    max-width:900px;
-    margin:0 auto 35px;
-    background:#111;
-    border-radius:18px;
+    max-width:950px;
+    margin:auto;
     overflow:hidden;
-    box-shadow:0 15px 40px #0008;
+    border-radius:20px;
+    background:#111;
+    box-shadow:0 15px 45px #0009;
 }
 
 canvas{
@@ -156,45 +154,45 @@ canvas{
     height:auto;
 }
 
-.animation-title{
+.scene-name{
     position:absolute;
     top:12px;
     left:50%;
     transform:translateX(-50%);
-    padding:8px 18px;
-    border-radius:20px;
     background:#0009;
     color:white;
+    padding:8px 18px;
+    border-radius:30px;
     font-family:Arial,sans-serif;
     font-size:14px;
 }
 
-/* ================= STORY ================= */
+/* STORY */
 
 .story{
+    margin-top:35px;
     font-size:19px;
-    line-height:2.1;
+    line-height:2.05;
     text-align:justify;
 }
 
 .story p{
-    margin-bottom:23px;
+    margin-bottom:22px;
     text-indent:40px;
 }
 
 .quote{
-    text-indent:0 !important;
+    text-indent:0!important;
     text-align:center;
-    margin:30px 0;
+    color:#8c591a;
+    border-top:1px solid #cda76b;
+    border-bottom:1px solid #cda76b;
     padding:20px;
-    border-top:1px solid #cfa76b;
-    border-bottom:1px solid #cfa76b;
-    color:#8b581b;
-    font-size:21px;
+    margin:30px 0;
     font-style:italic;
 }
 
-/* ================= NAVIGATION ================= */
+/* BUTTONS */
 
 .navigation{
     display:flex;
@@ -202,17 +200,25 @@ canvas{
     margin-top:25px;
 }
 
+.navigation button,
+.home-btn{
+    border:0;
+    cursor:pointer;
+    font-weight:bold;
+    border-radius:35px;
+    background:#bd7924;
+    color:white;
+    padding:15px;
+    box-shadow:0 8px 20px #0005;
+}
+
 .navigation button{
     flex:1;
-    border:0;
-    padding:16px;
-    border-radius:35px;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:bold;
-    background:#bd7b25;
-    color:white;
-    box-shadow:0 8px 20px #0005;
+}
+
+.navigation button:hover,
+.home-btn:hover{
+    background:#df9b3e;
 }
 
 .navigation button:disabled{
@@ -223,33 +229,24 @@ canvas{
 .home-btn{
     width:100%;
     margin-top:12px;
-    padding:13px;
-    border:1px solid #b78340;
     background:#3b2410;
-    color:#ffe1a3;
-    border-radius:30px;
-    cursor:pointer;
+    color:#ffe0a0;
 }
 
-/* ================= MOBILE ================= */
+/* MOBILE */
 
 @media(max-width:600px){
 
+    .paper{
+        padding:25px 19px;
+    }
+
     .story{
         font-size:17px;
-        line-height:2;
     }
 
     .story p{
         text-indent:25px;
-    }
-
-    .paper{
-        padding:25px 20px;
-    }
-
-    .navigation button{
-        font-size:14px;
     }
 }
 </style>
@@ -259,96 +256,90 @@ canvas{
 
 <header>
 
-    <div class="om">ॐ</div>
+<div class="om">ॐ</div>
 
-    <h1>रामायण</h1>
+<h1>रामायण</h1>
 
-    <p>कथा पढ्दै गर्दा सम्बन्धित Animated Scene</p>
+<p>Animated Story Book</p>
 
 </header>
 
 
 <main class="book-area">
 
-<!-- CHAPTERS -->
-
 <div class="chapter-menu">
 
-    <h2>Chapters</h2>
+<h2>Chapters</h2>
 
-    <div
-        class="chapter-buttons"
-        id="chapterButtons">
-    </div>
+<div
+class="chapter-buttons"
+id="chapterButtons">
+</div>
 
 </div>
 
 
-<!-- BOOK PAPER -->
-
 <article class="paper">
 
-    <div
-        class="chapter-label"
-        id="chapterLabel">
-    </div>
+<div
+class="chapter-label"
+id="chapterLabel">
+</div>
 
-    <h2 id="chapterTitle"></h2>
+<h2 id="chapterTitle"></h2>
 
-    <div class="subtitle">
-        श्रीरामको जीवनकथामा आधारित मौलिक पुनर्कथन
-    </div>
-
-
-    <!-- ANIMATION -->
-
-    <div class="animation-box">
-
-        <div class="animation-title">
-            🎬 Animated Scene
-        </div>
-
-        <canvas
-            id="sceneCanvas"
-            width="900"
-            height="500">
-        </canvas>
-
-    </div>
+<div class="subtitle">
+श्रीरामको जीवनकथामा आधारित मौलिक animated पुनर्कथन
+</div>
 
 
-    <!-- STORY -->
+<!-- ANIMATION -->
 
-    <div
-        class="story"
-        id="story">
-    </div>
+<div class="animation-box">
+
+<div class="scene-name">
+🎬 Animated Scene
+</div>
+
+<canvas
+id="canvas"
+width="1000"
+height="560">
+</canvas>
+
+</div>
+
+
+<!-- STORY -->
+
+<div
+class="story"
+id="story">
+</div>
 
 </article>
 
 
-<!-- NAVIGATION -->
-
 <div class="navigation">
 
-    <button
-        id="backBtn"
-        onclick="previousChapter()">
-        ← Back
-    </button>
+<button
+id="backBtn"
+onclick="previousChapter()">
+← Back
+</button>
 
-    <button
-        id="nextBtn"
-        onclick="nextChapter()">
-        Next →
-    </button>
+<button
+id="nextBtn"
+onclick="nextChapter()">
+Next →
+</button>
 
 </div>
 
 <button
-    class="home-btn"
-    onclick="goHome()">
-    🏠 Home
+class="home-btn"
+onclick="goHome()">
+🏠 Home
 </button>
 
 </main>
@@ -357,301 +348,273 @@ canvas{
 <script>
 
 /* =====================================================
-   RAMAYAN ANIMATED BOOK
+   CHAPTER DATA
 ===================================================== */
 
-const chapters = [
+const chapters=[
 
 {
-    title:"अयोध्याबाट वनतर्फ यात्रा",
+title:"अयोध्याबाट वनतर्फ",
 
-    story:`
+story:`
 
-    <p>
-    राजा दशरथको दरबारमा रामलाई चौध वर्ष वनवास जाने
-    निर्णय सुनाइयो। रामले पिताको वचनलाई आफ्नो कर्तव्य
-    मानेर कुनै विरोध गरेनन्।
-    </p>
+<p>
+अयोध्याका राजा दशरथका ज्येष्ठ पुत्र राम अत्यन्त
+धर्मनिष्ठ र जनप्रिय थिए। रामलाई राजा बनाउने तयारी
+भइरहेको समयमा परिस्थितिले अचानक अर्को मोड लियो।
+</p>
 
-    <p>
-    सीताले पनि रामलाई एक्लै वन जान नदिने निर्णय गरिन्।
-    लक्ष्मणले पनि आफ्ना दाजुको सेवा गर्न साथ जाने
-    प्रतिज्ञा गरे।
-    </p>
+<p>
+रामले पिताको वचनलाई सम्मान गर्दै चौध वर्ष वनवास
+स्वीकार गरे। सीता र लक्ष्मणले पनि रामलाई साथ दिने
+निर्णय गरे।
+</p>
 
-    <p>
-    यसरी राजमहलको सुख-सुविधा छोडेर राम, सीता र लक्ष्मण
-    वनतर्फ लागे।
-    </p>
+<p>
+राजकीय वस्त्र र सुविधा छोडेर तीनै जना वनतर्फ लागे।
+अयोध्याका मानिसहरू दुःखी भएर उनीहरूलाई बिदाइ गर्न
+आए।
+</p>
 
-    <p class="quote">
-    रामका लागि पिताको वचन र धर्म राज्यभन्दा ठूलो थियो।
-    </p>
-
-    `
+<p class="quote">
+धर्म र कर्तव्यलाई आफ्नो सुखभन्दा माथि राख्ने निर्णयले
+रामको वनयात्रा सुरु भयो।
+</p>
+`
 },
 
 {
-    title:"पञ्चवटीमा जीवन",
+title:"पञ्चवटीको जीवन",
 
-    story:`
+story:`
 
-    <p>
-    लामो यात्रापछि राम, सीता र लक्ष्मण पञ्चवटी क्षेत्रमा
-    पुगे। उनीहरूले त्यहाँ एउटा साधारण आश्रम बनाएर
-    वनजीवन बिताउन थाले।
-    </p>
+<p>
+राम, सीता र लक्ष्मण विभिन्न वन र आश्रम पार गर्दै
+पञ्चवटी क्षेत्रमा पुगे। त्यहाँ उनीहरूले सुन्दर
+कुटी बनाएर बस्न थाले।
+</p>
 
-    <p>
-    वनमा विभिन्न ऋषि, वनवासी र जीवजन्तुसँग उनीहरूको
-    भेट हुन्थ्यो। रामले ऋषिहरूको रक्षा गर्ने जिम्मेवारी
-    पनि लिए।
-    </p>
+<p>
+वनको शान्त वातावरणमा उनीहरूको जीवन सरल थियो।
+राम र लक्ष्मण वनमा घुम्थे र सीता कुटी वरिपरि
+आफ्ना दैनिक काम गर्थिन्।
+</p>
 
-    <p>
-    यही समयमा लङ्काका राजा रावणसँग जोडिने घटनाहरूको
-    सुरुवात भयो।
-    </p>
-
-    `
+<p>
+तर यही स्थानमा भविष्यका धेरै महत्वपूर्ण घटनाहरूको
+बीउ रोपियो।
+</p>
+`
 },
 
 {
-    title:"सीता हरण",
+title:"सुनौलो मृग र सीता हरण",
 
-    story:`
+story:`
 
-    <p>
-    एक दिन सीताले आश्रम नजिक एउटा अत्यन्त सुन्दर
-    सुनौलो मृग देखिन्। त्यो मृग वास्तवमा रावणको
-    योजनामा प्रयोग गरिएको मारीच थियो।
-    </p>
+<p>
+एक दिन सीताले कुटी नजिक एउटा अत्यन्त सुन्दर
+सुनौलो मृग देखिन्। त्यो दृश्य असाधारण थियो।
+सीताले रामलाई त्यो मृग समातेर ल्याइदिन आग्रह गरिन्।
+</p>
 
-    <p>
-    सीताले रामलाई त्यो मृग ल्याइदिन आग्रह गरिन्।
-    राम मृगको पछि लागे। केही समयपछि मारीचले रामकै
-    स्वरमा सहायता मागेको आवाज निकाल्यो।
-    </p>
+<p>
+राम मृगको पछि लागे। वास्तवमा त्यो मृग मारीचको
+रूप थियो, जसले रावणको योजनामा रामलाई कुटीबाट
+टाढा लैजान सहयोग गरेको थियो।
+</p>
 
-    <p>
-    सीता चिन्तित भएपछि लक्ष्मण पनि रामको खोजीमा
-    निस्किए। आश्रम केही समयका लागि खाली भयो।
-    </p>
+<p>
+मारीचले अन्तिम समयमा रामकै जस्तो आवाजमा
+“लक्ष्मण!” भनेर सहायता माग्यो। सीता चिन्तित भइन्
+र लक्ष्मणलाई रामको खोजीमा जान आग्रह गरिन्।
+</p>
 
-    <p>
-    त्यसपछि रावण साधुको भेषमा त्यहाँ आए। उनले छल गरेर
-    सीतालाई आफ्नो वास्तविक परिचय बताए र उनलाई
-    लङ्कातर्फ लिएर गए।
-    </p>
+<p>
+लक्ष्मण पनि गएपछि रावण साधुको भेषमा कुटीमा आयो।
+उसले आफ्नो वास्तविक रूप लुकाएर सीतासँग कुरा गर्यो।
+पछि अवसर पाएर सीतालाई लङ्कातर्फ लिएर गयो।
+</p>
 
-    <p>
-    बाटोमा जटायु नामका वृद्ध पक्षीराजले सीतालाई
-    बचाउन रावणसँग युद्ध गरे। जटायुले साहसपूर्वक
-    प्रतिरोध गरे तर अन्ततः गम्भीर रूपमा घाइते भए।
-    </p>
+<p>
+जटायु नामका पक्षीराजले सीतालाई बचाउन रावणसँग
+बहादुरीपूर्वक युद्ध गरे। तर रावणसँगको युद्धमा
+जटायु गम्भीर रूपमा घाइते भए।
+</p>
 
-    <p class="quote">
-    सीताको खोजी अब रामको जीवनको सबैभन्दा ठूलो
-    यात्रामध्ये एक बन्न पुग्यो।
-    </p>
-
-    `
+<p class="quote">
+राम वनमा फर्किएपछि सीता नभएको देखेर उनको खोजीको
+महान् यात्रा सुरु भयो।
+</p>
+`
 },
 
 {
-    title:"हनुमानसँग भेट",
+title:"हनुमानसँग भेट",
 
-    story:`
+story:`
 
-    <p>
-    सीताको खोजी गर्दै राम र लक्ष्मण दक्षिणतर्फ
-    अघि बढे। त्यही यात्रामा उनीहरूको भेट
-    हनुमानसँग भयो।
-    </p>
+<p>
+सीताको खोजी गर्दै राम र लक्ष्मण अगाडि बढ्दै गए।
+यही यात्रामा उनीहरूको भेट हनुमानसँग भयो।
+</p>
 
-    <p>
-    हनुमान सुग्रीवका विश्वासी सहयोगी थिए। उनले राम
-    र सुग्रीवबीच मित्रता गराए।
-    </p>
+<p>
+हनुमान सुग्रीवका अत्यन्त विश्वासिला सहयोगी थिए।
+उनले राम र सुग्रीवबीच मित्रता गराए।
+</p>
 
-    <p>
-    रामले सुग्रीवलाई सहयोग गरे र बदलामा सुग्रीवले
-    सीताको खोजीमा आफ्ना वानरहरू पठाउने वाचा गरे।
-    </p>
-
-    `
+<p>
+रामले सुग्रीवलाई सहयोग गरेपछि सुग्रीवले सीताको
+खोजीमा आफ्ना वानर योद्धाहरू परिचालन गरे।
+</p>
+`
 },
 
 {
-    title:"हनुमानको लङ्का यात्रा",
+title:"हनुमानको लङ्का यात्रा",
 
-    story:`
+story:`
 
-    <p>
-    सीता लङ्कामा रहेको कुरा पत्ता लागेपछि हनुमानले
-    समुद्र पार गर्ने जिम्मेवारी लिए।
-    </p>
+<p>
+सीता लङ्कामा रहेको पत्ता लागेपछि हनुमानले समुद्र
+पार गर्ने जिम्मेवारी लिए। आफ्नो शक्ति र आत्मविश्वास
+सम्झिएर उनी विशाल छलाङ लगाउँदै समुद्र पार गरे।
+</p>
 
-    <p>
-    आफ्नो विशाल शक्ति सम्झिएर हनुमान समुद्र पार गर्दै
-    लङ्कातर्फ उडे। बाटोमा विभिन्न बाधाहरू आए,
-    तर उनले आफ्नो बुद्धि र शक्ति प्रयोग गरेर ती
-    बाधाहरू पार गरे।
-    </p>
+<p>
+लङ्का पुगेपछि उनले आफूलाई सानो बनाएर शहरमा प्रवेश
+गरे। धेरै खोजी गरेपछि उनले अशोक वाटिकामा सीतालाई
+देखे।
+</p>
 
-    <p>
-    लङ्का पुगेपछि उनले अशोक वाटिकामा सीतालाई भेटे।
-    उनले रामको चिनारीका रूपमा औँठी दिए।
-    </p>
-
-    <p>
-    सीताले पनि रामका लागि आफ्नो चिनारी हनुमानलाई दिइन्।
-    त्यसपछि हनुमान रामकहाँ फर्किए।
-    </p>
-
-    `
+<p>
+हनुमानले रामको चिनारीका रूपमा औँठी दिए। सीताले
+पनि रामलाई देखाउन आफ्नो चिनारी हनुमानलाई दिइन्।
+</p>
+`
 },
 
 {
-    title:"लङ्का दहन",
+title:"लङ्का दहन",
 
-    story:`
+story:`
 
-    <p>
-    हनुमानलाई राक्षसहरूले समातेर रावणको दरबारमा
-    पुर्‍याए। हनुमानले रावणलाई सीता फिर्ता गर्न
-    चेतावनी दिए।
-    </p>
+<p>
+हनुमानले रावणलाई सीता फिर्ता गर्न चेतावनी दिए।
+तर रावणले उनको कुरा स्वीकार गरेन।
+</p>
 
-    <p>
-    रावणको आदेशमा हनुमानको पुच्छरमा आगो लगाइयो।
-    तर हनुमानले त्यही आगोको सहायताले लङ्काका
-    विभिन्न स्थानमा आगो फैलाए।
-    </p>
+<p>
+हनुमानलाई दण्ड दिन उनको पुच्छरमा कपडा बेरेर आगो
+लगाइयो। हनुमानले आफ्नो शक्ति प्रयोग गर्दै
+लङ्काका विभिन्न भागमा आगो फैलाए।
+</p>
 
-    <p>
-    त्यसपछि उनी समुद्र पार गरेर रामकहाँ फर्किए र
-    सीता सुरक्षित रहेको समाचार दिए।
-    </p>
-
-    `
+<p>
+त्यसपछि उनी समुद्र पार गरेर रामकहाँ फर्किए र
+सीता सुरक्षित रहेको समाचार दिए।
+</p>
+`
 },
 
 {
-    title:"राम र रावणको युद्ध",
+title:"राम–रावण युद्ध",
 
-    story:`
+story:`
 
-    <p>
-    रामले विशाल वानर सेना लिएर लङ्कातर्फ यात्रा गरे।
-    समुद्रमाथि सेतु निर्माण गरियो र सेना लङ्कामा पुग्यो।
-    </p>
+<p>
+रामले वानर सेना लिएर लङ्कातर्फ प्रस्थान गरे।
+समुद्रमाथि सेतु निर्माण भएपछि सेना लङ्कामा पुग्यो।
+</p>
 
-    <p>
-    रामको सेना र रावणको सेनाबीच ठूलो युद्ध भयो।
-    कुम्भकर्ण, इन्द्रजित लगायत धेरै शक्तिशाली
-    योद्धाहरू युद्धमा सहभागी भए।
-    </p>
+<p>
+रामको सेना र रावणको सेनाबीच ठूलो युद्ध भयो।
+धेरै शक्तिशाली योद्धाहरू युद्धमा सहभागी भए।
+</p>
 
-    <p>
-    अन्ततः राम र रावणबीच निर्णायक युद्ध भयो।
-    लामो संघर्षपछि रामले रावणलाई पराजित गरे।
-    </p>
-
-    <p class="quote">
-    लङ्काको युद्ध समाप्त भयो र सीताको उद्धार भयो।
-    </p>
-
-    `
+<p>
+अन्ततः राम र रावणबीच निर्णायक युद्ध भयो।
+लामो संघर्षपछि रामले रावणलाई पराजित गरे।
+</p>
+`
 },
 
 {
-    title:"अयोध्या फर्किएको दिन",
+title:"अयोध्या फर्किएको दिन",
 
-    story:`
+story:`
 
-    <p>
-    चौध वर्षको वनवास पूरा भएपछि राम, सीता र लक्ष्मण
-    अयोध्या फर्किए।
-    </p>
+<p>
+वनवासको अवधि पूरा भएपछि राम, सीता र लक्ष्मण
+अयोध्या फर्किए। भरत र अयोध्यावासीहरूले
+उनीहरूलाई ठूलो खुसीका साथ स्वागत गरे।
+</p>
 
-    <p>
-    भरतले रामलाई सम्मानपूर्वक स्वागत गरे।
-    अयोध्याका नागरिकहरू राम फर्किएकोमा अत्यन्त
-    खुसी भए।
-    </p>
+<p>
+रामको राज्याभिषेक भयो। उनले अयोध्याको शासन
+सम्हाले र प्रजाको हितलाई आफ्नो प्रमुख कर्तव्य
+बनाए।
+</p>
 
-    <p>
-    रामको राज्याभिषेक भयो र उनले अयोध्याको शासन
-    सम्हाले।
-    </p>
-
-    <p>
-    परम्परामा रामको शासनलाई रामराज्यका रूपमा
-    स्मरण गरिन्छ।
-    </p>
-
-    `
+<p class="quote">
+रामको अयोध्या आगमनलाई परम्परामा विजय,
+आशा र धर्मको प्रतीकका रूपमा स्मरण गरिन्छ।
+</p>
+`
 }
 
 ];
 
 
 /* =====================================================
-   CANVAS
+   BASIC VARIABLES
 ===================================================== */
-
-const canvas =
-document.getElementById("sceneCanvas");
-
-const ctx =
-canvas.getContext("2d");
-
 
 let current=0;
 let animationStart=performance.now();
 
+const canvas=
+document.getElementById("canvas");
 
-/* =====================================================
-   BOOK ELEMENTS
-===================================================== */
+const ctx=
+canvas.getContext("2d");
 
-const title =
+const title=
 document.getElementById("chapterTitle");
 
-const label =
+const label=
 document.getElementById("chapterLabel");
 
-const story =
+const story=
 document.getElementById("story");
 
-const buttons =
+const chapterButtons=
 document.getElementById("chapterButtons");
 
-const backBtn =
+const backBtn=
 document.getElementById("backBtn");
 
-const nextBtn =
+const nextBtn=
 document.getElementById("nextBtn");
 
 
 /* =====================================================
-   CHAPTER BUTTONS
+   CREATE CHAPTER BUTTONS
 ===================================================== */
 
 chapters.forEach((chapter,index)=>{
 
-    const button =
-    document.createElement("button");
+const btn=
+document.createElement("button");
 
-    button.textContent =
-    index+1;
+btn.textContent=index+1;
 
-    button.onclick=()=>{
-        loadChapter(index);
-    };
+btn.onclick=()=>{
+loadChapter(index);
+};
 
-    buttons.appendChild(button);
+chapterButtons.appendChild(btn);
 
 });
 
@@ -662,640 +625,1523 @@ chapters.forEach((chapter,index)=>{
 
 function loadChapter(index){
 
-    current=index;
+current=index;
 
-    label.textContent =
-    "CHAPTER "+(index+1);
+title.textContent=
+chapters[index].title;
 
-    title.textContent =
-    chapters[index].title;
+label.textContent=
+"CHAPTER "+(index+1);
 
-    story.innerHTML =
-    chapters[index].story;
+story.innerHTML=
+chapters[index].story;
 
-    document
-    .querySelectorAll(".chapter-buttons button")
-    .forEach((button,i)=>{
+document
+.querySelectorAll(".chapter-buttons button")
+.forEach((btn,i)=>{
 
-        button.classList.toggle(
-            "active",
-            i===current
-        );
+btn.classList.toggle(
+"active",
+i===current
+);
 
-    });
+});
 
-    backBtn.disabled =
-    current===0;
+backBtn.disabled=
+current===0;
 
-    nextBtn.disabled =
-    current===chapters.length-1;
+nextBtn.disabled=
+current===chapters.length-1;
 
-    animationStart =
-    performance.now();
+animationStart=
+performance.now();
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
 }
 
 
 /* =====================================================
-   DRAW SKY
+   BACKGROUND
 ===================================================== */
 
-function drawSky(){
+function background(){
 
-    const gradient =
-    ctx.createLinearGradient(
-        0,0,
-        0,canvas.height
-    );
+/* sky */
 
-    gradient.addColorStop(
-        0,
-        "#172b58"
-    );
+const sky=
+ctx.createLinearGradient(
+0,0,
+0,560
+);
 
-    gradient.addColorStop(
-        1,
-        "#e58b43"
-    );
+sky.addColorStop(
+0,
+"#172c5c"
+);
 
-    ctx.fillStyle=gradient;
+sky.addColorStop(
+0.55,
+"#d47d42"
+);
 
-    ctx.fillRect(
-        0,0,
-        canvas.width,
-        canvas.height
-    );
+sky.addColorStop(
+1,
+"#f0b85d"
+);
+
+ctx.fillStyle=sky;
+
+ctx.fillRect(
+0,0,
+1000,560
+);
+
+
+/* sun */
+
+ctx.beginPath();
+
+ctx.arc(
+820,
+100,
+55,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle="#ffd84d";
+
+ctx.fill();
+
+
+/* mountains */
+
+ctx.fillStyle="#3a443b";
+
+ctx.beginPath();
+
+ctx.moveTo(0,360);
+ctx.lineTo(170,210);
+ctx.lineTo(300,360);
+ctx.lineTo(470,180);
+ctx.lineTo(650,360);
+ctx.lineTo(820,210);
+ctx.lineTo(1000,360);
+
+ctx.closePath();
+
+ctx.fill();
+
+
+/* ground */
+
+ctx.fillStyle="#345b2e";
+
+ctx.fillRect(
+0,
+360,
+1000,
+200
+);
 
 }
 
 
 /* =====================================================
-   DRAW SUN
+   TREE
 ===================================================== */
 
-function drawSun(){
+function tree(x,y){
 
-    ctx.beginPath();
+ctx.fillStyle="#57381e";
 
-    ctx.arc(
-        720,
-        110,
-        55,
-        0,
-        Math.PI*2
-    );
+ctx.fillRect(
+x-14,
+y,
+28,
+150
+);
 
-    ctx.fillStyle="#ffd447";
+ctx.fillStyle="#1e642d";
 
-    ctx.fill();
+ctx.beginPath();
+
+ctx.arc(
+x,
+y,
+65,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.beginPath();
+
+ctx.arc(
+x-40,
+y+25,
+45,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.beginPath();
+
+ctx.arc(
+x+40,
+y+25,
+45,
+0,
+Math.PI*2
+);
+
+ctx.fill();
 
 }
 
 
 /* =====================================================
-   DRAW GROUND
+   RAM — IMPROVED CARTOON CHARACTER
 ===================================================== */
 
-function drawGround(){
+function ram(x,y,scale=1,walking=0){
 
-    ctx.fillStyle="#31552d";
+ctx.save();
 
-    ctx.fillRect(
-        0,
-        360,
-        canvas.width,
-        140
-    );
+ctx.translate(
+x,
+y
+);
+
+ctx.scale(
+scale,
+scale
+);
+
+
+/* shadow */
+
+ctx.fillStyle="#0004";
+
+ctx.beginPath();
+
+ctx.ellipse(
+0,
+115,
+55,
+12,
+0,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* legs */
+
+ctx.strokeStyle="#4b3022";
+ctx.lineWidth=13;
+ctx.lineCap="round";
+
+let step=
+Math.sin(walking)*10;
+
+ctx.beginPath();
+
+ctx.moveTo(-22,60);
+ctx.lineTo(-28-step,112);
+
+ctx.stroke();
+
+ctx.beginPath();
+
+ctx.moveTo(22,60);
+ctx.lineTo(28+step,112);
+
+ctx.stroke();
+
+
+/* golden clothing */
+
+ctx.fillStyle="#e4ad45";
+
+ctx.beginPath();
+
+ctx.roundRect(
+-48,
+-20,
+96,
+100,
+25
+);
+
+ctx.fill();
+
+
+/* blue shawl */
+
+ctx.fillStyle="#2863a8";
+
+ctx.beginPath();
+
+ctx.moveTo(-42,-15);
+ctx.lineTo(-70,75);
+ctx.lineTo(-30,85);
+ctx.lineTo(0,20);
+
+ctx.closePath();
+
+ctx.fill();
+
+
+/* neck */
+
+ctx.fillStyle="#b8784e";
+
+ctx.fillRect(
+-13,
+-48,
+26,
+30
+);
+
+
+/* face */
+
+ctx.fillStyle="#c8875b";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-80,
+48,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* long hair */
+
+ctx.fillStyle="#21140d";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-105,
+43,
+Math.PI,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.fillRect(
+-40,
+-105,
+80,
+35
+);
+
+
+/* hair top ornament */
+
+ctx.fillStyle="#e8b94e";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-130,
+12,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* eyes */
+
+ctx.fillStyle="#17110c";
+
+ctx.beginPath();
+
+ctx.ellipse(
+-17,
+-83,
+6,
+9,
+0,
+0,
+Math.PI*2
+);
+
+ctx.ellipse(
+17,
+-83,
+6,
+9,
+0,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* eyebrows */
+
+ctx.strokeStyle="#3a2013";
+ctx.lineWidth=4;
+
+ctx.beginPath();
+
+ctx.moveTo(-27,-98);
+ctx.lineTo(-8,-102);
+
+ctx.moveTo(8,-102);
+ctx.lineTo(27,-98);
+
+ctx.stroke();
+
+
+/* nose */
+
+ctx.beginPath();
+
+ctx.moveTo(0,-80);
+ctx.lineTo(-4,-65);
+ctx.lineTo(5,-64);
+
+ctx.stroke();
+
+
+/* smile */
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-61,
+14,
+0,
+Math.PI
+);
+
+ctx.stroke();
+
+
+/* bow */
+
+ctx.strokeStyle="#633a19";
+ctx.lineWidth=6;
+
+ctx.beginPath();
+
+ctx.arc(
+70,
+5,
+72,
+-Math.PI/2,
+Math.PI/2
+);
+
+ctx.stroke();
+
+
+/* arrow */
+
+ctx.strokeStyle="#d6b25b";
+ctx.lineWidth=4;
+
+ctx.beginPath();
+
+ctx.moveTo(20,5);
+ctx.lineTo(125,5);
+
+ctx.stroke();
+
+
+ctx.restore();
 
 }
 
 
 /* =====================================================
-   DRAW TREE
+   SITA — IMPROVED
 ===================================================== */
 
-function drawTree(x,y){
+function sita(x,y,scale=1){
 
-    ctx.fillStyle="#51351d";
+ctx.save();
 
-    ctx.fillRect(
-        x-15,
-        y,
-        30,
-        130
-    );
+ctx.translate(x,y);
 
-    ctx.fillStyle="#235c2d";
+ctx.scale(
+scale,
+scale
+);
 
-    ctx.beginPath();
 
-    ctx.arc(
-        x,
-        y,
-        70,
-        0,
-        Math.PI*2
-    );
+/* shadow */
 
-    ctx.fill();
+ctx.fillStyle="#0004";
+
+ctx.beginPath();
+
+ctx.ellipse(
+0,
+112,
+50,
+11,
+0,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* dress */
+
+ctx.fillStyle="#b92f54";
+
+ctx.beginPath();
+
+ctx.moveTo(-50,-5);
+ctx.lineTo(-75,110);
+ctx.lineTo(75,110);
+ctx.lineTo(50,-5);
+
+ctx.closePath();
+
+ctx.fill();
+
+
+/* golden border */
+
+ctx.strokeStyle="#f1c34f";
+ctx.lineWidth=8;
+
+ctx.beginPath();
+
+ctx.moveTo(-50,0);
+ctx.lineTo(-75,110);
+ctx.lineTo(75,110);
+ctx.lineTo(50,0);
+
+ctx.stroke();
+
+
+/* upper cloth */
+
+ctx.fillStyle="#eab64e";
+
+ctx.beginPath();
+
+ctx.moveTo(-48,-10);
+ctx.lineTo(0,40);
+ctx.lineTo(48,-10);
+ctx.lineTo(35,-35);
+ctx.lineTo(0,5);
+ctx.lineTo(-35,-35);
+
+ctx.closePath();
+
+ctx.fill();
+
+
+/* neck */
+
+ctx.fillStyle="#c8875b";
+
+ctx.fillRect(
+-12,
+-50,
+24,
+30
+);
+
+
+/* face */
+
+ctx.fillStyle="#c8875b";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-78,
+43,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* hair */
+
+ctx.fillStyle="#21140d";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-98,
+42,
+Math.PI,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.fillRect(
+-40,
+-98,
+80,
+28
+);
+
+
+/* veil */
+
+ctx.fillStyle="#e6ad45aa";
+
+ctx.beginPath();
+
+ctx.moveTo(
+-40,
+-105
+);
+
+ctx.quadraticCurveTo(
+0,
+-145,
+45,
+-105
+);
+
+ctx.lineTo(
+65,
+10
+);
+
+ctx.lineTo(
+40,
+-5
+);
+
+ctx.lineTo(
+25,
+-75
+);
+
+ctx.closePath();
+
+ctx.fill();
+
+
+/* eyes */
+
+ctx.fillStyle="#17110c";
+
+ctx.beginPath();
+
+ctx.ellipse(
+-15,
+-80,
+5,
+8,
+0,
+0,
+Math.PI*2
+);
+
+ctx.ellipse(
+15,
+-80,
+5,
+8,
+0,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* bindi */
+
+ctx.fillStyle="#9e1c29";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-65,
+4,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* smile */
+
+ctx.strokeStyle="#522319";
+ctx.lineWidth=3;
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-58,
+11,
+0,
+Math.PI
+);
+
+ctx.stroke();
+
+
+/* necklace */
+
+ctx.strokeStyle="#f4c84b";
+ctx.lineWidth=5;
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-35,
+25,
+0,
+Math.PI
+);
+
+ctx.stroke();
+
+
+ctx.restore();
 
 }
 
 
 /* =====================================================
-   DRAW RAM
+   HANUMAN — IMPROVED
 ===================================================== */
 
-function drawRam(x,y){
+function hanuman(x,y,scale=1,fly=0){
 
-    // body
-    ctx.fillStyle="#e6c49b";
+ctx.save();
 
-    ctx.beginPath();
+ctx.translate(x,y);
 
-    ctx.ellipse(
-        x,
-        y,
-        45,
-        65,
-        0,
-        0,
-        Math.PI*2
-    );
+ctx.scale(
+scale,
+scale
+);
 
-    ctx.fill();
 
-    // head
-    ctx.beginPath();
+/* flying shadow */
 
-    ctx.arc(
-        x,
-        y-65,
-        38,
-        0,
-        Math.PI*2
-    );
+ctx.fillStyle="#0003";
 
-    ctx.fill();
+ctx.beginPath();
 
-    // hair
-    ctx.fillStyle="#21170f";
+ctx.ellipse(
+0,
+105,
+65,
+10,
+0,
+0,
+Math.PI*2
+);
 
-    ctx.beginPath();
+ctx.fill();
 
-    ctx.arc(
-        x,
-        y-80,
-        35,
-        Math.PI,
-        Math.PI*2
-    );
 
-    ctx.fill();
+/* tail */
 
-    // eyes
-    ctx.fillStyle="#111";
+ctx.strokeStyle="#8c4d24";
+ctx.lineWidth=15;
+ctx.lineCap="round";
 
-    ctx.beginPath();
+ctx.beginPath();
 
-    ctx.arc(
-        x-13,
-        y-65,
-        4,
-        0,
-        Math.PI*2
-    );
+ctx.moveTo(
+-35,
+55
+);
 
-    ctx.arc(
-        x+13,
-        y-65,
-        4,
-        0,
-        Math.PI*2
-    );
+ctx.quadraticCurveTo(
+-100,
+0,
+-65,
+-65
+);
 
-    ctx.fill();
+ctx.stroke();
 
-    // bow
-    ctx.strokeStyle="#6e401c";
-    ctx.lineWidth=6;
 
-    ctx.beginPath();
+/* legs */
 
-    ctx.arc(
-        x+55,
-        y,
-        65,
-        -Math.PI/2,
-        Math.PI/2
-    );
+ctx.strokeStyle="#7b421f";
+ctx.lineWidth=18;
 
-    ctx.stroke();
+ctx.beginPath();
+
+ctx.moveTo(-20,45);
+ctx.lineTo(-45,100);
+
+ctx.moveTo(20,45);
+ctx.lineTo(45,100);
+
+ctx.stroke();
+
+
+/* body */
+
+ctx.fillStyle="#914c25";
+
+ctx.beginPath();
+
+ctx.ellipse(
+0,
+15,
+48,
+65,
+0,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* arms */
+
+ctx.strokeStyle="#914c25";
+ctx.lineWidth=20;
+
+ctx.beginPath();
+
+ctx.moveTo(-35,-5);
+ctx.lineTo(-75,-55);
+
+ctx.moveTo(35,-5);
+ctx.lineTo(75,-55);
+
+ctx.stroke();
+
+
+/* head */
+
+ctx.fillStyle="#a75a2c";
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-65,
+48,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* ears */
+
+ctx.beginPath();
+
+ctx.arc(
+-45,
+-65,
+20,
+0,
+Math.PI*2
+);
+
+ctx.arc(
+45,
+-65,
+20,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* crown */
+
+ctx.fillStyle="#e6ae39";
+
+ctx.beginPath();
+
+ctx.moveTo(
+-30,
+-105
+);
+
+ctx.lineTo(
+0,
+-145
+);
+
+ctx.lineTo(
+30,
+-105
+);
+
+ctx.closePath();
+
+ctx.fill();
+
+
+/* eyes */
+
+ctx.fillStyle="white";
+
+ctx.beginPath();
+
+ctx.arc(
+-16,
+-70,
+9,
+0,
+Math.PI*2
+);
+
+ctx.arc(
+16,
+-70,
+9,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.fillStyle="#111";
+
+ctx.beginPath();
+
+ctx.arc(
+-16,
+-70,
+4,
+0,
+Math.PI*2
+);
+
+ctx.arc(
+16,
+-70,
+4,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+/* smile */
+
+ctx.strokeStyle="#29140c";
+ctx.lineWidth=5;
+
+ctx.beginPath();
+
+ctx.arc(
+0,
+-48,
+20,
+0,
+Math.PI
+);
+
+ctx.stroke();
+
+
+/* gada */
+
+ctx.strokeStyle="#8a551f";
+ctx.lineWidth=8;
+
+ctx.beginPath();
+
+ctx.moveTo(
+75,
+20
+);
+
+ctx.lineTo(
+75,
+-80
+);
+
+ctx.stroke();
+
+ctx.fillStyle="#d5a238";
+
+ctx.beginPath();
+
+ctx.arc(
+75,
+-90,
+23,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+ctx.restore();
 
 }
 
 
 /* =====================================================
-   DRAW SITA
+   RAVAN — IMPROVED
 ===================================================== */
 
-function drawSita(x,y){
+function ravan(x,y,scale=1){
 
-    ctx.fillStyle="#b33b62";
+ctx.save();
 
-    ctx.beginPath();
+ctx.translate(x,y);
 
-    ctx.ellipse(
-        x,
-        y,
-        45,
-        70,
-        0,
-        0,
-        Math.PI*2
-    );
+ctx.scale(
+scale,
+scale
+);
 
-    ctx.fill();
 
-    ctx.fillStyle="#e7bd91";
+/* body */
 
-    ctx.beginPath();
+ctx.fillStyle="#581d25";
 
-    ctx.arc(
-        x,
-        y-75,
-        35,
-        0,
-        Math.PI*2
-    );
+ctx.beginPath();
 
-    ctx.fill();
+ctx.ellipse(
+0,
+30,
+65,
+105,
+0,
+0,
+Math.PI*2
+);
 
-    ctx.fillStyle="#21140d";
+ctx.fill();
 
-    ctx.beginPath();
 
-    ctx.arc(
-        x,
-        y-90,
-        38,
-        Math.PI,
-        Math.PI*2
-    );
+/* armor */
 
-    ctx.fill();
+ctx.fillStyle="#d59a32";
+
+ctx.fillRect(
+-55,
+-5,
+110,
+25
+);
+
+
+/* ten heads */
+
+for(let i=0;i<5;i++){
+
+let px=
+(i-2)*42;
+
+drawRavanHead(
+px,
+-110
+);
+
+}
+
+for(let i=0;i<5;i++){
+
+let px=
+(i-2)*42;
+
+drawRavanHead(
+px,
+-170
+);
+
+}
+
+
+/* arms */
+
+ctx.strokeStyle="#6c2630";
+ctx.lineWidth=20;
+
+for(let side of [-1,1]){
+
+ctx.beginPath();
+
+ctx.moveTo(
+side*50,
+0
+);
+
+ctx.lineTo(
+side*110,
+60
+);
+
+ctx.stroke();
+
+}
+
+
+/* sword */
+
+ctx.strokeStyle="#d8b766";
+ctx.lineWidth=7;
+
+ctx.beginPath();
+
+ctx.moveTo(
+110,
+60
+);
+
+ctx.lineTo(
+150,
+-10
+);
+
+ctx.stroke();
+
+
+ctx.restore();
+
+}
+
+
+function drawRavanHead(x,y){
+
+ctx.fillStyle="#8d3036";
+
+ctx.beginPath();
+
+ctx.arc(
+x,
+y,
+30,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+ctx.fillStyle="#e3a574";
+
+ctx.beginPath();
+
+ctx.arc(
+x,
+y+3,
+22,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+ctx.fillStyle="#21100d";
+
+ctx.beginPath();
+
+ctx.arc(
+x,
+y-12,
+23,
+Math.PI,
+Math.PI*2
+);
+
+ctx.fill();
+
+
+ctx.fillStyle="#111";
+
+ctx.beginPath();
+
+ctx.arc(
+x-8,
+y+2,
+3,
+0,
+Math.PI*2
+);
+
+ctx.arc(
+x+8,
+y+2,
+3,
+0,
+Math.PI*2
+);
+
+ctx.fill();
 
 }
 
 
 /* =====================================================
-   DRAW RAVAN
+   ARROW
 ===================================================== */
 
-function drawRavan(x,y){
+function arrow(x,y){
 
-    ctx.fillStyle="#541c1c";
+ctx.strokeStyle="#e7cf91";
+ctx.lineWidth=5;
 
-    ctx.beginPath();
+ctx.beginPath();
 
-    ctx.ellipse(
-        x,
-        y,
-        60,
-        90,
-        0,
-        0,
-        Math.PI*2
-    );
+ctx.moveTo(
+x,
+y
+);
 
-    ctx.fill();
+ctx.lineTo(
+x+120,
+y
+);
 
-    /*
-      Symbolic multi-head animation.
-      This is an original graphic representation.
-    */
+ctx.stroke();
 
-    for(let i=0;i<5;i++){
 
-        ctx.fillStyle="#7b2929";
+ctx.beginPath();
 
-        ctx.beginPath();
+ctx.moveTo(
+x+120,
+y
+);
 
-        ctx.arc(
-            x+(i-2)*38,
-            y-100,
-            28,
-            0,
-            Math.PI*2
-        );
+ctx.lineTo(
+x+98,
+y-13
+);
 
-        ctx.fill();
+ctx.moveTo(
+x+120,
+y
+);
 
-    }
+ctx.lineTo(
+x+98,
+y+13
+);
 
-    ctx.fillStyle="#ffd1a3";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        x,
-        y-100,
-        23,
-        0,
-        Math.PI*2
-    );
-
-    ctx.fill();
+ctx.stroke();
 
 }
 
 
 /* =====================================================
-   DRAW ARROW
-===================================================== */
-
-function drawArrow(x,y){
-
-    ctx.strokeStyle="#f2d58b";
-    ctx.lineWidth=5;
-
-    ctx.beginPath();
-
-    ctx.moveTo(x,y);
-    ctx.lineTo(x+110,y);
-
-    ctx.stroke();
-
-    ctx.beginPath();
-
-    ctx.moveTo(x+110,y);
-    ctx.lineTo(x+90,y-10);
-
-    ctx.moveTo(x+110,y);
-    ctx.lineTo(x+90,y+10);
-
-    ctx.stroke();
-
-}
-
-
-/* =====================================================
-   ANIMATION LOOP
+   ANIMATION
 ===================================================== */
 
 function animate(time){
 
-    const t =
-    (time-animationStart)/1000;
+const t=
+(time-animationStart)/1000;
 
-    drawSky();
-    drawSun();
-    drawGround();
 
-    drawTree(100,280);
-    drawTree(820,270);
+/* background */
 
-    /* ==========================================
-       SCENE BASED ON CHAPTER
-    ========================================== */
+background();
 
-    if(current===0){
+tree(100,285);
+tree(900,280);
 
-        drawRam(270,330);
 
-        drawSita(430,330);
+/* CHAPTER 1 */
 
-        drawRam(
-            270 + Math.sin(t)*10,
-            330
-        );
+if(current===0){
 
-    }
+ram(
+260+Math.sin(t)*8,
+350,
+1,
+t*3
+);
 
-    else if(current===1){
+sita(
+470,
+350,
+1
+);
 
-        drawRam(260,330);
-        drawSita(450,330);
+}
 
-        drawTree(700,270);
 
-    }
+/* CHAPTER 2 */
 
-    else if(current===2){
+else if(current===1){
 
-        /*
-          Sita Harlan Demo
-        */
+ram(
+250,
+350,
+1
+);
 
-        drawSita(350,330);
+sita(
+450,
+350,
+1
+);
 
-        drawRavan(700,300);
+tree(720,285);
 
-        const arrowX =
-        350 + Math.sin(t)*120;
+}
 
-        drawArrow(
-            arrowX,
-            250
-        );
 
-    }
+/* CHAPTER 3 — SITA HARIAN */
 
-    else if(current===3){
+else if(current===2){
 
-        drawRam(250,330);
+sita(
+320,
+350,
+1
+);
 
-        drawSita(450,330);
+ravan(
+720,
+320,
+0.8
+);
 
-        // symbolic Hanuman
-        ctx.fillStyle="#8a4f28";
 
-        ctx.beginPath();
+/* flying movement */
 
-        ctx.arc(
-            680,
-            300,
-            45,
-            0,
-            Math.PI*2
-        );
+let ax=
+350+Math.sin(t*2)*130;
 
-        ctx.fill();
+arrow(
+ax,
+220
+);
 
-        ctx.strokeStyle="#8a4f28";
-        ctx.lineWidth=15;
+}
 
-        ctx.beginPath();
 
-        ctx.moveTo(680,340);
-        ctx.lineTo(680,400);
+/* CHAPTER 4 */
 
-        ctx.stroke();
+else if(current===3){
 
-    }
+ram(
+220,
+350,
+1
+);
 
-    else if(current===4){
+sita(
+430,
+350,
+1
+);
 
-        /*
-          Hanuman flying
-        */
+hanuman(
+700,
+330,
+0.9
+);
 
-        const hx =
-        150 + ((t*100)%650);
+}
 
-        const hy =
-        250 + Math.sin(t*3)*45;
 
-        ctx.save();
+/* CHAPTER 5 — HANUMAN FLYING */
 
-        ctx.translate(hx,hy);
+else if(current===4){
 
-        ctx.rotate(
-            Math.sin(t*2)*.1
-        );
+ram(
+180,
+350,
+0.8
+);
 
-        ctx.fillStyle="#8a4f28";
+let hx=
+350+(t*100)%450;
 
-        ctx.beginPath();
+let hy=
+260+Math.sin(t*3)*55;
 
-        ctx.arc(
-            0,
-            0,
-            38,
-            0,
-            Math.PI*2
-        );
+hanuman(
+hx,
+hy,
+0.8
+);
 
-        ctx.fill();
+}
 
-        ctx.strokeStyle="#8a4f28";
-        ctx.lineWidth=14;
 
-        ctx.beginPath();
+/* CHAPTER 6 — LANKA */
 
-        ctx.moveTo(0,30);
-        ctx.lineTo(0,90);
+else if(current===5){
 
-        ctx.stroke();
+ravan(
+700,
+320,
+0.75
+);
 
-        // tail
-        ctx.beginPath();
+hanuman(
+280,
+350,
+0.75
+);
 
-        ctx.arc(
-            0,
-            80,
-            50,
-            Math.PI,
-            Math.PI*1.7
-        );
 
-        ctx.stroke();
+/* fire */
 
-        ctx.restore();
+for(let i=0;i<7;i++){
 
-    }
+let fx=
+350+i*75;
 
-    else if(current===5){
+let fy=
+330+Math.sin(t*6+i)*25;
 
-        drawRavan(650,300);
+ctx.fillStyle="#ff7a00";
 
-        ctx.fillStyle="#ff7b16";
+ctx.beginPath();
 
-        for(let i=0;i<7;i++){
+ctx.arc(
+fx,
+fy,
+18,
+0,
+Math.PI*2
+);
 
-            const fx =
-            120+i*100;
+ctx.fill();
 
-            const fy =
-            360-Math.abs(
-                Math.sin(t*5+i)*45
-            );
+}
 
-            ctx.beginPath();
+}
 
-            ctx.arc(
-                fx,
-                fy,
-                22,
-                0,
-                Math.PI*2
-            );
 
-            ctx.fill();
+/* CHAPTER 7 — WAR */
 
-        }
+else if(current===6){
 
-    }
+ram(
+210,
+350,
+0.9
+);
 
-    else if(current===6){
+ravan(
+720,
+320,
+0.72
+);
 
-        drawRam(250,330);
-        drawRavan(650,300);
+let ax=
+300+Math.sin(t*2)*160;
 
-        drawArrow(
-            300+Math.sin(t)*120,
-            240
-        );
+arrow(
+ax,
+230
+);
 
-    }
+}
 
-    else{
 
-        drawRam(330,330);
-        drawSita(500,330);
+/* CHAPTER 8 */
 
-    }
+else{
 
+ram(
+330,
+350,
+1
+);
 
-    requestAnimationFrame(animate);
+sita(
+510,
+350,
+1
+);
+
+}
+
+
+/* LOOP */
+
+requestAnimationFrame(
+animate
+);
 
 }
 
 
 /* =====================================================
-   NEXT / BACK
+   NAVIGATION
 ===================================================== */
 
 function nextChapter(){
 
-    if(current < chapters.length-1){
+if(current<chapters.length-1){
 
-        loadChapter(
-            current+1
-        );
+loadChapter(
+current+1
+);
 
-    }
+}
 
 }
 
 
 function previousChapter(){
 
-    if(current > 0){
+if(current>0){
 
-        loadChapter(
-            current-1
-        );
+loadChapter(
+current-1
+);
 
-    }
+}
 
 }
 
 
-/* =====================================================
-   HOME
-===================================================== */
-
 function goHome(){
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
 }
 
@@ -1307,7 +2153,7 @@ function goHome(){
 loadChapter(0);
 
 requestAnimationFrame(
-    animate
+animate
 );
 
 </script>
