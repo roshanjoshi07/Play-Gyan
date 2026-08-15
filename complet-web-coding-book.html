@@ -2,15 +2,16 @@
 <!DOCTYPE html>
 <html lang="ne">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Complete Web Coding Book</title>
+<title>Complete Web Development Course</title>
 
 <style>
 
 /* =====================================================
-   GLOBAL
+   BASIC
 ===================================================== */
 
 *{
@@ -19,15 +20,19 @@
     box-sizing:border-box;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     font-family:
-        "Noto Serif Devanagari",
-        "Segoe UI",
-        Arial,
-        sans-serif;
+    "Noto Serif Devanagari",
+    "Noto Sans Devanagari",
+    Arial,
+    sans-serif;
 
-    background:#101827;
-    color:#172033;
+    background:#101522;
+    color:#202838;
 }
 
 /* =====================================================
@@ -35,12 +40,12 @@ body{
 ===================================================== */
 
 header{
-    min-height:300px;
+    min-height:330px;
 
     display:flex;
     flex-direction:column;
-    align-items:center;
     justify-content:center;
+    align-items:center;
 
     text-align:center;
 
@@ -49,70 +54,87 @@ header{
     color:white;
 
     background:
-        radial-gradient(
-            circle at 50% 30%,
-            #2878d4,
-            #16355d 48%,
-            #07101f 100%
-        );
+    radial-gradient(
+        circle at center,
+        #247bc1,
+        #163c68 48%,
+        #07101d 100%
+    );
 
-    box-shadow:0 10px 40px #0008;
+    box-shadow:0 12px 40px #0008;
 }
 
-.book-icon{
+.logo{
     font-size:70px;
     margin-bottom:10px;
 }
 
 header h1{
-    font-size:clamp(35px,8vw,65px);
+    font-size:clamp(32px,7vw,62px);
     text-shadow:0 5px 20px #000;
 }
 
 header p{
-    margin-top:12px;
+    margin-top:15px;
+    color:#d9ecff;
     font-size:18px;
-    color:#dbeaff;
+}
+
+.course-info{
+    margin-top:20px;
+
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.course-info span{
+    background:#ffffff20;
+    border:1px solid #ffffff30;
+    padding:8px 15px;
+    border-radius:30px;
 }
 
 /* =====================================================
    MAIN
 ===================================================== */
 
-.book-area{
+.container{
     width:min(1100px,94%);
     margin:30px auto 80px;
 }
 
 /* =====================================================
-   CHAPTER MENU
+   CLASS MENU
 ===================================================== */
 
-.chapter-menu{
-    background:#18253a;
+.class-menu{
+    background:#182236;
+
     padding:20px;
+
     border-radius:20px;
 
-    box-shadow:
-        0 15px 40px #0007;
+    box-shadow:0 15px 40px #0007;
 
     margin-bottom:25px;
 }
 
-.chapter-menu h2{
-    color:#8bc7ff;
+.class-menu h2{
     text-align:center;
-    margin-bottom:16px;
+    color:#8ed0ff;
+    margin-bottom:17px;
 }
 
-.chapter-buttons{
+.buttons{
     display:flex;
     flex-wrap:wrap;
-    gap:9px;
     justify-content:center;
+    gap:8px;
 }
 
-.chapter-buttons button{
+.buttons button{
     border:0;
     cursor:pointer;
 
@@ -120,300 +142,250 @@ header p{
 
     border-radius:25px;
 
-    background:#357fc4;
+    background:#2b72ae;
     color:white;
 
     font-weight:bold;
+
+    transition:.2s;
 }
 
-.chapter-buttons button:hover{
+.buttons button:hover{
     transform:translateY(-2px);
 }
 
-.chapter-buttons button.active{
-    background:#79c2ff;
-    color:#07101f;
+.buttons button.active{
+    background:#8bd0ff;
+    color:#07101d;
 }
 
 /* =====================================================
-   BOOK PAPER
+   BOOK
 ===================================================== */
 
-.paper{
-    background:#fdfcf8;
+.book{
+    background:#fffdf7;
 
-    min-height:700px;
+    min-height:750px;
 
     padding:
-        clamp(25px,6vw,75px);
+    clamp(25px,7vw,75px);
 
     position:relative;
 
-    box-shadow:
-        0 20px 70px #0009;
-
-    border-radius:3px;
+    box-shadow:0 20px 70px #000a;
 }
 
-.paper::before{
+.book:before{
     content:"";
 
     position:absolute;
 
     inset:15px;
 
-    border:
-        2px solid #cbd7e6;
+    border:2px solid #d1dbe5;
 
     pointer-events:none;
 }
 
-/* =====================================================
-   TITLE
-===================================================== */
-
-.chapter-label{
+.class-number{
     text-align:center;
 
-    color:#2672b7;
+    color:#2476b3;
 
     font-weight:bold;
 
     letter-spacing:2px;
 
-    margin-bottom:15px;
-}
-
-.paper h2{
-    text-align:center;
-
-    color:#173d64;
-
-    font-size:
-        clamp(28px,6vw,45px);
-
     margin-bottom:12px;
 }
 
-.subtitle{
+.book h2{
     text-align:center;
 
-    color:#718096;
+    color:#173e65;
+
+    font-size:clamp(27px,6vw,45px);
+
+    margin-bottom:10px;
+}
+
+.book-subtitle{
+    text-align:center;
+
+    color:#7b8795;
 
     margin-bottom:35px;
 }
 
-/* =====================================================
-   STORY
-===================================================== */
-
-.story{
-    font-size:19px;
+.content{
+    font-size:18px;
 
     line-height:2;
 
     text-align:justify;
 }
 
-.story p{
+.content p{
     margin-bottom:22px;
 
-    text-indent:40px;
+    text-indent:35px;
 }
 
-.story ul{
+.content h3{
+    color:#1c5f96;
+
     margin:
-        15px 0 25px 30px;
+    30px 0 12px;
 
-    line-height:2;
+    font-size:24px;
 }
 
-.story li{
+.content h4{
+    color:#31536f;
+
+    margin:
+    25px 0 10px;
+}
+
+.content ul,
+.content ol{
+    margin:
+    10px 0 25px 30px;
+}
+
+.content li{
     margin-bottom:8px;
 }
 
-.quote{
-    text-indent:0 !important;
-
-    text-align:center;
-
-    padding:20px;
-
-    margin:30px 0;
-
-    border-top:
-        1px solid #b7cce1;
-
-    border-bottom:
-        1px solid #b7cce1;
-
-    color:#286ba6;
-
-    font-style:italic;
-}
-
-/* =====================================================
-   CODE BOX
-===================================================== */
-
-.code-title{
-    background:#18283d;
-
-    color:#a9d8ff;
-
-    padding:12px 16px;
-
-    font-family:Arial,sans-serif;
-
-    border-radius:
-        12px 12px 0 0;
-}
-
-.code-box{
-    background:#0b1220;
-
-    color:#e6edf7;
-
-    padding:20px;
-
-    overflow:auto;
-
-    border-radius:
-        0 0 12px 12px;
-
-    margin:
-        10px 0 25px;
-
-    font-family:
-        Consolas,
-        Monaco,
-        monospace;
-
-    font-size:14px;
-
-    line-height:1.7;
-
-    white-space:pre;
-}
-
-/* =====================================================
-   INFO BOX
-===================================================== */
-
 .info{
-    background:#eaf5ff;
+    background:#eaf6ff;
 
-    border-left:
-        5px solid #2981c7;
+    border-left:5px solid #2581c5;
 
     padding:18px;
 
+    border-radius:8px;
+
     margin:25px 0;
+
+    line-height:1.8;
+}
+
+.tip{
+    background:#eff9ed;
+
+    border-left:5px solid #43a047;
+
+    padding:18px;
 
     border-radius:8px;
 
-    line-height:1.8;
+    margin:25px 0;
 }
 
 .warning{
     background:#fff6df;
 
-    border-left:
-        5px solid #e2a52b;
+    border-left:5px solid #d99b22;
 
     padding:18px;
-
-    margin:25px 0;
 
     border-radius:8px;
 
-    line-height:1.8;
+    margin:25px 0;
+}
+
+.quote{
+    text-align:center;
+
+    padding:22px;
+
+    margin:30px 0;
+
+    border-top:1px solid #bdcbd8;
+
+    border-bottom:1px solid #bdcbd8;
+
+    color:#286a9d;
+
+    font-style:italic;
 }
 
 /* =====================================================
-   PLAYGROUND
+   CODE
 ===================================================== */
 
-.playground{
-    background:#172235;
+.code-title{
+    background:#172336;
+
+    color:#9bd7ff;
+
+    padding:11px 16px;
+
+    border-radius:
+    10px 10px 0 0;
+
+    margin-top:20px;
+
+    font-family:Arial;
+}
+
+.code{
+    background:#080e18;
+
+    color:#e6f1ff;
 
     padding:20px;
 
-    border-radius:18px;
-
-    margin-top:35px;
-
-    box-shadow:0 10px 30px #0006;
-}
-
-.playground h3{
-    color:#8bd0ff;
-
-    margin-bottom:15px;
-}
-
-.editor{
-    width:100%;
-
-    min-height:260px;
-
-    resize:vertical;
-
-    border:0;
-
-    outline:0;
-
-    padding:18px;
-
-    background:#080d17;
-
-    color:#e8f2ff;
+    overflow-x:auto;
 
     font-family:
-        Consolas,
-        monospace;
+    Consolas,
+    Monaco,
+    monospace;
 
     font-size:14px;
 
-    line-height:1.6;
+    line-height:1.7;
 
-    border-radius:12px;
+    border-radius:
+    0 0 10px 10px;
+
+    white-space:pre;
 }
 
-.run-button{
-    margin-top:12px;
+/* =====================================================
+   FINAL ROADMAP
+===================================================== */
 
-    border:0;
+.roadmap{
+    margin-top:25px;
 
-    padding:13px 22px;
+    display:grid;
 
-    border-radius:25px;
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
 
-    cursor:pointer;
-
-    font-weight:bold;
-
-    background:#39a2e8;
-
-    color:white;
+    gap:15px;
 }
 
-.run-button:hover{
-    background:#57b5f1;
+.step{
+    padding:20px;
+
+    background:#edf7ff;
+
+    border-radius:15px;
+
+    border:1px solid #c8dfef;
 }
 
-.preview{
-    margin-top:15px;
+.step b{
+    display:block;
 
-    width:100%;
+    color:#17639c;
 
-    min-height:180px;
-
-    background:white;
-
-    border-radius:12px;
-
-    overflow:hidden;
+    margin-bottom:8px;
 }
 
 /* =====================================================
@@ -431,11 +403,15 @@ header p{
 .navigation button{
     flex:1;
 
-    border:0;
-
     padding:16px;
 
+    border:0;
+
     border-radius:35px;
+
+    background:#2678b8;
+
+    color:white;
 
     cursor:pointer;
 
@@ -443,25 +419,19 @@ header p{
 
     font-weight:bold;
 
-    background:#2878bd;
-
-    color:white;
-
-    box-shadow:
-        0 8px 20px #0005;
+    box-shadow:0 8px 20px #0005;
 }
 
 .navigation button:hover{
-    background:#4096dc;
+    background:#4097d8;
 }
 
 .navigation button:disabled{
     opacity:.35;
-
     cursor:not-allowed;
 }
 
-.home-btn{
+.home{
     width:100%;
 
     margin-top:12px;
@@ -470,33 +440,32 @@ header p{
 
     border:0;
 
-    background:#18253a;
-
-    color:#a8d9ff;
-
     border-radius:30px;
+
+    background:#182236;
+
+    color:#9ed7ff;
 
     cursor:pointer;
 }
 
 /* =====================================================
-   RESPONSIVE
+   MOBILE
 ===================================================== */
 
 @media(max-width:600px){
 
-    .paper{
-        padding:
-            28px 20px;
-    }
-
-    .story{
+    .content{
         font-size:17px;
         line-height:1.9;
     }
 
-    .story p{
-        text-indent:25px;
+    .content p{
+        text-indent:22px;
+    }
+
+    .book{
+        padding:28px 20px;
     }
 
     .navigation button{
@@ -518,65 +487,74 @@ header p{
 
 <header>
 
-    <div class="book-icon">
-        💻
-    </div>
+<div class="logo">
+💻
+</div>
 
-    <h1>
-        Complete Web Coding
-    </h1>
+<h1>
+Complete Web Development
+</h1>
 
-    <p>
-        HTML • CSS • JavaScript • Website Development
-    </p>
+<p>
+HTML • CSS • JavaScript • Website Development
+</p>
+
+<div class="course-info">
+
+<span>📘 Beginner</span>
+<span>🎨 Design</span>
+<span>⚡ JavaScript</span>
+<span>🌐 Website</span>
+
+</div>
 
 </header>
 
 
-<main class="book-area">
+<main class="container">
 
 
 <!-- =====================================================
-     CHAPTER MENU
+     CLASS MENU
 ===================================================== -->
 
-<div class="chapter-menu">
+<section class="class-menu">
 
-    <h2>
-        📚 Chapters
-    </h2>
+<h2>
+📚 Complete Classes
+</h2>
 
-    <div
-        class="chapter-buttons"
-        id="chapterButtons">
-    </div>
-
+<div
+class="buttons"
+id="classButtons">
 </div>
+
+</section>
 
 
 <!-- =====================================================
      BOOK
 ===================================================== -->
 
-<article class="paper">
+<article class="book">
 
-    <div
-        class="chapter-label"
-        id="chapterLabel">
-    </div>
+<div
+class="class-number"
+id="classNumber">
+</div>
 
-    <h2
-        id="chapterTitle">
-    </h2>
+<h2
+id="classTitle">
+</h2>
 
-    <div class="subtitle">
-        Complete Beginner Web Development Guide
-    </div>
+<div class="book-subtitle">
+Web Development Learning Book
+</div>
 
-    <div
-        class="story"
-        id="story">
-    </div>
+<div
+class="content"
+id="content">
+</div>
 
 </article>
 
@@ -587,33 +565,32 @@ header p{
 
 <div class="navigation">
 
-    <button
-        id="backBtn"
-        onclick="previousChapter()">
+<button
+id="backBtn"
+onclick="previousClass()">
 
-        ← Back
+← Back
 
-    </button>
+</button>
 
-    <button
-        id="nextBtn"
-        onclick="nextChapter()">
+<button
+id="nextBtn"
+onclick="nextClass()">
 
-        Next →
+Next →
 
-    </button>
+</button>
 
 </div>
 
 
 <button
-    class="home-btn"
-    onclick="goHome()">
+class="home"
+onclick="goHome()">
 
-    🏠 Home
+🏠 Home
 
 </button>
-
 
 </main>
 
@@ -621,64 +598,46 @@ header p{
 <script>
 
 /* =====================================================
-   CHAPTER DATA
+   COMPLETE COURSE
 ===================================================== */
 
-const chapters = [
+const classes = [
 
 /* =====================================================
-   CHAPTER 1
+   CLASS 1
 ===================================================== */
 
 {
 title:"Web Development के हो?",
 
-story:`
+content:`
 
 <p>
-Web Development भनेको website र web application
-बनाउने प्रक्रिया हो। तपाईंले browser मा खोल्ने
-Google, YouTube, Facebook, online shopping websites,
-games र educational websites सबै web technologies
-प्रयोग गरेर बनाइएका हुन्छन्।
+Web Development भनेको website तथा web application
+बनाउने प्रक्रिया हो। तपाईंले मोबाइल वा computer मा
+browser खोलेर हेर्ने websites यही प्रक्रिया प्रयोग गरेर
+बनाइएका हुन्छन्।
 </p>
 
 <p>
-Web development सिक्नका लागि मुख्य रूपमा तीनवटा
-technology बुझ्नुपर्छ—HTML, CSS र JavaScript।
+Website बनाउन सिक्दा हामी मुख्य रूपमा HTML, CSS र
+JavaScript सिक्छौँ। यी तीनवटा technology को काम
+अलग-अलग हुन्छ तर सँगै प्रयोग गर्दा complete website
+बन्छ।
 </p>
-
-<ul>
-
-<li>
-<b>HTML</b> — Website को structure बनाउँछ।
-</li>
-
-<li>
-<b>CSS</b> — Website को design र appearance बनाउँछ।
-</li>
-
-<li>
-<b>JavaScript</b> — Website लाई interactive र dynamic बनाउँछ।
-</li>
-
-</ul>
 
 <div class="info">
 
-<b>Simple formula:</b><br><br>
-
-HTML = Structure 🏗️<br>
-CSS = Design 🎨<br>
-JavaScript = Function ⚡
+<b>HTML</b> = Structure 🏗️<br>
+<b>CSS</b> = Design 🎨<br>
+<b>JavaScript</b> = Function ⚡
 
 </div>
 
 <p>
-यी तीनवटा technology सँगै प्रयोग गरेपछि तपाईंले
-आफ्नै website, portfolio, blog, quiz, game,
-book website र धेरै प्रकारका web applications
-बनाउन सक्नुहुन्छ।
+यो course मा हामी एकदम beginner level बाट सुरु गरेर
+अन्त्यमा आफ्नै website कसरी तयार गर्ने र Internet मा
+publish गर्ने भन्ने कुरा पनि सिक्नेछौँ।
 </p>
 
 `
@@ -686,31 +645,30 @@ book website र धेरै प्रकारका web applications
 
 
 /* =====================================================
-   CHAPTER 2
+   CLASS 2
 ===================================================== */
 
 {
-title:"HTML को सुरुवात",
+title:"HTML को परिचय",
 
-story:`
+content:`
 
 <p>
 HTML को पूरा नाम HyperText Markup Language हो।
-यो programming language भन्दा markup language हो।
-HTML ले webpage को structure तयार गर्छ।
+HTML website को आधार हो। यसले webpage मा कुन
+content कहाँ रहने भन्ने structure तयार गर्छ।
 </p>
 
 <p>
-HTML मा विभिन्न elements र tags प्रयोग गरिन्छ।
-जस्तै heading का लागि h1, paragraph का लागि p,
-image का लागि img र link का लागि a प्रयोग हुन्छ।
+HTML programming language होइन; यो markup language हो।
+HTML मा विभिन्न tags प्रयोग गरेर webpage बनाइन्छ।
 </p>
 
 <div class="code-title">
-Basic HTML
+पहिलो HTML
 </div>
 
-<div class="code-box">
+<div class="code">
 &lt;!DOCTYPE html&gt;
 
 &lt;html&gt;
@@ -723,9 +681,7 @@ Basic HTML
 
     &lt;h1&gt;Hello World&lt;/h1&gt;
 
-    &lt;p&gt;
-        मेरो पहिलो website
-    &lt;/p&gt;
+    &lt;p&gt;मेरो पहिलो website&lt;/p&gt;
 
 &lt;/body&gt;
 
@@ -733,9 +689,7 @@ Basic HTML
 </div>
 
 <p>
-HTML document सामान्यतया html element बाट सुरु हुन्छ।
-त्यसभित्र head र body हुन्छन्। Browser मा देखिने
-मुख्य content body भित्र लेखिन्छ।
+यो code browser मा खोल्दा एउटा basic webpage तयार हुन्छ।
 </p>
 
 `
@@ -743,91 +697,118 @@ HTML document सामान्यतया html element बाट सुरु
 
 
 /* =====================================================
-   CHAPTER 3
+   CLASS 3
 ===================================================== */
 
 {
-title:"HTML मा Heading, Paragraph र Link",
+title:"HTML Tags र Elements",
 
-story:`
+content:`
 
 <p>
-Website मा text राख्न HTML का विभिन्न elements प्रयोग
-गरिन्छ। Heading का लागि h1 देखि h6 सम्म प्रयोग हुन्छ।
+HTML मा tags प्रयोग गरेर विभिन्न प्रकारका content
+बनाइन्छ। जस्तै heading, paragraph, link, image र
+button।
 </p>
 
-<div class="code-title">
-HTML Text Example
+<div class="code">
+&lt;h1&gt;Main Heading&lt;/h1&gt;
+
+&lt;h2&gt;Sub Heading&lt;/h2&gt;
+
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+
+&lt;button&gt;Click Me&lt;/button&gt;
 </div>
 
-<div class="code-box">
-&lt;h1&gt;मेरो Website&lt;/h1&gt;
+<p>
+धेरै HTML elements मा opening tag र closing tag हुन्छ।
+तर केही elements self-closing nature का हुन्छन्, जस्तै
+image element।
+</p>
 
-&lt;h2&gt;About Me&lt;/h2&gt;
+`
+},
 
-&lt;p&gt;
-म web development सिक्दैछु।
-&lt;/p&gt;
 
+/* =====================================================
+   CLASS 4
+===================================================== */
+
+{
+title:"HTML Attributes",
+
+content:`
+
+<p>
+Attribute ले HTML element बारे थप information दिन्छ।
+Attribute सामान्यतया opening tag भित्र राखिन्छ।
+</p>
+
+<div class="code">
 &lt;a href="https://example.com"&gt;
-Website खोल्नुहोस्
+Open Website
 &lt;/a&gt;
-</div>
 
-<p>
-h1 सबैभन्दा ठूलो heading हो भने h6 सबैभन्दा सानो
-heading हो। Paragraph लेख्न p element प्रयोग गरिन्छ।
-</p>
-
-<p>
-a element बाट अर्को webpage वा website मा जाने link
-बनाउन सकिन्छ।
-</p>
-
-`
-},
-
-
-/* =====================================================
-   CHAPTER 4
-===================================================== */
-
-{
-title:"HTML मा Image र Button",
-
-story:`
-
-<p>
-Website लाई आकर्षक बनाउन image र button पनि राख्न
-सकिन्छ।
-</p>
-
-<div class="code-title">
-Image
-</div>
-
-<div class="code-box">
 &lt;img
 src="photo.jpg"
 alt="My Photo"
+&gt;
+</div>
+
+<p>
+यहाँ href ले link कहाँ जाने भन्ने बताउँछ। src ले
+image कहाँबाट आउने भन्ने बताउँछ र alt ले image को
+alternative description दिन्छ।
+</p>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 5
+===================================================== */
+
+{
+title:"HTML Images, Links र Media",
+
+content:`
+
+<h3>Image</h3>
+
+<div class="code">
+&lt;img
+src="image.jpg"
+alt="Beautiful Image"
 width="300"
 &gt;
 </div>
 
-<div class="code-title">
-Button
+<h3>Link</h3>
+
+<div class="code">
+&lt;a href="https://example.com"&gt;
+Visit Website
+&lt;/a&gt;
 </div>
 
-<div class="code-box">
-&lt;button&gt;
-Click Me
-&lt;/button&gt;
+<h3>Video</h3>
+
+<div class="code">
+&lt;video controls width="400"&gt;
+
+&lt;source
+src="video.mp4"
+type="video/mp4"
+&gt;
+
+&lt;/video&gt;
 </div>
 
 <p>
-Image को src attribute मा image को location राखिन्छ।
-alt attribute accessibility र image load नभएको
-अवस्थामा उपयोगी हुन्छ।
+यसरी HTML बाट website मा text मात्र होइन, image,
+video र अन्य media पनि राख्न सकिन्छ।
 </p>
 
 `
@@ -835,85 +816,141 @@ alt attribute accessibility र image load नभएको
 
 
 /* =====================================================
-   CHAPTER 5
+   CLASS 6
 ===================================================== */
 
 {
-title:"HTML मा List र Table",
+title:"HTML Lists, Tables र Forms",
 
-story:`
+content:`
 
-<p>
-Website मा items को list बनाउन ul र ol प्रयोग गर्न
-सकिन्छ। Data देखाउन table प्रयोग गर्न सकिन्छ।
-</p>
+<h3>List</h3>
 
-<div class="code-title">
-List Example
-</div>
-
-<div class="code-box">
+<div class="code">
 &lt;ul&gt;
 
-    &lt;li&gt;HTML&lt;/li&gt;
-    &lt;li&gt;CSS&lt;/li&gt;
-    &lt;li&gt;JavaScript&lt;/li&gt;
+&lt;li&gt;HTML&lt;/li&gt;
+&lt;li&gt;CSS&lt;/li&gt;
+&lt;li&gt;JavaScript&lt;/li&gt;
 
 &lt;/ul&gt;
 </div>
 
-<div class="code-title">
-Table Example
-</div>
+<h3>Table</h3>
 
-<div class="code-box">
+<div class="code">
 &lt;table border="1"&gt;
 
 &lt;tr&gt;
-    &lt;th&gt;Name&lt;/th&gt;
-    &lt;th&gt;Age&lt;/th&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Age&lt;/th&gt;
 &lt;/tr&gt;
 
 &lt;tr&gt;
-    &lt;td&gt;Ram&lt;/td&gt;
-    &lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;Ram&lt;/td&gt;
+&lt;td&gt;20&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;/table&gt;
 </div>
 
+<h3>Form</h3>
+
+<div class="code">
+&lt;form&gt;
+
+&lt;input
+type="text"
+placeholder="Your Name"
+&gt;
+
+&lt;input
+type="email"
+placeholder="Your Email"
+&gt;
+
+&lt;button&gt;
+Submit
+&lt;/button&gt;
+
+&lt;/form&gt;
+</div>
+
 `
 },
 
 
 /* =====================================================
-   CHAPTER 6
+   CLASS 7
+===================================================== */
+
+{
+title:"HTML Page Structure र Semantic HTML",
+
+content:`
+
+<p>
+ठूलो website मा HTML लाई व्यवस्थित राख्नु महत्वपूर्ण हुन्छ।
+त्यसका लागि header, nav, main, section, article र footer
+जस्ता semantic elements प्रयोग गर्न सकिन्छ।
+</p>
+
+<div class="code">
+&lt;header&gt;
+Website Header
+&lt;/header&gt;
+
+&lt;nav&gt;
+Navigation Menu
+&lt;/nav&gt;
+
+&lt;main&gt;
+
+&lt;section&gt;
+Main Content
+&lt;/section&gt;
+
+&lt;/main&gt;
+
+&lt;footer&gt;
+Copyright
+&lt;/footer&gt;
+</div>
+
+<div class="tip">
+Semantic HTML प्रयोग गर्दा code बुझ्न सजिलो हुन्छ र
+website को structure पनि राम्रो हुन्छ।
+</div>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 8
 ===================================================== */
 
 {
 title:"CSS के हो?",
 
-story:`
+content:`
 
 <p>
 CSS को पूरा नाम Cascading Style Sheets हो। HTML ले
-website को structure बनाउँछ भने CSS ले त्यसलाई
-सुन्दर बनाउँछ।
+website को structure बनाएपछि CSS ले त्यसलाई सुन्दर
+र व्यवस्थित बनाउँछ।
 </p>
 
-<p>
-CSS बाट color, font, size, spacing, border, animation,
-layout र responsive design बनाउन सकिन्छ।
-</p>
-
-<div class="code-title">
-Basic CSS
+<div class="info">
+CSS बाट Color, Font, Size, Spacing, Layout,
+Animation र Responsive Design बनाउन सकिन्छ।
 </div>
 
-<div class="code-box">
+<div class="code">
 body{
 
-    background:#111;
+    background:black;
+
     color:white;
 
 }
@@ -921,14 +958,53 @@ body{
 h1{
 
     color:orange;
+
     text-align:center;
 
 }
 </div>
 
+`
+},
+
+
+/* =====================================================
+   CLASS 9
+===================================================== */
+
+{
+title:"CSS Selectors",
+
+content:`
+
 <p>
-CSS लाई HTML मा तीन तरिकाले प्रयोग गर्न सकिन्छ:
-Inline CSS, Internal CSS र External CSS।
+CSS selector ले कुन HTML element मा style लागू गर्ने
+भन्ने निर्धारण गर्छ।
+</p>
+
+<div class="code">
+/* Element selector */
+
+p{
+    color:blue;
+}
+
+/* Class selector */
+
+.card{
+    padding:20px;
+}
+
+/* ID selector */
+
+#title{
+    font-size:40px;
+}
+</div>
+
+<p>
+Class धेरै elements मा प्रयोग गर्न सकिन्छ। ID सामान्यतया
+विशेष एउटा element का लागि प्रयोग गरिन्छ।
 </p>
 
 `
@@ -936,25 +1012,169 @@ Inline CSS, Internal CSS र External CSS।
 
 
 /* =====================================================
-   CHAPTER 7
+   CLASS 10
 ===================================================== */
 
 {
-title:"CSS Layout र Flexbox",
+title:"CSS Color, Font र Text",
 
-story:`
+content:`
 
-<p>
-Modern website बनाउन CSS Flexbox अत्यन्त उपयोगी हुन्छ।
-यसले elements लाई row वा column मा सजिलै मिलाउन
-सहयोग गर्छ।
-</p>
+<div class="code">
+body{
 
-<div class="code-title">
-Flexbox Example
+    font-family:Arial;
+
+    color:#222;
+
+}
+
+h1{
+
+    font-size:45px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+}
+
+p{
+
+    line-height:1.8;
+
+}
 </div>
 
-<div class="code-box">
+<p>
+CSS बाट text को आकार, font, weight, alignment,
+line spacing र color नियन्त्रण गर्न सकिन्छ।
+</p>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 11
+===================================================== */
+
+{
+title:"CSS Box Model",
+
+content:`
+
+<p>
+CSS Box Model web design को अत्यन्त महत्वपूर्ण concept हो।
+हरेक HTML element लाई एउटा box जस्तै सम्झन सकिन्छ।
+</p>
+
+<div class="info">
+
+Content → Padding → Border → Margin
+
+</div>
+
+<div class="code">
+.card{
+
+    width:300px;
+
+    padding:20px;
+
+    border:2px solid blue;
+
+    margin:30px;
+
+}
+</div>
+
+<p>
+Padding content र border बीचको दूरी हो। Border ले
+element को सीमा देखाउँछ र margin ले बाहिरी दूरी
+निर्धारण गर्छ।
+</p>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 12
+===================================================== */
+
+{
+title:"CSS Display र Position",
+
+content:`
+
+<p>
+CSS display property ले element कसरी देखिने र layout मा
+कसरी बस्ने भन्ने नियन्त्रण गर्छ।
+</p>
+
+<div class="code">
+.box{
+
+    display:block;
+
+}
+
+.menu{
+
+    display:flex;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+</div>
+
+<p>
+Position property प्रयोग गरेर element लाई विशेष स्थानमा
+राख्न सकिन्छ।
+</p>
+
+<div class="code">
+.box{
+
+    position:relative;
+
+}
+
+.popup{
+
+    position:absolute;
+
+    top:20px;
+
+    right:20px;
+
+}
+</div>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 13
+===================================================== */
+
+{
+title:"CSS Flexbox",
+
+content:`
+
+<p>
+Flexbox modern website layout बनाउन अत्यन्त उपयोगी CSS
+system हो।
+</p>
+
+<div class="code">
 .container{
 
     display:flex;
@@ -969,9 +1189,8 @@ Flexbox Example
 </div>
 
 <p>
-justify-content ले horizontal arrangement नियन्त्रण गर्छ।
-align-items ले vertical alignment नियन्त्रण गर्छ।
-gap ले elements बीचको दूरी नियन्त्रण गर्छ।
+Flexbox बाट menu, cards, buttons, navigation र धेरै
+layout सजिलै बनाउन सकिन्छ।
 </p>
 
 `
@@ -979,51 +1198,76 @@ gap ले elements बीचको दूरी नियन्त्रण ग
 
 
 /* =====================================================
-   CHAPTER 8
+   CLASS 14
 ===================================================== */
 
 {
-title:"Responsive Website बनाउने",
+title:"CSS Grid",
 
-story:`
+content:`
 
 <p>
-आजकल website mobile, tablet र computer सबैमा राम्रो
-देखिनुपर्छ। यस्तो design लाई responsive design भनिन्छ।
+CSS Grid दुई-dimensional layout बनाउन प्रयोग हुन्छ।
+विशेष गरी cards र gallery जस्ता design मा Grid धेरै
+उपयोगी हुन्छ।
 </p>
 
-<div class="code-title">
-Media Query
-</div>
+<div class="code">
+.cards{
 
-<div class="code-box">
-@media(max-width:600px){
+    display:grid;
 
-    h1{
-        font-size:30px;
-    }
+    grid-template-columns:
+    repeat(3,1fr);
 
-    .container{
-        flex-direction:column;
-    }
+    gap:20px;
 
 }
 </div>
 
 <p>
-यसले screen सानो हुँदा website को design परिवर्तन
-गर्न सक्छ।
+यसरी एउटै row मा धेरै cards राख्न सकिन्छ।
 </p>
 
-<div class="info">
+`
+},
 
-📱 Mobile<br>
-💻 Desktop<br>
-📟 Tablet
 
-तीनै प्रकारका device का लागि responsive design
-बनाउनु राम्रो practice हो।
+/* =====================================================
+   CLASS 15
+===================================================== */
 
+{
+title:"Responsive Website",
+
+content:`
+
+<p>
+Website computer मा मात्र होइन mobile र tablet मा पनि
+राम्रो देखिनुपर्छ। यसलाई responsive design भनिन्छ।
+</p>
+
+<div class="code">
+@media(max-width:600px){
+
+    .cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+    h1{
+
+        font-size:30px;
+
+    }
+
+}
+</div>
+
+<div class="tip">
+Website बनाउँदा सधैं Mobile + Tablet + Desktop मा
+test गर्नुहोस्।
 </div>
 
 `
@@ -1031,26 +1275,84 @@ Media Query
 
 
 /* =====================================================
-   CHAPTER 9
+   CLASS 16
 ===================================================== */
 
 {
-title:"JavaScript को सुरुवात",
+title:"CSS Transition, Transform र Animation",
 
-story:`
+content:`
 
 <p>
-JavaScript website लाई interactive बनाउने programming
-language हो। Button click गर्दा message देखाउने,
-quiz चलाउने, game बनाउने, calculator चलाउने आदि
-काम JavaScript बाट गर्न सकिन्छ।
+CSS animation ले website लाई जीवित जस्तो देखाउन सक्छ।
 </p>
 
-<div class="code-title">
-First JavaScript
+<div class="code">
+button{
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    transform:
+    translateY(-5px);
+
+}
 </div>
 
-<div class="code-box">
+<p>
+CSS keyframes प्रयोग गरेर अझ advanced animation पनि
+बनाउन सकिन्छ।
+</p>
+
+<div class="code">
+@keyframes move{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(100px);
+    }
+
+}
+
+.box{
+
+    animation:
+    move 2s infinite alternate;
+
+}
+</div>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 17
+===================================================== */
+
+{
+title:"JavaScript के हो?",
+
+content:`
+
+<p>
+JavaScript website लाई interactive र dynamic बनाउन
+प्रयोग गरिने programming language हो।
+</p>
+
+<p>
+Button click गर्दा message देखाउने, quiz चलाउने,
+calculator बनाउने, game बनाउने, menu खोल्ने र data
+change गर्ने जस्ता काम JavaScript बाट गर्न सकिन्छ।
+</p>
+
+<div class="code">
 &lt;script&gt;
 
 alert("Hello World!");
@@ -1058,89 +1360,89 @@ alert("Hello World!");
 &lt;/script&gt;
 </div>
 
-<p>
-JavaScript लाई HTML document को script element भित्र
-लेख्न सकिन्छ। ठूलो project मा छुट्टै .js file बनाएर
-HTML सँग जोड्नु राम्रो हुन्छ।
-</p>
-
 `
 },
 
 
 /* =====================================================
-   CHAPTER 10
+   CLASS 18
 ===================================================== */
 
 {
-title:"JavaScript Variables",
+title:"JavaScript Variables र Data Types",
 
-story:`
+content:`
 
-<p>
-Variable भनेको data राख्ने container जस्तै हो।
-JavaScript मा आधुनिक code लेख्दा let र const धेरै
-प्रयोग गरिन्छ।
-</p>
-
-<div class="code-title">
-Variables
-</div>
-
-<div class="code-box">
-let name = "Roshan";
+<div class="code">
+let name = "Ram";
 
 let age = 20;
 
+let isStudent = true;
+
 const country = "Nepal";
-
-console.log(name);
-
-console.log(age);
-
-console.log(country);
 </div>
 
 <p>
-let को value पछि परिवर्तन गर्न सकिन्छ। const को value
-सामान्यतया पुनः assign गरिँदैन।
+String, Number र Boolean JavaScript का आधारभूत data
+types हुन्। Array र Object पनि धेरै महत्वपूर्ण छन्।
 </p>
+
+<div class="code">
+let fruits = [
+    "Apple",
+    "Mango",
+    "Banana"
+];
+
+let student = {
+
+    name:"Ram",
+
+    age:20
+
+};
+</div>
 
 `
 },
 
 
 /* =====================================================
-   CHAPTER 11
+   CLASS 19
 ===================================================== */
 
 {
-title:"JavaScript Function",
+title:"JavaScript Operators र Conditions",
 
-story:`
+content:`
 
 <p>
-Function भनेको कुनै काम गर्नका लागि बनाइएको reusable
-code block हो।
+Condition प्रयोग गरेर program ले विभिन्न अवस्था अनुसार
+अलग-अलग काम गर्न सक्छ।
 </p>
 
-<div class="code-title">
-Function Example
-</div>
+<div class="code">
+let age = 20;
 
-<div class="code-box">
-function greet(){
+if(age >= 18){
 
-    alert("Welcome!");
+    console.log(
+    "You are an adult"
+    );
+
+}else{
+
+    console.log(
+    "You are under 18"
+    );
 
 }
-
-greet();
 </div>
 
 <p>
-Function लाई धेरै पटक call गर्न सकिन्छ। यसले code
-repeat गर्नुपर्ने आवश्यकता घटाउँछ।
+यस्ता condition हरू quiz, login, game, calculator र
+धेरै प्रकारका website मा प्रयोग हुन्छन्।
 </p>
 
 `
@@ -1148,41 +1450,329 @@ repeat गर्नुपर्ने आवश्यकता घटाउँ�
 
 
 /* =====================================================
-   CHAPTER 12
+   CLASS 20
+===================================================== */
+
+{
+title:"JavaScript Loops",
+
+content:`
+
+<p>
+एउटै काम धेरै पटक गर्नुपर्दा loop प्रयोग गरिन्छ।
+</p>
+
+<div class="code">
+for(
+    let i=1;
+    i<=10;
+    i++
+){
+
+    console.log(i);
+
+}
+</div>
+
+<p>
+Loop प्रयोग गरेर list, table, quiz questions र game
+elements automatically generate गर्न सकिन्छ।
+</p>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 21
+===================================================== */
+
+{
+title:"JavaScript Functions",
+
+content:`
+
+<p>
+Function भनेको कुनै विशेष काम गर्ने reusable code block हो।
+</p>
+
+<div class="code">
+function greet(name){
+
+    return
+    "Hello " + name;
+
+}
+
+console.log(
+    greet("Ram")
+);
+</div>
+
+<p>
+Function प्रयोग गर्दा एउटै code बारम्बार लेख्नु पर्दैन।
+</p>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 22
+===================================================== */
+
+{
+title:"JavaScript DOM",
+
+content:`
+
+<p>
+DOM अर्थात Document Object Model ले JavaScript बाट
+HTML elements लाई control गर्न अनुमति दिन्छ।
+</p>
+
+<div class="code">
+&lt;h1 id="title"&gt;
+Hello
+&lt;/h1&gt;
+
+&lt;script&gt;
+
+document
+.getElementById("title")
+.textContent =
+"New Title";
+
+&lt;/script&gt;
+</div>
+
+<p>
+यसरी JavaScript बाट webpage को content change गर्न
+सकिन्छ।
+</p>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 23
 ===================================================== */
 
 {
 title:"JavaScript Events",
 
-story:`
+content:`
 
 <p>
-User ले website मा गर्ने action लाई event भनिन्छ।
-जस्तै click, typing, mouse movement आदि।
+User ले गर्ने action लाई event भनिन्छ। जस्तै click,
+typing, submit र mouse movement।
 </p>
 
-<div class="code-title">
-Button Event
-</div>
+<div class="code">
+&lt;button
+onclick="hello()"&gt;
 
-<div class="code-box">
-&lt;button onclick="sayHello()"&gt;
 Click Me
+
 &lt;/button&gt;
 
 &lt;script&gt;
 
-function sayHello(){
+function hello(){
 
-    alert("Hello!");
+    alert(
+    "Button clicked!"
+    );
 
 }
 
 &lt;/script&gt;
 </div>
 
+`
+},
+
+
+/* =====================================================
+   CLASS 24
+===================================================== */
+
+{
+title:"JavaScript Array र Objects",
+
+content:`
+
 <p>
-यसरी JavaScript प्रयोग गरेर website लाई interactive
+धेरै data एकै ठाउँमा राख्न Array उपयोगी हुन्छ।
+</p>
+
+<div class="code">
+let students = [
+
+    "Ram",
+    "Shyam",
+    "Hari",
+    "Sita"
+
+];
+
+console.log(
+    students[0]
+);
+</div>
+
+<p>
+Related information राख्न Object उपयोगी हुन्छ।
+</p>
+
+<div class="code">
+let user = {
+
+    name:"Ram",
+
+    age:20,
+
+    country:"Nepal"
+
+};
+</div>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 25
+===================================================== */
+
+{
+title:"HTML + CSS + JavaScript जोड्ने",
+
+content:`
+
+<p>
+अब तीनवटा technology लाई एउटा project मा जोडौँ।
+सामान्य website project मा तीनवटा file राख्न सकिन्छ।
+</p>
+
+<div class="code">
+my-website/
+
+├── index.html
+├── style.css
+└── script.js
+</div>
+
+<h3>HTML</h3>
+
+<div class="code">
+&lt;link
+rel="stylesheet"
+href="style.css"
+&gt;
+
+&lt;script
+src="script.js"
+defer&gt;
+&lt;/script&gt;
+</div>
+
+<p>
+HTML structure हो, CSS design हो र JavaScript website
+को functionality हो।
+</p>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 26
+===================================================== */
+
+{
+title:"पहिलो Website Project",
+
+content:`
+
+<p>
+अब एउटा सानो personal website बनाउने योजना बनाउनुहोस्।
+पहिले content को structure तयार गर्नुहोस्।
+</p>
+
+<div class="roadmap">
+
+<div class="step">
+<b>Step 1</b>
+Website को नाम छान्नुहोस्।
+</div>
+
+<div class="step">
+<b>Step 2</b>
+Home section बनाउनुहोस्।
+</div>
+
+<div class="step">
+<b>Step 3</b>
+About section बनाउनुहोस्।
+</div>
+
+<div class="step">
+<b>Step 4</b>
+Services वा Projects राख्नुहोस्।
+</div>
+
+<div class="step">
+<b>Step 5</b>
+Contact section बनाउनुहोस्।
+</div>
+
+<div class="step">
+<b>Step 6</b>
+CSS बाट design गर्नुहोस्।
+</div>
+
+</div>
+
+`
+},
+
+
+/* =====================================================
+   CLASS 27
+===================================================== */
+
+{
+title:"Website मा Navigation Menu बनाउने",
+
+content:`
+
+<p>
+ठूलो website मा एक page बाट अर्को page वा section मा
+जान navigation menu आवश्यक हुन्छ।
+</p>
+
+<div class="code">
+&lt;nav&gt;
+
+&lt;a href="index.html"&gt;
+Home
+&lt;/a&gt;
+
+&lt;a href="about.html"&gt;
+About
+&lt;/a&gt;
+
+&lt;a href="contact.html"&gt;
+Contact
+&lt;/a&gt;
+
+&lt;/nav&gt;
+</div>
+
+<p>
+CSS Flexbox प्रयोग गरेर navigation लाई professional
 बनाउन सकिन्छ।
 </p>
 
@@ -1191,200 +1781,41 @@ function sayHello(){
 
 
 /* =====================================================
-   CHAPTER 13
+   CLASS 28
 ===================================================== */
 
 {
-title:"HTML + CSS + JavaScript जोड्ने",
+title:"Website मा Quiz र Game कसरी बनाउने?",
 
-story:`
-
-<p>
-अब तीनवटा technology लाई एउटै project मा जोडौँ।
-सामान्य project मा तीनवटा file राख्न सकिन्छ।
-</p>
-
-<div class="code-title">
-Folder Structure
-</div>
-
-<div class="code-box">
-my-website/
-
-    index.html
-
-    style.css
-
-    script.js
-</div>
-
-<div class="code-title">
-index.html
-</div>
-
-<div class="code-box">
-&lt;link
-rel="stylesheet"
-href="style.css"
-&gt;
-
-&lt;script
-src="script.js"
-defer
-&gt;&lt;/script&gt;
-</div>
+content:`
 
 <p>
-HTML structure तयार गर्छ, CSS design गर्छ र JavaScript
-functionality थप्छ।
+HTML बाट question र buttons बनाउने, CSS बाट game को
+design बनाउने र JavaScript बाट score तथा game logic
+control गर्ने हो।
 </p>
 
-`
-},
+<div class="code">
+let answer = "Kathmandu";
 
+if(
+    userAnswer === answer
+){
 
-/* =====================================================
-   CHAPTER 14
-===================================================== */
-
-{
-title:"पहिलो Complete Website",
-
-story:`
-
-<p>
-अब HTML, CSS र JavaScript प्रयोग गरेर एउटा सानो
-complete website बनाउने तरिका हेरौँ।
-</p>
-
-<div class="code-title">
-HTML
-</div>
-
-<div class="code-box">
-&lt;h1 id="title"&gt;
-My Website
-&lt;/h1&gt;
-
-&lt;button onclick="changeTitle()"&gt;
-Change Title
-&lt;/button&gt;
-</div>
-
-<div class="code-title">
-CSS
-</div>
-
-<div class="code-box">
-body{
-
-    text-align:center;
-    padding:50px;
-    background:#111;
-    color:white;
-
-}
-
-button{
-
-    padding:15px 25px;
-    border-radius:20px;
+    score++;
 
 }
 </div>
 
-<div class="code-title">
-JavaScript
-</div>
-
-<div class="code-box">
-function changeTitle(){
-
-    document
-    .getElementById("title")
-    .textContent =
-    "Website Updated!";
-
-}
-</div>
-
-`
-},
-
-
-/* =====================================================
-   CHAPTER 15
-===================================================== */
-
-{
-title:"Website कसरी बनाउने? Complete Process",
-
-story:`
-
 <p>
-अब तपाईंले आफ्नै website बनाउन सुरु गर्न सक्नुहुन्छ।
-सबैभन्दा पहिले website को उद्देश्य निर्धारण गर्नुहोस्।
-</p>
-
-<ul>
-
-<li>
-Website केका लागि हो भनेर निर्णय गर्नुहोस्।
-</li>
-
-<li>
-Pages को structure तयार गर्नुहोस्।
-</li>
-
-<li>
-HTML बाट structure बनाउनुहोस्।
-</li>
-
-<li>
-CSS बाट design गर्नुहोस्।
-</li>
-
-<li>
-JavaScript बाट interactive features थप्नुहोस्।
-</li>
-
-<li>
-Mobile responsive बनाउनुहोस्।
-</li>
-
-<li>
-Browser मा testing गर्नुहोस्।
-</li>
-
-<li>
-Error भेटिएमा fix गर्नुहोस्।
-</li>
-
-<li>
-Website hosting मा upload गर्नुहोस्।
-</li>
-
-</ul>
-
-<p>
-उदाहरणका लागि तपाईं Games, Books र GK website बनाउन
-चाहनुहुन्छ भने homepage मा तीनवटा मुख्य section राख्न
-सक्नुहुन्छ।
+यही आधार प्रयोग गरेर GK Quiz, Math Quiz, Memory Game,
+Snake Game जस्ता project बनाउन सकिन्छ।
 </p>
 
 <div class="info">
-
-<b>Example Website:</b>
-
-<br><br>
-
-🏠 Home<br>
-🎮 Games<br>
-📚 Books<br>
-🧠 GK Quiz<br>
-💻 Coding Tutorials<br>
-📞 Contact
-
+HTML → Game Screen<br>
+CSS → Game Design<br>
+JavaScript → Game Logic
 </div>
 
 `
@@ -1392,142 +1823,39 @@ Website hosting मा upload गर्नुहोस्।
 
 
 /* =====================================================
-   CHAPTER 16
+   CLASS 29
 ===================================================== */
 
 {
-title:"Live Coding Playground",
+title:"Website Testing र Error Fix गर्ने",
 
-story:`
-
-<p>
-अब तपाईंले यस पुस्तकभित्रै code लेखेर तुरुन्त result
-हेर्न सक्नुहुन्छ। तलको editor मा HTML code लेख्नुहोस्
-र Run Code थिच्नुहोस्।
-</p>
-
-<div class="playground">
-
-<h3>
-💻 Try Coding Yourself
-</h3>
-
-<textarea
-class="editor"
-id="codeEditor"><h1>Hello World!</h1>
+content:`
 
 <p>
-This is my first website.
-</p>
-
-<button onclick="alert('Hello!')">
-Click Me
-</button></textarea>
-
-<button
-class="run-button"
-onclick="runCode()">
-
-▶ Run Code
-
-</button>
-
-<iframe
-class="preview"
-id="preview">
-</iframe>
-
-</div>
-
-`
-},
-
-
-/* =====================================================
-   CHAPTER 17
-===================================================== */
-
-{
-title:"Beginner Project — Personal Profile",
-
-story:`
-
-<p>
-HTML, CSS र JavaScript सिकेपछि सानो project बनाएर
-practice गर्नुहोस्। Personal profile website राम्रो
-beginner project हो।
-</p>
-
-<div class="code-title">
-Project Idea
-</div>
-
-<div class="code-box">
-My Profile
-
-Name
-About Me
-My Skills
-My Projects
-Contact
-
-HTML
-CSS
-JavaScript
-</div>
-
-<p>
-Project बनाउँदा code आफैं लेख्ने प्रयास गर्नुहोस्।
-पहिले simple design बनाउनुहोस् र पछि animation,
-dark mode, contact form र अन्य features थप्दै जानुहोस्।
-</p>
-
-`
-},
-
-
-/* =====================================================
-   CHAPTER 18
-===================================================== */
-
-{
-title:"Website लाई अझ राम्रो बनाउने",
-
-story:`
-
-<p>
-Website तयार भएपछि त्यसमा विभिन्न features थपेर
-अझ professional बनाउन सकिन्छ।
+Website बनाएपछि तुरुन्त publish गर्नु हुँदैन। पहिले
+सबै feature test गर्नुपर्छ।
 </p>
 
 <ul>
 
-<li>Dark / Light Mode</li>
+<li>सबै button चल्छ कि चल्दैन?</li>
 
-<li>Search System</li>
+<li>Link सही ठाउँमा जान्छ?</li>
 
-<li>Animated Buttons</li>
+<li>Mobile मा design बिग्रिएको छ?</li>
 
-<li>Responsive Navigation</li>
+<li>Image load हुन्छ?</li>
 
-<li>Login System</li>
+<li>JavaScript error आएको छ?</li>
 
-<li>Quiz System</li>
-
-<li>Game Section</li>
-
-<li>Book Reader</li>
-
-<li>Contact Form</li>
-
-<li>Loading Animation</li>
+<li>Text पढ्न सजिलो छ?</li>
 
 </ul>
 
 <p>
-तर धेरै features एकैचोटि थप्नुभन्दा पहिले basic
-website राम्रोसँग काम गरिरहेको छ कि छैन भनेर
-testing गर्नु आवश्यक हुन्छ।
+Browser को Developer Tools खोलेर JavaScript को error
+हेर्न सकिन्छ। Error पढेर line number हेर्नुहोस् र
+समस्या भएको code सुधार्नुहोस्।
 </p>
 
 `
@@ -1535,101 +1863,304 @@ testing गर्नु आवश्यक हुन्छ।
 
 
 /* =====================================================
-   CHAPTER 19
+   CLASS 30
 ===================================================== */
 
 {
-title:"Coding सिक्ने सही तरिका",
+title:"Final Class — अब आफ्नै Website बनाउनुहोस्",
 
-story:`
-
-<p>
-Coding सिक्दा code copy गरेर मात्र राख्नु भन्दा
-त्यो code किन काम गर्छ भनेर बुझ्नु महत्वपूर्ण हुन्छ।
-</p>
-
-<ul>
-
-<li>
-हरेक दिन केही समय coding practice गर्नुहोस्।
-</li>
-
-<li>
-सानो project बनाउनुहोस्।
-</li>
-
-<li>
-Error आउँदा error message पढ्नुहोस्।
-</li>
-
-<li>
-HTML, CSS र JavaScript लाई सँगै practice गर्नुहोस्।
-</li>
-
-<li>
-आफ्नो पुरानो project फेरि सुधार गर्नुहोस्।
-</li>
-
-</ul>
+content:`
 
 <p>
-पहिलो website perfect नहुन सक्छ। तर लगातार practice
-गर्दै जाँदा तपाईं आफैंले complete website बनाउन
-सक्ने अवस्थामा पुग्नुहुन्छ।
-</p>
-
-`
-},
-
-
-/* =====================================================
-   CHAPTER 20
-===================================================== */
-
-{
-title:"Final Project — आफ्नो Website बनाउनुहोस्",
-
-story:`
-
-<p>
-अब तपाईंले आफ्नो पहिलो complete website बनाउन सुरु
-गर्न सक्नुहुन्छ। एउटा folder बनाएर त्यसमा तीनवटा
-मुख्य file राख्नुहोस्।
-</p>
-
-<div class="code-box">
-MyWebsite/
-
-    index.html
-
-    style.css
-
-    script.js
-</div>
-
-<p>
-index.html मा website को structure बनाउनुहोस्।
-style.css मा design बनाउनुहोस्। script.js मा
-interactive functionality लेख्नुहोस्।
-</p>
-
-<p>
-त्यसपछि आफ्नो website लाई browser मा खोल्नुहोस्,
-mobile मा पनि test गर्नुहोस् र आवश्यक सुधार गर्नुहोस्।
+अब तपाईंले HTML, CSS र JavaScript का आधारभूत कुरा
+बुझिसक्नुभएको छ। अब सबै knowledge जोडेर आफ्नै
+complete website बनाउनुपर्ने समय हो।
 </p>
 
 <div class="quote">
 
-HTML सिक्नुहोस् → CSS सिक्नुहोस् →
-JavaScript सिक्नुहोस् → Project बनाउनुहोस् →
-आफ्नै Website तयार गर्नुहोस् 🚀
+Learn → Practice → Build → Test → Improve → Publish 🚀
 
 </div>
 
 <p>
-यसरी तपाईं basic HTML बाट सुरु गरेर बिस्तारै
-professional website र web application development
-तर्फ जान सक्नुहुन्छ।
+सबैभन्दा पहिले website को उद्देश्य निर्धारण गर्नुहोस्।
+उदाहरणका लागि Games, Books र GK website बनाउने हो
+भने Home, Games, Books र GK Quiz जस्ता section
+तयार गर्न सकिन्छ।
+</p>
+
+<h3>Recommended Folder</h3>
+
+<div class="code">
+MyWebsite/
+
+├── index.html
+
+├── style.css
+
+├── script.js
+
+├── images/
+
+├── games/
+
+└── books/
+</div>
+
+<p>
+पहिले एउटा simple version तयार गर्नुहोस्। त्यसपछि
+बिस्तारै features थप्दै जानुहोस्।
+</p>
+
+`
+},
+
+
+/* =====================================================
+   FINAL SPECIAL CLASS
+===================================================== */
+
+{
+title:"🌐 अन्तिम पाठ — कहाँ र कसरी Website बनाउने?",
+
+content:`
+
+<p>
+अब सबैभन्दा महत्वपूर्ण कुरा—तपाईंले website कहाँ
+बनाउने, कसरी बनाउने र Internet मा कसरी राख्ने?
+</p>
+
+<h3>1. Computer मा Website बनाउने</h3>
+
+<p>
+सबैभन्दा सजिलो तरिका computer मा एउटा folder बनाएर
+HTML, CSS र JavaScript file तयार गर्नु हो।
+</p>
+
+<div class="roadmap">
+
+<div class="step">
+<b>Step 1</b>
+Computer मा नयाँ folder बनाउनुहोस्।
+</div>
+
+<div class="step">
+<b>Step 2</b>
+त्यसमा index.html बनाउनुहोस्।
+</div>
+
+<div class="step">
+<b>Step 3</b>
+style.css बनाउनुहोस्।
+</div>
+
+<div class="step">
+<b>Step 4</b>
+script.js बनाउनुहोस्।
+</div>
+
+<div class="step">
+<b>Step 5</b>
+HTML मा CSS र JavaScript जोड्नुहोस्।
+</div>
+
+<div class="step">
+<b>Step 6</b>
+Browser मा index.html खोल्नुहोस्।
+</div>
+
+</div>
+
+<h3>2. Code लेख्ने ठाउँ</h3>
+
+<p>
+Code लेख्न Visual Studio Code जस्ता code editor प्रयोग
+गर्न सकिन्छ। Beginner का लागि यो निकै उपयोगी हुन्छ।
+</p>
+
+<p>
+यदि computer मा software install गर्न चाहनुहुन्न भने
+browser बाटै online coding environment प्रयोग गरेर
+HTML, CSS र JavaScript practice गर्न सकिन्छ।
+</p>
+
+<h3>3. Website कसरी तयार गर्ने?</h3>
+
+<p>
+पहिले website को उद्देश्य र pages को योजना बनाउनुहोस्।
+त्यसपछि HTML बाट structure बनाउनुहोस्। CSS बाट
+design गर्नुहोस्। JavaScript बाट आवश्यक interaction
+थप्नुहोस्।
+</p>
+
+<div class="code">
+Idea
+   ↓
+Plan
+   ↓
+HTML
+   ↓
+CSS
+   ↓
+JavaScript
+   ↓
+Testing
+   ↓
+Mobile Responsive
+   ↓
+Final Website
+</div>
+
+<h3>4. Website Internet मा कसरी राख्ने?</h3>
+
+<p>
+Website आफ्नो computer मा मात्र हुँदा अरू मानिसले
+Internet बाट हेर्न सक्दैनन्। त्यसका लागि hosting मा
+website का files upload गर्नुपर्छ।
+</p>
+
+<p>
+साधारण static HTML, CSS र JavaScript website का लागि
+static hosting प्रयोग गर्न सकिन्छ। उदाहरणका रूपमा
+GitHub Pages, Cloudflare Pages वा अन्य hosting service
+प्रयोग गर्न सकिन्छ।
+</p>
+
+<div class="warning">
+
+<b>महत्वपूर्ण:</b>
+
+यदि website मा केवल HTML, CSS र JavaScript छ भने
+static hosting पर्याप्त हुन सक्छ। तर login, database,
+online payment वा server-side functionality चाहिन्छ
+भने backend/server र database पनि आवश्यक पर्न सक्छ।
+
+</div>
+
+<h3>5. आफ्नो Domain कसरी राख्ने?</h3>
+
+<p>
+Website को आफ्नै नाम चाहियो भने domain प्रयोग गर्न
+सकिन्छ। उदाहरणका लागि:
+</p>
+
+<div class="code">
+www.example.com
+</div>
+
+<p>
+पहिले domain register गर्ने, त्यसपछि hosting सँग domain
+connect गर्ने र आवश्यक DNS settings मिलाउने प्रक्रिया
+हुन्छ।
+</p>
+
+<h3>6. Website बनाउने पूरा Formula</h3>
+
+<div class="roadmap">
+
+<div class="step">
+<b>01 — Idea</b>
+कस्तो website बनाउने?
+</div>
+
+<div class="step">
+<b>02 — Design</b>
+Website कस्तो देखिने?
+</div>
+
+<div class="step">
+<b>03 — HTML</b>
+Website को structure।
+</div>
+
+<div class="step">
+<b>04 — CSS</b>
+Website को design।
+</div>
+
+<div class="step">
+<b>05 — JavaScript</b>
+Website को functionality।
+</div>
+
+<div class="step">
+<b>06 — Testing</b>
+Error र mobile testing।
+</div>
+
+<div class="step">
+<b>07 — Hosting</b>
+Website Internet मा राख्ने।
+</div>
+
+<div class="step">
+<b>08 — Domain</b>
+आफ्नो website address जोड्ने।
+</div>
+
+</div>
+
+<h3>7. तपाईंको पहिलो ठूलो Project</h3>
+
+<p>
+अब तपाईंले आफ्नो Games + Books + GK website लाई नै
+final project बनाउन सक्नुहुन्छ।
+</p>
+
+<div class="info">
+
+🏠 Home<br><br>
+
+🎮 Games Section<br>
+Snake • Ludo • Puzzle • Racing • Football<br><br>
+
+📚 Books Section<br>
+Children Books • Horror • Love • Mythology • Coding<br><br>
+
+🧠 GK Section<br>
+World GK • Nepal GK • Sports GK • Computer GK<br><br>
+
+💻 Coding Section<br>
+HTML • CSS • JavaScript Tutorials
+
+</div>
+
+<p>
+यस्तो project बनाउँदा पहिले Home page तयार गर्नुहोस्।
+त्यसपछि Games, Books, GK र Coding का लागि अलग-अलग
+sections वा pages बनाउनुहोस्। प्रत्येक section लाई
+HTML, CSS र JavaScript प्रयोग गरेर design गर्नुहोस्।
+</p>
+
+<h3>8. Coding सिक्ने अन्तिम नियम</h3>
+
+<p>
+Coding केवल पढेर सिकिँदैन। पढेको कुरा आफैंले code
+लेखेर practice गर्नुपर्छ। एउटा code बुझिसकेपछि त्यसमा
+आफ्नो परिवर्तन गर्नुहोस्। Error आएमा डराउनु पर्दैन।
+Error नै coding सिक्ने प्रक्रियाको एउटा महत्वपूर्ण भाग हो।
+</p>
+
+<div class="quote">
+
+आज एउटा छोटो code लेख्नुहोस्।<br>
+भोलि एउटा project बनाउनुहोस्।<br>
+बिस्तारै आफ्नै complete website बनाउनुहोस्।<br><br>
+
+<b>Keep Coding • Keep Learning • Keep Building 🚀</b>
+
+</div>
+
+<h3>🎓 Course Complete</h3>
+
+<p>
+अब तपाईंको learning journey HTML बाट सुरु भएर CSS,
+JavaScript, Website Design, Projects, Testing, Hosting
+र Domain सम्म आइपुगेको छ। यही knowledge लाई निरन्तर
+practice गर्दै गएमा तपाईं आफ्नै website मात्र होइन,
+interactive web applications र games समेत बनाउन
+सक्नुहुन्छ।
 </p>
 
 `
@@ -1644,109 +2175,95 @@ professional website र web application development
 
 let current = 0;
 
+const classNumber =
+document.getElementById("classNumber");
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+const classTitle =
+document.getElementById("classTitle");
 
-const title =
-document.getElementById(
-    "chapterTitle"
-);
+const content =
+document.getElementById("content");
 
-const label =
-document.getElementById(
-    "chapterLabel"
-);
-
-const story =
-document.getElementById(
-    "story"
-);
-
-const chapterButtons =
-document.getElementById(
-    "chapterButtons"
-);
+const classButtons =
+document.getElementById("classButtons");
 
 const backBtn =
-document.getElementById(
-    "backBtn"
-);
+document.getElementById("backBtn");
 
 const nextBtn =
-document.getElementById(
-    "nextBtn"
-);
+document.getElementById("nextBtn");
 
 
 /* =====================================================
-   CHAPTER BUTTONS
+   CREATE BUTTONS
 ===================================================== */
 
-chapters.forEach(
-    (chapter,index)=>{
+classes.forEach((item,index)=>{
 
-        const button =
-        document.createElement(
-            "button"
-        );
+    const button =
+    document.createElement("button");
 
-        button.textContent =
-        index + 1;
+    button.textContent =
+    index === classes.length - 1
+    ? "FINAL"
+    : index + 1;
 
-        button.onclick =
-        ()=>loadChapter(index);
+    button.onclick =
+    function(){
 
-        chapterButtons.appendChild(
-            button
-        );
+        loadClass(index);
 
-    }
-);
+    };
+
+    classButtons.appendChild(button);
+
+});
 
 
 /* =====================================================
-   LOAD CHAPTER
+   LOAD CLASS
 ===================================================== */
 
-function loadChapter(index){
+function loadClass(index){
 
     current = index;
 
-    label.textContent =
-        "CHAPTER " + (index + 1);
+    classNumber.textContent =
+    index === classes.length - 1
+    ? "FINAL LESSON"
+    : "CLASS " + (index + 1);
 
-    title.textContent =
-        chapters[index].title;
+    classTitle.textContent =
+    classes[index].title;
 
-    story.innerHTML =
-        chapters[index].story;
+    content.innerHTML =
+    classes[index].content;
 
     document
-        .querySelectorAll(
-            ".chapter-buttons button"
-        )
-        .forEach(
-            (button,i)=>{
+    .querySelectorAll(
+        ".buttons button"
+    )
+    .forEach((button,i)=>{
 
-                button.classList.toggle(
-                    "active",
-                    i === current
-                );
-
-            }
+        button.classList.toggle(
+            "active",
+            i === current
         );
 
+    });
+
     backBtn.disabled =
-        current === 0;
+    current === 0;
 
     nextBtn.disabled =
-        current === chapters.length - 1;
+    current === classes.length - 1;
 
     window.scrollTo({
+
         top:0,
+
         behavior:"smooth"
+
     });
 
 }
@@ -1756,14 +2273,14 @@ function loadChapter(index){
    NEXT
 ===================================================== */
 
-function nextChapter(){
+function nextClass(){
 
     if(
         current <
-        chapters.length - 1
+        classes.length - 1
     ){
 
-        loadChapter(
+        loadClass(
             current + 1
         );
 
@@ -1776,11 +2293,11 @@ function nextChapter(){
    BACK
 ===================================================== */
 
-function previousChapter(){
+function previousClass(){
 
     if(current > 0){
 
-        loadChapter(
+        loadClass(
             current - 1
         );
 
@@ -1796,30 +2313,12 @@ function previousChapter(){
 function goHome(){
 
     window.scrollTo({
+
         top:0,
+
         behavior:"smooth"
+
     });
-
-}
-
-
-/* =====================================================
-   LIVE CODE RUNNER
-===================================================== */
-
-function runCode(){
-
-    const code =
-        document.getElementById(
-            "codeEditor"
-        ).value;
-
-    const preview =
-        document.getElementById(
-            "preview"
-        );
-
-    preview.srcdoc = code;
 
 }
 
@@ -1828,7 +2327,7 @@ function runCode(){
    START
 ===================================================== */
 
-loadChapter(0);
+loadClass(0);
 
 </script>
 
