@@ -1,0 +1,6827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🇳🇵 Ultimate GK Quiz</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    color:#fff;
+    background:
+      radial-gradient(circle at top,#243d68,#050812 65%);
+    padding:20px 10px;
+}
+
+.container{
+    width:100%;
+    max-width:950px;
+    margin:auto;
+}
+
+header{
+    text-align:center;
+    margin-bottom:18px;
+}
+
+h1{
+    font-size:clamp(32px,7vw,58px);
+    color:#00eaff;
+    text-shadow:
+      0 0 12px #00eaff,
+      0 0 30px #00eaff;
+}
+
+header p{
+    color:#abc2d0;
+    margin-top:5px;
+}
+
+/* TOP STATS */
+
+.stats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:14px;
+}
+
+.stat{
+    min-width:100px;
+    padding:9px 13px;
+    text-align:center;
+    border-radius:15px;
+    background:#ffffff0c;
+    border:1px solid #00eaff35;
+}
+
+.stat span{
+    display:block;
+    color:#8fa7b5;
+    font-size:10px;
+}
+
+.stat strong{
+    color:#00eaff;
+    font-size:19px;
+}
+
+/* FILTERS */
+
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-bottom:15px;
+}
+
+select,
+input,
+button{
+    border:0;
+    border-radius:20px;
+    padding:11px 15px;
+    font-weight:bold;
+}
+
+select,
+input{
+    background:#102238;
+    color:white;
+    border:1px solid #00eaff35;
+}
+
+input{
+    width:min(300px,90vw);
+    outline:none;
+}
+
+button{
+    background:#00eaff;
+    color:#001018;
+    cursor:pointer;
+    box-shadow:0 0 13px #00eaff55;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px) scale(1.03);
+}
+
+/* QUIZ CARD */
+
+.quiz-card{
+    padding:25px;
+    border-radius:25px;
+    background:#ffffff09;
+    border:1px solid #00eaff35;
+    box-shadow:
+      0 0 30px #00eaff15,
+      inset 0 0 30px #00eaff08;
+}
+
+.category{
+    display:inline-block;
+    padding:7px 14px;
+    border-radius:20px;
+    background:#00eaff16;
+    color:#00eaff;
+    margin-bottom:15px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.question{
+    font-size:clamp(21px,4vw,32px);
+    line-height:1.35;
+    margin-bottom:20px;
+}
+
+.options{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.option{
+    padding:15px;
+    text-align:left;
+    background:#ffffff09;
+    color:white;
+    border:1px solid #00eaff30;
+    border-radius:15px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    background:#00eaff15;
+    border-color:#00eaff;
+}
+
+.option.correct{
+    background:#087c52;
+    border-color:#38ffc0;
+}
+
+.option.wrong{
+    background:#9b2340;
+    border-color:#ff6d88;
+}
+
+.option:disabled{
+    cursor:not-allowed;
+}
+
+.feedback{
+    min-height:25px;
+    margin-top:15px;
+    color:#bceeff;
+}
+
+/* PROGRESS */
+
+.progress{
+    width:100%;
+    height:8px;
+    margin:20px 0;
+    background:#ffffff12;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#00eaff;
+    box-shadow:0 0 12px #00eaff;
+    transition:.3s;
+}
+
+/* BOTTOM */
+
+.bottom{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:17px;
+}
+
+.difficulty{
+    text-align:center;
+    margin:10px;
+    color:#a8c4d2;
+}
+
+/* START / RESULT */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:100;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    background:#020711e8;
+    backdrop-filter:blur(8px);
+}
+
+.overlay h2{
+    font-size:clamp(35px,8vw,60px);
+    color:#00eaff;
+    text-shadow:0 0 20px #00eaff;
+}
+
+.overlay p{
+    color:#c5dce7;
+    margin:6px;
+}
+
+.overlay button{
+    margin-top:15px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .quiz-card{
+        padding:17px;
+    }
+
+    .stat{
+        min-width:78px;
+    }
+
+    .stat strong{
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>🇳🇵 ULTIMATE GK QUIZ</h1>
+    <p>नेपालदेखि विश्वसम्म — History • Geography • Politics • Sports • Computer</p>
+</header>
+
+<div class="stats">
+
+    <div class="stat">
+        <span>SCORE</span>
+        <strong id="score">0</strong>
+    </div>
+
+    <div class="stat">
+        <span>BEST</span>
+        <strong id="best">0</strong>
+    </div>
+
+    <div class="stat">
+        <span>QUESTION</span>
+        <strong id="number">0/0</strong>
+    </div>
+
+    <div class="stat">
+        <span>TIMER</span>
+        <strong id="timer">20</strong>
+    </div>
+
+    <div class="stat">
+        <span>STREAK</span>
+        <strong id="streak">0</strong>
+    </div>
+
+</div>
+
+<div class="filters">
+
+    <select id="category">
+        <option value="All">🌎 All Categories</option>
+        <option value="Nepal History">🇳🇵 Nepal History</option>
+        <option value="Nepal Geography">🏔️ Nepal Geography</option>
+        <option value="Nepal Politics">🏛️ Nepal Politics</option>
+        <option value="World GK">🌎 World GK</option>
+        <option value="Sports">⚽ Sports</option>
+        <option value="Computer">💻 Computer</option>
+    </select>
+
+    <select id="difficulty">
+        <option value="All">All Levels</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+    </select>
+
+    <input
+        id="search"
+        type="text"
+        placeholder="🔎 Search question..."
+    >
+
+</div>
+
+<div class="quiz-card">
+
+    <div class="category" id="categoryText">
+        Nepal History
+    </div>
+
+    <div class="question" id="question">
+        Question will appear here.
+    </div>
+
+    <div class="options" id="options"></div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <div class="progress">
+        <div class="progress-bar" id="progress"></div>
+    </div>
+
+</div>
+
+<div class="difficulty">
+    Current Level:
+    <b id="level">Easy</b>
+</div>
+
+<div class="bottom">
+
+    <button onclick="previousQuestion()">
+        ◀ Previous
+    </button>
+
+    <button onclick="nextQuestion()">
+        Next ▶
+    </button>
+
+    <button onclick="restartQuiz()">
+        🔄 Restart
+    </button>
+
+</div>
+
+</div>
+
+
+<div class="overlay" id="overlay">
+
+    <h2>🧠 GK QUIZ</h2>
+
+    <p>🇳🇵 Nepal History</p>
+    <p>🏔️ Nepal Geography</p>
+    <p>🏛️ Nepal Politics</p>
+    <p>🌎 World GK</p>
+    <p>⚽ Sports</p>
+    <p>💻 Computer</p>
+
+    <p><b>200+ Questions Included</b></p>
+
+    <button onclick="startQuiz()">
+        ▶ START QUIZ
+    </button>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   QUESTION DATABASE
+   200+ QUESTIONS
+========================================================= */
+
+const questions = [
+
+/* =========================
+   NEPAL HISTORY
+========================= */
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपालको एकीकरण अभियान सुरु गर्ने राजा को हुन्?",
+a:["पृथ्वीनारायण शाह","रणबहादुर शाह","त्रिभुवन","महेन्द्र"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपाल एकीकरणका अभियन्ता भनेर कसलाई चिनिन्छ?",
+a:["पृथ्वीनारायण शाह","बहादुर शाह","जंगबहादुर राणा","महेन्द्र"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपालको राजधानी काठमाडौं कहिलेदेखि रहेको मानिन्छ?",
+a:["प्राचीन कालदेखि","१९५० देखि","२००७ देखि","२०१७ देखि"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"राणा शासनको सुरुवात कसको उदयसँग जोडिन्छ?",
+a:["जंगबहादुर राणा","चन्द्र शमशेर","देव शमशेर","पद्म शमशेर"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपालमा राणा शासन कति वर्ष चलेको थियो?",
+a:["१०४ वर्ष","५० वर्ष","७५ वर्ष","२०० वर्ष"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपालमा प्रजातन्त्र दिवस कहिले मनाइन्छ?",
+a:["फागुन ७","जेठ १५","असोज ३","बैशाख १"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपाल गणतन्त्र घोषणा भएको वर्ष कुन हो?",
+a:["२०६५ BS","२०४६ BS","२००७ BS","२०७२ BS"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपालको पहिलो निर्वाचित प्रधानमन्त्री को हुन्?",
+a:["बी.पी. कोइराला","मातृका प्रसाद कोइराला","टंकप्रसाद आचार्य","कृष्णप्रसाद भट्टराई"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"नेपालमा राणा शासनको अन्त्य कुन सालमा भयो?",
+a:["२००७ BS","२०१७ BS","२०४६ BS","२०६३ BS"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"कोत पर्वपछि शक्तिशाली बनेका व्यक्ति को हुन्?",
+a:["जंगबहादुर राणा","भीमसेन थापा","महेन्द्र","त्रिभुवन"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"नेपालको इतिहासमा भण्डारखाल पर्व कसको शासनकालमा भयो?",
+a:["राजा राजेन्द्र","राजा पृथ्वीनारायण","राजा महेन्द्र","राजा त्रिभुवन"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"नेपालको पहिलो लिखित संविधान कुन हो?",
+a:["नेपाल सरकार वैधानिक कानून २००४","नेपाल अधिराज्यको संविधान २०१५","नेपालको संविधान २०७२","अन्तरिम संविधान"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"नेपालमा बहुदलीय प्रजातन्त्र पुनःस्थापना भएको साल कुन हो?",
+a:["२०४६ BS","२०५१ BS","२०६३ BS","२०६५ BS"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Hard",
+q:"नेपालको अन्तरिम संविधान २०६३ कहिले जारी भयो?",
+a:["२०६३ माघ १","२०६५ जेठ १५","२०७२ असोज ३","२०६२ चैत १"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Hard",
+q:"नेपालमा गणतन्त्र घोषणा गर्ने संविधानसभा बैठक कहिले भयो?",
+a:["२०६५ जेठ १५","२०६३ माघ १","२०६२ वैशाख ११","२०७२ असोज ३"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Hard",
+q:"नेपालको आधुनिक इतिहासमा २००७ सालको क्रान्तिको मुख्य परिणाम के थियो?",
+a:["राणा शासनको अन्त्य","गणतन्त्र स्थापना","संघीयता स्थापना","पञ्चायत स्थापना"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपालका अन्तिम राजा को हुन्?",
+a:["ज्ञानेन्द्र शाह","महेन्द्र","वीरेन्द्र","त्रिभुवन"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपालका पहिलो राजा भनेर परम्परागत रूपमा कसलाई मानिन्छ?",
+a:["गोपाल राजा","पृथ्वीनारायण शाह","अंशुवर्मा","मानदेव"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"लिच्छवि कालका प्रसिद्ध राजा को हुन्?",
+a:["मानदेव","जंगबहादुर","द्रव्य शाह","राम शाह"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"चाँगुनारायणको अभिलेख कुन राजासँग सम्बन्धित छ?",
+a:["मानदेव","अंशुवर्मा","नरेन्द्रदेव","शिवदेव"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"मल्लकालमा काठमाडौं उपत्यका कति राज्यमा विभाजित थियो?",
+a:["तीन","दुई","चार","पाँच"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"काठमाडौं उपत्यकाका तीन मल्ल राज्यमा कुन पर्दैन?",
+a:["पोखरा","काठमाडौं","भक्तपुर","ललितपुर"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"भक्तपुरका प्रसिद्ध मल्ल राजा को हुन्?",
+a:["भूपतीन्द्र मल्ल","प्रताप मल्ल","योगनरेन्द्र मल्ल","जयस्थिति मल्ल"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"जयस्थिति मल्ल कुन क्षेत्रमा सुधारका लागि प्रसिद्ध छन्?",
+a:["सामाजिक तथा प्रशासनिक सुधार","वैज्ञानिक आविष्कार","औद्योगिक विकास","समुद्री व्यापार"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Hard",
+q:"नेपाल र ब्रिटिस भारतबीच सुगौली सन्धि कुन युद्धपछि भयो?",
+a:["नेपाल-अंग्रेज युद्ध","नेपाल-तिब्बत युद्ध","गोरखा युद्ध","भोट युद्ध"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"सगरमाथालाई अंग्रेजीमा के भनिन्छ?",
+a:["Mount Everest","K2","Kangchenjunga","Annapurna"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"नेपालको इतिहासमा भीमसेन थापा कुन पदमा थिए?",
+a:["मुख्तियार","प्रधान न्यायाधीश","राजदूत","सेनापति"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Hard",
+q:"नेपालमा पञ्चायती व्यवस्था कहिले सुरु भयो?",
+a:["२०१७ BS","२००७ BS","२०४६ BS","२०६३ BS"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपालको प्रजातान्त्रिक आन्दोलनमा बी.पी. कोइरालाको प्रमुख भूमिका कुन क्षेत्रमा थियो?",
+a:["राजनीति","खेलकुद","विज्ञान","संगीत"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"नेपालमा २०६२/६३ को जनआन्दोलनको मुख्य उपलब्धि के थियो?",
+a:["लोकतन्त्र पुनःस्थापना","राणा शासन स्थापना","पञ्चायत स्थापना","राजतन्त्र विस्तार"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Easy",
+q:"नेपालको गणतन्त्र दिवस कहिले मनाइन्छ?",
+a:["जेठ १५","फागुन ७","असोज ३","माघ १६"],
+c:0
+},
+
+{
+category:"Nepal History",difficulty:"Medium",
+q:"नेपालको संविधान २०७२ कहिले जारी भयो?",
+a:["असोज ३, २०७२","जेठ १५, २०६५","फागुन ७, २००७","माघ १, २०६३"],
+c:0
+},
+
+/* =========================
+   NEPAL GEOGRAPHY
+========================= */
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको राजधानी कुन हो?",
+a:["काठमाडौं","पोखरा","ललितपुर","भक्तपुर"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको क्षेत्रफल कति हो?",
+a:["147,516 वर्ग किमी","147,181 वर्ग किमी","150,000 वर्ग किमी","140,000 वर्ग किमी"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको सबैभन्दा अग्लो हिमाल कुन हो?",
+a:["सगरमाथा","कञ्चनजङ्घा","धौलागिरी","मनास्लु"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालमा कति प्रदेश छन्?",
+a:["७","५","६","८"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालमा कति जिल्ला छन्?",
+a:["७७","७५","७६","७८"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको सबैभन्दा ठूलो जिल्ला क्षेत्रफलका आधारमा कुन हो?",
+a:["डोल्पा","हुम्ला","मुस्ताङ","ताप्लेजुङ"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको सबैभन्दा सानो जिल्ला क्षेत्रफलका आधारमा कुन हो?",
+a:["भक्तपुर","ललितपुर","काठमाडौं","पर्सा"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको सबैभन्दा लामो नदी कुन हो?",
+a:["कर्णाली","कोशी","गण्डकी","बागमती"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"नेपालको सबैभन्दा ठूलो ताल कुन हो?",
+a:["रारा ताल","फेवा ताल","तिलिचो ताल","बेगनास ताल"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"रारा ताल कुन जिल्लामा पर्छ?",
+a:["मुगु","डोल्पा","हुम्ला","जुम्ला"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"फेवा ताल कुन शहरमा पर्छ?",
+a:["पोखरा","काठमाडौं","धरान","नेपालगञ्ज"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"तिलिचो ताल कुन जिल्लामा पर्छ?",
+a:["मनाङ","मुस्ताङ","गोरखा","कास्की"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको दक्षिणमा कुन देशसँग सीमा जोडिएको छ?",
+a:["भारत","चीन","भुटान","बंगलादेश"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको उत्तरमा कुन देशसँग सीमा जोडिएको छ?",
+a:["चीन","भारत","भुटान","म्यानमार"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"नेपालको भौगोलिक क्षेत्र मुख्यतः कति भागमा विभाजन गरिन्छ?",
+a:["तीन","दुई","चार","पाँच"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"तीन भौगोलिक क्षेत्रमध्ये दक्षिणी क्षेत्र कुन हो?",
+a:["तराई","पहाड","हिमाल","लेकाली"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको सबैभन्दा होचो भूभाग कुन क्षेत्रमा पर्छ?",
+a:["तराई","पहाड","हिमाल","हिमाली उपत्यका"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"कञ्चनजङ्घा हिमाल कुन प्रदेशमा पर्छ?",
+a:["कोशी प्रदेश","गण्डकी प्रदेश","कर्णाली प्रदेश","सुदूरपश्चिम"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"लुम्बिनी कुन जिल्लामा पर्छ?",
+a:["रुपन्देही","कपिलवस्तु","नवलपरासी","पाल्पा"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"जनकपुर कुन प्रदेशमा पर्छ?",
+a:["मधेश प्रदेश","कोशी","बागमती","लुम्बिनी"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"पोखरा कुन प्रदेशमा पर्छ?",
+a:["गण्डकी","बागमती","लुम्बिनी","कोशी"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"धनगढी कुन प्रदेशमा पर्छ?",
+a:["सुदूरपश्चिम","कर्णाली","लुम्बिनी","कोशी"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"नेपालको सबैभन्दा गहिरो ताल भनेर प्रसिद्ध कुन हो?",
+a:["शे-फोक्सुण्डो","रारा","फेवा","बेगनास"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"शे-फोक्सुण्डो ताल कुन जिल्लामा पर्छ?",
+a:["डोल्पा","मुगु","हुम्ला","मनाङ"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Hard",
+q:"नेपालको पूर्व-पश्चिम औसत लम्बाइ लगभग कति छ?",
+a:["८८५ किमी","५०० किमी","१२०० किमी","७५० किमी"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"नेपालको मानक समय कुन देशान्तरलाई आधार मानेर निर्धारण गरिएको छ?",
+a:["८६°१५′ पूर्व","८५° पूर्व","८७° पूर्व","८४° पूर्व"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"काठमाडौं उपत्यकामा कुन तीन प्रमुख शहर छन्?",
+a:["काठमाडौं, ललितपुर, भक्तपुर","पोखरा, काठमाडौं, विराटनगर","धरान, इटहरी, काठमाडौं","नेपालगञ्ज, धनगढी, काठमाडौं"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"कोशी नदीको प्रमुख सहायक नदी कुन हो?",
+a:["अरुण","बागमती","राप्ती","कमला"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"गण्डकी नदी प्रणालीमा कुन नदी पर्छ?",
+a:["कालीगण्डकी","अरुण","कर्णाली","बागमती"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Medium",
+q:"कर्णाली नदी प्रणालीमा प्रसिद्ध नदी कुन हो?",
+a:["भेरी","अरुण","त्रिशूली","तमोर"],
+c:0
+},
+
+{
+category:"Nepal Geography",difficulty:"Easy",
+q:"नेपालको जलवायुमा मुख्य प्रभाव पार्ने मौसमी प्रणाली कुन हो?",
+a:["मनसुन","टाइफुन","हिमआँधी","समुद्री आँधी"],
+c:0
+},
+
+/* =========================
+   NEPAL POLITICS
+========================= */
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको वर्तमान संविधान कुन सालमा जारी भयो?",
+a:["२०७२","२०६३","२०६५","२०४७"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको संविधानमा सार्वभौमसत्ता कसमा निहित छ?",
+a:["नेपाली जनतामा","राष्ट्रपतिमा","प्रधानमन्त्रीमा","संसदमा"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको शासन प्रणाली कस्तो छ?",
+a:["संघीय लोकतान्त्रिक गणतन्त्रात्मक","राजतन्त्रात्मक","एकदलीय","सैनिक शासन"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको राष्ट्रप्रमुख को हुन्?",
+a:["राष्ट्रपति","प्रधानमन्त्री","सभामुख","प्रधानन्यायाधीश"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको सरकार प्रमुख को हुन्?",
+a:["प्रधानमन्त्री","राष्ट्रपति","सभामुख","गृहमन्त्री"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको संघीय संसद कति सदनको हुन्छ?",
+a:["दुई","एक","तीन","चार"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"प्रतिनिधि सभामा कति सदस्य हुन्छन्?",
+a:["२७५","२६५","२५५","३०५"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Medium",
+q:"राष्ट्रिय सभामा कति सदस्य हुन्छन्?",
+a:["५९","६०","५५","६५"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको सर्वोच्च अदालतको प्रमुख को हुन्?",
+a:["प्रधानन्यायाधीश","महान्यायाधिवक्ता","सभामुख","राष्ट्रपति"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Medium",
+q:"नेपालको संविधानमा मौलिक हकहरू कुन भागमा छन्?",
+a:["भाग ३","भाग १","भाग ५","भाग १०"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालमा मतदान गर्ने न्यूनतम उमेर कति हो?",
+a:["१८ वर्ष","१६ वर्ष","२० वर्ष","२१ वर्ष"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Medium",
+q:"नेपालमा कति तहको सरकारको व्यवस्था छ?",
+a:["तीन","दुई","चार","पाँच"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"तीन तहका सरकार कुन-कुन हुन्?",
+a:["संघ, प्रदेश, स्थानीय","केन्द्र, जिल्ला, गाउँ","राष्ट्र, जिल्ला, नगर","प्रदेश, अञ्चल, जिल्ला"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Medium",
+q:"नेपालको निर्वाचन व्यवस्थामा मतदानको अधिकार कसलाई हुन्छ?",
+a:["कानूनबमोजिम योग्य नेपाली नागरिकलाई","सबै विदेशीलाई","केवल सरकारी कर्मचारीलाई","केवल सांसदलाई"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Hard",
+q:"संविधान संशोधन गर्ने अधिकार मुख्यतः कुन निकायसँग सम्बन्धित छ?",
+a:["संघीय संसद","सर्वोच्च अदालत","स्थानीय तह","राष्ट्र बैंक"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको राष्ट्रिय झण्डा कस्तो आकारको छ?",
+a:["दुई त्रिकोणयुक्त","आयताकार","गोलाकार","वर्गाकार"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको राष्ट्रिय फूल कुन हो?",
+a:["लालीगुराँस","कमल","गुलाब","सुनाखरी"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको राष्ट्रिय जनावर कुन हो?",
+a:["गाई","बाघ","गैंडा","हात्ती"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Easy",
+q:"नेपालको राष्ट्रिय चरा कुन हो?",
+a:["डाँफे","मुनाल","सारस","गरुड"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Medium",
+q:"नेपालको संविधानमा कति प्रदेशको व्यवस्था गरिएको छ?",
+a:["७","६","८","५"],
+c:0
+},
+
+{
+category:"Nepal Politics",difficulty:"Hard",
+q:"संविधान दिवस नेपालमा कुन दिन मनाइन्छ?",
+a:["असोज ३","जेठ १५","फागुन ७","माघ १६"],
+c:0
+},
+
+/* =========================
+   WORLD GK
+========================= */
+
+{
+category:"World GK",difficulty:"Easy",
+q:"विश्वको सबैभन्दा ठूलो महादेश कुन हो?",
+a:["एसिया","अफ्रिका","युरोप","उत्तर अमेरिका"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"विश्वको सबैभन्दा ठूलो महासागर कुन हो?",
+a:["प्रशान्त महासागर","एटलान्टिक","हिन्द महासागर","आर्कटिक"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"विश्वको सबैभन्दा ठूलो देश क्षेत्रफलका आधारमा कुन हो?",
+a:["रुस","क्यानडा","चीन","अमेरिका"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"भारतको राजधानी कुन हो?",
+a:["नयाँ दिल्ली","मुम्बई","कोलकाता","चेन्नई"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"चीनको राजधानी कुन हो?",
+a:["बेइजिङ","साङ्घाई","हङकङ","नानजिङ"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"जापानको राजधानी कुन हो?",
+a:["टोकियो","ओसाका","क्योटो","हिरोशिमा"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"अमेरिकाको राजधानी कुन हो?",
+a:["Washington, D.C.","New York","Los Angeles","Chicago"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"फ्रान्सको राजधानी कुन हो?",
+a:["पेरिस","रोम","बर्लिन","म्याड्रिड"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"बेलायतको राजधानी कुन हो?",
+a:["लन्डन","म्यानचेस्टर","लिभरपुल","बर्मिङ्घम"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"संयुक्त राष्ट्रसंघको मुख्यालय कहाँ छ?",
+a:["न्यूयोर्क","जेनेभा","पेरिस","लन्डन"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"UN को पूरा रूप के हो?",
+a:["United Nations","Universal Nations","United Nationality","Union Nations"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Medium",
+q:"UNESCO को मुख्यालय कहाँ छ?",
+a:["पेरिस","न्यूयोर्क","रोम","जेनेभा"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"विश्वको सबैभन्दा ठूलो मरुभूमि कुन हो?",
+a:["Antarctic Desert","Sahara","Gobi","Arabian"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"सहारा मरुभूमि कुन महादेशमा छ?",
+a:["अफ्रिका","एसिया","अष्ट्रेलिया","युरोप"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Medium",
+q:"विश्वको सबैभन्दा अग्लो पर्वत कुन हो?",
+a:["Mount Everest","K2","Kilimanjaro","Elbrus"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"विश्वको सबैभन्दा ठूलो टापु कुन हो?",
+a:["ग्रीनल्यान्ड","मडागास्कर","बोर्नियो","न्यू गिनी"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Medium",
+q:"विश्वको सबैभन्दा लामो नदीको रूपमा सामान्यतया कुन नदीलाई चिनिन्छ?",
+a:["नाइल","अमेजन","याङ्त्से","मिसिसिपी"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"सूर्यको सबैभन्दा नजिकको ग्रह कुन हो?",
+a:["बुध","शुक्र","पृथ्वी","मंगल"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"सौर्यमण्डलको सबैभन्दा ठूलो ग्रह कुन हो?",
+a:["बृहस्पति","शनि","पृथ्वी","नेप्च्युन"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"पृथ्वीको प्राकृतिक उपग्रह कुन हो?",
+a:["चन्द्रमा","सूर्य","मंगल","शुक्र"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Medium",
+q:"पृथ्वीले सूर्यको परिक्रमा गर्न लगभग कति समय लिन्छ?",
+a:["३६५ दिन","३० दिन","२४ घण्टा","७ दिन"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"पृथ्वीको एक मात्र प्राकृतिक उपग्रह कुन हो?",
+a:["चन्द्रमा","फोबोस","टाइटन","युरोपा"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Medium",
+q:"विश्वको सबैभन्दा बढी जनसंख्या भएको देश हाल कुन हो?",
+a:["भारत","चीन","अमेरिका","इन्डोनेसिया"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"मिश्रको प्रसिद्ध नदी कुन हो?",
+a:["नाइल","अमेजन","गंगा","याङ्त्से"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Medium",
+q:"ग्रेट वाल कुन देशमा छ?",
+a:["चीन","जापान","भारत","मंगोलिया"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"एफिल टावर कुन शहरमा छ?",
+a:["पेरिस","लन्डन","रोम","बर्लिन"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"स्ट्याचु अफ लिबर्टी कहाँ छ?",
+a:["न्यूयोर्क","लस एन्जलस","लन्डन","पेरिस"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Medium",
+q:"WHO को मुख्यालय कहाँ छ?",
+a:["जेनेभा","न्यूयोर्क","पेरिस","रोम"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"विश्व स्वास्थ्य संगठनको छोटकरी नाम के हो?",
+a:["WHO","WTO","UNICEF","UNESCO"],
+c:0
+},
+
+{
+category:"World GK",difficulty:"Easy",
+q:"ओलम्पिक खेलको प्रतीकमा कति वटा घेरा हुन्छन्?",
+a:["५","४","६","७"],
+c:0
+},
+
+/* =========================
+   SPORTS
+========================= */
+
+{
+category:"Sports",difficulty:"Easy",
+q:"फुटबलमा एक टोलीमा मैदानमा कति खेलाडी हुन्छन्?",
+a:["११","१०","९","१२"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"क्रिकेटमा एक टोलीमा कति खेलाडी हुन्छन्?",
+a:["११","१०","१२","९"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"फुटबलको विश्वकप आयोजना गर्ने संस्था कुन हो?",
+a:["FIFA","ICC","IOC","UEFA"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"क्रिकेटको अन्तर्राष्ट्रिय संस्था कुन हो?",
+a:["ICC","FIFA","IOC","BCCI"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"ओलम्पिक खेलको अन्तर्राष्ट्रिय संस्था कुन हो?",
+a:["IOC","FIFA","ICC","UEFA"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"क्रिकेटमा विकेटमा कति वटा स्टम्प हुन्छन्?",
+a:["३","२","४","५"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"क्रिकेटमा एक ओभरमा कति वैध बल हुन्छन्?",
+a:["६","५","८","१०"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"फुटबल खेलको सामान्य अवधि कति हुन्छ?",
+a:["९० मिनेट","६० मिनेट","१२० मिनेट","७५ मिनेट"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"फुटबलमा गोलरक्षकले मुख्य रूपमा के गर्छ?",
+a:["गोल जोगाउँछ","गोल गर्छ","रेफ्री गर्छ","कर्नर हान्छ"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"टेनिसमा Grand Slam प्रतियोगिता कति वटा छन्?",
+a:["४","३","५","६"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"Wimbledon कुन खेलसँग सम्बन्धित छ?",
+a:["टेनिस","फुटबल","क्रिकेट","हक्की"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"बास्केटबलमा एक टोलीका कति खेलाडी कोर्टमा हुन्छन्?",
+a:["५","६","७","११"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"भलिबलमा एक टोलीका कति खेलाडी कोर्टमा हुन्छन्?",
+a:["६","५","७","११"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"क्रिकेटमा LBW को पूरा रूप के हो?",
+a:["Leg Before Wicket","Leg Ball Wicket","Long Before Wicket","Left Bat Wicket"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"क्रिकेटमा छक्का लाग्दा कति रन हुन्छ?",
+a:["६","४","५","८"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"क्रिकेटमा चौका लाग्दा कति रन हुन्छ?",
+a:["४","६","३","५"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"FIFA World Cup सामान्यतया कति वर्षको अन्तरमा हुन्छ?",
+a:["४ वर्ष","२ वर्ष","३ वर्ष","५ वर्ष"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"ICC Cricket World Cup सामान्यतया कुन खेलको प्रतियोगिता हो?",
+a:["क्रिकेट","फुटबल","हक्की","टेनिस"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"Olympic Games कति वर्षको अन्तरमा आयोजना हुन्छ?",
+a:["४ वर्ष","२ वर्ष","३ वर्ष","५ वर्ष"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"म्याराथन दौडको आधिकारिक दूरी लगभग कति हो?",
+a:["42.195 km","40 km","50 km","35 km"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"फुटबलमा penalty kick कहाँबाट लिइन्छ?",
+a:["Penalty area को penalty spot","Center line","Corner","Goal line"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"ब्याडमिन्टनमा प्रयोग हुने वस्तुलाई के भनिन्छ?",
+a:["Shuttlecock","Ball","Puck","Disc"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"हक्कीमा खेलाडीले कुन उपकरण प्रयोग गर्छ?",
+a:["Stick","Bat","Racket","Glove"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"गोल्फमा बल हान्न प्रयोग गरिने उपकरण के हो?",
+a:["Club","Bat","Stick","Racket"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"टेबल टेनिसलाई अर्को नामले के भनिन्छ?",
+a:["Ping Pong","Soft Tennis","Mini Tennis","Indoor Ball"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"चेसमा प्रत्येक खेलाडीले सुरुमा कति वटा मोहरा पाउँछ?",
+a:["१६","१२","१४","१८"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"चेसमा राजा checkmate भएपछि के हुन्छ?",
+a:["खेल समाप्त हुन्छ","खेल दोहोरिन्छ","राजा फेरिन्छ","पास हुन्छ"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"कबड्डीमा खेलाडीले आक्रमण गर्दा के भन्नुपर्छ?",
+a:["कबड्डी","गोल","रेडी","हिट"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Medium",
+q:"Formula 1 मुख्यतः कुन खेल हो?",
+a:["मोटर रेसिङ","साइकल रेसिङ","घोडा दौड","पैदल दौड"],
+c:0
+},
+
+{
+category:"Sports",difficulty:"Easy",
+q:"Boxing खेलमा खेलाडीले के प्रयोग गर्छ?",
+a:["Gloves","Bat","Racket","Helmet मात्र"],
+c:0
+},
+
+/* =========================
+   COMPUTER
+========================= */
+
+{
+category:"Computer",difficulty:"Easy",
+q:"CPU को पूरा रूप के हो?",
+a:["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing User"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"कम्प्युटरको मस्तिष्क भनेर कुनलाई भनिन्छ?",
+a:["CPU","RAM","Monitor","Keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"RAM को पूरा रूप के हो?",
+a:["Random Access Memory","Read Access Memory","Rapid Access Machine","Random Application Memory"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"ROM को पूरा रूप के हो?",
+a:["Read Only Memory","Random Only Memory","Read Open Memory","Run Only Machine"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Keyboard कुन प्रकारको device हो?",
+a:["Input","Output","Storage","Network"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Monitor कुन प्रकारको device हो?",
+a:["Output","Input","Storage","Processing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Mouse कुन प्रकारको device हो?",
+a:["Input","Output","Storage","Processing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Printer कुन प्रकारको device हो?",
+a:["Output","Input","Processing","Memory"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Hard Disk को मुख्य काम के हो?",
+a:["Data storage","Typing","Printing","Scanning"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Operating System को उदाहरण कुन हो?",
+a:["Windows","Google","YouTube","Facebook"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Linux के हो?",
+a:["Operating System","Web Browser","Antivirus","Programming Language मात्र"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Android के हो?",
+a:["Operating System","CPU","Keyboard","Database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"HTML को पूरा रूप के हो?",
+a:["HyperText Markup Language","HighText Machine Language","Hyper Tool Markup Link","Home Text Machine Language"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"CSS को पूरा रूप के हो?",
+a:["Cascading Style Sheets","Computer Style System","Creative Style Sheet","Code Style System"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"JavaScript मुख्यतः केका लागि प्रयोग हुन्छ?",
+a:["Web interactivity","Computer cleaning","Printing","Hardware repair"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"HTTP को पूरा रूप के हो?",
+a:["HyperText Transfer Protocol","High Transfer Text Program","Hyper Tool Transfer Process","Home Text Transfer Protocol"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"URL को पूरा रूप के हो?",
+a:["Uniform Resource Locator","Universal Resource Link","Uniform Read Locator","User Resource Locator"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"IP को पूरा रूप के हो?",
+a:["Internet Protocol","Internet Program","Internal Protocol","Internet Process"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Wi-Fi मुख्यतः केका लागि प्रयोग हुन्छ?",
+a:["Wireless networking","Printing only","Video editing","Programming only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"LAN को पूरा रूप के हो?",
+a:["Local Area Network","Large Area Network","Long Access Network","Local Access Node"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"WAN को पूरा रूप के हो?",
+a:["Wide Area Network","Web Area Network","Wireless Access Network","World Access Node"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Google Chrome के हो?",
+a:["Web browser","Operating system","Antivirus","Database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Firefox के हो?",
+a:["Web browser","CPU","Programming language","Operating system"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"SQL मुख्यतः केका लागि प्रयोग हुन्छ?",
+a:["Database management","Photo editing","Video playback","Gaming"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Python के हो?",
+a:["Programming language","Operating system","Browser","Antivirus"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"C programming language के हो?",
+a:["Programming language","Database","Browser","Operating system"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"AI को पूरा रूप के हो?",
+a:["Artificial Intelligence","Automatic Internet","Advanced Interface","Artificial Internet"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Cyber Security को मुख्य उद्देश्य के हो?",
+a:["Digital systems and data protection","Computer speed घटाउने","Games बनाउने मात्र","Printer चलाउने"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Computer virus के हो?",
+a:["Malicious program","Hardware device","Keyboard type","Internet cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Phishing सामान्यतया केका लागि प्रयोग गरिन्छ?",
+a:["Sensitive information चोर्न","Computer speed बढाउन","Files compress गर्न","Games खेल्न"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Firewall को मुख्य काम के हो?",
+a:["Network traffic filter/protect गर्नु","Photo edit गर्नु","Text type गर्नु","Music बजाउनु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"USB को पूरा रूप के हो?",
+a:["Universal Serial Bus","United System Bus","Universal System Board","User Serial Board"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"SSD को मुख्य फाइदा के हो?",
+a:["छिटो storage access","Paper printing","Internet broadcasting","Sound recording"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"1 Byte मा कति bits हुन्छन्?",
+a:["8","4","16","32"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Binary number system मा कुन digits प्रयोग हुन्छन्?",
+a:["0 र 1","1 र 2","0 देखि 9","A र B"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Algorithm भनेको के हो?",
+a:["समस्या समाधान गर्ने क्रमबद्ध steps","Computer hardware","Internet cable","Database मात्र"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"File को नामको अन्त्यमा आउने .html ले के जनाउँछ?",
+a:["HTML document","Image","Audio","Video"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Git के हो?",
+a:["Version control system","Operating system","Browser","Antivirus"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"GitHub मुख्यतः केका लागि प्रयोग हुन्छ?",
+a:["Code hosting and collaboration","Only gaming","Only email","Only video editing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"API को पूरा रूप के हो?",
+a:["Application Programming Interface","Application Program Internet","Advanced Programming Input","Application Process Interface"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Database मा table कुन कुराको collection हो?",
+a:["Rows and columns","Only images","Only programs","Only passwords"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Cloud computing भन्नाले के बुझिन्छ?",
+a:["Internet-based computing resources","Computer repair","Only weather prediction","Keyboard technology"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Encryption को मुख्य उद्देश्य के हो?",
+a:["Data लाई सुरक्षित/गोप्य बनाउनु","Data delete गर्नु","Computer बन्द गर्नु","Printer चलाउनु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Ctrl + C को सामान्य काम के हो?",
+a:["Copy","Cut","Close","Create"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Ctrl + V को सामान्य काम के हो?",
+a:["Paste","Copy","Save","Print"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Ctrl + S को सामान्य काम के हो?",
+a:["Save","Search","Select","Start"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Ctrl + Z को सामान्य काम के हो?",
+a:["Undo","Zoom","Zip","Zero"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Binary 1010 को decimal value कति हुन्छ?",
+a:["10","8","12","14"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"HTML मा hyperlink बनाउन सामान्यतया कुन tag प्रयोग हुन्छ?",
+a:["<a>","<p>","<img>","<h1>"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"HTML मा image राख्न कुन tag प्रयोग हुन्छ?",
+a:["<img>","<image>","<pic>","<src>"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"CSS मा text को रंग परिवर्तन गर्न कुन property प्रयोग हुन्छ?",
+a:["color","text-color","font-color","background"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"CSS मा background color का लागि कुन property प्रयोग हुन्छ?",
+a:["background-color","color-background","bg","background-text"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"JavaScript मा variable घोषणा गर्न कुन keyword प्रयोग गर्न सकिन्छ?",
+a:["let","style","html","design"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"JavaScript मा array को पहिलो index कुन हो?",
+a:["0","1","-1","10"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"JSON को पूरा रूप के हो?",
+a:["JavaScript Object Notation","Java Source Object Network","JavaScript Online Node","JSON Object Network"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"HTTP status code 404 ले सामान्यतया के जनाउँछ?",
+a:["Not Found","Success","Server Started","Unauthorized"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"HTTP status code 200 ले सामान्यतया के जनाउँछ?",
+a:["OK / Success","Not Found","Server Error","Forbidden"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"RAM volatile memory हो भन्नुको अर्थ के हो?",
+a:["Power बन्द हुँदा data हराउँछ","Data सधैं रहन्छ","यो केवल output हो","यसमा internet मात्र हुन्छ"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"GPU मुख्यतः कुन काममा उपयोगी हुन्छ?",
+a:["Graphics processing","Text typing","Network naming","File compression मात्र"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Bluetooth कुन प्रकारको technology हो?",
+a:["Short-range wireless communication","Wired networking","Storage","Operating system"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"DNS को मुख्य काम के हो?",
+a:["Domain name लाई IP address मा resolve गर्नु","Computer shutdown गर्नु","Files delete गर्नु","Video edit गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"VPN को पूरा रूप के हो?",
+a:["Virtual Private Network","Visual Public Network","Virtual Program Node","Verified Private Node"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Two-factor authentication को उद्देश्य के हो?",
+a:["Account security बढाउनु","Internet speed बढाउनु","Storage बढाउनु","Screen brightness बढाउनु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Email पठाउन सामान्यतया कुन सेवा प्रयोग हुन्छ?",
+a:["Electronic mail","File manager","Compiler","Operating system"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Compiler को मुख्य काम के हो?",
+a:["Source code लाई machine/executable form मा translate गर्नु","Internet connect गर्नु","Files print गर्नु","Images scan गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Bug भन्नाले programming मा के बुझिन्छ?",
+a:["Program मा भएको error/defect","Computer mouse","Internet cable","Operating system"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Debugging भन्नाले के गरिन्छ?",
+a:["Program का errors खोजेर समाधान गरिन्छ","Computer बेचिन्छ","Files copy मात्र गरिन्छ","Internet बन्द गरिन्छ"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Screen मा text टाइप गर्न कुन device प्रयोग गरिन्छ?",
+a:["Keyboard","Monitor","Speaker","Printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Sound output का लागि कुन device प्रयोग हुन्छ?",
+a:["Speaker","Keyboard","Mouse","Scanner"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Scanner कुन प्रकारको device हो?",
+a:["Input","Output","Processing","Network"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Operating System को मुख्य काममध्ये एक कुन हो?",
+a:["Hardware र software resources manage गर्नु","Only typing","Only printing","Only browsing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Open-source software भन्नाले के बुझिन्छ?",
+a:["Source code उपलब्ध हुने software","Only paid software","Virus software","Hardware"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Malware शब्दले के जनाउँछ?",
+a:["Malicious software","Mail software","Machine language","Memory software"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Brute-force attack सामान्यतया के गर्छ?",
+a:["धेरै सम्भावित passwords try गर्छ","Computer physically तोड्छ","Internet speed बढाउँछ","Files print गर्छ"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Backup किन गरिन्छ?",
+a:["Data हराएमा पुनःप्राप्त गर्न","Computer slow बनाउन","Virus बनाउन","Password हटाउन"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Recycle Bin को काम के हो?",
+a:["Deleted files लाई अस्थायी रूपमा राख्नु","Internet चलाउनु","Programs compile गर्नु","Virus scan गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Cloud storage को उदाहरण कुन हो?",
+a:["Google Drive","CPU","RAM","Keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Search engine को उदाहरण कुन हो?",
+a:["Google","Windows","Python","RAM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Web browser को मुख्य काम के हो?",
+a:["Web pages access/display गर्नु","Computer power supply गर्नु","RAM बनाउनु","Keyboard control गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Domain name को उदाहरण कुन हो?",
+a:["example.com","192.168.1.1 मात्र","CPU","RAM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"IPv4 address मा कति bits हुन्छन्?",
+a:["32","64","16","128"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"IPv6 address मा कति bits हुन्छन्?",
+a:["128","64","32","256"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Machine language मुख्यतः कुन format मा हुन्छ?",
+a:["Binary instructions","English sentences","HTML","CSS"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Object-oriented programming को एउटा मुख्य concept कुन हो?",
+a:["Encapsulation","Printing","Browsing","Formatting"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Recursion भनेको के हो?",
+a:["Function ले आफैंलाई call गर्नु","Computer restart गर्नु","File copy गर्नु","Internet connect गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Stack data structure मा कुन principle प्रयोग हुन्छ?",
+a:["LIFO","FIFO","Random only","None"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Queue data structure मा कुन principle प्रयोग हुन्छ?",
+a:["FIFO","LIFO","Random","Binary"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Binary search ले data कस्तो अवस्थामा राम्रोसँग काम गर्छ?",
+a:["Sorted data","Random unsorted data मात्र","Images","Audio"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Computer को स्थायी storage को उदाहरण कुन हो?",
+a:["SSD","RAM","Cache","Register"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Cache memory को मुख्य उद्देश्य के हो?",
+a:["CPU लाई frequently used data छिटो उपलब्ध गराउनु","Permanent backup","Internet hosting","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Motherboard के हो?",
+a:["मुख्य circuit board","Operating system","Storage file","Browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"USB flash drive कुन प्रकारको device हो?",
+a:["Storage","Output only","Input only","CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"AI मा ML को अर्थ के हो?",
+a:["Machine Learning","Machine Language only","Memory Link","Media Learning"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Machine Learning मा model training को अर्थ के हो?",
+a:["Data बाट patterns सिकाउनु","Computer सफा गर्नु","File print गर्नु","Keyboard बदल्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Captcha को मुख्य उद्देश्य के हो?",
+a:["Human र automated bot छुट्याउन","Internet speed बढाउन","Video compress गर्न","Password generate गर्न"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Password को मुख्य उद्देश्य के हो?",
+a:["Access सुरक्षित गर्नु","Screen चम्काउनु","Sound बढाउनु","File print गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Strong password मा सामान्यतया के हुनु राम्रो हुन्छ?",
+a:["Letters, numbers र symbols को मिश्रण","केवल नाम","केवल 12345","केवल जन्ममिति"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"HTTPS मा S ले के जनाउँछ?",
+a:["Secure","System","Server","Search"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Cloud computing मा SaaS को पूरा रूप के हो?",
+a:["Software as a Service","System as a Server","Software and Security","Storage as System"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Database मा primary key को उद्देश्य के हो?",
+a:["Record लाई uniquely identify गर्नु","Table delete गर्नु","Internet connect गर्नु","Image store मात्र गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"SQL मा data खोज्न सामान्यतया कुन command प्रयोग हुन्छ?",
+a:["SELECT","PRINT","FINDALL","SEARCH"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"SQL मा नयाँ record थप्न कुन command प्रयोग हुन्छ?",
+a:["INSERT","ADDROW","NEW","PUSH"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"SQL मा record हटाउन कुन command प्रयोग हुन्छ?",
+a:["DELETE","REMOVEALL","CLEARROW","DROPFILE"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"SQL मा table को structure/definition परिवर्तन गर्न कुन command प्रयोग हुन सक्छ?",
+a:["ALTER","CHANGEFILE","EDITDB","MODIFYROW"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Web page को structure बनाउन मुख्यतः कुन भाषा प्रयोग हुन्छ?",
+a:["HTML","CSS","SQL","Python"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Web page लाई style/design दिन मुख्यतः कुन भाषा प्रयोग हुन्छ?",
+a:["CSS","HTML","SQL","C"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Web page मा interactive behavior थप्न कुन भाषा प्रयोग हुन्छ?",
+a:["JavaScript","HTML मात्र","CSS मात्र","SQL"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"HTML heading को सबैभन्दा ठूलो सामान्य heading कुन हो?",
+a:["h1","h6","head","title"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"HTML paragraph का लागि कुन tag प्रयोग हुन्छ?",
+a:["<p>","<para>","<text>","<paragraph>"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"CSS मा Flexbox केका लागि प्रयोग हुन्छ?",
+a:["Layout बनाउने","Database बनाउने","Server बनाउने","Antivirus चलाउने"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"CSS Grid केका लागि प्रयोग हुन्छ?",
+a:["Two-dimensional layouts","Audio editing","Database queries","Password encryption"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"DOM को पूरा रूप के हो?",
+a:["Document Object Model","Data Object Machine","Document Online Model","Digital Object Method"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"JavaScript मा function define गर्न कुन keyword प्रयोग गर्न सकिन्छ?",
+a:["function","methodonly","defonly","funcname"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"JavaScript मा strict equality operator कुन हो?",
+a:["===","==","=","!="],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Programming मा = operator सामान्यतया केका लागि प्रयोग हुन्छ?",
+a:["Assignment","Comparison only","Loop","Comment"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Loop को मुख्य उद्देश्य के हो?",
+a:["Code लाई दोहोर्याएर चलाउनु","Computer shutdown गर्नु","File print गर्नु","Password save गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"if statement केका लागि प्रयोग हुन्छ?",
+a:["Condition check गर्न","Image देखाउन मात्र","File save गर्न मात्र","Internet खोल्न"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Data structure भनेको के हो?",
+a:["Data organize/store गर्ने तरिका","Computer monitor","Internet cable","Operating system"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Algorithm को efficiency मापन गर्न कुन concept प्रयोग गरिन्छ?",
+a:["Time/Space Complexity","Screen Size","File Color","Keyboard Layout"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Big-O notation केका लागि प्रयोग हुन्छ?",
+a:["Algorithm complexity describe गर्न","HTML design गर्न","Image compress गर्न","Password बनाउन"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Computer मा data को सबैभन्दा सानो unit कुन हो?",
+a:["Bit","Byte","KB","MB"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"1024 Bytes लगभग कति हुन्छ?",
+a:["1 KB","1 MB","1 GB","1 TB"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"1024 KB लगभग कति हुन्छ?",
+a:["1 MB","1 GB","1 Byte","1 TB"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"1024 MB लगभग कति हुन्छ?",
+a:["1 GB","1 TB","1 KB","1 Byte"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"GUI को पूरा रूप के हो?",
+a:["Graphical User Interface","General User Internet","Graphic Utility Input","Global User Interface"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"CLI को पूरा रूप के हो?",
+a:["Command Line Interface","Computer Link Input","Command Level Internet","Control Line Interface"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Computer restart गर्दा सामान्यतया के हुन्छ?",
+a:["System पुनः सुरु हुन्छ","सबै files अनिवार्य रूपमा delete हुन्छन्","Monitor बिग्रन्छ","Internet सधैं बन्द हुन्छ"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Operating system मा process management को अर्थ के हो?",
+a:["Running processes manage गर्नु","Photos edit गर्नु","Keyboard manufacture गर्नु","Internet speed test मात्र गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Multitasking भनेको के हो?",
+a:["एकै समयमा धेरै tasks/processes manage गर्नु","एकै file मात्र खोल्नु","Computer बन्द गर्नु","एकै keyboard key थिच्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Virtual memory केसँग सम्बन्धित छ?",
+a:["Storage लाई memory extension जस्तै प्रयोग गर्नु","Only GPU memory","Printer memory","Keyboard memory"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Router को मुख्य काम के हो?",
+a:["Networks बीच data packets route गर्नु","Only typing","Only printing","Only scanning"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Modem सामान्यतया केका लागि प्रयोग हुन्छ?",
+a:["Internet connection मा signal conversion/communication","Only gaming","Only printing","Only typing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Bluetooth सामान्यतया कस्तो दूरीको communication का लागि प्रयोग हुन्छ?",
+a:["Short range","Global range","Satellite only","Oceanic"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"MAC address केसँग सम्बन्धित हुन्छ?",
+a:["Network interface identification","Website password","File name","CPU speed"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Spam email भनेको के हो?",
+a:["Unwanted email","Encrypted file","Operating system","Backup"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Ransomware ले सामान्यतया के गर्छ?",
+a:["Data encrypt/lock गरेर ransom माग्न सक्छ","Computer speed बढाउँछ","Free storage दिन्छ","Printer repair गर्छ"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Antivirus software को मुख्य उद्देश्य के हो?",
+a:["Malware detect/protect गर्नु","Internet speed मात्र बढाउनु","RAM बनाउनु","Keyboard control गर्नु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Screenshot के हो?",
+a:["Screen को image capture","Audio recording","Database","Program"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"PDF को पूरा रूप के हो?",
+a:["Portable Document Format","Public Data File","Personal Document Folder","Program Document Format"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"ZIP file सामान्यतया केका लागि प्रयोग हुन्छ?",
+a:["Files compress/archive गर्न","Operating system चलाउन","Internet connect गर्न","CPU speed बढाउन"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"OCR technology को मुख्य काम के हो?",
+a:["Image मा भएको text recognize गर्नु","Audio बढाउनु","Video edit गर्नु","Internet speed बढाउनु"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Blockchain केसँग सम्बन्धित technology हो?",
+a:["Distributed digital ledger","Keyboard technology","Monitor technology","Printer technology"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"QR code को मुख्य प्रयोग के हो?",
+a:["Information quickly encode/access गर्न","CPU cool गर्न","RAM बढाउन","Keyboard replace गर्न"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Bluetooth को लोगो कुन प्रकारको communication technology सँग सम्बन्धित छ?",
+a:["Wireless","Wired","Optical cable only","Satellite only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Cyber attack बाट बच्न software update किन महत्वपूर्ण हुन्छ?",
+a:["Security vulnerabilities fix हुन सक्छन्","Computer को screen ठूलो हुन्छ","Keyboard नयाँ हुन्छ","Files automatically print हुन्छन्"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Data privacy को अर्थ के हो?",
+a:["Personal/data information को उचित protection and control","Data सबैलाई दिने","Password public गर्ने","Files delete मात्र गर्ने"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Search engine मा keyword किन प्रयोग गरिन्छ?",
+a:["Information खोज्न","Computer बन्द गर्न","File format बदल्न","Printer चलाउन"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Operating system को example कुन होइन?",
+a:["Google Chrome","Windows","Linux","Android"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which is a programming language?",
+a:["Java","Chrome","Windows","Google"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which is an input device?",
+a:["Scanner","Monitor","Speaker","Projector"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which is an output device?",
+a:["Projector","Keyboard","Mouse","Scanner"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which memory is closest to the CPU?",
+a:["Cache","Hard Disk","USB","DVD"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Which protocol is commonly used to securely transfer web pages?",
+a:["HTTPS","FTP only","SMTP","POP3"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"SMTP is mainly used for what?",
+a:["Sending email","Browsing websites","Playing games","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"FTP is mainly related to what?",
+a:["File transfer","Email sending","Video calling","Image editing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"TCP/IP is mainly associated with what?",
+a:["Computer networking","Photo editing","Word processing","Gaming graphics"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does WWW stand for?",
+a:["World Wide Web","World Web Window","Wide World Wire","Web World Work"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does Wi-Fi allow?",
+a:["Wireless network connection","Only printing","Only charging","Only storage"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a database?",
+a:["Organized collection of data","A monitor","A keyboard","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a server?",
+a:["Computer/system providing services or resources","Only a keyboard","Only a monitor","Only a cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is virtualization?",
+a:["Creating virtual computing environments/resources","Printing documents","Changing keyboard layout","Deleting files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an IP address used for?",
+a:["Identifying/addressing devices on a network","Typing text","Printing images","Editing videos"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a proxy server?",
+a:["An intermediary between client and server","A type of keyboard","A storage chip","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a QR code?",
+a:["A machine-readable two-dimensional code","A CPU","A programming language","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What does authentication mean?",
+a:["Verifying identity","Deleting files","Compressing data","Formatting a disk"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What does authorization mean?",
+a:["Determining what an authenticated user is allowed to access","Checking screen size","Installing RAM","Starting a browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which is an example of biometric authentication?",
+a:["Fingerprint","Username only","File name","IP address"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a folder used for?",
+a:["Organizing files","Processing CPU instructions","Displaying pixels","Connecting Wi-Fi"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a file extension?",
+a:["Characters indicating file type","Computer password","Internet speed","CPU name"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which extension is commonly used for JavaScript files?",
+a:[".js",".css",".html",".jpg"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which extension is commonly used for CSS files?",
+a:[".css",".js",".html",".exe"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which extension is commonly used for HTML files?",
+a:[".html",".css",".js",".sql"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an IDE?",
+a:["Integrated Development Environment","Internet Data Engine","Internal Device Editor","Integrated Digital Ethernet"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"VS Code is mainly what?",
+a:["Code editor","Operating system","Database","Antivirus"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is debugging?",
+a:["Finding and fixing program errors","Creating a password","Deleting an OS","Formatting a monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a programming variable?",
+a:["A named storage location/value reference","A monitor","A cable","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does GUI stand for?",
+a:["Graphical User Interface","Global User Internet","General Utility Input","Graphic Universal Index"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an operating system responsible for?",
+a:["Managing hardware and software resources","Only browsing","Only typing","Only printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a kernel?",
+a:["Core part of an operating system","A browser extension","A database table","A keyboard driver only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is multitasking?",
+a:["Running/managing multiple tasks","Using multiple keyboards only","Printing multiple pages only","Opening one file"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which device is used to hear computer audio?",
+a:["Speaker","Scanner","Mouse","Keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which device is commonly used for video input?",
+a:["Webcam","Speaker","Printer","Projector"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is screen resolution?",
+a:["Number of pixels displayed","Internet speed","CPU temperature","Storage size"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is refresh rate measured in?",
+a:["Hertz (Hz)","Bytes","Volts only","Pixels only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What does GPU stand for?",
+a:["Graphics Processing Unit","General Processing Utility","Graphic Program Unit","Global Processing User"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is RAM mainly used for?",
+a:["Temporary working data","Permanent file storage only","Printing","Internet cables"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is ROM mainly known for?",
+a:["Non-volatile memory","Temporary working memory","Internet service","Input device"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which one is a storage device?",
+a:["SSD","Keyboard","Monitor","Speaker"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which one is a pointing device?",
+a:["Mouse","Printer","Speaker","Monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is an IP subnet?",
+a:["A logical division of an IP network","A type of monitor","A programming language","A file format"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is encryption?",
+a:["Converting data into a protected encoded form","Deleting data","Copying files","Increasing screen brightness"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is decryption?",
+a:["Converting encrypted data back into readable form","Compressing files","Deleting files","Creating a folder"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a digital signature used for?",
+a:["Authenticity/integrity verification","Increasing storage","Changing screen resolution","Playing games"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a software update?",
+a:["A newer version containing improvements/fixes","A hardware cable","A monitor setting","A keyboard shortcut"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a browser tab?",
+a:["A separate webpage view in a browser","A CPU component","A storage chip","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a hyperlink?",
+a:["A clickable reference to another resource/page","A type of CPU","A file compressor","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is responsive web design?",
+a:["Design that adapts to different screen sizes","A website with no CSS","A server technology","A database language"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is frontend development?",
+a:["Developing the user-facing part of an application","Managing only databases","Repairing hardware","Installing operating systems"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is backend development?",
+a:["Developing server-side logic and services","Designing only buttons","Changing monitor brightness","Editing photos"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a framework in programming?",
+a:["A reusable structure/toolset for building software","A hardware device","A monitor","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is source code?",
+a:["Human-readable program instructions","A computer monitor","A network cable","A storage device"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is software?",
+a:["Programs and instructions","Physical components only","A keyboard","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is hardware?",
+a:["Physical computer components","Programs only","Websites only","Passwords"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which is hardware?",
+a:["CPU","Windows","Python","Chrome"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which is software?",
+a:["Windows","Keyboard","Monitor","CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does Ctrl + P commonly do?",
+a:["Print","Paste","Pause","Preview only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does Ctrl + A commonly do?",
+a:["Select all","Save all","Add file","Align"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does Ctrl + X commonly do?",
+a:["Cut","Copy","Close","Execute"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a shortcut key?",
+a:["A key combination that performs an action quickly","A type of malware","A storage device","A network protocol"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a compiler?",
+a:["A program that translates source code","A web browser","A storage device","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an interpreter?",
+a:["A program that executes/translates code step by step","A monitor","A hard disk","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is an API used for?",
+a:["Allowing software components to communicate","Only storing photos","Only printing","Only gaming"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a server-side application?",
+a:["Software running on a server","Software running only on a keyboard","A monitor","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a client in client-server architecture?",
+a:["A system/application requesting services","Only a database","A CPU chip","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an internet browser's address bar used for?",
+a:["Entering URLs/searches","Changing CPU speed","Formatting RAM","Printing files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a homepage?",
+a:["A main/starting webpage","A CPU component","A password","A database table"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a hyperlink usually created with in HTML?",
+a:["<a> tag","<linker> tag","<url> tag","<href> tag"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which CSS property controls font size?",
+a:["font-size","text-size","size-font","font-height"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which CSS property makes text bold?",
+a:["font-weight","text-bold","font-style-bold","bold-text"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which CSS property controls rounded corners?",
+a:["border-radius","corner-size","round-border","radius-border-only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which CSS property controls spacing inside an element?",
+a:["padding","margin","space-in","inside-space"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which CSS property controls spacing outside an element?",
+a:["margin","padding","outside-space","element-gap"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is event handling in JavaScript?",
+a:["Responding to user/browser events","Creating hardware","Formatting a disk","Managing electricity"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which JavaScript event commonly occurs when a button is pressed?",
+a:["click","hover-only","pressKey","buttonEvent"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What does localStorage provide in a browser?",
+a:["Persistent client-side key-value storage","Server CPU","Database server","Internet cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is JSON commonly used for?",
+a:["Data interchange","Image editing","CPU control","Keyboard programming"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an array?",
+a:["A collection of values","A monitor","A browser","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a loop?",
+a:["A structure for repeating code","A storage device","A browser","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a comment in programming?",
+a:["Text ignored by the program interpreter/compiler","A virus","A command to delete files","A hardware device"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an if-else statement?",
+a:["Conditional decision structure","A storage format","A browser","A network protocol"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is object-oriented programming based around?",
+a:["Objects/classes and their interactions","Only numbers","Only HTML tags","Only network cables"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is inheritance in OOP?",
+a:["A class acquiring properties/behavior from another class","Copying a file","Saving a password","Installing software"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is polymorphism in OOP?",
+a:["One interface with different implementations/behaviors","A storage device","A network protocol","A file extension"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is encapsulation?",
+a:["Bundling data and methods while controlling access","Deleting files","Opening a browser","Formatting a disk"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a database query?",
+a:["A request for data or database operation","A keyboard shortcut","A screen setting","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which SQL command is used to create a table?",
+a:["CREATE TABLE","NEW TABLE","MAKE TABLE","BUILD TABLE"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is normalization in databases?",
+a:["Reducing redundancy and improving data organization","Deleting all data","Encrypting a website","Increasing monitor size"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a foreign key?",
+a:["A field linking to a key in another table","A password","A browser URL","A CPU instruction"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a relational database?",
+a:["Database organized into related tables","A folder of images only","A browser","A programming language"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is data redundancy?",
+a:["Unnecessary duplication of data","Data encryption","Internet speed","Computer restart"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a password manager used for?",
+a:["Securely storing/managing passwords","Editing videos","Increasing RAM","Printing documents"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is social engineering?",
+a:["Manipulating people to reveal information or perform actions","Building bridges","Programming graphics","Installing RAM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a denial-of-service attack?",
+a:["Attempting to make a service unavailable","Stealing a keyboard","Compressing files","Increasing bandwidth"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a secure backup strategy useful for?",
+a:["Recovering data after loss or attack","Making passwords shorter","Increasing monitor resolution","Removing keyboards"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a webcam?",
+a:["Camera used with a computer","Speaker","Printer","Storage"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a microphone?",
+a:["Audio input device","Audio output only","Storage","Processor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is video conferencing?",
+a:["Real-time audio/video communication over a network","File compression","Database management","CPU cooling"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a screenshot?",
+a:["A captured image of the screen","A sound recording","A database","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a file path?",
+a:["Location of a file in a file system","Internet speed","CPU type","Password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an executable file?",
+a:["A file that can run a program","An image only","A text note only","A keyboard driver only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is an operating system process?",
+a:["A program instance currently being executed","A saved image","A keyboard shortcut","A browser tab only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a thread?",
+a:["A unit of execution within a process","A network cable","A database table","A file extension"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is concurrency?",
+a:["Managing multiple tasks that make progress during overlapping periods","Only running one program","Deleting processes","Formatting disks"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a deadlock?",
+a:["Processes waiting indefinitely for resources","Computer shutdown","Internet speed issue only","File compression"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a file system?",
+a:["System for organizing and storing files","A web browser","A programming language","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which is an example of removable storage?",
+a:["USB flash drive","RAM","CPU","Monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is optical storage?",
+a:["Storage read using optical technology","RAM","Cloud only","CPU cache"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"CD and DVD are examples of what?",
+a:["Optical storage","RAM","CPU","Network devices"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a pixel?",
+a:["Smallest addressable element of a digital image/display","A CPU core","A file","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is an emoji?",
+a:["A digital symbol/pictograph","A CPU","A network protocol","A programming language"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is digital literacy?",
+a:["Ability to use digital technologies effectively and safely","Only programming","Only gaming","Only typing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is machine learning overfitting?",
+a:["Model learns training data too closely and generalizes poorly","Computer overheating","Storage failure","Network disconnect"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a neural network inspired by?",
+a:["The structure/function of biological neural systems","Computer cables","Printers","Databases"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is generative AI designed to do?",
+a:["Generate new content such as text, images or audio","Only store files","Only print documents","Only calculate electricity"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is cloud storage?",
+a:["Storing data on remote servers accessed through a network","RAM storage","CPU cache","Keyboard memory"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which company develops Windows?",
+a:["Microsoft","Apple","Google","IBM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which company develops Android?",
+a:["Google","Microsoft","IBM","Mozilla"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which company develops iOS?",
+a:["Apple","Google","Microsoft","Intel"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an app?",
+a:["Software application","A CPU","A cable","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does AI stand for?",
+a:["Artificial Intelligence","Automatic Interface","Advanced Internet","Artificial Internet"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a chatbot?",
+a:["Software designed to converse with users","A storage device","A monitor","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is natural language processing?",
+a:["Computer processing of human language","Computer cooling","Network routing","File compression"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is computer vision?",
+a:["Technology for interpreting visual information","Monitor repair","Keyboard programming","Audio compression"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an algorithm used for in AI?",
+a:["Defining computational procedures for solving tasks","Printing only","Charging computers","Changing screens"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is supervised learning?",
+a:["Learning from labeled training data","Learning without data","Only gaming","Only encryption"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is unsupervised learning?",
+a:["Learning patterns from unlabeled data","Learning only from labels","Only file storage","Only web browsing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a dataset?",
+a:["Collection of data used for analysis/training","A CPU","A keyboard","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is data visualization?",
+a:["Representing data graphically","Encrypting data","Deleting data","Typing data"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a spreadsheet?",
+a:["Software for tabular data and calculations","An operating system","A browser","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Microsoft Excel is mainly used for what?",
+a:["Spreadsheets and data analysis","Web browsing only","Operating system management","Antivirus"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Microsoft PowerPoint is mainly used for what?",
+a:["Presentations","Database servers","Web browsers","Antivirus"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Microsoft Word is mainly used for what?",
+a:["Word processing","Gaming","Networking","Programming hardware"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a presentation slide?",
+a:["A page/screen in a presentation","A database table","A CPU component","A network packet"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a chart?",
+a:["Visual representation of data","A keyboard","A browser","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a printer used for?",
+a:["Producing physical copies of digital documents","Storing RAM","Browsing internet","Processing CPU instructions"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a scanner used for?",
+a:["Digitizing physical documents/images","Printing","Playing sound","Processing code"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a projector used for?",
+a:["Displaying images/video on a larger surface","Storing files","Typing","Scanning"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is virtualization useful for?",
+a:["Running virtual machines/environments on physical hardware","Only printing","Only typing","Only browsing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a virtual machine?",
+a:["Software-based emulation of a computer environment","A physical keyboard","A printer","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is containerization in software?",
+a:["Packaging an application and dependencies into isolated environments","Compressing images only","Installing RAM","Creating hardware"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is Docker commonly associated with?",
+a:["Containers","Word processing","Photo editing","Operating system BIOS"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is version control?",
+a:["Tracking changes to files/code over time","Changing monitor resolution","Backing up only photos","Printing documents"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Git is commonly used for what?",
+a:["Version control","Video playback","Printing","Antivirus"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a repository in Git?",
+a:["A project directory tracked by Git","A CPU","A browser","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a commit in Git?",
+a:["A recorded set of changes","A computer restart","A browser tab","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a branch in Git?",
+a:["An independent line of development","A hardware cable","A browser","A storage device"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a merge in Git?",
+a:["Combining changes from branches","Deleting a repository","Formatting a disk","Installing software"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"GitHub is commonly used for what?",
+a:["Hosting and collaborating on code repositories","Playing music only","Printing","Editing photos only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an issue tracker used for?",
+a:["Tracking bugs/tasks/features","Increasing CPU speed","Printing documents","Storing passwords only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is continuous integration (CI)?",
+a:["Automatically building/testing code changes","Manual typing only","Photo editing","Hardware repair"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is continuous deployment?",
+a:["Automatically deploying tested changes to an environment","Deleting code","Installing keyboards","Printing code"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is software testing?",
+a:["Checking software behavior and quality","Cleaning a monitor","Changing RAM","Formatting files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a bug?",
+a:["A software error/defect","A mouse","A keyboard","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is unit testing?",
+a:["Testing individual components/functions","Testing electricity","Testing monitors only","Testing keyboards only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is integration testing?",
+a:["Testing interactions between components","Testing one key","Testing one pixel","Testing printer ink"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is usability?",
+a:["How easily users can use a system","CPU speed","Storage size","Internet cable length"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is accessibility in web design?",
+a:["Making websites usable by people with different abilities","Increasing internet speed","Changing CPU","Compressing files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is semantic HTML?",
+a:["HTML elements that convey meaning/structure","HTML with no tags","Only CSS","Only JavaScript"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an HTML form used for?",
+a:["Collecting user input","Displaying CPU temperature only","Creating a hard disk","Running antivirus"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which HTML element creates a button?",
+a:["<button>","<btn>","<click>","<inputbutton>"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which HTML attribute provides alternate text for an image?",
+a:["alt","src","href","title-only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which HTML attribute specifies an image source?",
+a:["src","href","alt","image"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Which HTML attribute specifies a hyperlink destination?",
+a:["href","src","link","url"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is responsive design commonly based on?",
+a:["Flexible layouts, media queries and adaptable content","Only fixed width","Only images","Only JavaScript"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a media query in CSS?",
+a:["A rule for applying styles based on conditions such as screen size","A database query","A JavaScript loop","A network request"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is CSS animation used for?",
+a:["Creating animated visual effects","Creating databases","Running servers","Encrypting files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a website?",
+a:["A collection of web pages/resources","A CPU","A keyboard","A storage chip"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a web page?",
+a:["A document/resource displayed in a web browser","A CPU","A hard disk","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a domain?",
+a:["A human-readable name identifying an internet resource/site","A CPU core","A file extension","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is web hosting?",
+a:["Providing server space/services for websites","Editing photos","Installing RAM","Typing documents"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a CDN?",
+a:["Content Delivery Network","Computer Data Node","Central Digital Network","Content Data Number"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a cookie in web browsing?",
+a:["Small piece of data stored by a website/browser","A computer virus always","A CPU component","A monitor setting"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a session in web applications?",
+a:["A period/state of interaction between user and application","A CPU process only","A keyboard shortcut","A file format"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a web server?",
+a:["Server that delivers web content/services","A keyboard","A monitor","A spreadsheet"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is REST commonly associated with?",
+a:["Web APIs and resource-based communication","Photo editing","CPU architecture","Keyboard design"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a URL scheme such as https?",
+a:["Protocol used to access a resource","File name","Password","CPU type"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a search engine?",
+a:["A service for finding information on the web","A CPU","A printer","A storage drive"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an online account?",
+a:["A user identity/profile on an online service","A CPU","A monitor","A cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is cloud computing useful for?",
+a:["On-demand computing/storage/services over networks","Only offline typing","Only printing","Only keyboard control"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is edge computing?",
+a:["Processing data closer to where it is generated/used","Only cloud storage","Only keyboard processing","Only printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is IoT?",
+a:["Internet of Things","Internet of Technology","Input Online Tool","Internal Object Transfer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"An IoT device is typically what?",
+a:["A physical device connected to a network and capable of data exchange","Only a monitor","Only a printer","Only a keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is big data?",
+a:["Very large/complex datasets requiring specialized processing","A large monitor","A large keyboard","A large printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is data mining?",
+a:["Discovering useful patterns in datasets","Deleting files","Mining hardware","Building keyboards"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a firewall rule?",
+a:["A rule controlling allowed/blocked network traffic","A CSS rule","A keyboard shortcut","A database row"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a secure website usually indicated by?",
+a:["HTTPS","FTP only","HTTP only","FILE"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a username?",
+a:["Name/identifier used to identify an account","A CPU","A password","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a password?",
+a:["Secret credential used for authentication","A monitor","A file extension","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Why should passwords not be reused across important accounts?",
+a:["A breach of one account could affect others","It makes typing faster","It increases screen size","It improves Wi-Fi"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is multi-factor authentication?",
+a:["Using multiple authentication factors","Using multiple keyboards","Using multiple monitors","Using multiple browsers only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Which is an example of a knowledge factor in authentication?",
+a:["Password","Fingerprint","Security key device","Face scan"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Which is an example of a possession factor?",
+a:["Security token/device","Password","Fingerprint","Face"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Which is an example of an inherence factor?",
+a:["Fingerprint","Password","Security token","Username"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is phishing prevention best supported by?",
+a:["Checking links and verifying the sender","Clicking every link","Sharing passwords","Disabling updates"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What should you do with a suspicious email attachment?",
+a:["Avoid opening it until verified","Open immediately","Forward to everyone","Enter your password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is software piracy?",
+a:["Unauthorized copying/use of software","Installing official updates","Using open-source software","Creating backups"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is copyright?",
+a:["Legal protection for original creative works","A computer virus","A network protocol","A storage device"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is open-source software?",
+a:["Software whose source code is available under its license","Always illegal software","Only paid software","Hardware"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a license in software?",
+a:["Terms governing how software may be used/distributed","A CPU","A monitor","A virus"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an update patch?",
+a:["A software change that fixes or improves a system","A keyboard","A cable","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is troubleshooting?",
+a:["Systematically finding and resolving problems","Writing only code","Printing documents","Deleting files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is rebooting?",
+a:["Restarting a computer/system","Deleting files","Installing RAM","Opening a browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is BIOS/UEFI used for?",
+a:["Firmware interface involved in starting/configuring hardware","Web browsing","Photo editing","Database management"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What happens during booting?",
+a:["The system initializes hardware and loads an operating system","Files are automatically deleted","The monitor is manufactured","The keyboard is formatted"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a desktop in a GUI?",
+a:["The main visual workspace","A CPU","A network cable","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is an icon?",
+a:["A small graphical representation of an item/action","A CPU","A password","A network protocol"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is drag and drop?",
+a:["Moving an item by pressing and dragging it","A network protocol","A programming language","A database query"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a menu in software?",
+a:["A list of commands/options","A CPU","A storage device","A cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a notification?",
+a:["A message informing the user about an event/status","A CPU component","A file format","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a download?",
+a:["Receiving data from a remote system to your device","Sending data only","Deleting data","Encrypting data"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an upload?",
+a:["Sending data from your device to a remote system","Receiving data only","Deleting files","Formatting a disk"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is streaming?",
+a:["Playing media while data is delivered over a network","Printing media","Storing RAM","Editing CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a digital file?",
+a:["Data stored electronically","A physical book","A keyboard","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a folder?",
+a:["A container for organizing files","A CPU","A browser","A network protocol"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is file compression?",
+a:["Reducing file size using an encoding method","Increasing file size","Deleting a file","Printing a file"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an archive?",
+a:["A collection of files stored together","A CPU","A monitor","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Lossless compression means what?",
+a:["Original data can be perfectly recovered","Some data is always lost","File is deleted","Data is encrypted"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Lossy compression means what?",
+a:["Some information is discarded to reduce size","All data is preserved exactly","File is deleted","Data becomes binary only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"JPEG is commonly used for what?",
+a:["Images/photos","Audio only","Programs only","Databases only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"MP3 is commonly used for what?",
+a:["Audio","Images","Web pages","Databases"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"MP4 is commonly used for what?",
+a:["Video/media","Text only","Database only","CPU instructions"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"PNG is commonly useful for what type of image?",
+a:["Images with transparency/lossless compression","Audio","Video","Executable programs"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an executable extension commonly used on Windows?",
+a:[".exe",".jpg",".txt",".mp3"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a text file extension commonly used?",
+a:[".txt",".exe",".mp4",".png"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an image file extension?",
+a:[".jpg",".exe",".txt",".js"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an audio file extension?",
+a:[".mp3",".html",".css",".exe"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a video file extension?",
+a:[".mp4",".txt",".css",".js"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is hexadecimal number system based on?",
+a:["16 symbols","2 symbols","8 symbols","10 symbols"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What digits are used in decimal number system?",
+a:["0–9","0–1","0–7","A–F"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What digits are used in octal number system?",
+a:["0–7","0–9","0–1","A–F"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What does ASCII represent?",
+a:["Character encoding standard","CPU architecture","Network protocol","Storage format"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Unicode is mainly used for what?",
+a:["Representing text characters across many writing systems","Network routing","CPU cooling","File compression"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a character encoding?",
+a:["Mapping characters to numeric/binary representations","A monitor setting","A CPU type","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is an email address used for?",
+a:["Sending/receiving electronic mail","Running CPU","Storing RAM","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an email attachment?",
+a:["A file sent along with an email","A password","A CPU","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is end-to-end encryption intended to provide?",
+a:["Protection of communication so only endpoints can read it","Faster CPU","More storage","Better screen resolution"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is privacy?",
+a:["Control/protection of personal information","Computer speed","Storage size","Screen brightness"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a computer network?",
+a:["Connected devices that communicate/share resources","A single keyboard","A single monitor","A single file"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a LAN commonly used for?",
+a:["Networking devices in a limited area","Connecting continents only","Satellite communication only","Audio editing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a WAN commonly used for?",
+a:["Connecting networks over large geographic areas","Connecting one keyboard","Printing","Photo editing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is the Internet?",
+a:["A global network of interconnected networks","A single computer","A single website","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an intranet?",
+a:["A private network within an organization","The entire public Internet","A CPU","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an extranet?",
+a:["A controlled private network that may provide access to authorized external users","A CPU","A browser","A file type"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is network latency?",
+a:["Delay in data communication","Storage capacity","CPU speed","Screen resolution"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is bandwidth?",
+a:["Data transfer capacity of a network connection","CPU temperature","Storage type","Screen size"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a packet in networking?",
+a:["A unit of data transmitted over a network","A keyboard key","A file extension","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is packet loss?",
+a:["Packets failing to reach their destination","Deleting a folder","RAM failure only","Screen flickering"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a network switch?",
+a:["Device connecting devices within a network","A browser","A CPU","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an Ethernet cable commonly used for?",
+a:["Wired networking","Wireless networking","Audio recording","Video editing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a modem commonly associated with?",
+a:["Connecting to an Internet service","Printing","Scanning","Typing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a router commonly responsible for?",
+a:["Forwarding traffic between networks","Printing","Typing","Displaying images"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is DHCP used for?",
+a:["Automatically assigning network configuration such as IP addresses","Encrypting files","Printing","Editing images"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is DNS used for?",
+a:["Resolving domain names to network addresses","Changing passwords","Printing","Playing music"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a domain name system?",
+a:["A system for translating domain names to IP information","A storage system","A programming language","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a URL?",
+a:["Address of a resource on the web","A CPU","A keyboard","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a protocol?",
+a:["A set of rules for communication","A monitor","A storage device","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does HTTP provide?",
+a:["Rules for transferring web resources","Only email","Only printing","Only storage"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What does HTTPS add to HTTP?",
+a:["Encryption/security through TLS","More storage","A bigger screen","A faster CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is TLS?",
+a:["A security protocol used to protect network communications","A programming language","A file format","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a digital certificate commonly used for?",
+a:["Binding an identity to a public key and enabling secure communication","Increasing RAM","Printing","File compression"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is public-key cryptography?",
+a:["Cryptography using a public/private key pair","Using only one password","Deleting data","Using a monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a private key?",
+a:["A secret cryptographic key that must be protected","A public username","A monitor setting","A file extension"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a public key?",
+a:["A cryptographic key that can be shared","A private password","A CPU","A storage device"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is hashing?",
+a:["Transforming data into a fixed-size digest","Encrypting with a password only","Deleting data","Compressing images only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Why are password hashes used?",
+a:["To avoid storing passwords directly in readable form","To increase screen brightness","To print passwords","To increase RAM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a salt in password hashing?",
+a:["Random data added before hashing to make attacks harder","A network cable","A CPU","A file extension"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a virus?",
+a:["A type of malicious software","A monitor","A keyboard","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a worm?",
+a:["Malware that can spread across systems/networks","A CPU","A browser","A file extension"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a Trojan?",
+a:["Malware disguised as legitimate software","A storage device","A monitor","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is spyware?",
+a:["Software designed to secretly monitor/collect information","A browser","A CPU","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is adware?",
+a:["Software that displays unwanted advertisements","A CPU","A storage device","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a botnet?",
+a:["A network of compromised devices controlled together","A web browser","A database","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a vulnerability?",
+a:["A weakness that can be exploited","A computer screen","A keyboard key","A file format"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a security patch?",
+a:["Update that fixes a security vulnerability","A new monitor","A keyboard","A storage drive"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is least privilege?",
+a:["Giving users only the access they need","Giving everyone administrator access","Deleting accounts","Disabling passwords"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is zero-day vulnerability?",
+a:["A vulnerability unknown or not yet patched by the relevant vendor","A computer with zero storage","A deleted file","A zero-byte image"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is cyber hygiene?",
+a:["Good practices for maintaining digital security","Cleaning a keyboard only","Deleting files","Installing games"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Why should software be updated regularly?",
+a:["To receive fixes, improvements and security patches","To delete all files","To reduce security","To remove the keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a backup?",
+a:["A separate copy of data","A virus","A browser","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is the 3-2-1 backup rule generally about?",
+a:["Maintaining multiple copies on different media with an offsite copy","Using 3 passwords","Using 2 CPUs","Using 1 monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a recycle bin?",
+a:["Temporary location for deleted files","A CPU","A browser","A network"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is formatting a storage device?",
+a:["Preparing/reorganizing its file system","Increasing CPU speed","Changing screen color","Creating Wi-Fi"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is partitioning a disk?",
+a:["Dividing storage into logical sections","Deleting the CPU","Increasing monitor resolution","Creating a browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a file system example?",
+a:["NTFS","HTML","CSS","HTTP"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is FAT32?",
+a:["A file system","A browser","A CPU","A programming language"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is NTFS?",
+a:["A Windows file system","A browser","A programming language","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is Linux?",
+a:["An operating system/kernel ecosystem","A web browser","A database only","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is Ubuntu?",
+a:["A Linux distribution","A browser","A CPU","A file format"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is Windows?",
+a:["An operating system family","A programming language","A browser only","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is macOS?",
+a:["An Apple operating system","A browser","A programming language","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is Android?",
+a:["A mobile operating system","A CPU","A browser","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is iOS?",
+a:["Apple mobile operating system","A web browser","A database","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is Linux kernel?",
+a:["Core component of Linux operating systems","A browser","A database","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is open-source licensing important for?",
+a:["Defining how software can be used, modified and distributed","Increasing CPU speed","Changing monitor color","Deleting files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is freeware?",
+a:["Software available to use without a purchase fee, subject to its license","Always open-source","Always illegal","Hardware"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is shareware?",
+a:["Software distributed for trial/evaluation, often with limitations","A CPU","A network protocol","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a compiler optimization?",
+a:["Transforming code to improve performance or resource use while preserving behavior","Deleting code randomly","Changing monitor size","Installing RAM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an IDE used for?",
+a:["Writing, running and debugging code","Browsing only","Printing only","Watching videos only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is VS Code?",
+a:["A source-code editor","An operating system","A CPU","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is debugging in VS Code?",
+a:["Finding and fixing program errors","Changing hardware","Printing documents","Browsing websites"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a terminal?",
+a:["Text-based interface for running commands","A monitor","A CPU","A storage chip"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a command?",
+a:["Instruction given to a computer/system","A monitor","A file","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a shell?",
+a:["Program that interprets commands","A monitor","A CPU","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is an environment variable?",
+a:["Named configuration value available to processes/programs","A monitor","A keyboard","A browser tab"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a software dependency?",
+a:["Another package/component required by software","A monitor","A keyboard","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is package management?",
+a:["Installing, updating and managing software packages","Managing printers only","Editing photos","Changing screen size"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is npm commonly associated with?",
+a:["JavaScript/Node.js package management","Windows booting","Database hardware","Video editing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is Node.js?",
+a:["JavaScript runtime environment","A browser only","A database only","An operating system"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is asynchronous programming?",
+a:["Programming where operations can progress without blocking the entire flow","Only running one command","Formatting a disk","Changing screen size"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a callback function?",
+a:["A function passed to be executed later/in response to an event","A CPU","A browser","A storage device"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a Promise in JavaScript?",
+a:["An object representing eventual completion/failure of an async operation","A password","A database","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What does async/await help with?",
+a:["Writing asynchronous JavaScript in a more readable style","Changing CSS colors","Creating hardware","Formatting disks"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an exception in programming?",
+a:["An abnormal condition/error during program execution","A monitor","A keyboard","A file"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is error handling?",
+a:["Managing errors so software can respond safely","Deleting errors manually only","Changing hardware","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is memory leak?",
+a:["Program unintentionally retaining memory it no longer needs","A broken monitor","A virus always","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is garbage collection?",
+a:["Automatic management/reclamation of unused memory in some languages","Deleting all files","Cleaning a keyboard","Formatting a disk"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a pointer in languages such as C?",
+a:["A value representing a memory address","A mouse","A browser","A file"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a function?",
+a:["Reusable block of code that performs a task","A monitor","A storage device","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a loop used for?",
+a:["Repeating instructions","Displaying only images","Saving passwords","Connecting a monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an array index?",
+a:["Position used to access an array element","A CPU address","A network cable","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a linked list?",
+a:["A data structure made of nodes connected by links/references","A browser","A network cable","A file format"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a tree data structure?",
+a:["Hierarchical collection of connected nodes","A monitor","A browser","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a graph data structure?",
+a:["Collection of vertices/nodes connected by edges","A chart only","A monitor","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a binary tree?",
+a:["A tree where nodes have at most two children","A tree with binary files","A network cable","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is sorting?",
+a:["Arranging data according to an order","Deleting data","Encrypting files","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is searching in algorithms?",
+a:["Finding a target item in data","Deleting data","Formatting files","Changing monitor settings"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is linear search?",
+a:["Checking elements sequentially until a match is found","Dividing sorted data repeatedly","Deleting files","Sorting images"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is binary search?",
+a:["Searching a sorted dataset by repeatedly dividing the search range","Searching randomly","Sorting data","Deleting data"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a stack?",
+a:["LIFO data structure","FIFO data structure","Database","Network"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a queue?",
+a:["FIFO data structure","LIFO data structure","Browser","CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a hash table?",
+a:["Data structure using key-based hashing for lookup","A monitor","A browser","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is recursion?",
+a:["A function calling itself directly or indirectly","A file format","A browser","A network"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is pseudocode?",
+a:["Informal description of an algorithm using programming-like steps","Executable code only","A virus","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a flowchart?",
+a:["Diagram representing a process/algorithm","A CPU","A browser","A storage device"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a decision symbol in a common flowchart?",
+a:["Diamond","Circle","Triangle","Star"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a start/end symbol commonly shown as?",
+a:["Oval/terminator","Diamond","Rectangle","Arrow only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a process symbol in a common flowchart?",
+a:["Rectangle","Diamond","Oval","Circle"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a database management system?",
+a:["Software for creating/managing databases","A browser","A keyboard","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does DBMS stand for?",
+a:["Database Management System","Data Backup Management Software","Digital Base Machine System","Database Machine Service"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is SQL?",
+a:["Structured Query Language","Simple Question Language","System Query Link","Structured Queue Logic"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a transaction in a database?",
+a:["A logical unit of database work","A browser tab","A CPU","A file extension"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What does ACID in databases relate to?",
+a:["Transaction properties","Network cables","Web design","Image formats"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a relational table made of?",
+a:["Rows and columns","Only images","Only programs","Only passwords"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a row in a database table?",
+a:["A record","A database server","A password","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a column in a database table?",
+a:["A field/attribute","A record only","A browser","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a database index used for?",
+a:["Improving data lookup performance","Deleting data","Encrypting images","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is cloud backup?",
+a:["Backup stored on remote cloud infrastructure","RAM","CPU cache","Keyboard memory"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is online storage?",
+a:["Storage accessed through a network/Internet","CPU","Keyboard","Monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a mobile app?",
+a:["Software designed to run on mobile devices","A CPU","A cable","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a smartphone?",
+a:["Mobile computing device with communication capabilities","A printer","A monitor","A server only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is GPS?",
+a:["Global Positioning System","General Processing System","Global Program Service","Graphic Position Software"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is Bluetooth commonly used for?",
+a:["Connecting nearby wireless devices","Long-distance satellite communication only","Printing newspapers","CPU processing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is NFC?",
+a:["Near Field Communication","Network File Control","New Frequency Connection","Near File Computer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a QR scanner used for?",
+a:["Reading QR codes","Increasing RAM","Printing","Cooling CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a touchscreen?",
+a:["Display that can detect touch input","Only a monitor","A keyboard","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is biometric authentication?",
+a:["Authentication using biological characteristics","Password only","Username only","IP address"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Which is a biometric method?",
+a:["Fingerprint","Username","Password","Email"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is facial recognition?",
+a:["Identifying/verifying a person using facial features","Changing wallpaper","Encrypting files","Scanning documents"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is artificial neural network?",
+a:["Computational model inspired by biological neural networks","A network cable","A CPU fan","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a chatbot?",
+a:["Program that communicates conversationally with users","A hard disk","A monitor","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is virtual reality?",
+a:["Computer-generated immersive environment","A printer","A database","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is augmented reality?",
+a:["Digital information overlaid on the real world","A CPU","A database","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a video game?",
+a:["Interactive digital entertainment software","A CPU","A printer","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is game development?",
+a:["Creating interactive games using software and assets","Only playing games","Printing documents","Managing emails"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a game engine?",
+a:["Software framework/tools for creating games","A CPU engine","A printer","A browser only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is collision detection in games?",
+a:["Detecting when game objects intersect or contact","Saving scores","Playing music","Changing resolution"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a game loop?",
+a:["Repeated cycle that updates and renders a game","A hardware cable","A database","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is FPS in gaming?",
+a:["Frames Per Second","Files Per System","Fast Processing Speed","Frame Program Storage"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What does FPS measure in graphics?",
+a:["Frames displayed per second","File size","Internet password","CPU cores"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a pixel?",
+a:["A small element of a digital image/display","A CPU","A file","A network"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is resolution?",
+a:["Number/dimensions of pixels in an image/display","Internet speed","RAM size only","CPU temperature"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is refresh rate?",
+a:["How many times a display refreshes per second","Storage speed","CPU speed","Network bandwidth"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an animation?",
+a:["Visual change over time creating motion","A database","A CPU","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is CSS animation useful for?",
+a:["Adding visual motion/effects to webpages","Creating databases","Managing servers","Writing SQL"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is JavaScript DOM manipulation?",
+a:["Changing webpage elements/content through JavaScript","Changing CPU hardware","Formatting disks","Changing Wi-Fi"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an HTML element?",
+a:["A structural component defined by HTML","A CPU","A network cable","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is an HTML tag?",
+a:["Markup syntax used to define elements","A CPU","A browser","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a CSS selector?",
+a:["Pattern used to target elements for styling","A database query","A CPU","A file"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is JavaScript console?",
+a:["Tool for viewing logs/errors and executing JS in developer tools","A speaker","A CPU","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What are browser developer tools used for?",
+a:["Inspecting/debugging webpages and web applications","Printing documents","Formatting hard disks","Changing CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is responsive CSS?",
+a:["CSS that adapts layout/style to different screens","CSS without selectors","CSS only for desktop","CSS only for printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a mobile-friendly website?",
+a:["Website designed to work well on mobile screens","Website only for computers","Website without HTML","Website without CSS"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is web accessibility?",
+a:["Making web content usable by people with disabilities","Making internet faster","Changing CPU","Adding games only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is ARIA used for in web development?",
+a:["Improving accessibility semantics for assistive technologies","Creating databases","Encrypting files","Changing CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is semantic HTML useful for?",
+a:["Meaningful structure, accessibility and SEO","Increasing RAM","Creating CPU","Encrypting files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is SEO?",
+a:["Search Engine Optimization","System Engine Operation","Secure Email Organization","Search Entry Output"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a search engine?",
+a:["A system for finding information online","A CPU","A keyboard","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a website favicon?",
+a:["Small icon associated with a website/page","A CPU","A database","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a browser bookmark?",
+a:["Saved link to a webpage","A CPU","A password","A file system"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a web link?",
+a:["A reference that can take you to another resource","A CPU","A keyboard","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an email client?",
+a:["Software used to send/receive/manage email","A CPU","A browser only","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a contact list?",
+a:["Collection of stored contact information","A CPU","A network cable","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a notification setting?",
+a:["Controls how an app informs the user","CPU control","Storage format","Network protocol"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a password reset?",
+a:["Process of creating/recovering a new password","Deleting an account","Installing software","Formatting disk"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Why is backup important?",
+a:["It helps recover data after loss","It removes all files","It reduces security","It disables passwords"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Why should you lock your computer when away?",
+a:["To prevent unauthorized access","To increase CPU speed","To save internet","To increase storage"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a screen lock?",
+a:["Security mechanism requiring authentication to access device","A monitor repair","A file type","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a software license?",
+a:["Legal terms governing software use","A CPU","A password","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an app store?",
+a:["Platform for discovering/installing apps","A CPU shop only","A browser","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a notification?",
+a:["Information shown to alert a user","A CPU","A storage device","A cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a settings menu?",
+a:["Place where application/system options can be configured","A CPU","A database","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a screenshot shortcut commonly used for?",
+a:["Capturing the current screen","Deleting files","Opening CPU","Changing RAM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a clipboard?",
+a:["Temporary area for copied/cut data","A CPU","A monitor","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Ctrl+C copies selected content to what?",
+a:["Clipboard","Recycle Bin","CPU","Printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Ctrl+V pastes content from what?",
+a:["Clipboard","CPU","Monitor","Internet"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Ctrl+Z commonly performs what?",
+a:["Undo","Save","Print","Paste"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Ctrl+F commonly performs what?",
+a:["Find/Search","Format","Forward","File"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"Alt+Tab commonly does what on Windows?",
+a:["Switches between open apps/windows","Deletes files","Prints","Saves"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a taskbar?",
+a:["Interface area for apps/system controls","A CPU","A database","A file"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a desktop shortcut?",
+a:["Quick link to an application/file/resource","A CPU","A monitor","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a file manager?",
+a:["Software for browsing/managing files and folders","A CPU","A browser","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a recycle bin useful for?",
+a:["Recovering recently deleted files in many systems","Increasing RAM","Changing Wi-Fi","Editing videos"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a software installer?",
+a:["Program/package used to install software","A monitor","A CPU","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an update?",
+a:["Newer software version or patch","A keyboard","A CPU","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a driver?",
+a:["Software that helps an operating system communicate with hardware","A browser","A database","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Why are device drivers important?",
+a:["They enable OS/software to interact correctly with hardware","They increase internet speed only","They create websites","They store passwords"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a printer driver?",
+a:["Software enabling the OS to communicate with a printer","A CPU","A browser","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is plug and play?",
+a:["Automatic detection/configuration of compatible hardware","A browser","A programming language","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is firmware?",
+a:["Software stored in hardware that provides low-level control","A browser","A spreadsheet","A password"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a BIOS/UEFI firmware responsible for during startup?",
+a:["Initializing hardware and starting the boot process","Playing videos","Browsing websites","Editing documents"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a power supply unit (PSU)?",
+a:["Provides electrical power to computer components","Stores files","Processes code","Displays images"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a CPU core?",
+a:["An individual processing unit within a CPU","A storage device","A monitor","A cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is clock speed commonly measured in?",
+a:["Hertz (Hz)","Bytes","Pixels","Volts only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a GPU used for?",
+a:["Graphics and parallel processing","Typing","Printing","Scanning"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a motherboard?",
+a:["Main circuit board connecting major components","A browser","A file","A network protocol"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a USB port?",
+a:["Interface for connecting USB devices","A CPU","A monitor","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is HDMI commonly used for?",
+a:["Digital audio/video connection","Database storage","Internet routing","CPU cooling"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is Bluetooth pairing?",
+a:["Establishing a connection between compatible Bluetooth devices","Formatting a disk","Installing RAM","Creating a website"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is Wi-Fi password used for?",
+a:["Securing access to a wireless network","Increasing CPU speed","Printing","Changing monitor resolution"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a wireless access point?",
+a:["Device that provides wireless network access","A CPU","A printer","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is network authentication?",
+a:["Verifying a user/device before granting network access","Changing CPU speed","Printing","Formatting"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is network encryption?",
+a:["Protecting network data from unauthorized reading","Increasing bandwidth","Printing data","Deleting files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a secure Wi-Fi standard commonly used today?",
+a:["WPA2/WPA3","HTTP","FTP","SMTP"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a VPN useful for?",
+a:["Creating an encrypted connection to a remote network/service","Increasing CPU cores","Printing","Changing screen resolution"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is remote access?",
+a:["Accessing a computer/system from another location","Printing locally","Editing photos","Changing RAM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is remote desktop software used for?",
+a:["Controlling/viewing a computer remotely","Printing","Scanning","CPU manufacturing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a server room/data center?",
+a:["Facility containing computing/network/storage infrastructure","A browser","A keyboard","A file"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is redundancy in infrastructure?",
+a:["Having additional components/resources to improve reliability","Deleting backups","Reducing security","Using one component only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is uptime?",
+a:["Time a system is available/operational","CPU speed","Storage capacity","Screen size"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is downtime?",
+a:["Period when a system/service is unavailable","Internet speed","RAM size","CPU cores"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is scalability?",
+a:["Ability of a system to handle increased workload","Ability to print","Screen resolution","Keyboard speed"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is load balancing?",
+a:["Distributing workloads across resources/servers","Deleting files","Formatting disks","Increasing screen size"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a database server?",
+a:["Server providing database services/data access","A monitor","A keyboard","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an application server?",
+a:["Server providing application/business logic/services","A printer","A keyboard","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a microservice?",
+a:["Small independently deployable service focused on a specific capability","A CPU","A browser","A file format"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is software architecture?",
+a:["Structure and organization of software components","A keyboard","A monitor","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is an object in programming?",
+a:["An entity containing data and/or behavior","A CPU","A monitor","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a class in OOP?",
+a:["Blueprint for creating objects","A keyboard","A database","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is an interface in programming?",
+a:["A contract specifying operations/behavior that implementations provide","A monitor","A keyboard","A storage device"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a library in programming?",
+a:["Reusable collection of code","A physical library only","A CPU","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a framework?",
+a:["Structured set of tools/libraries for building applications","A keyboard","A monitor","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is dependency injection?",
+a:["Providing dependencies to a component rather than having it create them itself","Installing RAM","Deleting files","Changing CSS"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is modular programming?",
+a:["Dividing software into manageable modules","Using one giant file only","Deleting code","Formatting disks"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is code?",
+a:["Instructions written for a computer","A monitor","A keyboard","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is source code written in?",
+a:["A programming language","A monitor","A CPU","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a programming language?",
+a:["Formal language used to write computer programs","A hardware device","A monitor","A cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is syntax?",
+a:["Rules for how code is written","A CPU","A browser","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a syntax error?",
+a:["Error caused by code not following language grammar","Hardware failure","Network cable failure","Printer issue"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a logical error?",
+a:["Program runs but produces incorrect results","Computer cannot turn on","Monitor broken","Keyboard missing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a runtime error?",
+a:["Error occurring during program execution","A CSS color","A keyboard key","A file extension"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a bug fix?",
+a:["Change that corrects a software problem","A new monitor","A keyboard","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is testing?",
+a:["Evaluating software to find defects and verify behavior","Deleting files","Installing RAM","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is regression testing?",
+a:["Testing to ensure changes did not break existing functionality","Testing CPU temperature","Testing a keyboard","Testing internet cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a test case?",
+a:["Defined inputs, conditions and expected results for a test","A CPU","A browser","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is quality assurance?",
+a:["Processes used to improve and maintain software quality","Changing hardware","Printing","Editing photos"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is code review?",
+a:["Reviewing source code to find issues and improve quality","Deleting code","Running games","Changing monitor settings"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is documentation?",
+a:["Information explaining software, systems or processes","A CPU","A keyboard","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a README file commonly used for?",
+a:["Project information/instructions","CPU control","Video playback","Network routing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an open-source repository?",
+a:["Code project whose source is available under a license","A CPU","A monitor","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a pull request?",
+a:["Proposal to merge code changes into a repository branch","A CPU command","A printer job","A browser tab"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a code fork?",
+a:["A separate copy of a repository for independent development","A keyboard","A monitor","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is collaboration in software development?",
+a:["Working together on software/code","Only gaming","Only printing","Only browsing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is an issue in a software repository?",
+a:["Tracked task, bug, feature request or problem","A CPU","A browser","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a release?",
+a:["A published version of software","A CPU","A keyboard","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is semantic versioning commonly written as?",
+a:["MAJOR.MINOR.PATCH","YEAR.MONTH.DAY only","A.B.C.D.E","VERSION only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a patch release generally for?",
+a:["Bug fixes and small compatible changes","Completely new product only","Hardware replacement","Deleting software"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an operating system update?",
+a:["New OS version or patch","A keyboard","A monitor","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a notification badge?",
+a:["Visual indicator showing alerts/counts","A CPU","A keyboard","A file"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is dark mode?",
+a:["UI color theme using darker backgrounds","Computer shutdown","A virus","A network mode"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a user interface?",
+a:["The part through which users interact with software","A CPU","A cable","A storage chip"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is UX?",
+a:["User Experience","Universal Extension","User Execution","Utility Experience"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is UI?",
+a:["User Interface","Universal Internet","User Input only","Utility Index"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is usability testing?",
+a:["Testing how easily users can complete tasks with a product","Testing CPU","Testing RAM","Testing printer ink"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a wireframe in UI design?",
+a:["Basic visual layout of a page/interface","A network cable","A CPU","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a prototype?",
+a:["Early model/version used to test ideas","A CPU","A keyboard","A browser"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is responsive UI?",
+a:["Interface adapting to different devices/screen sizes","A CPU","A database","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a button in a user interface?",
+a:["Control that triggers an action","A CPU","A database","A cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a menu?",
+a:["Collection of options/actions","A CPU","A monitor","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a modal window?",
+a:["Temporary dialog/overlay requiring or allowing user interaction","A CPU","A database","A cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a tooltip?",
+a:["Small contextual information shown near an interface element","A CPU","A browser","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a form input?",
+a:["Control for collecting user data","A CPU","A monitor","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a checkbox?",
+a:["Control allowing one or more options to be selected","A CPU","A browser","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a radio button?",
+a:["Control typically used to select one option from a group","A CPU","A keyboard","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a dropdown?",
+a:["Control that displays a list of selectable options","A CPU","A browser","A network"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Easy",
+q:"What is a text field?",
+a:["Input area for entering text","A CPU","A monitor","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is validation?",
+a:["Checking whether input meets required rules","Deleting input","Printing input","Encrypting CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"Why is server-side validation important?",
+a:["Client-side checks can be bypassed, so server must validate trusted data","It increases screen size","It changes CSS","It makes keyboard faster"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is sanitization?",
+a:["Cleaning/transforming input to reduce unsafe content","Deleting all files","Changing RAM","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is SQL injection?",
+a:["Attack that manipulates database queries through unsafe input","A CPU attack","A printer issue","A screen problem"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is XSS?",
+a:["Cross-Site Scripting","Cross System Storage","Extra Secure Script","XML Style System"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What does XSS exploit?",
+a:["Injection of malicious scripts into web contexts","CPU temperature","Printer ink","RAM only"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is CSRF?",
+a:["Cross-Site Request Forgery","Computer Secure Remote File","Cross System Resource Format","Client Server Request Function"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is secure coding?",
+a:["Writing software with security risks considered and reduced","Writing code without testing","Only using CSS","Only using HTML"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is input validation?",
+a:["Checking input against expected rules","Printing input","Deleting input","Encrypting CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is access control?",
+a:["Controlling who can access which resources","Changing screen size","Editing images","Increasing RAM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is role-based access control?",
+a:["Access permissions based on user roles","Access based only on monitor size","Access based on CPU speed","Access based on file color"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is auditing in cybersecurity?",
+a:["Reviewing/logging activity for security and compliance","Cleaning a keyboard","Installing RAM","Changing wallpaper"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a security log?",
+a:["Record of security-relevant events/activity","A CPU","A browser","A monitor"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is an alert in cybersecurity?",
+a:["Notification of potentially important/security-related activity","A printer","A keyboard","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is incident response?",
+a:["Process for detecting, containing and recovering from security incidents","Installing games","Changing screen resolution","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is disaster recovery?",
+a:["Restoring systems/data after a major disruption","Changing a password only","Printing","Editing images"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is business continuity?",
+a:["Keeping critical operations functioning during disruptions","Increasing CPU speed","Creating websites only","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a data center?",
+a:["Facility housing servers, storage and networking equipment","A browser","A keyboard","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is virtualization in a data center useful for?",
+a:["Running multiple virtual systems on physical hardware","Only printing","Only typing","Only browsing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a cloud region?",
+a:["Geographic area containing cloud infrastructure","A browser","A CPU","A database"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is high availability?",
+a:["Designing systems to remain operational with minimal downtime","Increasing screen size","Changing passwords","Deleting files"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is fault tolerance?",
+a:["Ability to continue operating despite certain failures","A CPU speed","A monitor setting","A keyboard feature"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a distributed system?",
+a:["System whose components run across multiple networked computers","A single CPU","A single monitor","A single keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is distributed computing?",
+a:["Processing performed across multiple networked machines","Printing","Photo editing","Single-device typing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is parallel processing?",
+a:["Performing multiple computations simultaneously","Deleting files","Browsing only","Printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is multicore processing?",
+a:["Using multiple CPU cores to execute work","Using multiple monitors only","Using multiple keyboards","Using multiple printers"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is GPU parallelism useful for?",
+a:["Performing many similar computations concurrently","Only typing","Only printing","Only browsing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is artificial intelligence?",
+a:["Systems performing tasks associated with intelligent behavior","A keyboard","A monitor","A cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is machine learning?",
+a:["A method where systems learn patterns from data","A hardware device","A monitor","A printer"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is deep learning?",
+a:["Machine learning using multi-layer neural networks","A hard disk","A browser","A keyboard"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a training dataset?",
+a:["Data used to train a machine learning model","A CPU","A monitor","A cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a validation dataset?",
+a:["Data used to tune/evaluate model choices during development","A keyboard","A browser","A CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is a test dataset in machine learning?",
+a:["Held-out data used to estimate generalization performance","A CPU","A monitor","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is model inference?",
+a:["Using a trained model to produce predictions/outputs","Training from scratch only","Deleting a model","Formatting storage"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is computer vision used for?",
+a:["Analyzing images and video","Only audio","Only databases","Only printing"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is speech recognition?",
+a:["Converting spoken language into machine-readable text/data","Printing speech","Editing images","Increasing RAM"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is text-to-speech?",
+a:["Generating spoken audio from text","Converting image to text","Printing text","Encrypting text"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is natural language generation?",
+a:["Generating human-like language from data/instructions","Creating CPU","Printing documents only","Scanning images"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is a prompt in generative AI?",
+a:["Instruction/input given to an AI system","A CPU","A browser","A network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is an AI hallucination?",
+a:["AI-generated information that is incorrect or unsupported","Computer virus","Hardware failure","Network cable"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"Why should AI-generated information sometimes be verified?",
+a:["AI systems can produce incorrect information","AI cannot generate text","AI is always offline","AI never makes mistakes"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is model bias?",
+a:["Systematic tendency that can produce unfair or inaccurate outcomes","CPU temperature","Storage failure","Keyboard error"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Medium",
+q:"What is data privacy important for AI?",
+a:["Protecting personal/sensitive information used or processed by systems","Increasing screen size","Printing","Changing CPU"],
+c:0
+},
+
+{
+category:"Computer",difficulty:"Hard",
+q:"What is responsible AI?",
+a:["Developing and using AI with safety, fairness, privacy and accountability considerations","Only making AI faster","Only making AI cheaper","Only generating images"],
+c:0
+}
+
+];
+
+
+/* =========================================================
+   QUIZ ENGINE
+========================================================= */
+
+let filteredQuestions=[];
+let current=0;
+let score=0;
+let streak=0;
+let answered=false;
+let timer=null;
+let timeLeft=20;
+let best=
+    Number(
+        localStorage.getItem("gkQuizBest")
+    ) || 0;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const categorySelect=
+    document.getElementById("category");
+
+const difficultySelect=
+    document.getElementById("difficulty");
+
+const searchInput=
+    document.getElementById("search");
+
+const questionEl=
+    document.getElementById("question");
+
+const optionsEl=
+    document.getElementById("options");
+
+const categoryEl=
+    document.getElementById("categoryText");
+
+const scoreEl=
+    document.getElementById("score");
+
+const bestEl=
+    document.getElementById("best");
+
+const numberEl=
+    document.getElementById("number");
+
+const timerEl=
+    document.getElementById("timer");
+
+const streakEl=
+    document.getElementById("streak");
+
+const levelEl=
+    document.getElementById("level");
+
+const progressEl=
+    document.getElementById("progress");
+
+const feedbackEl=
+    document.getElementById("feedback");
+
+
+/* =========================
+   START
+========================= */
+
+function startQuiz(){
+
+    overlay.classList.add("hidden");
+
+    applyFilters();
+
+}
+
+
+/* =========================
+   FILTER
+========================= */
+
+function applyFilters(){
+
+    const cat=
+        categorySelect.value;
+
+    const diff=
+        difficultySelect.value;
+
+    const search=
+        searchInput.value
+        .toLowerCase()
+        .trim();
+
+
+    filteredQuestions=
+        questions.filter(q=>{
+
+            const categoryMatch=
+                cat==="All" ||
+                q.category===cat;
+
+            const difficultyMatch=
+                diff==="All" ||
+                q.difficulty===diff;
+
+            const searchMatch=
+                !search ||
+                q.q
+                .toLowerCase()
+                .includes(search);
+
+            return(
+                categoryMatch &&
+                difficultyMatch &&
+                searchMatch
+            );
+
+        });
+
+
+    if(filteredQuestions.length===0){
+
+        questionEl.textContent=
+            "No questions found.";
+
+        optionsEl.innerHTML="";
+
+        numberEl.textContent=
+            "0/0";
+
+        clearInterval(timer);
+
+        return;
+
+    }
+
+
+    current=0;
+
+    score=0;
+
+    streak=0;
+
+    showQuestion();
+
+}
+
+
+/* =========================
+   SHOW QUESTION
+========================= */
+
+function showQuestion(){
+
+    clearInterval(timer);
+
+    answered=false;
+
+    const q=
+        filteredQuestions[current];
+
+
+    categoryEl.textContent=
+        q.category;
+
+    questionEl.textContent=
+        q.q;
+
+    levelEl.textContent=
+        q.difficulty;
+
+    numberEl.textContent=
+        `${current+1}/${filteredQuestions.length}`;
+
+
+    optionsEl.innerHTML="";
+
+    feedbackEl.textContent=
+        "Choose the correct answer.";
+
+
+    q.a.forEach(
+        (answer,index)=>{
+
+            const btn=
+                document.createElement(
+                    "button"
+                );
+
+            btn.className=
+                "option";
+
+            btn.textContent=
+                `${String.fromCharCode(65+index)}. ${answer}`;
+
+            btn.onclick=
+                ()=>checkAnswer(
+                    index,
+                    btn
+                );
+
+            optionsEl.appendChild(
+                btn
+            );
+
+        }
+    );
+
+
+    const percent=
+        ((current+1)/
+        filteredQuestions.length)*
+        100;
+
+    progressEl.style.width=
+        percent+"%";
+
+
+    startTimer();
+
+    updateStats();
+
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+function startTimer(){
+
+    timeLeft=20;
+
+    timerEl.textContent=
+        timeLeft;
+
+
+    timer=setInterval(
+        ()=>{
+
+            timeLeft--;
+
+            timerEl.textContent=
+                timeLeft;
+
+
+            if(timeLeft<=0){
+
+                clearInterval(timer);
+
+                timeUp();
+
+            }
+
+        },
+        1000
+    );
+
+}
+
+
+/* =========================
+   TIME UP
+========================= */
+
+function timeUp(){
+
+    if(answered)
+        return;
+
+    answered=true;
+
+    streak=0;
+
+    const q=
+        filteredQuestions[current];
+
+
+    document
+        .querySelectorAll(".option")
+        .forEach(
+            (btn,index)=>{
+
+                btn.disabled=true;
+
+                if(index===q.c){
+
+                    btn.classList.add(
+                        "correct"
+                    );
+
+                }
+
+            }
+        );
+
+
+    feedbackEl.textContent=
+        `⏰ Time up! Correct answer: ${q.a[q.c]}`;
+
+}
+
+
+/* =========================
+   ANSWER
+========================= */
+
+function checkAnswer(
+    selected,
+    button
+){
+
+    if(answered)
+        return;
+
+    answered=true;
+
+    clearInterval(timer);
+
+
+    const q=
+        filteredQuestions[current];
+
+
+    document
+        .querySelectorAll(".option")
+        .forEach(
+            btn=>btn.disabled=true
+        );
+
+
+    if(selected===q.c){
+
+        button.classList.add(
+            "correct"
+        );
+
+        streak++;
+
+
+        /*
+           Base points + time bonus
+        */
+
+        const points=
+            10+
+            streak*2+
+            Math.floor(
+                timeLeft/2
+            );
+
+
+        score+=points;
+
+
+        feedbackEl.textContent=
+            `✅ Correct! +${points} points`;
+
+    }else{
+
+        button.classList.add(
+            "wrong"
+        );
+
+        streak=0;
+
+
+        document
+            .querySelectorAll(".option")
+            [q.c]
+            .classList.add(
+                "correct"
+            );
+
+
+        feedbackEl.textContent=
+            `❌ Wrong! Correct answer: ${q.a[q.c]}`;
+
+    }
+
+
+    updateStats();
+
+}
+
+
+/* =========================
+   NEXT
+========================= */
+
+function nextQuestion(){
+
+    if(filteredQuestions.length===0)
+        return;
+
+
+    if(current<
+       filteredQuestions.length-1){
+
+        current++;
+
+        showQuestion();
+
+    }else{
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* =========================
+   PREVIOUS
+========================= */
+
+function previousQuestion(){
+
+    if(current>0){
+
+        current--;
+
+        showQuestion();
+
+    }
+
+}
+
+
+/* =========================
+   RESTART
+========================= */
+
+function restartQuiz(){
+
+    applyFilters();
+
+}
+
+
+/* =========================
+   FINISH
+========================= */
+
+function finishQuiz(){
+
+    clearInterval(timer);
+
+    if(score>best){
+
+        best=score;
+
+        localStorage.setItem(
+            "gkQuizBest",
+            best
+        );
+
+    }
+
+    updateStats();
+
+
+    overlay.innerHTML=`
+
+        <h2>🏆 QUIZ COMPLETE!</h2>
+
+        <p>
+            Final Score:
+            <b>${score}</b>
+        </p>
+
+        <p>
+            Questions:
+            <b>${filteredQuestions.length}</b>
+        </p>
+
+        <p>
+            Best Score:
+            <b>${best}</b>
+        </p>
+
+        <button onclick="startQuiz()">
+            🔄 PLAY AGAIN
+        </button>
+
+    `;
+
+
+    overlay.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================
+   UPDATE STATS
+========================= */
+
+function updateStats(){
+
+    scoreEl.textContent=
+        score;
+
+    bestEl.textContent=
+        best;
+
+    streakEl.textContent=
+        streak;
+
+}
+
+
+/* =========================
+   SEARCH/FILTER EVENTS
+========================= */
+
+categorySelect.addEventListener(
+    "change",
+    applyFilters
+);
+
+difficultySelect.addEventListener(
+    "change",
+    applyFilters
+);
+
+searchInput.addEventListener(
+    "input",
+    applyFilters
+);
+
+
+/* =========================
+   INITIAL
+========================= */
+
+bestEl.textContent=
+    best;
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>Ultimate Penalty Shootout ⚽</title>
+
+<style>
+
+/* =========================
+   BASIC
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:
+        radial-gradient(
+            circle at top,
+            #173c68,
+            #050b14 75%
+        );
+    color:white;
+    min-height:100vh;
+    overflow-x:hidden;
+    touch-action:manipulation;
+    text-align:center;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    padding:8px 5px 4px;
+}
+
+.header h1{
+    font-size:clamp(23px,7vw,36px);
+    text-shadow:
+        0 3px 8px #000;
+}
+
+.header p{
+    color:#bce7ff;
+    font-size:12px;
+    margin-top:3px;
+}
+
+/* =========================
+   SCORE
+========================= */
+
+.scoreboard{
+    width:94%;
+    max-width:700px;
+    margin:6px auto;
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+    gap:7px;
+}
+
+.scoreBox{
+    background:
+        linear-gradient(
+            145deg,
+            #18314d,
+            #07111d
+        );
+    border:
+        1px solid #ffffff25;
+    border-radius:14px;
+    padding:7px;
+    box-shadow:
+        0 5px 15px #0008;
+}
+
+.scoreBox span{
+    display:block;
+    color:#9fb4c8;
+    font-size:11px;
+}
+
+.scoreBox strong{
+    font-size:22px;
+}
+
+/* =========================
+   GAME FIELD
+========================= */
+
+.game{
+    position:relative;
+
+    width:94%;
+    max-width:760px;
+
+    height:min(56vh,470px);
+    min-height:340px;
+
+    margin:8px auto;
+
+    overflow:hidden;
+
+    border:
+        3px solid #ffffff35;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #58bee9 0 36%,
+            #0b853b 36% 100%
+        );
+
+    box-shadow:
+        0 15px 40px #000b;
+}
+
+/* =========================
+   SKY
+========================= */
+
+.sun{
+    position:absolute;
+
+    width:60px;
+    height:60px;
+
+    right:8%;
+    top:7%;
+
+    border-radius:50%;
+
+    background:#ffe66d;
+
+    box-shadow:
+        0 0 35px #fff3a6;
+}
+
+.cloud{
+    position:absolute;
+
+    width:95px;
+    height:24px;
+
+    border-radius:30px;
+
+    background:white;
+
+    opacity:.82;
+}
+
+.cloud::before,
+.cloud::after{
+    content:"";
+
+    position:absolute;
+
+    background:white;
+
+    border-radius:50%;
+}
+
+.cloud::before{
+    width:40px;
+    height:40px;
+
+    left:15px;
+    top:-20px;
+}
+
+.cloud::after{
+    width:48px;
+    height:48px;
+
+    right:8px;
+    top:-25px;
+}
+
+.cloud1{
+    left:8%;
+    top:13%;
+}
+
+.cloud2{
+    right:27%;
+    top:21%;
+
+    transform:scale(.7);
+}
+
+/* =========================
+   CROWD
+========================= */
+
+.crowd{
+    position:absolute;
+
+    left:0;
+    top:30%;
+
+    width:100%;
+    height:48px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #17202c 0 9px,
+            #354454 9px 18px
+        );
+
+    border-top:
+        5px solid #465361;
+}
+
+/* =========================
+   GRASS
+========================= */
+
+.grass{
+    position:absolute;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+    height:65%;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #0a8238 0 45px,
+            #087632 45px 90px
+        );
+}
+
+/* =========================
+   FIELD LINES
+========================= */
+
+.line{
+    position:absolute;
+
+    border:
+        2px solid #ffffffaa;
+}
+
+.penaltyArea{
+    width:68%;
+    height:48%;
+
+    left:16%;
+    bottom:0;
+
+    border-bottom:0;
+}
+
+.smallArea{
+    width:38%;
+    height:27%;
+
+    left:31%;
+    bottom:0;
+
+    border-bottom:0;
+}
+
+.arc{
+    position:absolute;
+
+    width:150px;
+    height:70px;
+
+    left:
+        calc(50% - 75px);
+
+    bottom:14%;
+
+    border:
+        2px solid #ffffffaa;
+
+    border-bottom:0;
+
+    border-radius:
+        100px 100px 0 0;
+}
+
+/* =========================
+   GOAL
+========================= */
+
+.goal{
+    position:absolute;
+
+    width:63%;
+    height:39%;
+
+    left:18.5%;
+    top:11%;
+
+    z-index:2;
+
+    border:
+        7px solid white;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 17px,
+            #ffffff55 18px 20px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent 0 17px,
+            #ffffff55 18px 20px
+        );
+
+    box-shadow:
+        inset 0 0 20px #0006,
+        0 6px 16px #0008;
+}
+
+/* =========================
+   GOALKEEPER
+========================= */
+
+.goalkeeper{
+    position:absolute;
+
+    width:100px;
+    height:130px;
+
+    left:
+        calc(50% - 50px);
+
+    top:18%;
+
+    z-index:10;
+
+    transition:
+        transform .48s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+/* head */
+
+.gkHead{
+    position:absolute;
+
+    width:30px;
+    height:30px;
+
+    left:35px;
+    top:0;
+
+    border-radius:50%;
+
+    background:#d9966b;
+
+    border:
+        2px solid #603a27;
+}
+
+/* hair */
+
+.gkHair{
+    position:absolute;
+
+    width:31px;
+    height:13px;
+
+    left:34px;
+    top:-3px;
+
+    background:#171717;
+
+    border-radius:
+        20px 20px 5px 5px;
+}
+
+/* eyes */
+
+.gkEye{
+    position:absolute;
+
+    width:4px;
+    height:4px;
+
+    background:#111;
+
+    border-radius:50%;
+
+    top:14px;
+}
+
+.gkEye1{
+    left:43px;
+}
+
+.gkEye2{
+    left:53px;
+}
+
+/* body */
+
+.gkBody{
+    position:absolute;
+
+    width:44px;
+    height:50px;
+
+    left:28px;
+    top:29px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffda00,
+            #eaa900
+        );
+
+    border:
+        2px solid #806000;
+
+    border-radius:10px;
+}
+
+/* number */
+
+.gkNumber{
+    position:absolute;
+
+    left:41px;
+    top:39px;
+
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* arms */
+
+.gkArm{
+    position:absolute;
+
+    width:48px;
+    height:10px;
+
+    top:38px;
+
+    background:#d9966b;
+
+    border-radius:20px;
+
+    transform-origin:center;
+}
+
+.gkArmLeft{
+    left:-12px;
+    transform:rotate(25deg);
+}
+
+.gkArmRight{
+    right:-12px;
+    transform:rotate(-25deg);
+}
+
+/* gloves */
+
+.glove{
+    position:absolute;
+
+    width:17px;
+    height:17px;
+
+    background:#18d9ef;
+
+    border:
+        2px solid #006b7a;
+
+    border-radius:50%;
+
+    top:-4px;
+}
+
+.gkArmLeft .glove{
+    left:-8px;
+}
+
+.gkArmRight .glove{
+    right:-8px;
+}
+
+/* legs */
+
+.gkLeg{
+    position:absolute;
+
+    width:12px;
+    height:50px;
+
+    top:76px;
+
+    background:#26384a;
+
+    border-radius:8px;
+
+    transform-origin:top;
+}
+
+.gkLegLeft{
+    left:34px;
+    transform:rotate(7deg);
+}
+
+.gkLegRight{
+    left:53px;
+    transform:rotate(-7deg);
+}
+
+/* boots */
+
+.gkBoot{
+    position:absolute;
+
+    width:26px;
+    height:11px;
+
+    background:#111;
+
+    border-radius:8px;
+
+    top:118px;
+}
+
+.gkBootLeft{
+    left:22px;
+}
+
+.gkBootRight{
+    left:52px;
+}
+
+/* goalkeeper dives */
+
+.goalkeeper.diveLeft{
+    transform:
+        translateX(-145px)
+        rotate(-25deg);
+}
+
+.goalkeeper.diveRight{
+    transform:
+        translateX(145px)
+        rotate(25deg);
+}
+
+.goalkeeper.diveCenter{
+    transform:
+        translateY(18px)
+        scale(1.05);
+}
+
+/* =========================
+   PLAYER
+========================= */
+
+.player{
+    position:absolute;
+
+    width:110px;
+    height:155px;
+
+    left:
+        calc(50% - 55px);
+
+    bottom:3%;
+
+    z-index:12;
+
+    transform-origin:
+        bottom center;
+
+    transition:
+        transform .2s ease;
+}
+
+/* head */
+
+.playerHead{
+    position:absolute;
+
+    width:35px;
+    height:35px;
+
+    left:37px;
+    top:0;
+
+    border-radius:50%;
+
+    background:#d9966b;
+
+    border:
+        2px solid #603a27;
+}
+
+/* hair */
+
+.playerHair{
+    position:absolute;
+
+    width:37px;
+    height:15px;
+
+    left:36px;
+    top:-4px;
+
+    background:#151515;
+
+    border-radius:
+        20px 20px 5px 5px;
+}
+
+/* eyes */
+
+.playerEye{
+    position:absolute;
+
+    width:4px;
+    height:4px;
+
+    background:#111;
+
+    border-radius:50%;
+
+    top:16px;
+}
+
+.playerEye1{
+    left:47px;
+}
+
+.playerEye2{
+    left:58px;
+}
+
+/* body / jersey */
+
+.playerBody{
+    position:absolute;
+
+    width:48px;
+    height:56px;
+
+    left:31px;
+    top:35px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #e60000,
+            #ff3030,
+            #b90000
+        );
+
+    border:
+        2px solid #720000;
+
+    border-radius:10px;
+
+    transform-origin:
+        bottom center;
+
+    transition:
+        transform .2s ease;
+}
+
+/* number */
+
+.playerNumber{
+    position:absolute;
+
+    left:45px;
+    top:47px;
+
+    color:white;
+
+    font-size:21px;
+
+    font-weight:bold;
+}
+
+/* arms */
+
+.playerArm{
+    position:absolute;
+
+    width:50px;
+    height:10px;
+
+    top:46px;
+
+    background:#d9966b;
+
+    border-radius:10px;
+
+    transform-origin:center;
+
+    transition:
+        transform .2s ease;
+}
+
+.playerArmLeft{
+    left:-2px;
+
+    transform:
+        rotate(25deg);
+}
+
+.playerArmRight{
+    right:-2px;
+
+    transform:
+        rotate(-25deg);
+}
+
+/* legs */
+
+.playerLeg{
+    position:absolute;
+
+    width:13px;
+    height:61px;
+
+    top:88px;
+
+    background:#17202a;
+
+    border-radius:9px;
+
+    transform-origin:top center;
+
+    transition:
+        transform .18s
+        cubic-bezier(.3,.8,.2,1);
+}
+
+.playerLegLeft{
+    left:39px;
+
+    transform:
+        rotate(8deg);
+}
+
+.playerLegRight{
+    left:60px;
+
+    transform:
+        rotate(-8deg);
+}
+
+/* boots */
+
+.playerBoot{
+    position:absolute;
+
+    width:31px;
+    height:12px;
+
+    background:#111;
+
+    border-radius:10px;
+
+    transition:
+        transform .18s ease;
+}
+
+.bootLeft{
+    left:23px;
+    top:145px;
+}
+
+.bootRight{
+    left:59px;
+    top:143px;
+}
+
+/* =========================
+   REAL KICK ANIMATION
+========================= */
+
+.player.prepare{
+    transform:
+        rotate(-4deg)
+        translateX(-3px);
+}
+
+.player.prepare .playerLegRight{
+    transform:
+        rotate(40deg);
+}
+
+.player.prepare .playerArmLeft{
+    transform:
+        rotate(45deg);
+}
+
+.player.kick{
+    transform:
+        rotate(4deg)
+        translateX(5px);
+}
+
+.player.kick .playerLegRight{
+    transform:
+        rotate(-58deg);
+}
+
+.player.kick .playerLegLeft{
+    transform:
+        rotate(12deg);
+}
+
+.player.kick .playerBody{
+    transform:
+        skewX(-5deg);
+}
+
+.player.kick .playerArmLeft{
+    transform:
+        rotate(45deg);
+}
+
+.player.kick .playerArmRight{
+    transform:
+        rotate(-5deg);
+}
+
+.player.follow{
+    transform:
+        rotate(2deg)
+        translateX(3px);
+}
+
+.player.follow .playerLegRight{
+    transform:
+        rotate(-38deg);
+}
+
+/* =========================
+   BALL
+========================= */
+
+.ball{
+    position:absolute;
+
+    width:42px;
+    height:42px;
+
+    left:
+        calc(50% - 21px);
+
+    bottom:11%;
+
+    z-index:20;
+
+    border-radius:50%;
+
+    background:white;
+
+    border:
+        2px solid #222;
+
+    box-shadow:
+        0 5px 10px #0008;
+
+    transition:
+        left .65s
+        cubic-bezier(.15,.8,.2,1),
+        bottom .65s
+        cubic-bezier(.15,.8,.2,1),
+        transform .65s ease;
+}
+
+.ball::after{
+    content:"⚽";
+
+    position:absolute;
+
+    left:1px;
+    top:1px;
+
+    font-size:34px;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    width:94%;
+    max-width:700px;
+
+    min-height:25px;
+
+    margin:4px auto;
+
+    font-size:
+        clamp(15px,4vw,20px);
+
+    font-weight:bold;
+
+    text-shadow:
+        0 2px 6px #000;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controls{
+    width:94%;
+    max-width:700px;
+
+    margin:auto;
+}
+
+.powerLabel{
+    text-align:left;
+
+    color:#aec1d2;
+
+    font-size:11px;
+
+    margin-bottom:3px;
+}
+
+.powerBox{
+    width:100%;
+    height:15px;
+
+    background:#101820;
+
+    border:
+        1px solid white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.power{
+    width:50%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00d66b,
+            #ffe000,
+            #ff2222
+        );
+}
+
+/* buttons */
+
+.buttons{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:8px;
+
+    margin-top:8px;
+}
+
+.shootButton{
+    min-height:51px;
+
+    border:0;
+
+    border-radius:15px;
+
+    color:white;
+
+    font-weight:bold;
+
+    font-size:
+        clamp(13px,4vw,17px);
+
+    background:
+        linear-gradient(
+            145deg,
+            #087dff,
+            #0048a8
+        );
+
+    box-shadow:
+        0 5px 0 #002d68,
+        0 7px 15px #0008;
+
+    touch-action:manipulation;
+}
+
+.shootButton:active{
+    transform:
+        translateY(4px);
+
+    box-shadow:
+        0 1px 0 #002d68;
+}
+
+.shootButton:disabled{
+    opacity:.45;
+}
+
+.restart{
+    display:none;
+
+    width:100%;
+
+    margin-top:8px;
+
+    padding:13px;
+
+    border:0;
+
+    border-radius:14px;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    background:
+        linear-gradient(
+            145deg,
+            #00ddff,
+            #0076ff
+        );
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    body{
+        overflow:auto;
+    }
+
+    .game{
+        height:51vh;
+        min-height:320px;
+        border-radius:18px;
+    }
+
+    .goal{
+        width:68%;
+        left:16%;
+    }
+
+    .goalkeeper{
+        transform:scale(.85);
+        transform-origin:center;
+    }
+
+    .player{
+        transform:
+            scale(.82);
+        transform-origin:
+            bottom center;
+    }
+
+    .ball{
+        width:38px;
+        height:38px;
+
+        left:
+            calc(50% - 19px);
+    }
+
+    .ball::after{
+        font-size:30px;
+    }
+}
+
+@media(max-height:700px){
+
+    .header p{
+        display:none;
+    }
+
+    .game{
+        height:45vh;
+        min-height:285px;
+    }
+
+    .player{
+        transform:
+            scale(.68);
+    }
+
+    .goalkeeper{
+        transform:
+            scale(.7);
+    }
+
+    .message{
+        font-size:14px;
+    }
+
+    .shootButton{
+        min-height:44px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+    <h1>
+        ⚽ ULTIMATE PENALTY
+    </h1>
+
+    <p>
+        Beat the goalkeeper!
+    </p>
+
+</div>
+
+
+<!-- =========================
+     SCOREBOARD
+========================= -->
+
+<div class="scoreboard">
+
+    <div class="scoreBox">
+        <span>GOALS</span>
+        <strong id="score">
+            0
+        </strong>
+    </div>
+
+    <div class="scoreBox">
+        <span>SAVES</span>
+        <strong id="saves">
+            0
+        </strong>
+    </div>
+
+    <div class="scoreBox">
+        <span>ROUND</span>
+        <strong>
+            <span id="round">
+                1
+            </span>
+            /5
+        </strong>
+    </div>
+
+</div>
+
+
+<!-- =========================
+     GAME
+========================= -->
+
+<div class="game">
+
+    <!-- sky -->
+
+    <div class="sun"></div>
+
+    <div class="cloud cloud1"></div>
+
+    <div class="cloud cloud2"></div>
+
+
+    <!-- crowd -->
+
+    <div class="crowd"></div>
+
+
+    <!-- grass -->
+
+    <div class="grass"></div>
+
+
+    <!-- field -->
+
+    <div class="line penaltyArea"></div>
+
+    <div class="line smallArea"></div>
+
+    <div class="arc"></div>
+
+
+    <!-- goal -->
+
+    <div class="goal"></div>
+
+
+    <!-- =====================
+         STICK GOALKEEPER
+    ====================== -->
+
+    <div
+        class="goalkeeper"
+        id="goalkeeper">
+
+        <div class="gkHead"></div>
+
+        <div class="gkHair"></div>
+
+        <div
+            class="gkEye gkEye1">
+        </div>
+
+        <div
+            class="gkEye gkEye2">
+        </div>
+
+        <div class="gkBody"></div>
+
+        <div class="gkNumber">
+            1
+        </div>
+
+        <div
+            class="gkArm gkArmLeft">
+
+            <div class="glove"></div>
+
+        </div>
+
+        <div
+            class="gkArm gkArmRight">
+
+            <div class="glove"></div>
+
+        </div>
+
+        <div
+            class="gkLeg gkLegLeft">
+        </div>
+
+        <div
+            class="gkLeg gkLegRight">
+        </div>
+
+        <div
+            class="gkBoot gkBootLeft">
+        </div>
+
+        <div
+            class="gkBoot gkBootRight">
+        </div>
+
+    </div>
+
+
+    <!-- =====================
+         STICK FOOTBALL PLAYER
+    ====================== -->
+
+    <div
+        class="player"
+        id="player">
+
+        <div class="playerHead"></div>
+
+        <div class="playerHair"></div>
+
+        <div
+            class="playerEye playerEye1">
+        </div>
+
+        <div
+            class="playerEye playerEye2">
+        </div>
+
+        <div class="playerBody"></div>
+
+        <div class="playerNumber">
+            10
+        </div>
+
+        <div
+            class="playerArm playerArmLeft">
+        </div>
+
+        <div
+            class="playerArm playerArmRight">
+        </div>
+
+        <div
+            class="playerLeg playerLegLeft">
+        </div>
+
+        <div
+            class="playerLeg playerLegRight">
+        </div>
+
+        <div
+            class="playerBoot bootLeft">
+        </div>
+
+        <div
+            class="playerBoot bootRight">
+        </div>
+
+    </div>
+
+
+    <!-- BALL -->
+
+    <div
+        class="ball"
+        id="ball">
+    </div>
+
+</div>
+
+
+<!-- MESSAGE -->
+
+<div
+    class="message"
+    id="message">
+
+    Choose where to shoot! ⚽
+
+</div>
+
+
+<!-- =========================
+     CONTROLS
+========================= -->
+
+<div class="controls">
+
+    <div class="powerLabel">
+        POWER
+    </div>
+
+    <div class="powerBox">
+
+        <div
+            class="power"
+            id="power">
+        </div>
+
+    </div>
+
+
+    <div class="buttons">
+
+        <button
+            class="shootButton"
+            onclick="shoot('left')">
+
+            ⬅️ LEFT
+
+        </button>
+
+
+        <button
+            class="shootButton"
+            onclick="shoot('center')">
+
+            🎯 CENTER
+
+        </button>
+
+
+        <button
+            class="shootButton"
+            onclick="shoot('right')">
+
+            RIGHT ➡️
+
+        </button>
+
+    </div>
+
+
+    <button
+        class="restart"
+        id="restart"
+        onclick="restartGame()">
+
+        🔄 PLAY AGAIN
+
+    </button>
+
+</div>
+
+
+<script>
+
+/* =========================
+   GAME VARIABLES
+========================= */
+
+let score = 0;
+
+let saves = 0;
+
+let round = 1;
+
+let playing = true;
+
+let powerValue = 20;
+
+let powerDirection = 1;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const ball =
+    document.getElementById(
+        "ball"
+    );
+
+const player =
+    document.getElementById(
+        "player"
+    );
+
+const goalkeeper =
+    document.getElementById(
+        "goalkeeper"
+    );
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+const scoreText =
+    document.getElementById(
+        "score"
+    );
+
+const savesText =
+    document.getElementById(
+        "saves"
+    );
+
+const roundText =
+    document.getElementById(
+        "round"
+    );
+
+const power =
+    document.getElementById(
+        "power"
+    );
+
+const restart =
+    document.getElementById(
+        "restart"
+    );
+
+const buttons =
+    document.querySelectorAll(
+        ".shootButton"
+    );
+
+
+/* =========================
+   POWER BAR
+========================= */
+
+setInterval(function(){
+
+    if(!playing){
+        return;
+    }
+
+    powerValue +=
+        powerDirection * 2;
+
+    if(powerValue >= 100){
+
+        powerValue = 100;
+
+        powerDirection = -1;
+    }
+
+    if(powerValue <= 20){
+
+        powerValue = 20;
+
+        powerDirection = 1;
+    }
+
+    power.style.width =
+        powerValue + "%";
+
+},40);
+
+
+/* =========================
+   SHOOT
+========================= */
+
+function shoot(direction){
+
+    if(!playing){
+        return;
+    }
+
+    playing = false;
+
+
+    /* disable buttons */
+
+    buttons.forEach(
+        function(button){
+
+            button.disabled = true;
+
+        }
+    );
+
+
+    /* remove previous animation */
+
+    player.classList.remove(
+        "prepare",
+        "kick",
+        "follow"
+    );
+
+
+    goalkeeper.classList.remove(
+        "diveLeft",
+        "diveCenter",
+        "diveRight"
+    );
+
+
+    message.textContent =
+        "🏃 GET READY...";
+
+
+    /*
+       STEP 1
+       Player pulls leg back
+    */
+
+    setTimeout(function(){
+
+        player.classList.add(
+            "prepare"
+        );
+
+        message.textContent =
+            "⚽ PREPARING...";
+
+    },80);
+
+
+    /*
+       STEP 2
+       Actual kick
+    */
+
+    setTimeout(function(){
+
+        player.classList.remove(
+            "prepare"
+        );
+
+        player.classList.add(
+            "kick"
+        );
+
+        message.textContent =
+            "💥 KICK!";
+
+    },280);
+
+
+    /*
+       Goalkeeper AI
+    */
+
+    const directions = [
+        "left",
+        "center",
+        "right"
+    ];
+
+    const keeperChoice =
+        directions[
+            Math.floor(
+                Math.random() * 3
+            )
+        ];
+
+
+    /*
+       STEP 3
+       Goalkeeper dives
+    */
+
+    setTimeout(function(){
+
+        if(
+            keeperChoice ===
+            "left"
+        ){
+
+            goalkeeper.classList.add(
+                "diveLeft"
+            );
+
+        }
+
+        if(
+            keeperChoice ===
+            "center"
+        ){
+
+            goalkeeper.classList.add(
+                "diveCenter"
+            );
+
+        }
+
+        if(
+            keeperChoice ===
+            "right"
+        ){
+
+            goalkeeper.classList.add(
+                "diveRight"
+            );
+
+        }
+
+    },420);
+
+
+    /*
+       STEP 4
+       Ball moves only after kick
+    */
+
+    setTimeout(function(){
+
+        if(direction === "left"){
+
+            ball.style.left =
+                "24%";
+
+            ball.style.bottom =
+                "63%";
+
+        }
+
+
+        if(direction === "center"){
+
+            ball.style.left =
+                "calc(50% - 19px)";
+
+            ball.style.bottom =
+                "67%";
+
+        }
+
+
+        if(direction === "right"){
+
+            ball.style.left =
+                "76%";
+
+            ball.style.bottom =
+                "63%";
+
+        }
+
+
+        ball.style.transform =
+            "rotate(1000deg) scale(.7)";
+
+
+    },450);
+
+
+    /*
+       STEP 5
+       Result
+    */
+
+    setTimeout(function(){
+
+        if(
+            direction ===
+            keeperChoice
+        ){
+
+            saves++;
+
+            savesText.textContent =
+                saves;
+
+            message.textContent =
+                "🧤 AMAZING SAVE!";
+
+        }
+
+        else{
+
+            score++;
+
+            scoreText.textContent =
+                score;
+
+            message.textContent =
+                "⚽ GOOOOOOAL! 🔥";
+
+        }
+
+    },900);
+
+
+    /*
+       STEP 6
+       Follow-through
+    */
+
+    setTimeout(function(){
+
+        player.classList.remove(
+            "kick"
+        );
+
+        player.classList.add(
+            "follow"
+        );
+
+    },850);
+
+
+    /*
+       NEXT ROUND
+    */
+
+    setTimeout(function(){
+
+        if(round >= 5){
+
+            finishGame();
+
+        }
+
+        else{
+
+            round++;
+
+            roundText.textContent =
+                round;
+
+            resetShot();
+
+        }
+
+    },1750);
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetShot(){
+
+    ball.style.left =
+        "calc(50% - 21px)";
+
+    ball.style.bottom =
+        "11%";
+
+    ball.style.transform =
+        "rotate(0deg) scale(1)";
+
+
+    player.classList.remove(
+        "prepare",
+        "kick",
+        "follow"
+    );
+
+
+    goalkeeper.classList.remove(
+        "diveLeft",
+        "diveCenter",
+        "diveRight"
+    );
+
+
+    message.textContent =
+        "Choose your next shot! ⚽";
+
+
+    buttons.forEach(
+        function(button){
+
+            button.disabled = false;
+
+        }
+    );
+
+
+    playing = true;
+}
+
+
+/* =========================
+   FINISH
+========================= */
+
+function finishGame(){
+
+    playing = false;
+
+    if(score >= 3){
+
+        message.textContent =
+            "🏆 YOU WIN! " +
+            score +
+            "/5 GOALS! 🔥";
+
+    }
+
+    else{
+
+        message.textContent =
+            "😢 YOU LOST! " +
+            score +
+            "/5 GOALS.";
+
+    }
+
+
+    restart.style.display =
+        "block";
+}
+
+
+/* =========================
+   RESTART
+========================= */
+
+function restartGame(){
+
+    score = 0;
+
+    saves = 0;
+
+    round = 1;
+
+    scoreText.textContent =
+        "0";
+
+    savesText.textContent =
+        "0";
+
+    roundText.textContent =
+        "1";
+
+
+    restart.style.display =
+        "none";
+
+
+    resetShot();
+}
+
+</script>
+
+</body>
+</html>

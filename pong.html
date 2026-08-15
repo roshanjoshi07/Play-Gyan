@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>🏓 Neon Pong</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at center,#123b50,#030811 70%);
+    color:white;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+}
+
+.game{
+    width:95%;
+    max-width:900px;
+    text-align:center;
+}
+
+h1{
+    font-size:clamp(32px,7vw,55px);
+    color:#00eaff;
+    text-shadow:
+        0 0 12px #00eaff,
+        0 0 30px #00eaff;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:#9db9c8;
+    margin-bottom:12px;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+}
+
+.stat{
+    min-width:105px;
+    padding:8px 15px;
+    border-radius:15px;
+    background:#ffffff0d;
+    border:1px solid #00eaff33;
+}
+
+.stat span{
+    display:block;
+    font-size:10px;
+    color:#8ca6b4;
+}
+
+.stat strong{
+    font-size:23px;
+    color:#00eaff;
+}
+
+/* GAME AREA */
+
+.arena{
+    position:relative;
+    width:100%;
+    height:min(65vh,560px);
+    min-height:360px;
+
+    overflow:hidden;
+
+    border:2px solid #00eaff;
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 49.5%,
+            #00eaff33 50%,
+            transparent 50.5%
+        ),
+        #050c16;
+
+    box-shadow:
+        0 0 30px #00eaff33,
+        inset 0 0 50px #00eaff0b;
+
+    touch-action:none;
+}
+
+/* CENTER LINE */
+
+.line{
+    position:absolute;
+    left:50%;
+    top:0;
+    bottom:0;
+    width:3px;
+
+    transform:translateX(-50%);
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            #00eaff 0 12px,
+            transparent 12px 25px
+        );
+
+    opacity:.4;
+}
+
+/* PADDLES */
+
+.paddle{
+    position:absolute;
+
+    width:18px;
+    height:100px;
+
+    border-radius:12px;
+
+    background:#00eaff;
+
+    box-shadow:
+        0 0 15px #00eaff,
+        0 0 30px #00eaff66;
+}
+
+.player{
+    left:12px;
+    top:50%;
+
+    transform:translateY(-50%);
+}
+
+.enemy{
+    right:12px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    background:#ff4fd8;
+
+    box-shadow:
+        0 0 15px #ff4fd8,
+        0 0 30px #ff4fd866;
+}
+
+/* BALL */
+
+.ball{
+    position:absolute;
+
+    width:22px;
+    height:22px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 12px white,
+        0 0 30px #00eaff;
+
+    transform:translate(-50%,-50%);
+}
+
+/* BUTTONS */
+
+.controls{
+    margin-top:12px;
+}
+
+button,
+select{
+    border:0;
+    padding:10px 18px;
+    margin:4px;
+
+    border-radius:22px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+button{
+    background:#00eaff;
+    color:#001018;
+
+    box-shadow:
+        0 0 15px #00eaff66;
+
+    transition:.2s;
+}
+
+button:hover{
+    transform:scale(1.06);
+}
+
+select{
+    background:#132638;
+    color:white;
+    border:1px solid #00eaff44;
+}
+
+.message{
+    min-height:25px;
+    margin-top:7px;
+    color:#bdefff;
+}
+
+/* START SCREEN */
+
+.overlay{
+    position:absolute;
+    inset:0;
+
+    z-index:20;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    background:#020711e8;
+
+    backdrop-filter:blur(7px);
+
+    border-radius:20px;
+}
+
+.overlay h2{
+    font-size:clamp(32px,8vw,55px);
+
+    color:#00eaff;
+
+    text-shadow:
+        0 0 15px #00eaff,
+        0 0 30px #00eaff;
+
+    margin-bottom:10px;
+}
+
+.overlay p{
+    color:#c5dce8;
+    margin:4px;
+}
+
+.overlay button{
+    margin-top:14px;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+    .arena{
+        min-height:330px;
+    }
+
+    .paddle{
+        width:14px;
+        height:85px;
+    }
+
+    .ball{
+        width:18px;
+        height:18px;
+    }
+
+    .stat{
+        min-width:80px;
+        padding:7px;
+    }
+
+    .stat strong{
+        font-size:18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<h1>🏓 NEON PONG</h1>
+
+<p class="subtitle">
+    Player vs Computer
+</p>
+
+<div class="stats">
+
+    <div class="stat">
+        <span>PLAYER</span>
+        <strong id="playerScore">0</strong>
+    </div>
+
+    <div class="stat">
+        <span>COMPUTER</span>
+        <strong id="enemyScore">0</strong>
+    </div>
+
+    <div class="stat">
+        <span>BEST</span>
+        <strong id="best">0</strong>
+    </div>
+
+</div>
+
+<div class="arena" id="arena">
+
+    <div class="line"></div>
+
+    <div class="paddle player" id="player"></div>
+
+    <div class="paddle enemy" id="enemy"></div>
+
+    <div class="ball" id="ball"></div>
+
+    <div class="overlay" id="overlay">
+
+        <h2>🏓 NEON PONG</h2>
+
+        <p>⌨️ Use ↑ ↓ or W S</p>
+
+        <p>📱 On mobile, drag your paddle</p>
+
+        <button onclick="startGame()">
+            ▶ START GAME
+        </button>
+
+    </div>
+
+</div>
+
+<div class="controls">
+
+    <select id="difficulty">
+
+        <option value="easy">
+            🟢 Easy
+        </option>
+
+        <option value="medium" selected>
+            🟡 Medium
+        </option>
+
+        <option value="hard">
+            🔴 Hard
+        </option>
+
+    </select>
+
+    <button onclick="togglePause()">
+        ⏸ Pause
+    </button>
+
+    <button onclick="startGame()">
+        🔄 Restart
+    </button>
+
+</div>
+
+<div class="message" id="message">
+    Ready!
+</div>
+
+</div>
+
+<script>
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const arena =
+    document.getElementById("arena");
+
+const player =
+    document.getElementById("player");
+
+const enemy =
+    document.getElementById("enemy");
+
+const ball =
+    document.getElementById("ball");
+
+const overlay =
+    document.getElementById("overlay");
+
+const playerScoreText =
+    document.getElementById("playerScore");
+
+const enemyScoreText =
+    document.getElementById("enemyScore");
+
+const bestText =
+    document.getElementById("best");
+
+const difficulty =
+    document.getElementById("difficulty");
+
+const message =
+    document.getElementById("message");
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let playerScore=0;
+let enemyScore=0;
+
+let best=
+    Number(
+        localStorage.getItem(
+            "pongBest"
+        )
+    ) || 0;
+
+let playing=false;
+let paused=false;
+
+let animation;
+
+let keys={};
+
+let playerY=0;
+let enemyY=0;
+
+let ballX=0;
+let ballY=0;
+
+let ballVX=0;
+let ballVY=0;
+
+let speed=5;
+
+let enemySpeed=4;
+
+
+/* =========================
+   START GAME
+========================= */
+
+function startGame(){
+
+    cancelAnimationFrame(
+        animation
+    );
+
+    playerScore=0;
+    enemyScore=0;
+
+    playing=true;
+    paused=false;
+
+    overlay.style.display="none";
+
+    setDifficulty();
+
+    resetPositions();
+
+    updateScore();
+
+    message.textContent=
+        "🏓 Game started!";
+
+    animation=
+        requestAnimationFrame(
+            gameLoop
+        );
+
+}
+
+
+/* =========================
+   DIFFICULTY
+========================= */
+
+function setDifficulty(){
+
+    const level=
+        difficulty.value;
+
+    if(level==="easy"){
+
+        speed=4.2;
+        enemySpeed=3.2;
+
+    }
+
+    else if(level==="medium"){
+
+        speed=5.2;
+        enemySpeed=4.3;
+
+    }
+
+    else{
+
+        speed=6.2;
+        enemySpeed=5.5;
+
+    }
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetPositions(){
+
+    const h=
+        arena.clientHeight;
+
+    const w=
+        arena.clientWidth;
+
+    playerY=
+        h/2;
+
+    enemyY=
+        h/2;
+
+    ballX=
+        w/2;
+
+    ballY=
+        h/2;
+
+    /*
+       Random direction
+    */
+
+    ballVX=
+        Math.random()>0.5
+        ? speed
+        : -speed;
+
+    ballVY=
+        (Math.random()-.5)*
+        speed;
+
+    draw();
+
+}
+
+
+/* =========================
+   GAME LOOP
+========================= */
+
+function gameLoop(){
+
+    if(!playing){
+
+        return;
+
+    }
+
+    if(!paused){
+
+        update();
+
+        draw();
+
+    }
+
+    animation=
+        requestAnimationFrame(
+            gameLoop
+        );
+
+}
+
+
+/* =========================
+   UPDATE
+========================= */
+
+function update(){
+
+    const h=
+        arena.clientHeight;
+
+    const w=
+        arena.clientWidth;
+
+
+    /* PLAYER */
+
+    const paddleHeight=
+        player.offsetHeight;
+
+    const playerMove=
+        7;
+
+
+    if(
+        keys["ArrowUp"] ||
+        keys["w"] ||
+        keys["W"]
+    ){
+
+        playerY-=playerMove;
+
+    }
+
+
+    if(
+        keys["ArrowDown"] ||
+        keys["s"] ||
+        keys["S"]
+    ){
+
+        playerY+=playerMove;
+
+    }
+
+
+    playerY=
+        Math.max(
+            paddleHeight/2,
+            Math.min(
+                h-paddleHeight/2,
+                playerY
+            )
+        );
+
+
+    /* COMPUTER */
+
+    const enemyHeight=
+        enemy.offsetHeight;
+
+
+    /*
+       Computer follows the ball,
+       but with limited speed.
+    */
+
+    if(
+        enemyY <
+        ballY-10
+    ){
+
+        enemyY+=enemySpeed;
+
+    }
+
+    else if(
+        enemyY >
+        ballY+10
+    ){
+
+        enemyY-=enemySpeed;
+
+    }
+
+
+    enemyY=
+        Math.max(
+            enemyHeight/2,
+            Math.min(
+                h-enemyHeight/2,
+                enemyY
+            )
+        );
+
+
+    /* BALL */
+
+    ballX+=ballVX;
+
+    ballY+=ballVY;
+
+
+    /*
+       Top / bottom collision
+    */
+
+    const ballRadius=
+        ball.offsetWidth/2;
+
+
+    if(
+        ballY-ballRadius<=0 ||
+        ballY+ballRadius>=h
+    ){
+
+        ballVY=-ballVY;
+
+        ballY=
+            Math.max(
+                ballRadius,
+                Math.min(
+                    h-ballRadius,
+                    ballY
+                )
+            );
+
+    }
+
+
+    /* PLAYER COLLISION */
+
+    const playerX=
+        player.offsetLeft;
+
+    const playerWidth=
+        player.offsetWidth;
+
+
+    if(
+        ballVX<0 &&
+        ballX-ballRadius<=
+            playerX+playerWidth &&
+        ballX+ballRadius>=
+            playerX &&
+        ballY>=
+            playerY-paddleHeight/2 &&
+        ballY<=
+            playerY+paddleHeight/2
+    ){
+
+        ballVX=
+            Math.abs(ballVX)+0.15;
+
+        /*
+           Change angle according
+           to hit position
+        */
+
+        const difference=
+            (ballY-playerY)/
+            (paddleHeight/2);
+
+        ballVY=
+            difference*
+            speed;
+
+        ballX=
+            playerX+
+            playerWidth+
+            ballRadius;
+
+    }
+
+
+    /* COMPUTER COLLISION */
+
+    const enemyX=
+        enemy.offsetLeft;
+
+
+    if(
+        ballVX>0 &&
+        ballX+ballRadius>=
+            enemyX &&
+        ballX-ballRadius<=
+            enemyX+
+            enemy.offsetWidth &&
+        ballY>=
+            enemyY-enemyHeight/2 &&
+        ballY<=
+            enemyY+enemyHeight/2
+    ){
+
+        ballVX=
+            -Math.abs(ballVX)-0.15;
+
+        const difference=
+            (ballY-enemyY)/
+            (enemyHeight/2);
+
+        ballVY=
+            difference*
+            speed;
+
+        ballX=
+            enemyX-
+            ballRadius;
+
+    }
+
+
+    /* PLAYER MISSED */
+
+    if(
+        ballX<
+        -ballRadius
+    ){
+
+        enemyScore++;
+
+        updateScore();
+
+        resetBall(-1);
+
+    }
+
+
+    /* COMPUTER MISSED */
+
+    if(
+        ballX>
+        w+ballRadius
+    ){
+
+        playerScore++;
+
+        updateScore();
+
+        resetBall(1);
+
+    }
+
+
+    /*
+       First player to 5 wins
+    */
+
+    if(playerScore>=5){
+
+        winGame(true);
+
+    }
+
+    if(enemyScore>=5){
+
+        winGame(false);
+
+    }
+
+}
+
+
+/* =========================
+   RESET BALL
+========================= */
+
+function resetBall(direction){
+
+    ballX=
+        arena.clientWidth/2;
+
+    ballY=
+        arena.clientHeight/2;
+
+    ballVX=
+        direction*
+        speed;
+
+    ballVY=
+        (Math.random()-.5)*
+        speed;
+
+}
+
+
+/* =========================
+   DRAW
+========================= */
+
+function draw(){
+
+    player.style.top=
+        playerY+"px";
+
+    enemy.style.top=
+        enemyY+"px";
+
+    ball.style.left=
+        ballX+"px";
+
+    ball.style.top=
+        ballY+"px";
+
+}
+
+
+/* =========================
+   SCORE
+========================= */
+
+function updateScore(){
+
+    playerScoreText.textContent=
+        playerScore;
+
+    enemyScoreText.textContent=
+        enemyScore;
+
+    bestText.textContent=
+        best;
+
+}
+
+
+/* =========================
+   WIN
+========================= */
+
+function winGame(playerWon){
+
+    playing=false;
+
+    cancelAnimationFrame(
+        animation
+    );
+
+
+    if(playerWon){
+
+        message.textContent=
+            "🏆 You Win!";
+
+        if(playerScore>best){
+
+            best=playerScore;
+
+            localStorage.setItem(
+                "pongBest",
+                best
+            );
+
+        }
+
+    }else{
+
+        message.textContent=
+            "🤖 Computer Wins!";
+
+    }
+
+
+    updateScore();
+
+
+    overlay.innerHTML=`
+
+        <h2>
+            ${playerWon
+                ? "🏆 YOU WIN!"
+                : "🤖 COMPUTER WINS!"}
+        </h2>
+
+        <p>
+            Player:
+            <b>${playerScore}</b>
+        </p>
+
+        <p>
+            Computer:
+            <b>${enemyScore}</b>
+        </p>
+
+        <button onclick="startGame()">
+            🔄 PLAY AGAIN
+        </button>
+
+    `;
+
+
+    overlay.style.display="flex";
+
+}
+
+
+/* =========================
+   PAUSE
+========================= */
+
+function togglePause(){
+
+    if(!playing)
+        return;
+
+    paused=!paused;
+
+    message.textContent=
+        paused
+        ? "⏸ Game Paused"
+        : "▶ Game Resumed";
+
+}
+
+
+/* =========================
+   KEYBOARD
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        keys[e.key]=true;
+
+        if(
+            e.key===" "
+        ){
+
+            togglePause();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keyup",
+    function(e){
+
+        keys[e.key]=false;
+
+    }
+);
+
+
+/* =========================
+   MOBILE TOUCH
+========================= */
+
+arena.addEventListener(
+    "pointermove",
+    function(e){
+
+        if(!playing)
+            return;
+
+        /*
+           Only move player
+           when pointer is inside arena.
+        */
+
+        const rect=
+            arena.getBoundingClientRect();
+
+        const y=
+            e.clientY-
+            rect.top;
+
+        playerY=y;
+
+        const h=
+            arena.clientHeight;
+
+        const ph=
+            player.offsetHeight;
+
+        playerY=
+            Math.max(
+                ph/2,
+                Math.min(
+                    h-ph/2,
+                    playerY
+                )
+            );
+
+    }
+);
+
+
+/* =========================
+   INITIAL
+========================= */
+
+bestText.textContent=
+    best;
+
+</script>
+
+</body>
+</html>

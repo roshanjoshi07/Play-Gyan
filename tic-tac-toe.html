@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tic Tac Toe</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+
+    font-family:Arial,sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #253b80,
+            #080b18 60%,
+            #000
+        );
+
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+}
+
+.game{
+    width:100%;
+    max-width:430px;
+
+    text-align:center;
+
+    background:
+        rgba(255,255,255,.08);
+
+    padding:25px;
+
+    border-radius:25px;
+
+    box-shadow:
+        0 0 40px rgba(0,200,255,.2);
+
+    backdrop-filter:blur(10px);
+}
+
+h1{
+    font-size:38px;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:#aaa;
+    margin-bottom:20px;
+}
+
+.mode-buttons{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+}
+
+.mode-btn{
+    flex:1;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    background:#222a45;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.mode-btn.active{
+    background:#00d9ff;
+    color:#001018;
+}
+
+.score{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:8px;
+
+    margin-bottom:18px;
+}
+
+.score-box{
+    padding:10px;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.score-box span{
+    display:block;
+
+    color:#aaa;
+
+    font-size:13px;
+
+    margin-bottom:5px;
+}
+
+.score-box b{
+    font-size:22px;
+}
+
+.status{
+    min-height:30px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+}
+
+.board{
+    width:min(90vw,360px);
+
+    aspect-ratio:1/1;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:9px;
+}
+
+.cell{
+    border:none;
+
+    border-radius:18px;
+
+    background:
+        rgba(255,255,255,.1);
+
+    color:white;
+
+    font-size:55px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:
+        transform .15s,
+        background .2s;
+}
+
+.cell:hover{
+    background:
+        rgba(255,255,255,.18);
+
+    transform:scale(1.03);
+}
+
+.cell.x{
+    color:#00e5ff;
+
+    text-shadow:
+        0 0 20px #00e5ff;
+}
+
+.cell.o{
+    color:#ff4fd8;
+
+    text-shadow:
+        0 0 20px #ff4fd8;
+}
+
+.cell.win{
+    animation:
+        winner .6s infinite alternate;
+}
+
+@keyframes winner{
+
+    from{
+        transform:scale(1);
+    }
+
+    to{
+        transform:scale(1.08);
+    }
+
+}
+
+.buttons{
+    display:flex;
+
+    gap:10px;
+
+    margin-top:20px;
+}
+
+button.action{
+    flex:1;
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.new{
+    background:#00d9ff;
+    color:#001018;
+}
+
+.reset{
+    background:#ff315c;
+    color:white;
+}
+
+.message{
+    margin-top:15px;
+
+    color:#aaa;
+
+    font-size:13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+    <h1>❌ Tic Tac Toe ⭕</h1>
+
+    <p class="subtitle">
+        Classic X & O Game
+    </p>
+
+
+    <!-- GAME MODE -->
+
+    <div class="mode-buttons">
+
+        <button
+            id="computerBtn"
+            class="mode-btn active"
+            onclick="setMode('computer')">
+
+            🤖 vs Computer
+
+        </button>
+
+        <button
+            id="twoPlayerBtn"
+            class="mode-btn"
+            onclick="setMode('two')">
+
+            👥 2 Players
+
+        </button>
+
+    </div>
+
+
+    <!-- SCORE -->
+
+    <div class="score">
+
+        <div class="score-box">
+
+            <span>❌ You</span>
+
+            <b id="xScore">0</b>
+
+        </div>
+
+
+        <div class="score-box">
+
+            <span>🤝 Draw</span>
+
+            <b id="drawScore">0</b>
+
+        </div>
+
+
+        <div class="score-box">
+
+            <span>⭕ Opponent</span>
+
+            <b id="oScore">0</b>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div
+        id="status"
+        class="status">
+
+        ❌ Your Turn
+
+    </div>
+
+
+    <!-- BOARD -->
+
+    <div
+        id="board"
+        class="board">
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="buttons">
+
+        <button
+            class="action new"
+            onclick="newGame()">
+
+            🔄 New Game
+
+        </button>
+
+        <button
+            class="action reset"
+            onclick="resetScore()">
+
+            🗑️ Reset Score
+
+        </button>
+
+    </div>
+
+
+    <div class="message">
+
+        Make 3 symbols in a row to win!
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+let board = [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+];
+
+
+let currentPlayer = "X";
+
+let gameActive = true;
+
+let mode = "computer";
+
+
+let xScore = 0;
+
+let oScore = 0;
+
+let drawScore = 0;
+
+
+/* =====================================
+   WINNING COMBINATIONS
+===================================== */
+
+const wins = [
+
+    [0,1,2],
+
+    [3,4,5],
+
+    [6,7,8],
+
+    [0,3,6],
+
+    [1,4,7],
+
+    [2,5,8],
+
+    [0,4,8],
+
+    [2,4,6]
+
+];
+
+
+/* =====================================
+   ELEMENTS
+===================================== */
+
+const boardElement =
+    document.getElementById(
+        "board"
+    );
+
+const statusElement =
+    document.getElementById(
+        "status"
+    );
+
+const xScoreElement =
+    document.getElementById(
+        "xScore"
+    );
+
+const oScoreElement =
+    document.getElementById(
+        "oScore"
+    );
+
+const drawScoreElement =
+    document.getElementById(
+        "drawScore"
+    );
+
+
+/* =====================================
+   CREATE BOARD
+===================================== */
+
+function createBoard(){
+
+    boardElement.innerHTML = "";
+
+
+    board.forEach(
+        function(value,index){
+
+            const cell =
+                document.createElement(
+                    "button"
+                );
+
+
+            cell.className =
+                "cell";
+
+
+            cell.dataset.index =
+                index;
+
+
+            cell.textContent =
+                value === "X"
+                ? "❌"
+                : value === "O"
+                ? "⭕"
+                : "";
+
+
+            if(value === "X"){
+
+                cell.classList.add(
+                    "x"
+                );
+
+            }
+
+
+            if(value === "O"){
+
+                cell.classList.add(
+                    "o"
+                );
+
+            }
+
+
+            cell.onclick =
+                function(){
+
+                    playerMove(index);
+
+                };
+
+
+            boardElement.appendChild(
+                cell
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   PLAYER MOVE
+===================================== */
+
+function playerMove(index){
+
+    if(!gameActive)
+        return;
+
+
+    if(board[index] !== "")
+        return;
+
+
+    /*
+       Computer mode:
+       Player is X
+    */
+
+    if(
+        mode === "computer" &&
+        currentPlayer !== "X"
+    ){
+
+        return;
+
+    }
+
+
+    board[index] =
+        currentPlayer;
+
+
+    createBoard();
+
+
+    if(
+        checkGame()
+    ){
+
+        return;
+
+    }
+
+
+    currentPlayer =
+        currentPlayer === "X"
+        ? "O"
+        : "X";
+
+
+    updateStatus();
+
+
+    /*
+       COMPUTER TURN
+    */
+
+    if(
+        mode === "computer" &&
+        currentPlayer === "O" &&
+        gameActive
+    ){
+
+        setTimeout(
+            computerMove,
+            400
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   CHECK GAME
+===================================== */
+
+function checkGame(){
+
+    for(
+        let combo of wins
+    ){
+
+        const [a,b,c] =
+            combo;
+
+
+        if(
+
+            board[a] !== ""
+
+            &&
+
+            board[a] ===
+            board[b]
+
+            &&
+
+            board[a] ===
+            board[c]
+
+        ){
+
+            endGame(
+                board[a],
+                combo
+            );
+
+            return true;
+
+        }
+
+    }
+
+
+    /*
+       DRAW
+    */
+
+    if(
+        board.every(
+            cell => cell !== ""
+        )
+    ){
+
+        drawGame();
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
+
+
+/* =====================================
+   END GAME
+===================================== */
+
+function endGame(
+    winner,
+    combo
+){
+
+    gameActive = false;
+
+
+    /*
+       Highlight winning cells
+    */
+
+    combo.forEach(
+        function(index){
+
+            const cell =
+                boardElement
+                .children[index];
+
+
+            cell.classList.add(
+                "win"
+            );
+
+        }
+    );
+
+
+    if(
+        winner === "X"
+    ){
+
+        xScore++;
+
+
+        statusElement.textContent =
+            "🎉 ❌ X Wins!";
+
+
+    }
+    else{
+
+        oScore++;
+
+
+        statusElement.textContent =
+            "🎉 ⭕ O Wins!";
+
+    }
+
+
+    updateScore();
+
+}
+
+
+/* =====================================
+   DRAW GAME
+===================================== */
+
+function drawGame(){
+
+    gameActive = false;
+
+    drawScore++;
+
+
+    statusElement.textContent =
+        "🤝 It's a Draw!";
+
+
+    updateScore();
+
+}
+
+
+/* =====================================
+   COMPUTER AI
+===================================== */
+
+function computerMove(){
+
+    if(
+        !gameActive ||
+        mode !== "computer"
+    ){
+
+        return;
+
+    }
+
+
+    /*
+       Find best move using Minimax
+    */
+
+    const move =
+        getBestMove();
+
+
+    if(move !== -1){
+
+        board[move] = "O";
+
+    }
+
+
+    createBoard();
+
+
+    if(
+        checkGame()
+    ){
+
+        return;
+
+    }
+
+
+    currentPlayer = "X";
+
+
+    updateStatus();
+
+}
+
+
+/* =====================================
+   BEST MOVE
+===================================== */
+
+function getBestMove(){
+
+    let bestScore =
+        -Infinity;
+
+    let move = -1;
+
+
+    for(
+        let i=0;
+        i<9;
+        i++
+    ){
+
+        if(
+            board[i] === ""
+        ){
+
+            board[i] = "O";
+
+
+            let score =
+                minimax(
+                    board,
+                    0,
+                    false
+                );
+
+
+            board[i] = "";
+
+
+            if(
+                score > bestScore
+            ){
+
+                bestScore =
+                    score;
+
+                move = i;
+
+            }
+
+        }
+
+    }
+
+
+    return move;
+
+}
+
+
+/* =====================================
+   MINIMAX AI
+===================================== */
+
+function minimax(
+    state,
+    depth,
+    isMaximizing
+){
+
+    const result =
+        getWinner(state);
+
+
+    if(result !== null){
+
+        if(
+            result === "O"
+        ){
+
+            return 10-depth;
+
+        }
+
+
+        if(
+            result === "X"
+        ){
+
+            return depth-10;
+
+        }
+
+
+        return 0;
+
+    }
+
+
+    if(isMaximizing){
+
+        let best =
+            -Infinity;
+
+
+        for(
+            let i=0;
+            i<9;
+            i++
+        ){
+
+            if(
+                state[i] === ""
+            ){
+
+                state[i] = "O";
+
+
+                best =
+                    Math.max(
+                        best,
+
+                        minimax(
+                            state,
+                            depth+1,
+                            false
+                        )
+                    );
+
+
+                state[i] = "";
+
+            }
+
+        }
+
+
+        return best;
+
+    }
+    else{
+
+        let best =
+            Infinity;
+
+
+        for(
+            let i=0;
+            i<9;
+            i++
+        ){
+
+            if(
+                state[i] === ""
+            ){
+
+                state[i] = "X";
+
+
+                best =
+                    Math.min(
+                        best,
+
+                        minimax(
+                            state,
+                            depth+1,
+                            true
+                        )
+                    );
+
+
+                state[i] = "";
+
+            }
+
+        }
+
+
+        return best;
+
+    }
+
+}
+
+
+/* =====================================
+   GET WINNER FOR AI
+===================================== */
+
+function getWinner(state){
+
+    for(
+        let combo of wins
+    ){
+
+        const [a,b,c] =
+            combo;
+
+
+        if(
+
+            state[a] !== ""
+
+            &&
+
+            state[a] ===
+            state[b]
+
+            &&
+
+            state[a] ===
+            state[c]
+
+        ){
+
+            return state[a];
+
+        }
+
+    }
+
+
+    if(
+        state.every(
+            cell => cell !== ""
+        )
+    ){
+
+        return "draw";
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================
+   UPDATE STATUS
+===================================== */
+
+function updateStatus(){
+
+    if(!gameActive)
+        return;
+
+
+    if(
+        mode === "computer"
+    ){
+
+        if(
+            currentPlayer === "X"
+        ){
+
+            statusElement.textContent =
+                "❌ Your Turn";
+
+        }
+        else{
+
+            statusElement.textContent =
+                "🤖 Computer Thinking...";
+
+        }
+
+    }
+    else{
+
+        statusElement.textContent =
+            currentPlayer === "X"
+            ?
+            "❌ Player X Turn"
+            :
+            "⭕ Player O Turn";
+
+    }
+
+}
+
+
+/* =====================================
+   NEW GAME
+===================================== */
+
+function newGame(){
+
+    board = [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ];
+
+
+    currentPlayer = "X";
+
+    gameActive = true;
+
+
+    createBoard();
+
+    updateStatus();
+
+}
+
+
+/* =====================================
+   CHANGE MODE
+===================================== */
+
+function setMode(newMode){
+
+    mode = newMode;
+
+
+    document
+        .getElementById(
+            "computerBtn"
+        )
+        .classList.toggle(
+            "active",
+            mode === "computer"
+        );
+
+
+    document
+        .getElementById(
+            "twoPlayerBtn"
+        )
+        .classList.toggle(
+            "active",
+            mode === "two"
+        );
+
+
+    newGame();
+
+}
+
+
+/* =====================================
+   UPDATE SCORE
+===================================== */
+
+function updateScore(){
+
+    xScoreElement.textContent =
+        xScore;
+
+
+    oScoreElement.textContent =
+        oScore;
+
+
+    drawScoreElement.textContent =
+        drawScore;
+
+}
+
+
+/* =====================================
+   RESET SCORE
+===================================== */
+
+function resetScore(){
+
+    xScore = 0;
+
+    oScore = 0;
+
+    drawScore = 0;
+
+
+    updateScore();
+
+    newGame();
+
+}
+
+
+/* =====================================
+   START
+===================================== */
+
+createBoard();
+
+updateScore();
+
+updateStatus();
+
+</script>
+
+</body>
+</html>

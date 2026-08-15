@@ -1,0 +1,2438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zombie Survival 360°</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    background:
+    radial-gradient(circle at top,#263238,#070909 65%,#000);
+    color:white;
+    font-family:Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:10px;
+}
+
+.game{
+    width:100%;
+    max-width:540px;
+    text-align:center;
+}
+
+h1{
+    font-size:30px;
+    margin-bottom:4px;
+}
+
+.subtitle{
+    color:#aaa;
+    margin-bottom:10px;
+}
+
+.info{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:5px;
+    margin-bottom:8px;
+}
+
+.infoBox{
+    background:rgba(255,255,255,.09);
+    border-radius:10px;
+    padding:8px 2px;
+    font-size:11px;
+}
+
+.infoBox b{
+    display:block;
+    font-size:16px;
+    margin-top:3px;
+}
+
+.gameBox{
+    background:#020403;
+    padding:5px;
+    border-radius:18px;
+    box-shadow:0 0 35px rgba(0,255,80,.15);
+}
+
+canvas{
+    width:100%;
+    display:block;
+    background:#071008;
+    border-radius:13px;
+    touch-action:none;
+    cursor:crosshair;
+}
+
+.status{
+    min-height:28px;
+    margin:8px;
+    font-weight:bold;
+}
+
+.buttons{
+    display:flex;
+    gap:6px;
+}
+
+.btn{
+    flex:1;
+    border:0;
+    border-radius:10px;
+    padding:11px 4px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.shoot{
+    background:#00c853;
+    color:white;
+}
+
+.reload{
+    background:#ffc107;
+}
+
+.grenade{
+    background:#ff1744;
+    color:white;
+}
+
+.restart{
+    background:#00b8d4;
+    color:white;
+}
+
+.controls{
+    margin:12px auto 0;
+    width:280px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+}
+
+.control{
+    height:48px;
+    border:0;
+    border-radius:10px;
+    background:rgba(255,255,255,.13);
+    color:white;
+    font-size:20px;
+    touch-action:none;
+}
+
+.fire{
+    background:#00c853;
+}
+
+.aimInfo{
+    margin-top:8px;
+    color:#888;
+    font-size:12px;
+}
+
+@media(max-width:400px){
+
+    h1{
+        font-size:25px;
+    }
+
+    .controls{
+        width:235px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<h1>🧟 Zombie Survival 360°</h1>
+
+<p class="subtitle">
+🎯 Aim Anywhere • Shoot Anywhere
+</p>
+
+<div class="info">
+
+<div class="infoBox">
+❤️ Health
+<b id="health">100</b>
+</div>
+
+<div class="infoBox">
+⭐ Score
+<b id="score">0</b>
+</div>
+
+<div class="infoBox">
+🔥 Level
+<b id="level">1</b>
+</div>
+
+<div class="infoBox">
+🔫 Ammo
+<b id="ammo">20</b>
+</div>
+
+</div>
+
+<div class="gameBox">
+
+<canvas
+id="game"
+width="500"
+height="650">
+</canvas>
+
+</div>
+
+<div id="status" class="status">
+🧟 Zombies are coming!
+</div>
+
+<div class="buttons">
+
+<button class="btn shoot" onclick="shootUp()">
+🔫 SHOOT
+</button>
+
+<button class="btn reload" onclick="reload()">
+🔄 RELOAD
+</button>
+
+<button class="btn grenade" onclick="grenade()">
+💣 3
+</button>
+
+<button class="btn restart" onclick="startGame()">
+🔄
+</button>
+
+</div>
+
+<div class="controls">
+
+<button
+class="control"
+onpointerdown="keys.left=true"
+onpointerup="keys.left=false"
+onpointerleave="keys.left=false">
+◀️
+</button>
+
+<button
+class="control fire"
+onclick="shootUp()">
+🔥
+</button>
+
+<button
+class="control"
+onpointerdown="keys.right=true"
+onpointerup="keys.right=false"
+onpointerleave="keys.right=false">
+▶️
+</button>
+
+</div>
+
+<p class="aimInfo">
+📱 Mobile: Screen मा zombie भएको ठाउँमा tap गर्नुहोस्<br>
+🖱️ PC: Zombie भएको ठाउँमा click गर्नुहोस्
+</p>
+
+</div>
+
+<script>
+
+const canvas =
+document.getElementById("game");
+
+const ctx =
+canvas.getContext("2d");
+
+
+const healthEl =
+document.getElementById("health");
+
+const scoreEl =
+document.getElementById("score");
+
+const levelEl =
+document.getElementById("level");
+
+const ammoEl =
+document.getElementById("ammo");
+
+const statusEl =
+document.getElementById("status");
+
+
+let player;
+
+let bullets=[];
+
+let zombies=[];
+
+let particles=[];
+
+let stars=[];
+
+
+let score=0;
+
+let health=100;
+
+let ammo=20;
+
+let level=1;
+
+let grenades=3;
+
+let gameOver=false;
+
+let spawnTimer=0;
+
+let lastTime=0;
+
+let animation;
+
+
+const keys={
+    left:false,
+    right:false
+};
+
+
+/* =========================
+   START
+========================= */
+
+function startGame(){
+
+    cancelAnimationFrame(animation);
+
+    player={
+
+        x:250,
+        y:575,
+
+        width:44,
+        height:55,
+
+        speed:6,
+
+        cooldown:0,
+
+        recoil:0,
+
+        flash:0,
+
+        angle:-Math.PI/2
+
+    };
+
+    bullets=[];
+
+    zombies=[];
+
+    particles=[];
+
+    score=0;
+
+    health=100;
+
+    ammo=20;
+
+    level=1;
+
+    grenades=3;
+
+    spawnTimer=0;
+
+    gameOver=false;
+
+    createStars();
+
+    updateInfo();
+
+    statusEl.textContent=
+        "🧟 Zombies are coming!";
+
+    lastTime=
+        performance.now();
+
+    animation=
+        requestAnimationFrame(loop);
+}
+
+
+/* =========================
+   STARS
+========================= */
+
+function createStars(){
+
+    stars=[];
+
+    for(let i=0;i<100;i++){
+
+        stars.push({
+
+            x:Math.random()*500,
+
+            y:Math.random()*650,
+
+            size:Math.random()*2+1,
+
+            speed:Math.random()+.2
+
+        });
+
+    }
+}
+
+
+/* =========================
+   GAME LOOP
+========================= */
+
+function loop(time){
+
+    if(gameOver)return;
+
+    const delta=
+        Math.min(
+            (time-lastTime)/16.67,
+            3
+        );
+
+    lastTime=time;
+
+    update(delta);
+
+    draw();
+
+    animation=
+        requestAnimationFrame(loop);
+}
+
+
+/* =========================
+   UPDATE
+========================= */
+
+function update(delta){
+
+    /*
+       PLAYER MOVE
+    */
+
+    if(keys.left){
+
+        player.x -=
+            player.speed*delta;
+    }
+
+    if(keys.right){
+
+        player.x +=
+            player.speed*delta;
+    }
+
+    player.x=
+        Math.max(
+            30,
+            Math.min(
+                470,
+                player.x
+            )
+        );
+
+
+    if(player.cooldown>0)
+        player.cooldown-=delta;
+
+    if(player.recoil>0)
+        player.recoil-=delta;
+
+    if(player.flash>0)
+        player.flash-=delta;
+
+
+    /*
+       BULLETS
+    */
+
+    bullets.forEach(b=>{
+
+        b.x += b.vx*delta;
+
+        b.y += b.vy*delta;
+
+    });
+
+
+    bullets=
+        bullets.filter(b=>
+
+            b.x>-60 &&
+            b.x<560 &&
+            b.y>-60 &&
+            b.y<710
+
+        );
+
+
+    /*
+       SPAWN ZOMBIES
+    */
+
+    spawnTimer+=delta;
+
+    const spawnRate=
+        Math.max(
+            16,
+            58-level*4
+        );
+
+    if(spawnTimer>spawnRate){
+
+        createZombie();
+
+        spawnTimer=0;
+    }
+
+
+    /*
+       ZOMBIE MOVE
+    */
+
+    zombies.forEach(z=>{
+
+        const dx=
+            player.x-z.x;
+
+        const dy=
+            player.y-z.y;
+
+        const distance=
+            Math.hypot(
+                dx,
+                dy
+            )||1;
+
+        z.x +=
+            dx/distance*
+            z.speed*
+            delta;
+
+        z.y +=
+            dy/distance*
+            z.speed*
+            delta;
+
+        z.walk+=
+            .15*delta;
+
+    });
+
+
+    checkBulletHits();
+
+    checkZombieCollision();
+
+
+    /*
+       PARTICLES
+    */
+
+    particles.forEach(p=>{
+
+        p.x += p.vx*delta;
+
+        p.y += p.vy*delta;
+
+        p.life -= .04*delta;
+
+        p.vy += .03*delta;
+
+    });
+
+
+    particles=
+        particles.filter(
+            p=>p.life>0
+        );
+
+
+    /*
+       LEVEL
+    */
+
+    level=
+        Math.floor(score/100)+1;
+
+
+    /*
+       STARS
+    */
+
+    stars.forEach(s=>{
+
+        s.y+=s.speed*delta;
+
+        if(s.y>650){
+
+            s.y=0;
+
+            s.x=Math.random()*500;
+        }
+
+    });
+
+
+    updateInfo();
+}
+
+
+/* =========================
+   CREATE ZOMBIE
+========================= */
+
+function createZombie(){
+
+    const strong=
+        Math.random()<
+        Math.min(
+            .25,
+            level*.03
+        );
+
+    const side=
+        Math.random()<.5;
+
+
+    zombies.push({
+
+        x:
+            side?-45:545,
+
+        y:
+            60+
+            Math.random()*350,
+
+        width:
+            strong?58:44,
+
+        height:
+            strong?68:54,
+
+        speed:
+            strong
+            ?1+level*.08
+            :1.35+level*.1,
+
+        health:
+            strong
+            ?5+level
+            :1+Math.floor(level/3),
+
+        maxHealth:
+            strong
+            ?5+level
+            :1+Math.floor(level/3),
+
+        strong:strong,
+
+        walk:
+            Math.random()*6
+
+    });
+
+}
+
+
+/* =========================
+   360° SHOOTING
+========================= */
+
+function shootAt(targetX,targetY){
+
+    if(gameOver)return;
+
+    if(player.cooldown>0)return;
+
+    if(ammo<=0){
+
+        statusEl.textContent=
+            "🔴 OUT OF AMMO! Press RELOAD";
+
+        return;
+    }
+
+
+    ammo--;
+
+    player.cooldown=8;
+
+    player.recoil=4;
+
+    player.flash=3;
+
+
+    /*
+       AIM DIRECTION
+    */
+
+    const dx=
+        targetX-player.x;
+
+    const dy=
+        targetY-player.y;
+
+    const distance=
+        Math.hypot(
+            dx,
+            dy
+        )||1;
+
+
+    const speed=14;
+
+
+    /*
+       SAVE AIM ANGLE
+    */
+
+    player.angle=
+        Math.atan2(
+            dy,
+            dx
+        );
+
+
+    /*
+       CREATE BULLET
+    */
+
+    bullets.push({
+
+        x:
+            player.x+
+            Math.cos(player.angle)*20,
+
+        y:
+            player.y+
+            Math.sin(player.angle)*20,
+
+        vx:
+            Math.cos(player.angle)*speed,
+
+        vy:
+            Math.sin(player.angle)*speed,
+
+        damage:2
+
+    });
+
+
+    /*
+       MUZZLE PARTICLES
+    */
+
+    for(let i=0;i<7;i++){
+
+        particles.push({
+
+            x:
+                player.x+
+                Math.cos(player.angle)*25,
+
+            y:
+                player.y+
+                Math.sin(player.angle)*25,
+
+            vx:
+                Math.cos(player.angle)*3+
+                (Math.random()-.5)*2,
+
+            vy:
+                Math.sin(player.angle)*3+
+                (Math.random()-.5)*2,
+
+            size:
+                2+Math.random()*3,
+
+            life:.5
+
+        });
+
+    }
+
+    updateInfo();
+}
+
+
+/*
+   SHOOT BUTTON
+   DEFAULT UP
+*/
+
+function shootUp(){
+
+    shootAt(
+        player.x,
+        player.y-500
+    );
+
+}
+
+
+/* =========================
+   CANVAS AIM
+========================= */
+
+canvas.addEventListener(
+"pointerdown",
+function(e){
+
+    if(gameOver)return;
+
+
+    const rect=
+        canvas.getBoundingClientRect();
+
+
+    const scaleX=
+        canvas.width/
+        rect.width;
+
+
+    const scaleY=
+        canvas.height/
+        rect.height;
+
+
+    const targetX=
+        (e.clientX-
+        rect.left)*
+        scaleX;
+
+
+    const targetY=
+        (e.clientY-
+        rect.top)*
+        scaleY;
+
+
+    shootAt(
+        targetX,
+        targetY
+    );
+
+});
+
+
+/* =========================
+   RELOAD
+========================= */
+
+function reload(){
+
+    if(gameOver)return;
+
+    ammo=20;
+
+    statusEl.textContent=
+        "🔄 Reloaded!";
+
+    updateInfo();
+}
+
+
+/* =========================
+   GRENADE
+========================= */
+
+function grenade(){
+
+    if(gameOver)return;
+
+    if(grenades<=0){
+
+        statusEl.textContent=
+            "❌ No grenades left!";
+
+        return;
+    }
+
+
+    grenades--;
+
+    statusEl.textContent=
+        "💣 MEGA BOOM!";
+
+
+    zombies.forEach(z=>{
+
+        createExplosion(
+            z.x,
+            z.y,
+            25
+        );
+
+    });
+
+
+    score+=
+        zombies.length*15;
+
+
+    zombies=[];
+}
+
+
+/* =========================
+   BULLET HIT
+========================= */
+
+function checkBulletHits(){
+
+    for(
+        let i=bullets.length-1;
+        i>=0;
+        i--
+    ){
+
+        const b=
+            bullets[i];
+
+
+        for(
+            let j=zombies.length-1;
+            j>=0;
+            j--
+        ){
+
+            const z=
+                zombies[j];
+
+
+            if(hitBox(b,z)){
+
+                z.health-=2;
+
+                bullets.splice(
+                    i,
+                    1
+                );
+
+
+                createExplosion(
+                    z.x,
+                    z.y,
+                    7
+                );
+
+
+                if(z.health<=0){
+
+                    score+=
+                        z.strong
+                        ?30
+                        :10;
+
+
+                    createExplosion(
+                        z.x,
+                        z.y,
+                        30
+                    );
+
+
+                    zombies.splice(
+                        j,
+                        1
+                    );
+
+                }
+
+                break;
+            }
+
+        }
+
+    }
+}
+
+
+/* =========================
+   ZOMBIE TOUCH
+========================= */
+
+function checkZombieCollision(){
+
+    for(
+        let i=zombies.length-1;
+        i>=0;
+        i--
+    ){
+
+        const z=
+            zombies[i];
+
+
+        /*
+           DAMAGE ONLY
+           WHEN TOUCHING
+        */
+
+        const touching=
+
+            Math.abs(
+                player.x-z.x
+            )<
+            (
+                player.width+
+                z.width
+            )/2
+
+            &&
+
+            Math.abs(
+                player.y-z.y
+            )<
+            (
+                player.height+
+                z.height
+            )/2;
+
+
+        if(touching){
+
+            createExplosion(
+                z.x,
+                z.y,
+                25
+            );
+
+
+            zombies.splice(
+                i,
+                1
+            );
+
+
+            health-=
+                z.strong
+                ?25
+                :15;
+
+
+            statusEl.textContent=
+                "💥 Zombie touched you!";
+
+
+            if(health<=0){
+
+                health=0;
+
+                endGame();
+
+            }
+
+        }
+
+    }
+}
+
+
+/* =========================
+   HIT BOX
+========================= */
+
+function hitBox(a,b){
+
+    return(
+
+        a.x>
+        b.x-b.width/2
+
+        &&
+
+        a.x<
+        b.x+b.width/2
+
+        &&
+
+        a.y>
+        b.y-b.height/2
+
+        &&
+
+        a.y<
+        b.y+b.height/2
+
+    );
+}
+
+
+/* =========================
+   EXPLOSION
+========================= */
+
+function createExplosion(
+    x,
+    y,
+    amount
+){
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        particles.push({
+
+            x:x,
+
+            y:y,
+
+            vx:
+                (Math.random()-.5)*8,
+
+            vy:
+                (Math.random()-.5)*8,
+
+            size:
+                Math.random()*5+2,
+
+            life:1
+
+        });
+
+    }
+}
+
+
+/* =========================
+   DRAW
+========================= */
+
+function draw(){
+
+    ctx.fillStyle=
+        "#071008";
+
+    ctx.fillRect(
+        0,
+        0,
+        500,
+        650
+    );
+
+
+    /*
+       GROUND
+    */
+
+    ctx.fillStyle=
+        "#102016";
+
+    ctx.fillRect(
+        0,
+        500,
+        500,
+        150
+    );
+
+
+    /*
+       STARS
+    */
+
+    stars.forEach(s=>{
+
+        ctx.fillStyle="#fff";
+
+        ctx.globalAlpha=.45;
+
+        ctx.fillRect(
+            s.x,
+            s.y,
+            s.size,
+            s.size
+        );
+
+    });
+
+    ctx.globalAlpha=1;
+
+
+    drawGround();
+
+
+    bullets.forEach(
+        drawBullet
+    );
+
+
+    zombies.forEach(
+        drawZombie
+    );
+
+
+    drawPlayer();
+
+
+    particles.forEach(p=>{
+
+        ctx.globalAlpha=
+            Math.max(
+                0,
+                p.life
+            );
+
+        ctx.fillStyle=
+            p.life>.5
+            ?" #ffb300"
+            :"#ff5722";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    });
+
+    ctx.globalAlpha=1;
+}
+
+
+/* =========================
+   GROUND
+========================= */
+
+function drawGround(){
+
+    ctx.strokeStyle=
+        "rgba(120,160,120,.12)";
+
+    ctx.lineWidth=1;
+
+
+    for(
+        let x=0;
+        x<500;
+        x+=50
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            x,
+            500
+        );
+
+        ctx.lineTo(
+            x-30,
+            650
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    for(
+        let y=520;
+        y<650;
+        y+=30
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            0,
+            y
+        );
+
+        ctx.lineTo(
+            500,
+            y
+        );
+
+        ctx.stroke();
+
+    }
+}
+
+
+/* =========================
+   BULLET
+========================= */
+
+function drawBullet(b){
+
+    ctx.fillStyle=
+        "#fff176";
+
+    ctx.shadowColor=
+        "#ff9800";
+
+    ctx.shadowBlur=12;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        b.x,
+        b.y,
+        4,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.shadowBlur=0;
+}
+
+
+/* =========================
+   PLAYER
+========================= */
+
+function drawPlayer(){
+
+    const recoil=
+        player.recoil>0
+        ?3
+        :0;
+
+
+    ctx.save();
+
+
+    ctx.translate(
+        player.x,
+        player.y+recoil
+    );
+
+
+    /*
+       SHADOW
+    */
+
+    ctx.fillStyle=
+        "rgba(0,0,0,.5)";
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        31,
+        30,
+        8,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       BODY
+    */
+
+    ctx.fillStyle=
+        "#263238";
+
+
+    ctx.shadowColor=
+        "#00bfff";
+
+
+    ctx.shadowBlur=10;
+
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        -21,
+        -13,
+        42,
+        38,
+        10
+    );
+
+    ctx.fill();
+
+
+    ctx.shadowBlur=0;
+
+
+    /*
+       BLUE ARMOR
+    */
+
+    ctx.fillStyle=
+        "#1565c0";
+
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        -13,
+        -7,
+        26,
+        25,
+        5
+    );
+
+    ctx.fill();
+
+
+    /*
+       ARMOR LIGHT
+    */
+
+    ctx.fillStyle=
+        "#00e5ff";
+
+    ctx.fillRect(
+        -3,
+        -4,
+        6,
+        15
+    );
+
+
+    /*
+       LEGS
+    */
+
+    ctx.fillStyle=
+        "#18222b";
+
+    ctx.fillRect(
+        -17,
+        12,
+        12,
+        29
+    );
+
+    ctx.fillRect(
+        5,
+        12,
+        12,
+        29
+    );
+
+
+    /*
+       BOOTS
+    */
+
+    ctx.fillStyle=
+        "#080808";
+
+    ctx.fillRect(
+        -20,
+        35,
+        17,
+        7
+    );
+
+    ctx.fillRect(
+        3,
+        35,
+        17,
+        7
+    );
+
+
+    /*
+       BACKPACK
+    */
+
+    ctx.fillStyle=
+        "#37474f";
+
+    ctx.fillRect(
+        -28,
+        -10,
+        10,
+        32
+    );
+
+
+    /*
+       NECK
+    */
+
+    ctx.fillStyle=
+        "#d19b7d";
+
+    ctx.fillRect(
+        -7,
+        -22,
+        14,
+        10
+    );
+
+
+    /*
+       HEAD
+    */
+
+    ctx.fillStyle=
+        "#d9a27f";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -34,
+        16,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       HAIR
+    */
+
+    ctx.fillStyle=
+        "#171717";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -39,
+        16,
+        Math.PI,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       HELMET
+    */
+
+    ctx.strokeStyle=
+        "#607d8b";
+
+    ctx.lineWidth=5;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -36,
+        19,
+        Math.PI*1.05,
+        Math.PI*1.95
+    );
+
+    ctx.stroke();
+
+
+    /*
+       EYES
+    */
+
+    ctx.fillStyle=
+        "#111";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -6,
+        -35,
+        2.2,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        6,
+        -35,
+        2.2,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       SCARF
+    */
+
+    ctx.fillStyle=
+        "#e53935";
+
+    ctx.fillRect(
+        -11,
+        -20,
+        22,
+        6
+    );
+
+
+    /*
+       ARMS
+       Aim direction अनुसार
+    */
+
+    const gunLength=48;
+
+
+    const gx=
+        Math.cos(
+            player.angle
+        );
+
+    const gy=
+        Math.sin(
+            player.angle
+        );
+
+
+    ctx.strokeStyle=
+        "#d19b7d";
+
+    ctx.lineWidth=8;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        gx*5-18,
+        gy*5
+    );
+
+    ctx.lineTo(
+        gx*18-10,
+        gy*18
+    );
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        gx*5+18,
+        gy*5
+    );
+
+    ctx.lineTo(
+        gx*18+10,
+        gy*18
+    );
+
+    ctx.stroke();
+
+
+    /*
+       ROTATING GUN
+    */
+
+    ctx.save();
+
+
+    ctx.rotate(
+        player.angle
+    );
+
+
+    /*
+       Gun body
+    */
+
+    ctx.fillStyle=
+        "#111";
+
+    ctx.fillRect(
+        8,
+        -5,
+        gunLength,
+        10
+    );
+
+
+    /*
+       Gun metal
+    */
+
+    ctx.fillStyle=
+        "#78909c";
+
+    ctx.fillRect(
+        15,
+        -2,
+        35,
+        4
+    );
+
+
+    /*
+       Gun scope
+    */
+
+    ctx.fillStyle=
+        "#00bcd4";
+
+    ctx.fillRect(
+        20,
+        -9,
+        12,
+        4
+    );
+
+
+    /*
+       Gun muzzle
+    */
+
+    ctx.fillStyle=
+        "#263238";
+
+    ctx.fillRect(
+        48,
+        -7,
+        8,
+        14
+    );
+
+
+    /*
+       MUZZLE FLASH
+    */
+
+    if(
+        player.flash>0
+    ){
+
+        ctx.fillStyle=
+            "#fff59d";
+
+        ctx.shadowColor=
+            "#ff9800";
+
+        ctx.shadowBlur=25;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            56,
+            0
+        );
+
+        ctx.lineTo(
+            75,
+            -12
+        );
+
+        ctx.lineTo(
+            65,
+            0
+        );
+
+        ctx.lineTo(
+            75,
+            12
+        );
+
+        ctx.closePath();
+
+        ctx.fill();
+
+
+        ctx.shadowBlur=0;
+
+    }
+
+
+    ctx.restore();
+
+
+    /*
+       AIM LINE
+       हल्का guide
+    */
+
+    ctx.strokeStyle=
+        "rgba(0,255,255,.12)";
+
+    ctx.lineWidth=1;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        0
+    );
+
+    ctx.lineTo(
+        gx*70,
+        gy*70
+    );
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================
+   ZOMBIE
+========================= */
+
+function drawZombie(z){
+
+    const bob=
+        Math.sin(z.walk)*2;
+
+
+    ctx.save();
+
+
+    ctx.translate(
+        z.x,
+        z.y+bob
+    );
+
+
+    const scale=
+        z.strong
+        ?1.15
+        :1;
+
+
+    ctx.scale(
+        scale,
+        scale
+    );
+
+
+    /*
+       SHADOW
+    */
+
+    ctx.fillStyle=
+        "rgba(0,0,0,.5)";
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        30,
+        28,
+        8,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       LEGS
+    */
+
+    ctx.fillStyle=
+        z.strong
+        ?" #301313"
+        :"#26352a";
+
+
+    ctx.fillRect(
+        -15,
+        14,
+        11,
+        29
+    );
+
+    ctx.fillRect(
+        4,
+        14,
+        11,
+        29
+    );
+
+
+    /*
+       TORN BODY
+    */
+
+    ctx.fillStyle=
+        z.strong
+        ?"#741d1d"
+        :"#3f6943";
+
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        -20,
+        -3,
+        40,
+        37,
+        8
+    );
+
+    ctx.fill();
+
+
+    /*
+       CLOTH DAMAGE
+    */
+
+    ctx.strokeStyle=
+        "#172019";
+
+    ctx.lineWidth=3;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -12,
+        5
+    );
+
+    ctx.lineTo(
+        -4,
+        15
+    );
+
+    ctx.lineTo(
+        -14,
+        22
+    );
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        10,
+        3
+    );
+
+    ctx.lineTo(
+        4,
+        15
+    );
+
+    ctx.stroke();
+
+
+    /*
+       NECK
+    */
+
+    ctx.fillStyle=
+        "#63845e";
+
+    ctx.fillRect(
+        -7,
+        -20,
+        14,
+        10
+    );
+
+
+    /*
+       HEAD
+    */
+
+    ctx.fillStyle=
+        z.strong
+        ?"#704040"
+        :"#6f966b";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -31,
+        19,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       EARS
+    */
+
+    ctx.fillStyle=
+        z.strong
+        ?"#603535"
+        :"#5f815b";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -19,
+        -30,
+        6,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        19,
+        -30,
+        6,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       HAIR
+    */
+
+    ctx.fillStyle=
+        "#161a16";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -39,
+        18,
+        Math.PI,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       RED GLOWING EYES
+    */
+
+    ctx.fillStyle=
+        "#ff1744";
+
+    ctx.shadowColor=
+        "#ff1744";
+
+    ctx.shadowBlur=15;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -7,
+        -32,
+        4,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        7,
+        -32,
+        4,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.shadowBlur=0;
+
+
+    /*
+       PUPILS
+    */
+
+    ctx.fillStyle=
+        "#050505";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -7,
+        -32,
+        1.5,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        7,
+        -32,
+        1.5,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /*
+       MOUTH
+    */
+
+    ctx.fillStyle=
+        "#120909";
+
+    ctx.fillRect(
+        -10,
+        -18,
+        20,
+        9
+    );
+
+
+    /*
+       TEETH
+    */
+
+    ctx.fillStyle=
+        "#eee";
+
+
+    for(
+        let i=-7;
+        i<=5;
+        i+=6
+    ){
+
+        ctx.fillRect(
+            i,
+            -18,
+            3,
+            5
+        );
+
+    }
+
+
+    /*
+       BLOOD
+    */
+
+    ctx.fillStyle=
+        "#9e1b1b";
+
+    ctx.fillRect(
+        8,
+        -13,
+        3,
+        9
+    );
+
+
+    /*
+       ARMS
+    */
+
+    ctx.strokeStyle=
+        z.strong
+        ?"#8b4949"
+        :"#638b60";
+
+    ctx.lineWidth=8;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -17,
+        1
+    );
+
+    ctx.lineTo(
+        -31,
+        15
+    );
+
+    ctx.lineTo(
+        -40,
+        7
+    );
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        17,
+        1
+    );
+
+    ctx.lineTo(
+        31,
+        13
+    );
+
+    ctx.lineTo(
+        40,
+        5
+    );
+
+    ctx.stroke();
+
+
+    /*
+       CLAWS
+    */
+
+    ctx.strokeStyle=
+        "#c4d6bd";
+
+    ctx.lineWidth=2;
+
+
+    for(
+        let i=0;
+        i<3;
+        i++
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -40,
+            7
+        );
+
+        ctx.lineTo(
+            -47,
+            2+i*4
+        );
+
+        ctx.stroke();
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            40,
+            5
+        );
+
+        ctx.lineTo(
+            47,
+            i*4
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    /*
+       HEALTH BAR
+    */
+
+    ctx.fillStyle=
+        "#222";
+
+    ctx.fillRect(
+        -24,
+        45,
+        48,
+        6
+    );
+
+
+    ctx.fillStyle=
+        z.strong
+        ?"#ff1744"
+        :"#76ff03";
+
+
+    ctx.fillRect(
+        -24,
+        45,
+        48*
+        (
+            z.health/
+            z.maxHealth
+        ),
+        6
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+function updateInfo(){
+
+    healthEl.textContent=
+        health;
+
+    scoreEl.textContent=
+        score;
+
+    levelEl.textContent=
+        level;
+
+    ammoEl.textContent=
+        ammo;
+
+}
+
+
+/* =========================
+   GAME OVER
+========================= */
+
+function endGame(){
+
+    gameOver=true;
+
+
+    cancelAnimationFrame(
+        animation
+    );
+
+
+    statusEl.textContent=
+        "💀 GAME OVER! Score: "+
+        score;
+
+
+    ctx.fillStyle=
+        "rgba(0,0,0,.78)";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        500,
+        650
+    );
+
+
+    ctx.textAlign=
+        "center";
+
+
+    ctx.fillStyle=
+        "#fff";
+
+
+    ctx.font=
+        "bold 38px Arial";
+
+
+    ctx.fillText(
+        "GAME OVER",
+        250,
+        310
+    );
+
+
+    ctx.font=
+        "18px Arial";
+
+
+    ctx.fillText(
+        "Press 🔄 to Restart",
+        250,
+        350
+    );
+
+}
+
+
+/* =========================
+   START GAME
+========================= */
+
+startGame();
+
+</script>
+
+</body>
+</html>

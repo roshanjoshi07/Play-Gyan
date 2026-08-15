@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🐦 Flying Bird</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at top,#153b67,#050816 70%);
+    font-family:Arial,sans-serif;
+    color:white;
+    overflow:hidden;
+}
+
+.game{
+    width:95%;
+    max-width:850px;
+    text-align:center;
+}
+
+h1{
+    font-size:clamp(32px,7vw,55px);
+    color:#00eaff;
+    text-shadow:0 0 15px #00eaff;
+    margin-bottom:10px;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:12px;
+}
+
+.stat{
+    min-width:110px;
+    padding:9px 15px;
+    border-radius:15px;
+    background:#ffffff10;
+    border:1px solid #00eaff33;
+}
+
+.stat span{
+    display:block;
+    font-size:11px;
+    color:#9db8c9;
+}
+
+.stat strong{
+    font-size:20px;
+    color:#00eaff;
+}
+
+/* GAME */
+
+.gameArea{
+    position:relative;
+    width:100%;
+    height:min(70vh,560px);
+    min-height:350px;
+    overflow:hidden;
+
+    border:2px solid #00eaff66;
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            #48c8ff,
+            #a8edff 65%,
+            #63d15c 65%
+        );
+
+    box-shadow:
+        0 0 30px #00eaff33;
+
+    cursor:pointer;
+}
+
+/* clouds */
+
+.cloud{
+    position:absolute;
+    width:100px;
+    height:35px;
+    background:#ffffffaa;
+    border-radius:40px;
+    animation:cloudMove 15s linear infinite;
+}
+
+.cloud::before,
+.cloud::after{
+    content:"";
+    position:absolute;
+    background:#ffffffaa;
+    border-radius:50%;
+}
+
+.cloud::before{
+    width:45px;
+    height:45px;
+    left:15px;
+    bottom:10px;
+}
+
+.cloud::after{
+    width:60px;
+    height:60px;
+    right:10px;
+    bottom:5px;
+}
+
+.cloud1{
+    top:12%;
+    left:100%;
+}
+
+.cloud2{
+    top:30%;
+    left:130%;
+    animation-delay:5s;
+}
+
+@keyframes cloudMove{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-1300px);
+    }
+}
+
+/* bird */
+
+#bird{
+    position:absolute;
+    left:18%;
+    top:45%;
+
+    width:48px;
+    height:38px;
+
+    background:#ffd83d;
+
+    border-radius:
+        50% 55% 45% 50%;
+
+    box-shadow:
+        0 0 12px #ffd83d;
+
+    z-index:5;
+
+    transition:
+        transform .08s linear;
+}
+
+#bird::before{
+    content:"";
+
+    position:absolute;
+
+    width:16px;
+    height:10px;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    right:5px;
+    top:7px;
+}
+
+#bird::after{
+    content:"";
+
+    position:absolute;
+
+    width:7px;
+    height:7px;
+
+    background:#111;
+
+    border-radius:50%;
+
+    right:10px;
+    top:9px;
+}
+
+.wing{
+    position:absolute;
+    left:5px;
+    top:15px;
+
+    width:22px;
+    height:12px;
+
+    background:#ffb928;
+
+    border-radius:50%;
+
+    animation:wing .18s infinite alternate;
+}
+
+@keyframes wing{
+    from{
+        transform:rotate(20deg);
+    }
+    to{
+        transform:rotate(-25deg);
+    }
+}
+
+/* pipe */
+
+.pipe{
+    position:absolute;
+    width:65px;
+    background:
+        linear-gradient(
+            90deg,
+            #087d3b,
+            #25d95e,
+            #087d3b
+        );
+
+    border:2px solid #075b2e;
+
+    z-index:3;
+}
+
+.pipe.top{
+    top:0;
+}
+
+.pipe.bottom{
+    bottom:35%;
+}
+
+/* pipe caps */
+
+.pipe.top::after,
+.pipe.bottom::before{
+    content:"";
+    position:absolute;
+    left:-7px;
+    width:79px;
+    height:25px;
+
+    background:#1dcc56;
+
+    border:2px solid #075b2e;
+}
+
+.pipe.top::after{
+    bottom:-25px;
+}
+
+.pipe.bottom::before{
+    top:-25px;
+}
+
+/* start screen */
+
+.overlay{
+    position:absolute;
+    inset:0;
+
+    z-index:20;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    background:#020812bb;
+    backdrop-filter:blur(7px);
+}
+
+.overlay h2{
+    font-size:40px;
+    color:#00eaff;
+    text-shadow:0 0 20px #00eaff;
+    margin-bottom:12px;
+}
+
+.overlay p{
+    color:#c2dce8;
+    margin:4px;
+}
+
+button{
+    border:0;
+    padding:11px 22px;
+    margin-top:15px;
+
+    border-radius:25px;
+
+    background:#00eaff;
+    color:#001018;
+
+    font-weight:bold;
+    cursor:pointer;
+
+    box-shadow:0 0 18px #00eaff99;
+
+    transition:.2s;
+}
+
+button:hover{
+    transform:scale(1.07);
+}
+
+.message{
+    min-height:25px;
+    margin-top:10px;
+    color:#bcefff;
+}
+
+@media(max-width:500px){
+
+    .gameArea{
+        min-height:330px;
+    }
+
+    #bird{
+        width:42px;
+        height:33px;
+    }
+
+    .pipe{
+        width:55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<h1>🐦 FLYING BIRD</h1>
+
+<div class="stats">
+
+    <div class="stat">
+        <span>SCORE</span>
+        <strong id="score">0</strong>
+    </div>
+
+    <div class="stat">
+        <span>BEST</span>
+        <strong id="best">0</strong>
+    </div>
+
+    <div class="stat">
+        <span>SPEED</span>
+        <strong id="speed">1x</strong>
+    </div>
+
+</div>
+
+<div class="gameArea" id="gameArea">
+
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <div id="bird">
+        <div class="wing"></div>
+    </div>
+
+    <div class="overlay" id="overlay">
+
+        <h2>🐦 Flying Bird</h2>
+
+        <p>Tap / Click / Space to fly</p>
+        <p>Avoid the pipes!</p>
+
+        <button onclick="startGame()">
+            ▶ START GAME
+        </button>
+
+    </div>
+
+</div>
+
+<div class="message" id="message">
+    Ready to fly!
+</div>
+
+</div>
+
+<script>
+
+const gameArea =
+    document.getElementById("gameArea");
+
+const bird =
+    document.getElementById("bird");
+
+const overlay =
+    document.getElementById("overlay");
+
+const scoreText =
+    document.getElementById("score");
+
+const bestText =
+    document.getElementById("best");
+
+const speedText =
+    document.getElementById("speed");
+
+const message =
+    document.getElementById("message");
+
+
+let birdY=45;
+let velocity=0;
+
+let gravity=.42;
+let jump=-7.5;
+
+let playing=false;
+
+let score=0;
+
+let best=
+    Number(
+        localStorage.getItem(
+            "flyingBirdBest"
+        )
+    ) || 0;
+
+let pipes=[];
+
+let pipeTimer;
+
+let gameLoop;
+
+let speed=1;
+
+bestText.textContent=best;
+
+
+/* ======================
+   START
+====================== */
+
+function startGame(){
+
+    clearInterval(pipeTimer);
+    cancelAnimationFrame(gameLoop);
+
+    score=0;
+
+    speed=1;
+
+    birdY=45;
+
+    velocity=0;
+
+    pipes=[];
+
+    document
+        .querySelectorAll(".pipe")
+        .forEach(p=>p.remove());
+
+    playing=true;
+
+    overlay.style.display="none";
+
+    scoreText.textContent="0";
+
+    speedText.textContent="1x";
+
+    message.textContent=
+        "🐦 Fly through the pipes!";
+
+    pipeTimer=
+        setInterval(
+            createPipe,
+            1500
+        );
+
+    gameLoop=
+        requestAnimationFrame(update);
+
+}
+
+
+/* ======================
+   FLY
+====================== */
+
+function fly(){
+
+    if(!playing){
+
+        startGame();
+
+        return;
+    }
+
+    velocity=jump;
+
+}
+
+
+/* ======================
+   CONTROLS
+====================== */
+
+gameArea.addEventListener(
+    "click",
+    function(e){
+
+        if(
+            e.target.tagName!=="BUTTON"
+        ){
+
+            fly();
+
+        }
+
+    }
+);
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.code==="Space" ||
+            e.code==="ArrowUp"
+        ){
+
+            e.preventDefault();
+
+            fly();
+
+        }
+
+    }
+);
+
+
+/* ======================
+   CREATE PIPE
+====================== */
+
+function createPipe(){
+
+    if(!playing) return;
+
+    const areaHeight =
+        gameArea.clientHeight;
+
+    const ground =
+        areaHeight * .35;
+
+    const gap=150;
+
+    const minTop=70;
+
+    const maxTop=
+        areaHeight-ground-gap-70;
+
+    const topHeight =
+        minTop +
+        Math.random() *
+        (maxTop-minTop);
+
+    const bottomHeight =
+        areaHeight -
+        ground -
+        topHeight -
+        gap;
+
+    const topPipe =
+        document.createElement("div");
+
+    topPipe.className=
+        "pipe top";
+
+    topPipe.style.height=
+        topHeight+"px";
+
+    topPipe.style.left=
+        "100%";
+
+
+    const bottomPipe =
+        document.createElement("div");
+
+    bottomPipe.className=
+        "pipe bottom";
+
+    bottomPipe.style.height=
+        bottomHeight+"px";
+
+    bottomPipe.style.left=
+        "100%";
+
+
+    gameArea.appendChild(topPipe);
+    gameArea.appendChild(bottomPipe);
+
+
+    pipes.push({
+
+        top:topPipe,
+        bottom:bottomPipe,
+
+        x:gameArea.clientWidth,
+
+        passed:false
+
+    });
+
+}
+
+
+/* ======================
+   GAME UPDATE
+====================== */
+
+function update(){
+
+    if(!playing) return;
+
+    velocity+=gravity;
+
+    birdY+=
+        velocity *
+        .08;
+
+    birdY=
+        Math.max(
+            0,
+            Math.min(
+                65,
+                birdY
+            )
+        );
+
+    bird.style.top=
+        birdY+"%";
+
+    bird.style.transform=
+        `rotate(${Math.max(-25,
+        Math.min(80,velocity*5))}deg)`;
+
+
+    const birdRect =
+        bird.getBoundingClientRect();
+
+
+    for(
+        let i=pipes.length-1;
+        i>=0;
+        i--
+    ){
+
+        const p=pipes[i];
+
+        p.x -=
+            3.5 * speed;
+
+        p.top.style.left=
+            p.x+"px";
+
+        p.bottom.style.left=
+            p.x+"px";
+
+
+        if(!p.passed &&
+            p.x <
+            gameArea.clientWidth*.18
+        ){
+
+            p.passed=true;
+
+            score++;
+
+            scoreText.textContent=
+                score;
+
+            if(score%5===0){
+
+                speed+=.1;
+
+                speedText.textContent=
+                    speed.toFixed(1)+"x";
+
+            }
+
+        }
+
+
+        if(
+            p.x < -100
+        ){
+
+            p.top.remove();
+            p.bottom.remove();
+
+            pipes.splice(i,1);
+
+            continue;
+
+        }
+
+
+        if(
+            collision(
+                birdRect,
+                p.top.getBoundingClientRect()
+            ) ||
+            collision(
+                birdRect,
+                p.bottom.getBoundingClientRect()
+            )
+        ){
+
+            endGame();
+
+            return;
+
+        }
+
+    }
+
+
+    const areaRect =
+        gameArea.getBoundingClientRect();
+
+
+    if(
+        birdRect.top <=
+        areaRect.top ||
+
+        birdRect.bottom >=
+        areaRect.bottom -
+        areaRect.height*.35
+    ){
+
+        endGame();
+
+        return;
+
+    }
+
+
+    gameLoop=
+        requestAnimationFrame(update);
+
+}
+
+
+/* ======================
+   COLLISION
+====================== */
+
+function collision(a,b){
+
+    return !(
+        a.right < b.left ||
+        a.left > b.right ||
+        a.bottom < b.top ||
+        a.top > b.bottom
+    );
+
+}
+
+
+/* ======================
+   GAME OVER
+====================== */
+
+function endGame(){
+
+    playing=false;
+
+    clearInterval(pipeTimer);
+
+    cancelAnimationFrame(gameLoop);
+
+
+    if(score>best){
+
+        best=score;
+
+        localStorage.setItem(
+            "flyingBirdBest",
+            best
+        );
+
+        bestText.textContent=
+            best;
+
+    }
+
+
+    message.textContent=
+        "💥 Game Over!";
+
+
+    overlay.innerHTML=`
+
+        <h2>💥 GAME OVER</h2>
+
+        <p>Score: <b>${score}</b></p>
+
+        <p>Best: <b>${best}</b></p>
+
+        <button onclick="startGame()">
+            🔄 PLAY AGAIN
+        </button>
+
+    `;
+
+    overlay.style.display=
+        "flex";
+
+}
+
+
+/* ======================
+   RESET
+====================== */
+
+function resetGame(){
+
+    startGame();
+
+}
+
+
+/* INITIAL */
+
+scoreText.textContent="0";
+bestText.textContent=best;
+
+</script>
+
+</body>
+</html>

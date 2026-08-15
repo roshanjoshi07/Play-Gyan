@@ -1,0 +1,2684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Alien Space Shooter</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #18265c,
+            #050713 55%,
+            #000
+        );
+
+    color:white;
+
+    font-family:Arial,sans-serif;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:12px;
+}
+
+.game{
+    width:100%;
+    max-width:520px;
+    text-align:center;
+}
+
+h1{
+    font-size:32px;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:#aaa;
+    margin-bottom:12px;
+}
+
+.info{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin-bottom:10px;
+}
+
+.info div{
+    background:rgba(255,255,255,.1);
+    border-radius:10px;
+    padding:9px 3px;
+    font-size:12px;
+}
+
+.info b{
+    display:block;
+    font-size:16px;
+    margin-top:3px;
+}
+
+.canvas-box{
+    padding:5px;
+    border-radius:17px;
+
+    background:rgba(0,0,0,.7);
+
+    box-shadow:
+        0 0 35px rgba(0,180,255,.3);
+}
+
+canvas{
+    width:100%;
+    display:block;
+
+    background:#02030b;
+
+    border-radius:13px;
+
+    touch-action:none;
+}
+
+.message{
+    min-height:28px;
+    margin:10px 0;
+
+    font-weight:bold;
+}
+
+.buttons{
+    display:flex;
+    gap:8px;
+}
+
+.main-btn{
+    flex:1;
+
+    border:none;
+
+    padding:13px;
+
+    border-radius:11px;
+
+    font-size:15px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.restart{
+    background:#00e5ff;
+    color:#001015;
+}
+
+.bomb{
+    background:#ff1744;
+    color:white;
+}
+
+.bomb:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.controls{
+    width:280px;
+
+    margin:14px auto 0;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:7px;
+}
+
+.control{
+    height:52px;
+
+    border:none;
+
+    border-radius:11px;
+
+    background:
+        rgba(255,255,255,.14);
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    touch-action:none;
+}
+
+.fire{
+    background:#00c853;
+}
+
+.control:active,
+.main-btn:active{
+    transform:scale(.92);
+}
+
+@media(max-width:400px){
+
+    h1{
+        font-size:27px;
+    }
+
+    .controls{
+        width:235px;
+    }
+
+    .control{
+        height:48px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+    <h1>🚀 Alien Space Shooter</h1>
+
+    <p class="subtitle">
+        Destroy the alien army!
+    </p>
+
+
+    <div class="info">
+
+        <div>
+            ⭐ Score
+            <b id="score">0</b>
+        </div>
+
+        <div>
+            ❤️ Lives
+            <b id="lives">3</b>
+        </div>
+
+        <div>
+            🔥 Level
+            <b id="level">1</b>
+        </div>
+
+        <div>
+            🔫 Weapon
+            <b id="weapon">LASER</b>
+        </div>
+
+    </div>
+
+
+    <div class="canvas-box">
+
+        <canvas
+            id="game"
+            width="480"
+            height="650">
+        </canvas>
+
+    </div>
+
+
+    <div id="message" class="message">
+        🚀 Destroy the aliens!
+    </div>
+
+
+    <div class="buttons">
+
+        <button
+            class="main-btn restart"
+            onclick="startGame()">
+
+            🔄 Restart
+
+        </button>
+
+
+        <button
+            id="bombBtn"
+            class="main-btn bomb"
+            onclick="megaBomb()">
+
+            💣 MEGA BOMB × 3
+
+        </button>
+
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            class="control"
+            onclick="moveLeft()">
+
+            ◀️
+
+        </button>
+
+
+        <button
+            class="control fire"
+            onclick="shoot()">
+
+            🔥
+
+        </button>
+
+
+        <button
+            class="control"
+            onclick="moveRight()">
+
+            ▶️
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   CANVAS
+========================================= */
+
+const canvas =
+    document.getElementById("game");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+const scoreEl =
+    document.getElementById("score");
+
+const livesEl =
+    document.getElementById("lives");
+
+const levelEl =
+    document.getElementById("level");
+
+const weaponEl =
+    document.getElementById("weapon");
+
+const messageEl =
+    document.getElementById("message");
+
+const bombBtn =
+    document.getElementById("bombBtn");
+
+
+/* =========================================
+   GAME VARIABLES
+========================================= */
+
+let player;
+
+let bullets = [];
+
+let enemies = [];
+
+let particles = [];
+
+let stars = [];
+
+let powerUps = [];
+
+let boss = null;
+
+
+let score = 0;
+
+let lives = 3;
+
+let level = 1;
+
+
+let weaponLevel = 1;
+
+let weaponName = "LASER";
+
+
+/*
+   IMPORTANT:
+   Only 3 Mega Bombs per game
+*/
+
+let megaBombs = 3;
+
+
+let gameOver = false;
+
+let spawnTimer = 0;
+
+let lastTime = 0;
+
+let animation;
+
+
+/* =========================================
+   KEYBOARD
+========================================= */
+
+const keys = {};
+
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        keys[e.key.toLowerCase()] = true;
+
+
+        /* SPACE = SHOOT */
+
+        if(e.code === "Space"){
+
+            e.preventDefault();
+
+            shoot();
+
+        }
+
+
+        /* B = MEGA BOMB */
+
+        if(
+            e.key.toLowerCase() === "b"
+        ){
+
+            megaBomb();
+
+        }
+
+
+        /* ENTER = RESTART */
+
+        if(
+            gameOver &&
+            e.key === "Enter"
+        ){
+
+            startGame();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keyup",
+    function(e){
+
+        keys[e.key.toLowerCase()] = false;
+
+    }
+);
+
+
+/* =========================================
+   START GAME
+========================================= */
+
+function startGame(){
+
+    cancelAnimationFrame(animation);
+
+
+    player = {
+
+        x:canvas.width / 2,
+
+        y:canvas.height - 70,
+
+        width:45,
+
+        height:48,
+
+        speed:6,
+
+        cooldown:0
+
+    };
+
+
+    bullets = [];
+
+    enemies = [];
+
+    particles = [];
+
+    powerUps = [];
+
+
+    score = 0;
+
+    lives = 3;
+
+    level = 1;
+
+
+    weaponLevel = 1;
+
+    weaponName = "LASER";
+
+
+    /* RESET BOMB COUNT */
+
+    megaBombs = 3;
+
+
+    boss = null;
+
+    spawnTimer = 0;
+
+    gameOver = false;
+
+
+    createStars();
+
+    updateInfo();
+
+    updateBombButton();
+
+
+    messageEl.textContent =
+        "🚀 Destroy the aliens!";
+
+
+    lastTime =
+        performance.now();
+
+
+    animation =
+        requestAnimationFrame(
+            gameLoop
+        );
+
+}
+
+
+/* =========================================
+   STARS
+========================================= */
+
+function createStars(){
+
+    stars = [];
+
+
+    for(
+        let i=0;
+        i<100;
+        i++
+    ){
+
+        stars.push({
+
+            x:
+                Math.random() *
+                canvas.width,
+
+            y:
+                Math.random() *
+                canvas.height,
+
+            size:
+                Math.random()*2+.5,
+
+            speed:
+                Math.random()*2+.5
+
+        });
+
+    }
+
+}
+
+
+/* =========================================
+   GAME LOOP
+========================================= */
+
+function gameLoop(time){
+
+    if(gameOver)
+        return;
+
+
+    const delta =
+        Math.min(
+            (time-lastTime)/16.67,
+            3
+        );
+
+
+    lastTime = time;
+
+
+    update(delta);
+
+    draw();
+
+
+    animation =
+        requestAnimationFrame(
+            gameLoop
+        );
+
+}
+
+
+/* =========================================
+   UPDATE
+========================================= */
+
+function update(delta){
+
+
+    /* PLAYER MOVEMENT */
+
+    if(
+        keys["arrowleft"] ||
+        keys["a"]
+    ){
+
+        player.x -=
+            player.speed * delta;
+
+    }
+
+
+    if(
+        keys["arrowright"] ||
+        keys["d"]
+    ){
+
+        player.x +=
+            player.speed * delta;
+
+    }
+
+
+    player.x =
+        Math.max(
+            25,
+
+            Math.min(
+                canvas.width-25,
+                player.x
+            )
+        );
+
+
+    if(player.cooldown>0){
+
+        player.cooldown -= delta;
+
+    }
+
+
+    /* HOLD SPACE TO SHOOT */
+
+    if(keys[" "]){
+
+        shoot();
+
+    }
+
+
+    /* =====================================
+       BULLETS
+    ===================================== */
+
+    bullets.forEach(
+        function(b){
+
+            b.x +=
+                b.vx * delta;
+
+            b.y -=
+                b.speed * delta;
+
+        }
+    );
+
+
+    bullets =
+        bullets.filter(
+            b => b.y > -50
+        );
+
+
+    /* =====================================
+       CREATE ENEMIES
+    ===================================== */
+
+    spawnTimer += delta;
+
+
+    const spawnRate =
+        Math.max(
+            16,
+            55-level*4
+        );
+
+
+    if(
+        spawnTimer > spawnRate &&
+        !boss
+    ){
+
+        createAlien();
+
+        spawnTimer = 0;
+
+    }
+
+
+    /* =====================================
+       ENEMY MOVEMENT
+    ===================================== */
+
+    enemies.forEach(
+        function(enemy){
+
+            enemy.y +=
+                enemy.speed * delta;
+
+
+            enemy.x +=
+                Math.sin(
+                    (
+                        enemy.y+
+                        enemy.wave
+                    ) / 30
+                )
+                *
+                .5
+                *
+                delta;
+
+        }
+    );
+
+
+    /* =====================================
+       BOSS MOVEMENT
+    ===================================== */
+
+    if(boss){
+
+        boss.x +=
+            Math.sin(
+                boss.y/35
+            )
+            *
+            1.5
+            *
+            delta;
+
+
+        boss.y +=
+            boss.speed *
+            delta;
+
+
+        if(
+            boss.y > 150
+        ){
+
+            boss.y = 150;
+
+        }
+
+    }
+
+
+    /* =====================================
+       COLLISIONS
+    ===================================== */
+
+    checkBulletHits();
+
+    checkEnemyHitsPlayer();
+
+
+    /* =====================================
+       IMPORTANT:
+       ENEMY GOES OFF SCREEN
+
+       LIFE DOES NOT DECREASE
+    ===================================== */
+
+    enemies =
+        enemies.filter(
+            function(enemy){
+
+                if(
+                    enemy.y >
+                    canvas.height+50
+                ){
+
+                    /*
+                       Enemy simply disappears.
+                       NO loseLife() here.
+                    */
+
+                    return false;
+
+                }
+
+                return true;
+
+            }
+        );
+
+
+    /* =====================================
+       POWER UPS
+    ===================================== */
+
+    powerUps.forEach(
+        function(p){
+
+            p.y +=
+                2*delta;
+
+        }
+    );
+
+
+    checkPowerUps();
+
+
+    /* =====================================
+       STARS
+    ===================================== */
+
+    stars.forEach(
+        function(star){
+
+            star.y +=
+                star.speed*delta;
+
+
+            if(
+                star.y >
+                canvas.height
+            ){
+
+                star.y = 0;
+
+                star.x =
+                    Math.random() *
+                    canvas.width;
+
+            }
+
+        }
+    );
+
+
+    /* =====================================
+       PARTICLES
+    ===================================== */
+
+    particles.forEach(
+        function(p){
+
+            p.x +=
+                p.vx*delta;
+
+            p.y +=
+                p.vy*delta;
+
+            p.life -=
+                .035*delta;
+
+        }
+    );
+
+
+    particles =
+        particles.filter(
+            p => p.life > 0
+        );
+
+
+    /* =====================================
+       BOSS SPAWN
+    ===================================== */
+
+    if(
+        score > 0 &&
+        score % 500 < 10 &&
+        !boss
+    ){
+
+        createBoss();
+
+    }
+
+
+    level =
+        Math.floor(
+            score/100
+        ) + 1;
+
+
+    updateInfo();
+
+}
+
+
+/* =========================================
+   SHOOT
+========================================= */
+
+function shoot(){
+
+    if(gameOver)
+        return;
+
+
+    if(player.cooldown > 0)
+        return;
+
+
+    /* =====================================
+       LEVEL 1
+    ===================================== */
+
+    if(
+        weaponLevel === 1
+    ){
+
+        bullets.push({
+
+            x:player.x,
+
+            y:player.y-25,
+
+            vx:0,
+
+            damage:1,
+
+            speed:11,
+
+            type:"laser"
+
+        });
+
+    }
+
+
+    /* =====================================
+       LEVEL 2
+       DOUBLE
+    ===================================== */
+
+    else if(
+        weaponLevel === 2
+    ){
+
+        bullets.push({
+
+            x:player.x-13,
+
+            y:player.y-20,
+
+            vx:0,
+
+            damage:1,
+
+            speed:11,
+
+            type:"laser"
+
+        });
+
+
+        bullets.push({
+
+            x:player.x+13,
+
+            y:player.y-20,
+
+            vx:0,
+
+            damage:1,
+
+            speed:11,
+
+            type:"laser"
+
+        });
+
+    }
+
+
+    /* =====================================
+       LEVEL 3
+       TRIPLE PLASMA
+    ===================================== */
+
+    else if(
+        weaponLevel === 3
+    ){
+
+        [
+            -.8,
+            0,
+            .8
+        ]
+        .forEach(
+            function(v){
+
+                bullets.push({
+
+                    x:player.x,
+
+                    y:player.y-25,
+
+                    vx:v,
+
+                    damage:2,
+
+                    speed:11,
+
+                    type:"plasma"
+
+                });
+
+            }
+        );
+
+    }
+
+
+    /* =====================================
+       LEVEL 4
+       MEGA WEAPON
+    ===================================== */
+
+    else{
+
+        [
+            -1.2,
+            -.6,
+            0,
+            .6,
+            1.2
+        ]
+        .forEach(
+            function(v){
+
+                bullets.push({
+
+                    x:player.x,
+
+                    y:player.y-25,
+
+                    vx:v,
+
+                    damage:3,
+
+                    speed:12,
+
+                    type:"mega"
+
+                });
+
+            }
+        );
+
+    }
+
+
+    player.cooldown = 7;
+
+}
+
+
+/* =========================================
+   CREATE ALIEN
+========================================= */
+
+function createAlien(){
+
+    const strong =
+        Math.random() <
+        Math.min(
+            .35,
+            level*.04
+        );
+
+
+    enemies.push({
+
+        x:
+            Math.random() *
+            (canvas.width-70)
+            + 35,
+
+        y:-50,
+
+        width:
+            strong ? 55 : 42,
+
+        height:
+            strong ? 58 : 48,
+
+        speed:
+            (
+                strong
+                ? 1.2
+                : 1.7
+            )
+            +
+            level*.12,
+
+        health:
+            strong
+            ?
+            4+level
+            :
+            1+
+            Math.floor(
+                level/4
+            ),
+
+        maxHealth:
+            strong
+            ?
+            4+level
+            :
+            1+
+            Math.floor(
+                level/4
+            ),
+
+        strong:strong,
+
+        wave:
+            Math.random()*1000
+
+    });
+
+}
+
+
+/* =========================================
+   CREATE BOSS
+========================================= */
+
+function createBoss(){
+
+    boss = {
+
+        x:
+            canvas.width/2,
+
+        y:-100,
+
+        width:130,
+
+        height:100,
+
+        health:
+            80+level*20,
+
+        maxHealth:
+            80+level*20,
+
+        speed:1
+
+    };
+
+
+    messageEl.textContent =
+        "👾 BOSS INCOMING!";
+
+}
+
+
+/* =========================================
+   BULLET COLLISION
+========================================= */
+
+function checkBulletHits(){
+
+    for(
+        let i=bullets.length-1;
+        i>=0;
+        i--
+    ){
+
+        const b =
+            bullets[i];
+
+        let hit = false;
+
+
+        /* =================================
+           NORMAL ALIENS
+        ================================= */
+
+        for(
+            let j=enemies.length-1;
+            j>=0;
+            j--
+        ){
+
+            const e =
+                enemies[j];
+
+
+            if(
+                hitBox(b,e)
+            ){
+
+                e.health -=
+                    b.damage;
+
+
+                bullets.splice(
+                    i,
+                    1
+                );
+
+
+                createExplosion(
+                    e.x,
+                    e.y,
+                    8
+                );
+
+
+                hit = true;
+
+
+                if(
+                    e.health <= 0
+                ){
+
+                    score +=
+                        e.strong
+                        ? 30
+                        : 10;
+
+
+                    createExplosion(
+                        e.x,
+                        e.y,
+                        25
+                    );
+
+
+                    /* POWER-UP DROP */
+
+                    if(
+                        Math.random() < .15
+                    ){
+
+                        powerUps.push({
+
+                            x:e.x,
+
+                            y:e.y,
+
+                            type:
+                                Math.random()<.5
+                                ?
+                                "weapon"
+                                :
+                                "life"
+
+                        });
+
+                    }
+
+
+                    enemies.splice(
+                        j,
+                        1
+                    );
+
+                }
+
+
+                break;
+
+            }
+
+        }
+
+
+        /* =================================
+           BOSS
+        ================================= */
+
+        if(
+            !hit &&
+            boss &&
+            hitBox(b,boss)
+        ){
+
+            boss.health -=
+                b.damage*1.5;
+
+
+            bullets.splice(
+                i,
+                1
+            );
+
+
+            createExplosion(
+                b.x,
+                b.y,
+                6
+            );
+
+
+            if(
+                boss.health <= 0
+            ){
+
+                score += 300;
+
+
+                createExplosion(
+                    boss.x,
+                    boss.y,
+                    80
+                );
+
+
+                boss = null;
+
+
+                messageEl.textContent =
+                    "🏆 BOSS DESTROYED!";
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   HIT BOX
+========================================= */
+
+function hitBox(a,b){
+
+    return (
+
+        a.x >
+        b.x-b.width/2
+
+        &&
+
+        a.x <
+        b.x+b.width/2
+
+        &&
+
+        a.y >
+        b.y-b.height/2
+
+        &&
+
+        a.y <
+        b.y+b.height/2
+
+    );
+
+}
+
+
+/* =========================================
+   ENEMY TOUCHES PLAYER
+
+   ONLY HERE LIFE DECREASES
+========================================= */
+
+function checkEnemyHitsPlayer(){
+
+    for(
+        let i=enemies.length-1;
+        i>=0;
+        i--
+    ){
+
+        const enemy =
+            enemies[i];
+
+
+        /*
+           Enemy must actually touch
+           the spaceship.
+        */
+
+        if(
+
+            Math.abs(
+                player.x -
+                enemy.x
+            )
+
+            <
+
+            (
+                player.width +
+                enemy.width
+            ) / 2
+
+            &&
+
+            Math.abs(
+                player.y -
+                enemy.y
+            )
+
+            <
+
+            (
+                player.height +
+                enemy.height
+            ) / 2
+
+        ){
+
+            /*
+               Collision effect
+            */
+
+            createExplosion(
+                enemy.x,
+                enemy.y,
+                25
+            );
+
+
+            /*
+               Remove enemy
+            */
+
+            enemies.splice(
+                i,
+                1
+            );
+
+
+            /*
+               IMPORTANT:
+               LIFE DECREASES
+               ONLY WHEN ENEMY
+               TOUCHES PLAYER
+            */
+
+            loseLife();
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   POWER UPS
+========================================= */
+
+function checkPowerUps(){
+
+    for(
+        let i=powerUps.length-1;
+        i>=0;
+        i--
+    ){
+
+        const p =
+            powerUps[i];
+
+
+        if(
+
+            Math.abs(
+                player.x-p.x
+            ) < 30
+
+            &&
+
+            Math.abs(
+                player.y-p.y
+            ) < 35
+
+        ){
+
+            /* WEAPON */
+
+            if(
+                p.type === "weapon"
+            ){
+
+                weaponLevel =
+                    Math.min(
+                        4,
+                        weaponLevel+1
+                    );
+
+
+                weaponName =
+                    weaponLevel === 2
+                    ?
+                    "DOUBLE"
+                    :
+                    weaponLevel === 3
+                    ?
+                    "TRIPLE"
+                    :
+                    weaponLevel === 4
+                    ?
+                    "MEGA"
+                    :
+                    "LASER";
+
+
+                messageEl.textContent =
+                    "🔥 POWER WEAPON ACTIVATED!";
+
+            }
+
+
+            /* LIFE POWER-UP */
+
+            else{
+
+                lives =
+                    Math.min(
+                        5,
+                        lives+1
+                    );
+
+
+                messageEl.textContent =
+                    "❤️ EXTRA LIFE!";
+
+            }
+
+
+            powerUps.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   MEGA BOMB
+
+   ONLY 3 PER GAME
+========================================= */
+
+function megaBomb(){
+
+    if(gameOver)
+        return;
+
+
+    /* NO BOMBS */
+
+    if(
+        megaBombs <= 0
+    ){
+
+        messageEl.textContent =
+            "❌ NO MEGA BOMBS LEFT!";
+
+        return;
+
+    }
+
+
+    /* USE ONE */
+
+    megaBombs--;
+
+
+    /* DESTROY ALL ENEMIES */
+
+    enemies.forEach(
+        function(e){
+
+            createExplosion(
+                e.x,
+                e.y,
+                25
+            );
+
+        }
+    );
+
+
+    score +=
+        enemies.length * 10;
+
+
+    enemies = [];
+
+
+    /* BOSS DAMAGE */
+
+    if(boss){
+
+        boss.health -= 35;
+
+
+        createExplosion(
+            boss.x,
+            boss.y,
+            40
+        );
+
+
+        if(
+            boss.health <= 0
+        ){
+
+            score += 300;
+
+
+            createExplosion(
+                boss.x,
+                boss.y,
+                80
+            );
+
+
+            boss = null;
+
+        }
+
+    }
+
+
+    updateBombButton();
+
+
+    if(
+        megaBombs > 0
+    ){
+
+        messageEl.textContent =
+            "💣 MEGA BOMB FIRED! " +
+            megaBombs +
+            " LEFT";
+
+    }
+    else{
+
+        messageEl.textContent =
+            "💣 ALL 3 BOMBS USED!";
+
+    }
+
+}
+
+
+/* =========================================
+   BOMB BUTTON
+========================================= */
+
+function updateBombButton(){
+
+    bombBtn.textContent =
+        "💣 MEGA BOMB × " +
+        megaBombs;
+
+
+    if(
+        megaBombs <= 0
+    ){
+
+        bombBtn.disabled = true;
+
+        bombBtn.textContent =
+            "💣 NO BOMBS";
+
+    }
+    else{
+
+        bombBtn.disabled = false;
+
+    }
+
+}
+
+
+/* =========================================
+   LOSE LIFE
+========================================= */
+
+function loseLife(){
+
+    lives--;
+
+    updateInfo();
+
+
+    if(
+        lives <= 0
+    ){
+
+        endGame();
+
+    }
+
+}
+
+
+/* =========================================
+   EXPLOSION
+========================================= */
+
+function createExplosion(
+    x,
+    y,
+    amount
+){
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        particles.push({
+
+            x:x,
+
+            y:y,
+
+            vx:
+                (Math.random()-.5)*8,
+
+            vy:
+                (Math.random()-.5)*8,
+
+            size:
+                Math.random()*5+2,
+
+            life:1
+
+        });
+
+    }
+
+}
+
+
+/* =========================================
+   DRAW
+========================================= */
+
+function draw(){
+
+    ctx.fillStyle =
+        "#02030b";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    /* STARS */
+
+    stars.forEach(
+        function(s){
+
+            ctx.fillStyle="#fff";
+
+
+            ctx.globalAlpha =
+                Math.random()*.6+.4;
+
+
+            ctx.fillRect(
+                s.x,
+                s.y,
+                s.size,
+                s.size
+            );
+
+        }
+    );
+
+
+    ctx.globalAlpha=1;
+
+
+    /* BULLETS */
+
+    bullets.forEach(
+        function(b){
+
+            if(
+                b.type === "mega"
+            ){
+
+                ctx.fillStyle =
+                    "#ffea00";
+
+                ctx.shadowColor =
+                    "#ff9800";
+
+                ctx.shadowBlur=18;
+
+            }
+
+            else if(
+                b.type === "plasma"
+            ){
+
+                ctx.fillStyle =
+                    "#e040fb";
+
+                ctx.shadowColor =
+                    "#e040fb";
+
+                ctx.shadowBlur=15;
+
+            }
+
+            else{
+
+                ctx.fillStyle =
+                    "#00e5ff";
+
+                ctx.shadowColor =
+                    "#00e5ff";
+
+                ctx.shadowBlur=12;
+
+            }
+
+
+            ctx.beginPath();
+
+
+            ctx.arc(
+                b.x,
+                b.y,
+
+                b.type === "mega"
+                ? 6
+                : 4,
+
+                0,
+                Math.PI*2
+            );
+
+
+            ctx.fill();
+
+        }
+    );
+
+
+    ctx.shadowBlur=0;
+
+
+    /* ALIENS */
+
+    enemies.forEach(
+        drawAlien
+    );
+
+
+    /* BOSS */
+
+    if(boss){
+
+        drawBoss();
+
+    }
+
+
+    /* POWER UPS */
+
+    powerUps.forEach(
+        drawPowerUp
+    );
+
+
+    /* PLAYER */
+
+    drawPlayer();
+
+
+    /* PARTICLES */
+
+    particles.forEach(
+        function(p){
+
+            ctx.globalAlpha =
+                Math.max(
+                    0,
+                    p.life
+                );
+
+
+            ctx.fillStyle =
+                "#ffcc00";
+
+
+            ctx.beginPath();
+
+
+            ctx.arc(
+                p.x,
+                p.y,
+                p.size,
+                0,
+                Math.PI*2
+            );
+
+
+            ctx.fill();
+
+        }
+    );
+
+
+    ctx.globalAlpha=1;
+
+}
+
+
+/* =========================================
+   DRAW PLAYER
+========================================= */
+
+function drawPlayer(){
+
+    ctx.save();
+
+
+    ctx.translate(
+        player.x,
+        player.y
+    );
+
+
+    ctx.shadowBlur=20;
+
+    ctx.shadowColor =
+        "#00e5ff";
+
+
+    /* SHIP */
+
+    ctx.fillStyle =
+        "#00e5ff";
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -30
+    );
+
+    ctx.lineTo(
+        -24,
+        22
+    );
+
+    ctx.lineTo(
+        0,
+        14
+    );
+
+    ctx.lineTo(
+        24,
+        22
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.shadowBlur=0;
+
+
+    /* COCKPIT */
+
+    ctx.fillStyle="#fff";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -7,
+        7,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* ENGINE FIRE */
+
+    ctx.fillStyle =
+        "#ff9800";
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -7,
+        18
+    );
+
+    ctx.lineTo(
+        0,
+        35
+    );
+
+    ctx.lineTo(
+        7,
+        18
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================
+   DRAW ALIEN
+========================================= */
+
+function drawAlien(e){
+
+    ctx.save();
+
+
+    ctx.translate(
+        e.x,
+        e.y
+    );
+
+
+    const scale =
+        e.strong
+        ? 1.2
+        : 1;
+
+
+    ctx.scale(
+        scale,
+        scale
+    );
+
+
+    /* HEAD */
+
+    ctx.fillStyle =
+        e.strong
+        ? "#9c27b0"
+        : "#43a047";
+
+
+    ctx.shadowBlur=12;
+
+
+    ctx.shadowColor =
+        e.strong
+        ? "#e040fb"
+        : "#00ff66";
+
+
+    ctx.beginPath();
+
+
+    ctx.ellipse(
+        0,
+        -5,
+        21,
+        19,
+        0,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fill();
+
+
+    ctx.shadowBlur=0;
+
+
+    /* EARS */
+
+    ctx.fillStyle =
+        e.strong
+        ? "#7b1fa2"
+        : "#2e7d32";
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -18,
+        -12
+    );
+
+    ctx.lineTo(
+        -31,
+        -23
+    );
+
+    ctx.lineTo(
+        -25,
+        -3
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        18,
+        -12
+    );
+
+    ctx.lineTo(
+        31,
+        -23
+    );
+
+    ctx.lineTo(
+        25,
+        -3
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* EYES */
+
+    ctx.fillStyle =
+        "#050505";
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        -8,
+        -7,
+        6,
+        9,
+        -.3,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        8,
+        -7,
+        6,
+        9,
+        .3,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* EYE SHINE */
+
+    ctx.fillStyle="#fff";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -9,
+        -10,
+        2,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        7,
+        -10,
+        2,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* BODY */
+
+    ctx.fillStyle =
+        e.strong
+        ? "#6a1b9a"
+        : "#388e3c";
+
+
+    ctx.beginPath();
+
+
+    ctx.roundRect(
+        -17,
+        10,
+        34,
+        25,
+        8
+    );
+
+
+    ctx.fill();
+
+
+    /* HANDS */
+
+    ctx.fillStyle =
+        e.strong
+        ? "#8e24aa"
+        : "#2e7d32";
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -22,
+        22,
+        6,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        22,
+        22,
+        6,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* SMILE */
+
+    ctx.strokeStyle =
+        "#111";
+
+    ctx.lineWidth=2;
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -1,
+        8,
+        .2,
+        Math.PI-.2
+    );
+
+    ctx.stroke();
+
+
+    /* HEALTH BAR */
+
+    ctx.fillStyle =
+        "#333";
+
+
+    ctx.fillRect(
+        -22,
+        43,
+        44,
+        5
+    );
+
+
+    ctx.fillStyle =
+        "#ff1744";
+
+
+    ctx.fillRect(
+        -22,
+        43,
+        44*
+        (
+            e.health/
+            e.maxHealth
+        ),
+        5
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================
+   DRAW BOSS
+========================================= */
+
+function drawBoss(){
+
+    ctx.save();
+
+
+    ctx.translate(
+        boss.x,
+        boss.y
+    );
+
+
+    ctx.shadowBlur=25;
+
+    ctx.shadowColor =
+        "#ff0055";
+
+
+    /* BODY */
+
+    ctx.fillStyle =
+        "#7b1fa2";
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        0,
+        65,
+        45,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.shadowBlur=0;
+
+
+    /* EYES */
+
+    ctx.fillStyle =
+        "#ff1744";
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        -23,
+        -7,
+        13,
+        18,
+        -.3,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        23,
+        -7,
+        13,
+        18,
+        .3,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* MOUTH */
+
+    ctx.fillStyle =
+        "#111";
+
+
+    ctx.fillRect(
+        -25,
+        18,
+        50,
+        12
+    );
+
+
+    /* BOSS HEALTH */
+
+    ctx.fillStyle =
+        "#333";
+
+
+    ctx.fillRect(
+        -65,
+        -65,
+        130,
+        8
+    );
+
+
+    ctx.fillStyle =
+        "#ff1744";
+
+
+    ctx.fillRect(
+        -65,
+        -65,
+        130*
+        (
+            boss.health/
+            boss.maxHealth
+        ),
+        8
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================
+   POWER UP
+========================================= */
+
+function drawPowerUp(p){
+
+    ctx.save();
+
+
+    ctx.translate(
+        p.x,
+        p.y
+    );
+
+
+    ctx.shadowBlur=18;
+
+
+    ctx.shadowColor =
+        p.type === "weapon"
+        ? "#ffea00"
+        : "#00ff88";
+
+
+    ctx.fillStyle =
+        p.type === "weapon"
+        ? "#ffea00"
+        : "#00ff88";
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+        0,
+        0,
+        13,
+        0,
+        Math.PI*2
+    );
+
+
+    ctx.fill();
+
+
+    ctx.shadowBlur=0;
+
+
+    ctx.fillStyle="#111";
+
+
+    ctx.font =
+        "bold 16px Arial";
+
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.textBaseline =
+        "middle";
+
+
+    ctx.fillText(
+        p.type === "weapon"
+        ? "W"
+        : "+",
+        0,
+        1
+    );
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================================
+   UPDATE INFO
+========================================= */
+
+function updateInfo(){
+
+    scoreEl.textContent =
+        score;
+
+    livesEl.textContent =
+        lives;
+
+    levelEl.textContent =
+        level;
+
+    weaponEl.textContent =
+        weaponName;
+
+}
+
+
+/* =========================================
+   GAME OVER
+========================================= */
+
+function endGame(){
+
+    gameOver=true;
+
+
+    cancelAnimationFrame(
+        animation
+    );
+
+
+    messageEl.textContent =
+        "💥 GAME OVER — Score: "
+        + score;
+
+
+    ctx.fillStyle =
+        "rgba(0,0,0,.7)";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    ctx.fillStyle="#fff";
+
+
+    ctx.textAlign="center";
+
+
+    ctx.font =
+        "bold 34px Arial";
+
+
+    ctx.fillText(
+        "GAME OVER",
+        canvas.width/2,
+        canvas.height/2
+    );
+
+
+    ctx.font =
+        "18px Arial";
+
+
+    ctx.fillText(
+        "Press Restart",
+        canvas.width/2,
+        canvas.height/2+35
+    );
+
+}
+
+
+/* =========================================
+   MOBILE BUTTONS
+========================================= */
+
+function moveLeft(){
+
+    if(!player)
+        return;
+
+
+    player.x -= 40;
+
+
+    player.x =
+        Math.max(
+            25,
+            player.x
+        );
+
+}
+
+
+function moveRight(){
+
+    if(!player)
+        return;
+
+
+    player.x += 40;
+
+
+    player.x =
+        Math.min(
+            canvas.width-25,
+            player.x
+        );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+startGame();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🃏 Card Flip Memory</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    color:white;
+    background:
+        radial-gradient(circle at top,#182b55,#050816 65%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:auto;
+}
+
+.game{
+    width:95%;
+    max-width:850px;
+    text-align:center;
+    padding:25px 0;
+}
+
+h1{
+    font-size:clamp(30px,6vw,52px);
+    color:#00eaff;
+    text-shadow:
+        0 0 10px #00eaff,
+        0 0 30px #00eaff;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#a9c4d8;
+    margin-bottom:18px;
+}
+
+/* ======================
+   STATS
+====================== */
+
+.stats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    min-width:105px;
+    padding:10px 14px;
+    border-radius:15px;
+    background:#ffffff0d;
+    border:1px solid #00eaff33;
+    box-shadow:0 0 15px #00eaff18;
+    backdrop-filter:blur(10px);
+}
+
+.stat span{
+    display:block;
+    font-size:12px;
+    color:#91aabb;
+}
+
+.stat strong{
+    display:block;
+    margin-top:3px;
+    font-size:21px;
+    color:#00eaff;
+}
+
+/* ======================
+   CONTROLS
+====================== */
+
+.controls{
+    margin-bottom:18px;
+}
+
+button,
+select{
+    margin:4px;
+    padding:10px 18px;
+    border:0;
+    border-radius:20px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button{
+    background:#00eaff;
+    color:#001018;
+    box-shadow:0 0 15px #00eaff88;
+    transition:.2s;
+}
+
+button:hover{
+    transform:scale(1.06);
+    box-shadow:0 0 25px #00eaff;
+}
+
+select{
+    background:#14263a;
+    color:white;
+}
+
+/* ======================
+   BOARD
+====================== */
+
+.board{
+    width:100%;
+    max-width:650px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+
+    padding:15px;
+
+    border-radius:22px;
+
+    background:#ffffff08;
+
+    border:1px solid #00eaff33;
+
+    box-shadow:
+        inset 0 0 30px #00eaff0d,
+        0 0 30px #00eaff18;
+}
+
+/* ======================
+   CARD
+====================== */
+
+.card{
+    aspect-ratio:1/1;
+    perspective:1000px;
+    cursor:pointer;
+}
+
+.card-inner{
+    width:100%;
+    height:100%;
+    position:relative;
+
+    transition:
+        transform .55s cubic-bezier(.2,.8,.2,1);
+
+    transform-style:preserve-3d;
+}
+
+.card.flipped .card-inner,
+.card.matched .card-inner{
+    transform:rotateY(180deg);
+}
+
+.card-front,
+.card-back{
+    position:absolute;
+    width:100%;
+    height:100%;
+
+    border-radius:15px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    backface-visibility:hidden;
+
+    border:1px solid #00eaff55;
+
+    box-shadow:
+        0 0 15px #00eaff20;
+}
+
+/* BACK */
+
+.card-back{
+    background:
+        linear-gradient(
+            135deg,
+            #07152b,
+            #10375b
+        );
+
+    color:#00eaff;
+
+    font-size:clamp(25px,6vw,45px);
+
+    text-shadow:
+        0 0 10px #00eaff;
+}
+
+/* FRONT */
+
+.card-front{
+    transform:rotateY(180deg);
+
+    background:
+        radial-gradient(
+            circle,
+            #183c59,
+            #081421
+        );
+
+    font-size:clamp(28px,7vw,48px);
+
+    box-shadow:
+        inset 0 0 20px #00eaff15,
+        0 0 15px #00eaff20;
+}
+
+/* MATCH */
+
+.card.matched .card-front{
+    border-color:#35ff9a;
+
+    box-shadow:
+        0 0 15px #35ff9a,
+        inset 0 0 20px #35ff9a22;
+
+    animation:
+        matched .5s ease;
+}
+
+@keyframes matched{
+
+    0%{
+        transform:rotateY(180deg) scale(1);
+    }
+
+    50%{
+        transform:rotateY(180deg) scale(1.12);
+    }
+
+    100%{
+        transform:rotateY(180deg) scale(1);
+    }
+
+}
+
+/* ======================
+   MESSAGE
+====================== */
+
+.message{
+    min-height:25px;
+    margin-top:15px;
+    color:#bdefff;
+}
+
+/* ======================
+   WIN SCREEN
+====================== */
+
+.overlay{
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    background:#020612dd;
+    backdrop-filter:blur(10px);
+
+    z-index:20;
+
+    padding:20px;
+}
+
+.overlay h2{
+    color:#00eaff;
+    font-size:clamp(30px,7vw,55px);
+    text-shadow:0 0 25px #00eaff;
+    margin-bottom:15px;
+}
+
+.overlay p{
+    color:#b9d5e5;
+    margin:5px;
+}
+
+/* ======================
+   MOBILE
+====================== */
+
+@media(max-width:500px){
+
+    .game{
+        padding-top:15px;
+    }
+
+    .board{
+        gap:8px;
+        padding:9px;
+    }
+
+    .card-front,
+    .card-back{
+        border-radius:10px;
+    }
+
+    .stat{
+        min-width:85px;
+        padding:8px;
+    }
+
+    .stat strong{
+        font-size:17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+    <h1>🃏 CARD FLIP</h1>
+
+    <p class="subtitle">
+        Find all matching pairs!
+    </p>
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+            <span>SCORE</span>
+            <strong id="score">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>MOVES</span>
+            <strong id="moves">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>TIME</span>
+            <strong id="time">60</strong>
+        </div>
+
+        <div class="stat">
+            <span>PAIRS</span>
+            <strong id="pairs">0/8</strong>
+        </div>
+
+        <div class="stat">
+            <span>COMBO</span>
+            <strong id="combo">0</strong>
+        </div>
+
+    </div>
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+        <select id="level">
+
+            <option value="easy">
+                Easy - 6 Pairs
+            </option>
+
+            <option value="medium" selected>
+                Medium - 8 Pairs
+            </option>
+
+            <option value="hard">
+                Hard - 10 Pairs
+            </option>
+
+        </select>
+
+        <button onclick="startGame()">
+            ▶ Start
+        </button>
+
+        <button onclick="resetGame()">
+            🔄 Reset
+        </button>
+
+    </div>
+
+    <!-- BOARD -->
+
+    <div class="board" id="board"></div>
+
+    <div class="message" id="message">
+        Choose a level and press Start.
+    </div>
+
+</div>
+
+<!-- OVERLAY -->
+
+<div class="overlay" id="overlay">
+
+    <h2>🃏 CARD FLIP</h2>
+
+    <p>
+        Match all the cards before the timer ends.
+    </p>
+
+    <button onclick="startGame()">
+        START GAME
+    </button>
+
+</div>
+
+
+<script>
+
+/* ======================
+   ELEMENTS
+====================== */
+
+const board =
+    document.getElementById("board");
+
+const overlay =
+    document.getElementById("overlay");
+
+const scoreText =
+    document.getElementById("score");
+
+const movesText =
+    document.getElementById("moves");
+
+const timeText =
+    document.getElementById("time");
+
+const pairsText =
+    document.getElementById("pairs");
+
+const comboText =
+    document.getElementById("combo");
+
+const message =
+    document.getElementById("message");
+
+const level =
+    document.getElementById("level");
+
+
+/* ======================
+   VARIABLES
+====================== */
+
+let cards = [];
+
+let firstCard = null;
+let secondCard = null;
+
+let lockBoard = false;
+
+let moves = 0;
+let score = 0;
+let matchedPairs = 0;
+let combo = 0;
+
+let time = 60;
+
+let timer = null;
+
+let playing = false;
+
+
+/* ======================
+   SYMBOLS
+====================== */
+
+const symbols = [
+
+    "🚀",
+    "🎮",
+    "🐍",
+    "🦄",
+    "🔥",
+    "⚡",
+    "👾",
+    "🌟",
+    "🎯",
+    "💎"
+
+];
+
+
+/* ======================
+   LEVEL SETTINGS
+====================== */
+
+const settings = {
+
+    easy:{
+        pairs:6,
+        time:60
+    },
+
+    medium:{
+        pairs:8,
+        time:60
+    },
+
+    hard:{
+        pairs:10,
+        time:75
+    }
+
+};
+
+
+/* ======================
+   SHUFFLE
+====================== */
+
+function shuffle(array){
+
+    for(
+        let i=array.length-1;
+        i>0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random()*(i+1)
+            );
+
+        [
+            array[i],
+            array[j]
+        ] =
+        [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+    return array;
+
+}
+
+
+/* ======================
+   START GAME
+====================== */
+
+function startGame(){
+
+    clearInterval(timer);
+
+    const selected =
+        settings[level.value];
+
+    moves = 0;
+    score = 0;
+    matchedPairs = 0;
+    combo = 0;
+
+    time = selected.time;
+
+    firstCard = null;
+    secondCard = null;
+
+    lockBoard = false;
+
+    playing = true;
+
+    overlay.style.display="none";
+
+    createBoard();
+
+    updateStats();
+
+    message.textContent =
+        "🧠 Find the matching cards!";
+
+    timer = setInterval(()=>{
+
+        time--;
+
+        updateStats();
+
+        if(time <= 0){
+
+            gameOver();
+
+        }
+
+    },1000);
+
+}
+
+
+/* ======================
+   CREATE BOARD
+====================== */
+
+function createBoard(){
+
+    board.innerHTML="";
+
+    const pairCount =
+        settings[level.value].pairs;
+
+    let selectedSymbols =
+        symbols.slice(0,pairCount);
+
+    cards =
+        shuffle(
+            [
+                ...selectedSymbols,
+                ...selectedSymbols
+            ]
+        );
+
+    /* 10 pairs = 20 cards */
+    if(pairCount === 10){
+
+        board.style.gridTemplateColumns =
+            "repeat(5,1fr)";
+
+    }else{
+
+        board.style.gridTemplateColumns =
+            "repeat(4,1fr)";
+
+    }
+
+    cards.forEach((symbol,index)=>{
+
+        const card =
+            document.createElement("div");
+
+        card.className="card";
+
+        card.dataset.symbol =
+            symbol;
+
+        card.innerHTML = `
+
+            <div class="card-inner">
+
+                <div class="card-back">
+                    ?
+                </div>
+
+                <div class="card-front">
+                    ${symbol}
+                </div>
+
+            </div>
+
+        `;
+
+        card.addEventListener(
+            "click",
+            flipCard
+        );
+
+        board.appendChild(card);
+
+    });
+
+}
+
+
+/* ======================
+   FLIP CARD
+====================== */
+
+function flipCard(){
+
+    if(!playing) return;
+
+    if(lockBoard) return;
+
+    if(this === firstCard) return;
+
+    if(this.classList.contains("matched"))
+        return;
+
+    this.classList.add("flipped");
+
+    if(!firstCard){
+
+        firstCard=this;
+
+        return;
+
+    }
+
+    secondCard=this;
+
+    moves++;
+
+    checkMatch();
+
+}
+
+
+/* ======================
+   CHECK MATCH
+====================== */
+
+function checkMatch(){
+
+    lockBoard=true;
+
+    const isMatch =
+        firstCard.dataset.symbol ===
+        secondCard.dataset.symbol;
+
+    if(isMatch){
+
+        matched();
+
+    }else{
+
+        notMatched();
+
+    }
+
+}
+
+
+/* ======================
+   MATCH
+====================== */
+
+function matched(){
+
+    firstCard.classList.add("matched");
+
+    secondCard.classList.add("matched");
+
+    matchedPairs++;
+
+    combo++;
+
+    const bonus =
+        combo * 10;
+
+    score +=
+        100 + bonus;
+
+    message.textContent =
+        "🔥 Match! Combo x"+combo;
+
+    updateStats();
+
+    resetTurn();
+
+    if(
+        matchedPairs ===
+        settings[level.value].pairs
+    ){
+
+        setTimeout(
+            winGame,
+            500
+        );
+
+    }
+
+}
+
+
+/* ======================
+   NOT MATCH
+====================== */
+
+function notMatched(){
+
+    combo=0;
+
+    message.textContent =
+        "❌ Not a match!";
+
+    setTimeout(()=>{
+
+        firstCard.classList.remove(
+            "flipped"
+        );
+
+        secondCard.classList.remove(
+            "flipped"
+        );
+
+        updateStats();
+
+        resetTurn();
+
+    },750);
+
+}
+
+
+/* ======================
+   RESET TURN
+====================== */
+
+function resetTurn(){
+
+    [
+        firstCard,
+        secondCard
+    ]=[
+        null,
+        null
+    ];
+
+    lockBoard=false;
+
+}
+
+
+/* ======================
+   UPDATE STATS
+====================== */
+
+function updateStats(){
+
+    scoreText.textContent =
+        score;
+
+    movesText.textContent =
+        moves;
+
+    timeText.textContent =
+        time;
+
+    pairsText.textContent =
+        matchedPairs +
+        "/" +
+        settings[level.value].pairs;
+
+    comboText.textContent =
+        combo;
+
+}
+
+
+/* ======================
+   WIN
+====================== */
+
+function winGame(){
+
+    playing=false;
+
+    clearInterval(timer);
+
+    const timeBonus =
+        time * 5;
+
+    score += timeBonus;
+
+    updateStats();
+
+    overlay.innerHTML = `
+
+        <h2>🏆 YOU WIN!</h2>
+
+        <p>
+            🎯 Final Score:
+            <b>${score}</b>
+        </p>
+
+        <p>
+            🧠 Moves:
+            ${moves}
+        </p>
+
+        <p>
+            ⏱️ Time Bonus:
+            ${timeBonus}
+        </p>
+
+        <button onclick="startGame()">
+            🔄 PLAY AGAIN
+        </button>
+
+    `;
+
+    overlay.style.display="flex";
+
+}
+
+
+/* ======================
+   GAME OVER
+====================== */
+
+function gameOver(){
+
+    playing=false;
+
+    clearInterval(timer);
+
+    overlay.innerHTML = `
+
+        <h2>⏰ TIME UP!</h2>
+
+        <p>
+            Score:
+            <b>${score}</b>
+        </p>
+
+        <p>
+            Pairs:
+            ${matchedPairs}/
+            ${settings[level.value].pairs}
+        </p>
+
+        <button onclick="startGame()">
+            🔄 TRY AGAIN
+        </button>
+
+    `;
+
+    overlay.style.display="flex";
+
+    message.textContent =
+        "Time's up!";
+
+}
+
+
+/* ======================
+   RESET
+====================== */
+
+function resetGame(){
+
+    clearInterval(timer);
+
+    playing=false;
+
+    moves=0;
+    score=0;
+    matchedPairs=0;
+    combo=0;
+
+    time =
+        settings[level.value].time;
+
+    firstCard=null;
+    secondCard=null;
+
+    lockBoard=false;
+
+    board.innerHTML="";
+
+    updateStats();
+
+    overlay.innerHTML = `
+
+        <h2>🃏 CARD FLIP</h2>
+
+        <p>
+            Match all the cards
+            before the timer ends.
+        </p>
+
+        <button onclick="startGame()">
+            START GAME
+        </button>
+
+    `;
+
+    overlay.style.display="flex";
+
+    message.textContent =
+        "Choose a level and press Start.";
+
+}
+
+
+/* ======================
+   KEYBOARD
+====================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key==="Enter" &&
+            !playing
+        ){
+
+            startGame();
+
+        }
+
+        if(
+            event.key.toLowerCase()==="r"
+        ){
+
+            resetGame();
+
+        }
+
+    }
+);
+
+
+/* INITIAL */
+
+updateStats();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎈 Balloon Pop</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top,#173b62,#050914 65%);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.game{
+    width:95%;
+    max-width:1000px;
+    text-align:center;
+}
+
+h1{
+    font-size:clamp(30px,6vw,52px);
+    color:#ff55cc;
+    text-shadow:
+        0 0 10px #ff55cc,
+        0 0 30px #ff55cc;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#b8d5e8;
+    margin-bottom:15px;
+}
+
+/* STATS */
+
+.stats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    min-width:110px;
+    padding:10px 15px;
+    border-radius:15px;
+    background:#ffffff10;
+    border:1px solid #ffffff22;
+    box-shadow:0 0 15px #00eaff22;
+    backdrop-filter:blur(10px);
+}
+
+.stat span{
+    display:block;
+    font-size:12px;
+    color:#9db4c4;
+}
+
+.stat strong{
+    font-size:22px;
+    color:#00eaff;
+}
+
+/* CONTROLS */
+
+.controls{
+    margin-bottom:15px;
+}
+
+button,select{
+    padding:10px 18px;
+    margin:4px;
+    border:0;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button{
+    background:#00eaff;
+    color:#001018;
+    box-shadow:0 0 15px #00eaff88;
+    transition:.2s;
+}
+
+button:hover{
+    transform:scale(1.06);
+    box-shadow:0 0 25px #00eaff;
+}
+
+select{
+    background:#17283a;
+    color:white;
+}
+
+/* GAME AREA */
+
+.arena{
+    position:relative;
+    width:100%;
+    height:min(65vh,520px);
+    min-height:330px;
+    overflow:hidden;
+
+    border:2px solid #00eaff55;
+    border-radius:25px;
+
+    background:
+        linear-gradient(#ffffff08 1px,transparent 1px),
+        linear-gradient(90deg,#ffffff08 1px,transparent 1px);
+
+    background-size:35px 35px;
+
+    box-shadow:
+        inset 0 0 60px #00eaff15,
+        0 0 30px #00eaff22;
+
+    cursor:crosshair;
+}
+
+/* BALLOON */
+
+.balloon{
+    position:absolute;
+    width:65px;
+    height:78px;
+    border-radius:50% 50% 45% 45%;
+    cursor:pointer;
+
+    animation:
+        float 1.8s ease-in-out infinite alternate,
+        appear .25s ease-out;
+
+    filter:drop-shadow(0 0 10px currentColor);
+}
+
+.balloon::before{
+    content:"";
+    position:absolute;
+    top:12px;
+    left:15px;
+    width:13px;
+    height:25px;
+    border-radius:50%;
+    background:#ffffff66;
+}
+
+.balloon::after{
+    content:"";
+    position:absolute;
+    bottom:-32px;
+    left:50%;
+    width:2px;
+    height:32px;
+    background:#ddd;
+}
+
+@keyframes float{
+    from{
+        transform:translate(-50%,0);
+    }
+    to{
+        transform:translate(-50%,-15px);
+    }
+}
+
+@keyframes appear{
+    from{
+        transform:translate(-50%,0) scale(0);
+    }
+    to{
+        transform:translate(-50%,0) scale(1);
+    }
+}
+
+/* POP EFFECT */
+
+.pop{
+    position:absolute;
+    pointer-events:none;
+    font-size:30px;
+    animation:pop .55s forwards;
+}
+
+@keyframes pop{
+    0%{
+        opacity:1;
+        transform:scale(.5);
+    }
+
+    100%{
+        opacity:0;
+        transform:scale(2) translateY(-30px);
+    }
+}
+
+/* START SCREEN */
+
+.overlay{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    background:#020812dd;
+    backdrop-filter:blur(8px);
+
+    z-index:10;
+}
+
+.overlay h2{
+    font-size:34px;
+    color:#00eaff;
+    margin-bottom:12px;
+}
+
+.overlay p{
+    color:#b9d0df;
+    margin:4px;
+}
+
+/* MESSAGE */
+
+.message{
+    min-height:25px;
+    margin-top:12px;
+    color:#bceeff;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .stat{
+        min-width:90px;
+        padding:8px;
+    }
+
+    .stat strong{
+        font-size:18px;
+    }
+
+    .arena{
+        height:55vh;
+        min-height:300px;
+    }
+
+    .balloon{
+        width:55px;
+        height:68px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+    <h1>🎈 BALLOON POP</h1>
+
+    <p class="subtitle">
+        Pop as many balloons as you can!
+    </p>
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+            <span>SCORE</span>
+            <strong id="score">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>TIME</span>
+            <strong id="time">30</strong>
+        </div>
+
+        <div class="stat">
+            <span>POPPED</span>
+            <strong id="popped">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>MISSED</span>
+            <strong id="missed">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>COMBO</span>
+            <strong id="combo">0</strong>
+        </div>
+
+    </div>
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+        <select id="difficulty">
+
+            <option value="easy">Easy 🎈</option>
+
+            <option value="medium" selected>
+                Medium ⚡
+            </option>
+
+            <option value="hard">
+                Hard 🔥
+            </option>
+
+        </select>
+
+        <button onclick="startGame()">
+            ▶ Start
+        </button>
+
+        <button onclick="resetGame()">
+            🔄 Reset
+        </button>
+
+    </div>
+
+    <!-- GAME -->
+
+    <div class="arena" id="arena">
+
+        <div class="overlay" id="overlay">
+
+            <h2>🎈 Balloon Pop</h2>
+
+            <p>Pop the balloons before time runs out!</p>
+
+            <p>🔥 Build combos for a higher score.</p>
+
+            <button onclick="startGame()">
+                START GAME
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="message" id="message">
+        Ready to pop?
+    </div>
+
+</div>
+
+<script>
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const arena =
+    document.getElementById("arena");
+
+const overlay =
+    document.getElementById("overlay");
+
+const scoreText =
+    document.getElementById("score");
+
+const timeText =
+    document.getElementById("time");
+
+const poppedText =
+    document.getElementById("popped");
+
+const missedText =
+    document.getElementById("missed");
+
+const comboText =
+    document.getElementById("combo");
+
+const difficulty =
+    document.getElementById("difficulty");
+
+const message =
+    document.getElementById("message");
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let score = 0;
+let popped = 0;
+let missed = 0;
+let combo = 0;
+
+let time = 30;
+
+let playing = false;
+
+let timer;
+let balloonTimer;
+
+let balloon;
+
+
+/* =========================
+   DIFFICULTY
+========================= */
+
+const settings = {
+
+    easy:{
+        speed:1200,
+        points:5
+    },
+
+    medium:{
+        speed:850,
+        points:10
+    },
+
+    hard:{
+        speed:550,
+        points:20
+    }
+
+};
+
+
+/* =========================
+   COLORS
+========================= */
+
+const balloonColors = [
+
+    "#ff3b6b",
+    "#00eaff",
+    "#ffd43b",
+    "#9b5cff",
+    "#38ff88",
+    "#ff7b22"
+
+];
+
+
+/* =========================
+   START
+========================= */
+
+function startGame(){
+
+    clearInterval(timer);
+
+    clearInterval(balloonTimer);
+
+    score = 0;
+    popped = 0;
+    missed = 0;
+    combo = 0;
+
+    time = 30;
+
+    playing = true;
+
+    updateStats();
+
+    overlay.style.display="none";
+
+    message.textContent =
+        "🎈 POP THE BALLOONS!";
+
+    createBalloon();
+
+    balloonTimer =
+        setInterval(
+            createBalloon,
+            settings[difficulty.value].speed
+        );
+
+    timer =
+        setInterval(()=>{
+
+            time--;
+
+            updateStats();
+
+            if(time <= 0){
+
+                endGame();
+
+            }
+
+        },1000);
+
+}
+
+
+/* =========================
+   CREATE BALLOON
+========================= */
+
+function createBalloon(){
+
+    if(!playing) return;
+
+    if(balloon){
+
+        balloon.remove();
+
+        missed++;
+
+        combo = 0;
+
+        updateStats();
+
+    }
+
+    balloon =
+        document.createElement("div");
+
+    balloon.className="balloon";
+
+    const color =
+        balloonColors[
+            Math.floor(
+                Math.random() *
+                balloonColors.length
+            )
+        ];
+
+    balloon.style.background =
+        color;
+
+    balloon.style.color =
+        color;
+
+    const size =
+        difficulty.value === "hard"
+        ? 48
+        : difficulty.value === "medium"
+        ? 60
+        : 72;
+
+    balloon.style.width =
+        size+"px";
+
+    balloon.style.height =
+        (size*1.15)+"px";
+
+
+    const x =
+        5 +
+        Math.random()*90;
+
+    const y =
+        10 +
+        Math.random()*75;
+
+    balloon.style.left =
+        x+"%";
+
+    balloon.style.top =
+        y+"%";
+
+
+    balloon.addEventListener(
+        "click",
+        popBalloon
+    );
+
+    arena.appendChild(balloon);
+
+}
+
+
+/* =========================
+   POP BALLOON
+========================= */
+
+function popBalloon(event){
+
+    if(!playing) return;
+
+    event.stopPropagation();
+
+    popped++;
+
+    combo++;
+
+    const base =
+        settings[difficulty.value].points;
+
+    const bonus =
+        Math.min(combo * 2,20);
+
+    score += base + bonus;
+
+    createPopEffect(
+        event.clientX,
+        event.clientY
+    );
+
+    balloon.remove();
+
+    balloon=null;
+
+    updateStats();
+
+    message.textContent =
+        "💥 POP! Combo x"+combo;
+
+    createBalloon();
+
+}
+
+
+/* =========================
+   POP EFFECT
+========================= */
+
+function createPopEffect(x,y){
+
+    const effect =
+        document.createElement("div");
+
+    effect.className="pop";
+
+    effect.textContent="💥";
+
+    const rect =
+        arena.getBoundingClientRect();
+
+    effect.style.left =
+        (x-rect.left-15)+"px";
+
+    effect.style.top =
+        (y-rect.top-15)+"px";
+
+    arena.appendChild(effect);
+
+    setTimeout(()=>{
+
+        effect.remove();
+
+    },550);
+
+}
+
+
+/* =========================
+   ARENA MISS
+========================= */
+
+arena.addEventListener(
+    "click",
+    function(event){
+
+        if(!playing) return;
+
+        if(event.target === arena){
+
+            missed++;
+
+            combo=0;
+
+            score =
+                Math.max(0,score-1);
+
+            message.textContent =
+                "❌ Miss!";
+
+            updateStats();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   UPDATE
+========================= */
+
+function updateStats(){
+
+    scoreText.textContent =
+        score;
+
+    timeText.textContent =
+        time;
+
+    poppedText.textContent =
+        popped;
+
+    missedText.textContent =
+        missed;
+
+    comboText.textContent =
+        combo;
+
+}
+
+
+/* =========================
+   GAME OVER
+========================= */
+
+function endGame(){
+
+    playing=false;
+
+    clearInterval(timer);
+
+    clearInterval(balloonTimer);
+
+    if(balloon){
+
+        balloon.remove();
+
+        balloon=null;
+
+    }
+
+    overlay.innerHTML=`
+
+        <h2>🏆 GAME OVER!</h2>
+
+        <p>Score: <b>${score}</b></p>
+
+        <p>
+            Balloons Popped: ${popped}
+        </p>
+
+        <p>
+            Best Combo: ${combo}
+        </p>
+
+        <button onclick="startGame()">
+            🔄 PLAY AGAIN
+        </button>
+
+    `;
+
+    overlay.style.display="flex";
+
+    message.textContent =
+        "🎈 Time's up!";
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetGame(){
+
+    clearInterval(timer);
+
+    clearInterval(balloonTimer);
+
+    playing=false;
+
+    score=0;
+    popped=0;
+    missed=0;
+    combo=0;
+
+    time=30;
+
+    if(balloon){
+
+        balloon.remove();
+
+        balloon=null;
+
+    }
+
+    updateStats();
+
+    overlay.innerHTML=`
+
+        <h2>🎈 Balloon Pop</h2>
+
+        <p>
+            Pop the balloons before time runs out!
+        </p>
+
+        <p>
+            🔥 Build combos for a higher score.
+        </p>
+
+        <button onclick="startGame()">
+            START GAME
+        </button>
+
+    `;
+
+    overlay.style.display="flex";
+
+    message.textContent =
+        "Ready to pop?";
+
+}
+
+
+/* =========================
+   KEYBOARD
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key==="Enter" &&
+            !playing
+        ){
+
+            startGame();
+
+        }
+
+        if(
+            event.key.toLowerCase()==="r"
+        ){
+
+            resetGame();
+
+        }
+
+    }
+);
+
+
+/* INITIAL */
+
+updateStats();
+
+</script>
+
+</body>
+</html>

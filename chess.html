@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>♟️ Neon Chess</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    color:white;
+    background:
+        radial-gradient(circle at top,#172f55,#050814 65%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:auto;
+}
+
+.game{
+    width:95%;
+    max-width:850px;
+    text-align:center;
+    padding:20px 0;
+}
+
+h1{
+    font-size:clamp(30px,6vw,50px);
+    color:#00eaff;
+    text-shadow:
+        0 0 10px #00eaff,
+        0 0 30px #00eaff;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#aac7d8;
+    margin-bottom:15px;
+}
+
+.info{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.box{
+    min-width:150px;
+    padding:10px 16px;
+    border-radius:15px;
+    background:#ffffff0d;
+    border:1px solid #00eaff33;
+    box-shadow:0 0 15px #00eaff18;
+}
+
+.box span{
+    display:block;
+    color:#8fa9b9;
+    font-size:12px;
+}
+
+.box strong{
+    color:#00eaff;
+    font-size:19px;
+}
+
+.controls{
+    margin-bottom:15px;
+}
+
+button{
+    border:0;
+    padding:10px 18px;
+    margin:4px;
+    border-radius:20px;
+    background:#00eaff;
+    color:#001018;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 15px #00eaff88;
+    transition:.2s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 25px #00eaff;
+}
+
+/* =========================
+   CHESS BOARD
+========================= */
+
+.board{
+    width:min(92vw,620px);
+    aspect-ratio:1;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+
+    border:4px solid #00eaff;
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 0 20px #00eaff66,
+        0 0 50px #00eaff22;
+}
+
+.square{
+    position:relative;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:clamp(28px,7vw,55px);
+
+    cursor:pointer;
+
+    user-select:none;
+
+    transition:
+        filter .15s,
+        transform .1s;
+}
+
+.light{
+    background:#b9d7dc;
+}
+
+.dark{
+    background:#24556a;
+}
+
+.square:hover{
+    filter:brightness(1.25);
+}
+
+.selected{
+    box-shadow:
+        inset 0 0 0 4px #00ffff,
+        inset 0 0 25px #00ffff66;
+}
+
+.legal{
+    box-shadow:
+        inset 0 0 0 4px #ffe60066;
+}
+
+.legal::after{
+    content:"";
+    width:20%;
+    height:20%;
+    border-radius:50%;
+    background:#ffe600;
+    position:absolute;
+    opacity:.8;
+}
+
+.capture{
+    box-shadow:
+        inset 0 0 0 5px #ff4055;
+}
+
+.check{
+    animation:
+        checkPulse .7s infinite alternate;
+}
+
+@keyframes checkPulse{
+    from{
+        box-shadow:inset 0 0 10px #ff304f;
+    }
+    to{
+        box-shadow:
+            inset 0 0 35px #ff304f,
+            0 0 20px #ff304f;
+    }
+}
+
+/* =========================
+   PIECES
+========================= */
+
+.white-piece{
+    color:#ffffff;
+    text-shadow:
+        0 2px 3px #000,
+        0 0 8px #ffffff88;
+}
+
+.black-piece{
+    color:#111111;
+    text-shadow:
+        0 2px 3px #ffffff88,
+        0 0 8px #000;
+}
+
+.piece-move{
+    animation:pieceMove .25s ease;
+}
+
+@keyframes pieceMove{
+    from{
+        transform:scale(.7);
+    }
+    to{
+        transform:scale(1);
+    }
+}
+
+.message{
+    min-height:25px;
+    margin-top:14px;
+    color:#bfefff;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:500px){
+
+    .game{
+        padding-top:10px;
+    }
+
+    .board{
+        border-width:2px;
+    }
+
+    .box{
+        min-width:120px;
+        padding:8px;
+    }
+
+    .box strong{
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<h1>♟️ NEON CHESS</h1>
+
+<p class="subtitle">
+    Futuristic 2-Player Chess
+</p>
+
+<div class="info">
+
+    <div class="box">
+        <span>TURN</span>
+        <strong id="turn">White</strong>
+    </div>
+
+    <div class="box">
+        <span>STATUS</span>
+        <strong id="status">Playing</strong>
+    </div>
+
+</div>
+
+<div class="controls">
+
+    <button onclick="newGame()">
+        🔄 New Game
+    </button>
+
+    <button onclick="undoMove()">
+        ↩ Undo
+    </button>
+
+</div>
+
+<div class="board" id="board"></div>
+
+<div class="message" id="message">
+    White's turn — select a piece.
+</div>
+
+</div>
+
+<script>
+
+/* =================================
+   NEON CHESS
+================================= */
+
+const boardElement =
+    document.getElementById("board");
+
+const turnElement =
+    document.getElementById("turn");
+
+const statusElement =
+    document.getElementById("status");
+
+const messageElement =
+    document.getElementById("message");
+
+
+/* =================================
+   PIECES
+================================= */
+
+const icons = {
+
+    K:"♔",
+    Q:"♕",
+    R:"♖",
+    B:"♗",
+    N:"♘",
+    P:"♙",
+
+    k:"♚",
+    q:"♛",
+    r:"♜",
+    b:"♝",
+    n:"♞",
+    p:"♟"
+
+};
+
+
+/* =================================
+   INITIAL BOARD
+================================= */
+
+const initialBoard = [
+
+    ["r","n","b","q","k","b","n","r"],
+
+    ["p","p","p","p","p","p","p","p"],
+
+    ["","","","","","","",""],
+
+    ["","","","","","","",""],
+
+    ["","","","","","","",""],
+
+    ["","","","","","","",""],
+
+    ["P","P","P","P","P","P","P","P"],
+
+    ["R","N","B","Q","K","B","N","R"]
+
+];
+
+
+let board = [];
+
+let turn = "white";
+
+let selected = null;
+
+let legalMoves = [];
+
+let history = [];
+
+let gameOver = false;
+
+
+/* =================================
+   NEW GAME
+================================= */
+
+function newGame(){
+
+    board =
+        initialBoard.map(
+            row => [...row]
+        );
+
+    turn = "white";
+
+    selected = null;
+
+    legalMoves = [];
+
+    history = [];
+
+    gameOver = false;
+
+    statusElement.textContent =
+        "Playing";
+
+    render();
+
+    messageElement.textContent =
+        "White's turn — select a piece.";
+
+}
+
+
+/* =================================
+   RENDER BOARD
+================================= */
+
+function render(){
+
+    boardElement.innerHTML="";
+
+    for(let r=0;r<8;r++){
+
+        for(let c=0;c<8;c++){
+
+            const square =
+                document.createElement("div");
+
+            square.className =
+                "square "+
+                ((r+c)%2===0
+                ?"light"
+                :"dark");
+
+            square.dataset.row=r;
+            square.dataset.col=c;
+
+            const piece =
+                board[r][c];
+
+            if(piece){
+
+                square.textContent =
+                    icons[piece];
+
+                square.classList.add(
+                    isWhite(piece)
+                    ?"white-piece"
+                    :"black-piece"
+                );
+
+            }
+
+            if(
+                selected &&
+                selected.r===r &&
+                selected.c===c
+            ){
+
+                square.classList.add(
+                    "selected"
+                );
+
+            }
+
+            const isLegal =
+                legalMoves.some(
+                    m =>
+                    m.r===r &&
+                    m.c===c
+                );
+
+            if(isLegal){
+
+                square.classList.add(
+                    board[r][c]
+                    ? "capture"
+                    : "legal"
+                );
+
+            }
+
+            square.addEventListener(
+                "click",
+                squareClick
+            );
+
+            boardElement.appendChild(
+                square
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =================================
+   CLICK SQUARE
+================================= */
+
+function squareClick(){
+
+    if(gameOver) return;
+
+    const r =
+        Number(this.dataset.row);
+
+    const c =
+        Number(this.dataset.col);
+
+    const piece =
+        board[r][c];
+
+    /* Move selected piece */
+
+    if(selected){
+
+        const canMove =
+            legalMoves.some(
+                m =>
+                m.r===r &&
+                m.c===c
+            );
+
+        if(canMove){
+
+            movePiece(
+                selected.r,
+                selected.c,
+                r,
+                c
+            );
+
+            return;
+
+        }
+
+    }
+
+    /* Select own piece */
+
+    if(
+        piece &&
+        pieceColor(piece)===turn
+    ){
+
+        selected={
+            r:r,
+            c:c
+        };
+
+        legalMoves =
+            getLegalMoves(r,c);
+
+        messageElement.textContent =
+            "Choose a highlighted square.";
+
+        render();
+
+    }
+
+}
+
+
+/* =================================
+   MOVE PIECE
+================================= */
+
+function movePiece(
+    fr,
+    fc,
+    tr,
+    tc
+){
+
+    history.push(
+        board.map(
+            row=>[...row]
+        )
+    );
+
+    const piece =
+        board[fr][fc];
+
+    /* Pawn promotion */
+
+    board[tr][tc]=piece;
+
+    board[fr][fc]="";
+
+    if(piece==="P" && tr===0){
+        board[tr][tc]="Q";
+    }
+
+    if(piece==="p" && tr===7){
+        board[tr][tc]="q";
+    }
+
+    selected=null;
+    legalMoves=[];
+
+    turn =
+        turn==="white"
+        ?"black"
+        :"white";
+
+    checkGameState();
+
+    render();
+
+}
+
+
+/* =================================
+   GET LEGAL MOVES
+================================= */
+
+function getLegalMoves(r,c){
+
+    const piece =
+        board[r][c];
+
+    if(!piece) return [];
+
+    const type =
+        piece.toLowerCase();
+
+    let moves=[];
+
+    if(type==="p"){
+        moves =
+            pawnMoves(r,c,piece);
+    }
+
+    if(type==="r"){
+        moves =
+            lineMoves(
+                r,c,
+                piece,
+                [
+                    [1,0],
+                    [-1,0],
+                    [0,1],
+                    [0,-1]
+                ]
+            );
+    }
+
+    if(type==="b"){
+        moves =
+            lineMoves(
+                r,c,
+                piece,
+                [
+                    [1,1],
+                    [1,-1],
+                    [-1,1],
+                    [-1,-1]
+                ]
+            );
+    }
+
+    if(type==="q"){
+        moves =
+            lineMoves(
+                r,c,
+                piece,
+                [
+                    [1,0],
+                    [-1,0],
+                    [0,1],
+                    [0,-1],
+                    [1,1],
+                    [1,-1],
+                    [-1,1],
+                    [-1,-1]
+                ]
+            );
+    }
+
+    if(type==="n"){
+
+        const jumps=[
+            [2,1],
+            [2,-1],
+            [-2,1],
+            [-2,-1],
+            [1,2],
+            [1,-2],
+            [-1,2],
+            [-1,-2]
+        ];
+
+        jumps.forEach(
+            ([dr,dc])=>{
+                addIfValid(
+                    moves,
+                    r+dr,
+                    c+dc,
+                    piece
+                );
+            }
+        );
+
+    }
+
+    if(type==="k"){
+
+        for(
+            let dr=-1;
+            dr<=1;
+            dr++
+        ){
+
+            for(
+                let dc=-1;
+                dc<=1;
+                dc++
+            ){
+
+                if(dr===0 && dc===0)
+                    continue;
+
+                addIfValid(
+                    moves,
+                    r+dr,
+                    c+dc,
+                    piece
+                );
+
+            }
+
+        }
+
+    }
+
+    return moves;
+
+}
+
+
+/* =================================
+   PAWN MOVES
+================================= */
+
+function pawnMoves(r,c,piece){
+
+    const moves=[];
+
+    const white =
+        piece==="P";
+
+    const dir =
+        white ? -1 : 1;
+
+    const startRow =
+        white ? 6 : 1;
+
+    const nextR =
+        r+dir;
+
+    if(
+        inside(nextR,c) &&
+        board[nextR][c]===""
+    ){
+
+        moves.push({
+            r:nextR,
+            c:c
+        });
+
+        const twoR =
+            r+(dir*2);
+
+        if(
+            r===startRow &&
+            board[twoR][c]===""
+        ){
+
+            moves.push({
+                r:twoR,
+                c:c
+            });
+
+        }
+
+    }
+
+    for(
+        const dc of [-1,1]
+    ){
+
+        const nr =
+            r+dir;
+
+        const nc =
+            c+dc;
+
+        if(
+            inside(nr,nc) &&
+            board[nr][nc] &&
+            pieceColor(
+                board[nr][nc]
+            )!==pieceColor(piece)
+        ){
+
+            moves.push({
+                r:nr,
+                c:nc
+            });
+
+        }
+
+    }
+
+    return moves;
+
+}
+
+
+/* =================================
+   LINE MOVES
+================================= */
+
+function lineMoves(
+    r,
+    c,
+    piece,
+    directions
+){
+
+    const moves=[];
+
+    directions.forEach(
+        ([dr,dc])=>{
+
+            let nr=r+dr;
+            let nc=c+dc;
+
+            while(
+                inside(nr,nc)
+            ){
+
+                if(
+                    board[nr][nc]===""
+                ){
+
+                    moves.push({
+                        r:nr,
+                        c:nc
+                    });
+
+                }else{
+
+                    if(
+                        pieceColor(
+                            board[nr][nc]
+                        )!==pieceColor(piece)
+                    ){
+
+                        moves.push({
+                            r:nr,
+                            c:nc
+                        });
+
+                    }
+
+                    break;
+
+                }
+
+                nr+=dr;
+                nc+=dc;
+
+            }
+
+        }
+    );
+
+    return moves;
+
+}
+
+
+/* =================================
+   VALID SQUARE
+================================= */
+
+function addIfValid(
+    moves,
+    r,
+    c,
+    piece
+){
+
+    if(!inside(r,c))
+        return;
+
+    if(
+        board[r][c]==="" ||
+        pieceColor(
+            board[r][c]
+        )!==pieceColor(piece)
+    ){
+
+        moves.push({
+            r:r,
+            c:c
+        });
+
+    }
+
+}
+
+
+/* =================================
+   INSIDE BOARD
+================================= */
+
+function inside(r,c){
+
+    return (
+        r>=0 &&
+        r<8 &&
+        c>=0 &&
+        c<8
+    );
+
+}
+
+
+/* =================================
+   COLORS
+================================= */
+
+function isWhite(piece){
+
+    return piece ===
+        piece.toUpperCase();
+
+}
+
+function pieceColor(piece){
+
+    return isWhite(piece)
+        ?"white"
+        :"black";
+
+}
+
+
+/* =================================
+   CHECK GAME STATE
+================================= */
+
+function checkGameState(){
+
+    const opponent =
+        turn;
+
+    const king =
+        opponent==="white"
+        ?"K"
+        :"k";
+
+    let kingFound=false;
+
+    for(let r=0;r<8;r++){
+
+        for(let c=0;c<8;c++){
+
+            if(board[r][c]===king){
+
+                kingFound=true;
+
+            }
+
+        }
+
+    }
+
+    if(!kingFound){
+
+        gameOver=true;
+
+        const winner =
+            turn==="white"
+            ?"Black"
+            :"White";
+
+        statusElement.textContent =
+            "Game Over";
+
+        messageElement.textContent =
+            "🏆 "+winner+
+            " wins!";
+
+        return;
+
+    }
+
+    statusElement.textContent =
+        "Playing";
+
+    turnElement.textContent =
+        turn==="white"
+        ?"White"
+        :"Black";
+
+    messageElement.textContent =
+        turn==="white"
+        ?"White's turn."
+        :"Black's turn.";
+
+}
+
+
+/* =================================
+   UNDO
+================================= */
+
+function undoMove(){
+
+    if(history.length===0){
+
+        messageElement.textContent =
+            "No move to undo.";
+
+        return;
+
+    }
+
+    board =
+        history.pop();
+
+    turn =
+        turn==="white"
+        ?"black"
+        :"white";
+
+    selected=null;
+
+    legalMoves=[];
+
+    gameOver=false;
+
+    statusElement.textContent =
+        "Playing";
+
+    render();
+
+    checkGameState();
+
+}
+
+
+/* =================================
+   START
+================================= */
+
+newGame();
+
+</script>
+
+</body>
+</html>

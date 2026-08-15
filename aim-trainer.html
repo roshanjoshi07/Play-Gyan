@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎯 Neon Aim Trainer</title>
+
+<style>
+/* =========================
+   FUTURISTIC AIM TRAINER
+========================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top,#102b4a,#050912 60%,#02040a);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.game{
+    width:95%;
+    max-width:1000px;
+    text-align:center;
+}
+
+h1{
+    font-size:clamp(28px,5vw,50px);
+    color:#00eaff;
+    text-shadow:
+        0 0 8px #00eaff,
+        0 0 25px #00eaff;
+    margin-bottom:15px;
+}
+
+.subtitle{
+    color:#a9c7d9;
+    margin-bottom:20px;
+}
+
+/* =========================
+   TOP PANEL
+========================= */
+
+.panel{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    min-width:120px;
+    padding:12px 18px;
+    border:1px solid #00eaff55;
+    background:#ffffff0c;
+    border-radius:15px;
+    box-shadow:0 0 15px #00eaff22;
+    backdrop-filter:blur(10px);
+}
+
+.stat span{
+    display:block;
+    color:#8da9ba;
+    font-size:12px;
+}
+
+.stat strong{
+    font-size:22px;
+    color:#00eaff;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.controls{
+    margin-bottom:15px;
+}
+
+button,
+select{
+    padding:10px 18px;
+    border:none;
+    border-radius:20px;
+    margin:5px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button{
+    background:#00eaff;
+    color:#001018;
+    box-shadow:0 0 15px #00eaff88;
+    transition:.2s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 25px #00eaff;
+}
+
+select{
+    background:#142536;
+    color:white;
+}
+
+/* =========================
+   GAME AREA
+========================= */
+
+.arena{
+    position:relative;
+    width:100%;
+    height:min(65vh,520px);
+    min-height:330px;
+
+    border:2px solid #00eaff55;
+    border-radius:25px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(#ffffff08 1px,transparent 1px),
+        linear-gradient(90deg,#ffffff08 1px,transparent 1px);
+
+    background-size:35px 35px;
+
+    box-shadow:
+        inset 0 0 50px #00eaff15,
+        0 0 30px #00eaff25;
+
+    cursor:crosshair;
+}
+
+/* =========================
+   TARGET
+========================= */
+
+.target{
+    position:absolute;
+
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            white 0 10%,
+            #ff405c 11% 30%,
+            white 31% 43%,
+            #ff405c 44% 62%,
+            white 63% 72%,
+            #ff405c 73%
+        );
+
+    box-shadow:
+        0 0 10px #ff405c,
+        0 0 25px #ff405c,
+        0 0 45px #ff405c;
+
+    transform:translate(-50%,-50%);
+
+    animation:
+        targetPulse .7s infinite alternate,
+        targetAppear .25s ease-out;
+
+    cursor:crosshair;
+}
+
+@keyframes targetPulse{
+    from{
+        filter:brightness(.8);
+    }
+    to{
+        filter:brightness(1.4);
+    }
+}
+
+@keyframes targetAppear{
+    from{
+        transform:translate(-50%,-50%) scale(0);
+    }
+    to{
+        transform:translate(-50%,-50%) scale(1);
+    }
+}
+
+/* =========================
+   HIT EFFECT
+========================= */
+
+.hit{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border:3px solid #00ffcc;
+    border-radius:50%;
+    pointer-events:none;
+
+    animation:hit .5s forwards;
+}
+
+@keyframes hit{
+    from{
+        opacity:1;
+        transform:scale(1);
+    }
+
+    to{
+        opacity:0;
+        transform:scale(6);
+    }
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    margin-top:15px;
+    min-height:25px;
+    color:#b9e9ff;
+}
+
+/* =========================
+   START OVERLAY
+========================= */
+
+.overlay{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    background:#020812dd;
+    backdrop-filter:blur(8px);
+
+    z-index:5;
+}
+
+.overlay h2{
+    font-size:32px;
+    color:#00eaff;
+    margin-bottom:10px;
+}
+
+.overlay p{
+    color:#a9c7d9;
+    margin-bottom:20px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:600px){
+
+    .stat{
+        min-width:95px;
+        padding:9px;
+    }
+
+    .stat strong{
+        font-size:18px;
+    }
+
+    .arena{
+        height:55vh;
+        min-height:300px;
+    }
+
+    .target{
+        width:58px;
+        height:58px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+    <h1>🎯 NEON AIM TRAINER</h1>
+
+    <p class="subtitle">
+        Test your speed, accuracy and reaction!
+    </p>
+
+    <!-- STATS -->
+    <div class="panel">
+
+        <div class="stat">
+            <span>SCORE</span>
+            <strong id="score">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>TIME</span>
+            <strong id="time">30</strong>
+        </div>
+
+        <div class="stat">
+            <span>HITS</span>
+            <strong id="hits">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>MISS</span>
+            <strong id="miss">0</strong>
+        </div>
+
+        <div class="stat">
+            <span>ACCURACY</span>
+            <strong id="accuracy">100%</strong>
+        </div>
+
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+
+        <select id="difficulty">
+
+            <option value="easy">
+                Easy 🎯
+            </option>
+
+            <option value="medium" selected>
+                Medium ⚡
+            </option>
+
+            <option value="hard">
+                Hard 🔥
+            </option>
+
+        </select>
+
+        <button onclick="startGame()">
+            ▶ Start Game
+        </button>
+
+        <button onclick="resetGame()">
+            🔄 Reset
+        </button>
+
+    </div>
+
+    <!-- GAME ARENA -->
+    <div class="arena" id="arena">
+
+        <div class="overlay" id="overlay">
+
+            <h2>🎯 Ready?</h2>
+
+            <p>
+                Click the targets as quickly as possible.
+            </p>
+
+            <button onclick="startGame()">
+                START
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="message" id="message">
+        Choose difficulty and press Start.
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   VARIABLES
+========================= */
+
+const arena =
+    document.getElementById("arena");
+
+const overlay =
+    document.getElementById("overlay");
+
+const scoreText =
+    document.getElementById("score");
+
+const timeText =
+    document.getElementById("time");
+
+const hitsText =
+    document.getElementById("hits");
+
+const missText =
+    document.getElementById("miss");
+
+const accuracyText =
+    document.getElementById("accuracy");
+
+const message =
+    document.getElementById("message");
+
+const difficulty =
+    document.getElementById("difficulty");
+
+
+let score = 0;
+let hits = 0;
+let misses = 0;
+let time = 30;
+
+let playing = false;
+
+let timer;
+
+let target;
+
+
+/* =========================
+   DIFFICULTY
+========================= */
+
+const settings = {
+
+    easy:{
+        size:85,
+        points:5
+    },
+
+    medium:{
+        size:65,
+        points:10
+    },
+
+    hard:{
+        size:48,
+        points:20
+    }
+
+};
+
+
+/* =========================
+   START GAME
+========================= */
+
+function startGame(){
+
+    clearInterval(timer);
+
+    score = 0;
+    hits = 0;
+    misses = 0;
+    time = 30;
+
+    playing = true;
+
+    updateStats();
+
+    overlay.style.display = "none";
+
+    message.textContent =
+        "🎯 HIT THE TARGET!";
+
+    createTarget();
+
+    timer = setInterval(()=>{
+
+        time--;
+
+        timeText.textContent = time;
+
+        if(time <= 0){
+
+            endGame();
+
+        }
+
+    },1000);
+
+}
+
+
+/* =========================
+   CREATE TARGET
+========================= */
+
+function createTarget(){
+
+    if(!playing) return;
+
+    if(target){
+        target.remove();
+    }
+
+    target =
+        document.createElement("div");
+
+    target.className = "target";
+
+    const level =
+        settings[difficulty.value];
+
+    target.style.width =
+        level.size + "px";
+
+    target.style.height =
+        level.size + "px";
+
+    const arenaWidth =
+        arena.clientWidth;
+
+    const arenaHeight =
+        arena.clientHeight;
+
+    const margin =
+        level.size;
+
+    const x =
+        margin +
+        Math.random() *
+        (arenaWidth - margin * 2);
+
+    const y =
+        margin +
+        Math.random() *
+        (arenaHeight - margin * 2);
+
+    target.style.left =
+        x + "px";
+
+    target.style.top =
+        y + "px";
+
+    target.addEventListener(
+        "click",
+        hitTarget
+    );
+
+    arena.appendChild(target);
+
+}
+
+
+/* =========================
+   HIT TARGET
+========================= */
+
+function hitTarget(event){
+
+    if(!playing) return;
+
+    event.stopPropagation();
+
+    hits++;
+
+    const level =
+        settings[difficulty.value];
+
+    score += level.points;
+
+    createHitEffect(
+        event.clientX,
+        event.clientY
+    );
+
+    updateStats();
+
+    createTarget();
+
+}
+
+
+/* =========================
+   MISS CLICK
+========================= */
+
+arena.addEventListener(
+    "click",
+    function(event){
+
+        if(!playing) return;
+
+        if(event.target === arena){
+
+            misses++;
+
+            score =
+                Math.max(0,score - 2);
+
+            updateStats();
+
+            message.textContent =
+                "❌ Miss! -2 points";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   HIT EFFECT
+========================= */
+
+function createHitEffect(x,y){
+
+    const effect =
+        document.createElement("div");
+
+    effect.className = "hit";
+
+    const rect =
+        arena.getBoundingClientRect();
+
+    effect.style.left =
+        (x - rect.left) + "px";
+
+    effect.style.top =
+        (y - rect.top) + "px";
+
+    arena.appendChild(effect);
+
+    setTimeout(()=>{
+
+        effect.remove();
+
+    },500);
+
+}
+
+
+/* =========================
+   UPDATE STATS
+========================= */
+
+function updateStats(){
+
+    scoreText.textContent =
+        score;
+
+    hitsText.textContent =
+        hits;
+
+    missText.textContent =
+        misses;
+
+    timeText.textContent =
+        time;
+
+    const total =
+        hits + misses;
+
+    const accuracy =
+        total === 0
+        ? 100
+        : Math.round(
+            (hits / total) * 100
+        );
+
+    accuracyText.textContent =
+        accuracy + "%";
+
+}
+
+
+/* =========================
+   END GAME
+========================= */
+
+function endGame(){
+
+    playing = false;
+
+    clearInterval(timer);
+
+    if(target){
+        target.remove();
+        target = null;
+    }
+
+    const total =
+        hits + misses;
+
+    const accuracy =
+        total === 0
+        ? 0
+        : Math.round(
+            (hits / total) * 100
+        );
+
+    overlay.innerHTML = `
+
+        <h2>🏆 GAME OVER!</h2>
+
+        <p>
+            Score: <b>${score}</b>
+        </p>
+
+        <p>
+            Hits: ${hits}
+            &nbsp; | &nbsp;
+            Accuracy: ${accuracy}%
+        </p>
+
+        <button onclick="startGame()">
+            🔄 Play Again
+        </button>
+
+    `;
+
+    overlay.style.display = "flex";
+
+    message.textContent =
+        "Great job! Try again and beat your score.";
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetGame(){
+
+    clearInterval(timer);
+
+    playing = false;
+
+    score = 0;
+    hits = 0;
+    misses = 0;
+    time = 30;
+
+    if(target){
+
+        target.remove();
+
+        target = null;
+
+    }
+
+    updateStats();
+
+    overlay.innerHTML = `
+
+        <h2>🎯 Ready?</h2>
+
+        <p>
+            Click the targets as quickly as possible.
+        </p>
+
+        <button onclick="startGame()">
+            START
+        </button>
+
+    `;
+
+    overlay.style.display = "flex";
+
+    message.textContent =
+        "Choose difficulty and press Start.";
+
+}
+
+
+/* =========================
+   KEYBOARD SHORTCUT
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter" && !playing){
+
+            startGame();
+
+        }
+
+        if(event.key === "r"){
+
+            resetGame();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   INITIAL STATS
+========================= */
+
+updateStats();
+
+</script>
+
+</body>
+</html>
