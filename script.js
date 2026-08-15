@@ -70,17 +70,6 @@ cards.forEach(card=>{
 // ===============================
 // Card Click
 // ===============================
-
-cards.forEach(card=>{
-
-card.addEventListener("click",()=>{
-
-alert("🚀 "+card.innerText+"\n\nComing Soon!");
-
-});
-
-});
-
 // ===============================
 // Random Background Glow
 // ===============================
