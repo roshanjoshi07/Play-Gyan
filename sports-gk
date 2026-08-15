@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sports GK Quiz - 150 Questions</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, "Noto Sans Devanagari", sans-serif;
+  min-height:100vh;
+  background:linear-gradient(135deg,#06111f,#12345a,#071827);
+  color:#172033;
+}
+
+header{
+  text-align:center;
+  color:white;
+  padding:30px 15px 20px;
+}
+
+header h1{
+  font-size:clamp(30px,7vw,55px);
+}
+
+header p{
+  margin-top:8px;
+  opacity:.9;
+}
+
+.nav{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
+}
+
+.nav button{
+  border:0;
+  border-radius:30px;
+  padding:13px 22px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:15px;
+}
+
+.container{
+  width:min(1050px,94%);
+  margin:auto;
+}
+
+.panel{
+  background:white;
+  border-radius:24px;
+  padding:25px;
+  margin-bottom:30px;
+  box-shadow:0 20px 60px #0006;
+}
+
+.hidden{
+  display:none;
+}
+
+.search{
+  width:100%;
+  padding:15px;
+  border:2px solid #ddd;
+  border-radius:14px;
+  margin:18px 0;
+  font-size:16px;
+}
+
+.card{
+  padding:18px;
+  margin:12px 0;
+  border-radius:15px;
+  background:#f8fafc;
+  border-left:6px solid #1479c9;
+}
+
+.category{
+  display:inline-block;
+  background:#e0f2fe;
+  color:#075985;
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.question{
+  font-size:18px;
+  font-weight:bold;
+  line-height:1.55;
+}
+
+.answer{
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  background:#dcfce7;
+  color:#166534;
+  font-weight:bold;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.stat{
+  background:#eff6ff;
+  padding:15px;
+  text-align:center;
+  border-radius:15px;
+  font-weight:bold;
+}
+
+.progress{
+  width:100%;
+  height:10px;
+  background:#e5e7eb;
+  border-radius:20px;
+  margin:18px 0;
+  overflow:hidden;
+}
+
+.progressBar{
+  height:100%;
+  width:0;
+  background:#16a34a;
+  transition:.3s;
+}
+
+.gameQuestion{
+  font-size:25px;
+  font-weight:bold;
+  line-height:1.5;
+  margin:25px 0;
+}
+
+.options{
+  display:grid;
+  gap:12px;
+}
+
+.option{
+  width:100%;
+  padding:16px;
+  border:2px solid #dbe4ee;
+  border-radius:14px;
+  background:white;
+  cursor:pointer;
+  text-align:left;
+  font-size:17px;
+  transition:.2s;
+}
+
+.option:hover{
+  background:#eff6ff;
+  transform:translateY(-2px);
+}
+
+.correct{
+  background:#bbf7d0 !important;
+  border-color:#16a34a !important;
+}
+
+.wrong{
+  background:#fecaca !important;
+  border-color:#dc2626 !important;
+}
+
+.next,
+.restart{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  margin-top:18px;
+  background:#0879c9;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.next:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.result{
+  text-align:center;
+}
+
+.result h2{
+  font-size:36px;
+  margin-bottom:15px;
+}
+
+.footer{
+  text-align:center;
+  color:white;
+  padding:25px;
+}
+
+@media(max-width:600px){
+  .panel{
+    padding:17px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .gameQuestion{
+    font-size:21px;
+  }
+
+  .option{
+    font-size:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🏆 Sports GK Quiz</h1>
+  <p>150 Sports Questions • 3 Lives • No Timer</p>
+
+  <div class="nav">
+    <button onclick="showBank()">📚 Question Bank</button>
+    <button onclick="startGame()">🎮 Play Quiz</button>
+  </div>
+</header>
+
+<div class="container">
+
+<section id="bank" class="panel">
+
+  <h2>📚 150 Sports Questions</h2>
+  <p>Football, Cricket, Volleyball, Basketball, Tennis, Badminton, Olympics र अन्य खेलहरू।</p>
+
+  <input
+    id="search"
+    class="search"
+    placeholder="🔎 Search question..."
+    oninput="displayBank()"
+  >
+
+  <div id="bankList"></div>
+
+</section>
+
+
+<section id="game" class="panel hidden">
+
+  <div class="stats">
+
+    <div class="stat">
+      📝 Question
+      <br>
+      <span id="questionNumber">1</span>/150
+    </div>
+
+    <div class="stat">
+      🏆 Score
+      <br>
+      <span id="score">0</span>
+    </div>
+
+    <div class="stat">
+      ❤️ Lives
+      <br>
+      <span id="lives">3</span>
+    </div>
+
+  </div>
+
+  <div class="progress">
+    <div id="progressBar" class="progressBar"></div>
+  </div>
+
+  <div id="gameQuestion" class="gameQuestion"></div>
+
+  <div id="options" class="options"></div>
+
+  <button
+    id="nextButton"
+    class="next"
+    onclick="nextQuestion()"
+    disabled>
+    Next Question ➡️
+  </button>
+
+</section>
+
+
+<section id="result" class="panel result hidden">
+
+  <h2>🏆 Quiz Finished!</h2>
+
+  <h3 id="resultScore"></h3>
+
+  <p id="resultMessage"></p>
+
+  <button class="restart" onclick="startGame()">
+    🔄 Play Again
+  </button>
+
+</section>
+
+</div>
+
+<div class="footer">
+  🏆 Sports GK Quiz • 150 Questions • ❤️ 3 Lives • ⏱️ No Timer
+</div>
+
+
+<script>
+
+/* =====================================================
+   150 SPORTS QUESTIONS
+   ===================================================== */
+
+const questions = [
+
+/* ================= FOOTBALL 1-30 ================= */
+
+["⚽ Football","How many players does one football team normally have on the field?","11"],
+["⚽ Football","How long is a standard football match, excluding added time?","90 minutes"],
+["⚽ Football","How many halves are there in a normal football match?","2"],
+["⚽ Football","How long is each normal half in football?","45 minutes"],
+["⚽ Football","Which organization governs world football?","FIFA"],
+["⚽ Football","What does FIFA stand for?","Fédération Internationale de Football Association"],
+["⚽ Football","How many players can normally use their hands during open play?","1"],
+["⚽ Football","Which player can use their hands inside their own penalty area?","Goalkeeper"],
+["⚽ Football","What card normally means a warning?","Yellow card"],
+["⚽ Football","What card sends a player off?","Red card"],
+["⚽ Football","What is three goals by one player in a match called?","Hat-trick"],
+["⚽ Football","What is a kick taken from the corner called?","Corner kick"],
+["⚽ Football","What is awarded when the ball completely crosses the touchline?","Throw-in"],
+["⚽ Football","From where is a penalty kick taken?","Penalty mark"],
+["⚽ Football","How many points is a normal football win worth in a league using the standard system?","3"],
+["⚽ Football","What is the person who enforces the Laws of the Game called?","Referee"],
+["⚽ Football","What is the area directly in front of the goal called?","Penalty area"],
+["⚽ Football","What is the small rectangular area inside the penalty area called?","Goal area"],
+["⚽ Football","What is the restart from the center of the field called?","Kick-off"],
+["⚽ Football","What is a goal scored directly from a corner kick sometimes called?","Olympico"],
+["⚽ Football","What is UEFA mainly associated with?","European football"],
+["⚽ Football","What is CONMEBOL associated with?","South American football"],
+["⚽ Football","What is AFC associated with?","Asian football"],
+["⚽ Football","What is CAF associated with?","African football"],
+["⚽ Football","What is CONCACAF associated with?","North and Central American and Caribbean football"],
+["⚽ Football","What is OFC associated with?","Oceania football"],
+["⚽ Football","How often is the FIFA World Cup normally held?","Every 4 years"],
+["⚽ Football","Which country hosted the first FIFA World Cup in 1930?","Uruguay"],
+["⚽ Football","What is the maximum number of players a team can have on the field including the goalkeeper?","11"],
+["⚽ Football","What is the term for passing the ball to a teammate who then scores?","Assist"],
+
+
+/* ================= CRICKET 31-60 ================= */
+
+["🏏 Cricket","How many players are in a cricket team?","11"],
+["🏏 Cricket","How many legal deliveries are normally in an over?","6"],
+["🏏 Cricket","How long is a cricket pitch?","22 yards"],
+["🏏 Cricket","How many stumps are in one wicket?","3"],
+["🏏 Cricket","How many bails are placed on a wicket?","2"],
+["🏏 Cricket","How many runs are scored when the ball reaches the boundary after touching the ground?","4"],
+["🏏 Cricket","How many runs are normally scored when the ball crosses the boundary without touching the ground?","6"],
+["🏏 Cricket","What does LBW stand for?","Leg Before Wicket"],
+["🏏 Cricket","What does ICC stand for?","International Cricket Council"],
+["🏏 Cricket","What does ODI stand for?","One Day International"],
+["🏏 Cricket","How many overs does each team normally face in a T20 international?","20"],
+["🏏 Cricket","How many overs does each team normally face in an ODI?","50"],
+["🏏 Cricket","How many days can a Test match normally last?","5 days"],
+["🏏 Cricket","What is a score of 100 runs by a batter called?","Century"],
+["🏏 Cricket","What is a score of 50 runs called?","Half-century"],
+["🏏 Cricket","What is being dismissed without scoring called?","Duck"],
+["🏏 Cricket","What is three wickets in three consecutive deliveries called?","Hat-trick"],
+["🏏 Cricket","Who normally stands behind the stumps?","Wicketkeeper"],
+["🏏 Cricket","What is a delivery outside the batter's reach that is called illegal called?","Wide"],
+["🏏 Cricket","What is an illegal delivery that gives an extra run called?","No-ball"],
+["🏏 Cricket","What is a batter's score of zero called?","Duck"],
+["🏏 Cricket","What is the person who leads a cricket team called?","Captain"],
+["🏏 Cricket","What is the act of dismissing a batter by breaking the wicket while they are out of their crease called?","Run out"],
+["🏏 Cricket","What is dismissal by the wicketkeeper removing the bails while the batter is out of their crease called?","Stumping"],
+["🏏 Cricket","What is a ball caught by a fielder before it touches the ground called?","Catch"],
+["🏏 Cricket","What is the wooden equipment used by a batter called?","Bat"],
+["🏏 Cricket","What is the player who delivers the ball called?","Bowler"],
+["🏏 Cricket","What is the period in which a team bats called?","Innings"],
+["🏏 Cricket","What is the area between the two wickets called?","Pitch"],
+["🏏 Cricket","Which country is home to the Marylebone Cricket Club?","England"],
+
+
+/* ================= VOLLEYBALL 61-75 ================= */
+
+["🏐 Volleyball","How many players from one team are normally on court in indoor volleyball?","6"],
+["🏐 Volleyball","What organization governs international volleyball?","FIVB"],
+["🏐 Volleyball","What does FIVB stand for?","Fédération Internationale de Volleyball"],
+["🏐 Volleyball","What is the opening hit that starts a rally called?","Serve"],
+["🏐 Volleyball","What is a powerful attacking hit called?","Spike"],
+["🏐 Volleyball","What is stopping an opponent's attack at the net called?","Block"],
+["🏐 Volleyball","How many times can a team normally contact the ball before sending it over the net?","3"],
+["🏐 Volleyball","What is the defensive specialist wearing a different colored jersey called?","Libero"],
+["🏐 Volleyball","How many players are on a beach volleyball team?","2"],
+["🏐 Volleyball","What is the system where every rally gives a point called?","Rally scoring"],
+["🏐 Volleyball","What is the act of moving positions after winning the right to serve called?","Rotation"],
+["🏐 Volleyball","What is the raised net used in volleyball called?","Net"],
+["🏐 Volleyball","Is volleyball played over a net?","Yes"],
+["🏐 Volleyball","How many points does a team normally need to win a standard set, subject to the required margin?","25"],
+["🏐 Volleyball","How many points are normally needed to win the deciding set, subject to the required margin?","15"],
+
+
+/* ================= BASKETBALL 76-90 ================= */
+
+["🏀 Basketball","How many players from one team are on court in basketball?","5"],
+["🏀 Basketball","What is bouncing the ball while moving called?","Dribbling"],
+["🏀 Basketball","How many points is a normal field goal worth inside the three-point line?","2"],
+["🏀 Basketball","How many points is a successful three-point shot worth?","3"],
+["🏀 Basketball","How many points is a successful free throw worth?","1"],
+["🏀 Basketball","What organization governs international basketball?","FIBA"],
+["🏀 Basketball","What does FIBA stand for?","International Basketball Federation"],
+["🏀 Basketball","What is collecting the ball after a missed shot called?","Rebound"],
+["🏀 Basketball","What is a pass that directly leads to a teammate scoring called?","Assist"],
+["🏀 Basketball","What is putting the ball through the hoop forcefully from above called?","Dunk"],
+["🏀 Basketball","What is moving illegally while holding the ball called?","Travelling"],
+["🏀 Basketball","What is an illegal physical action against an opponent called?","Foul"],
+["🏀 Basketball","What is the circular goal called?","Basket"],
+["🏀 Basketball","What is the rectangular board behind the basket called?","Backboard"],
+["🏀 Basketball","Which famous professional basketball league is based in the United States and Canada?","NBA"],
+
+
+/* ================= TENNIS 91-100 ================= */
+
+["🎾 Tennis","How many Grand Slam tournaments are there in tennis?","4"],
+["🎾 Tennis","Where is the Australian Open held?","Australia"],
+["🎾 Tennis","Where is the French Open held?","France"],
+["🎾 Tennis","Where is Wimbledon held?","England"],
+["🎾 Tennis","Where is the US Open held?","United States"],
+["🎾 Tennis","What does 'love' mean in tennis scoring?","0"],
+["🎾 Tennis","What is the score called when both players have 40 points?","Deuce"],
+["🎾 Tennis","What organization governs international tennis?","ITF"],
+["🎾 Tennis","What does ITF stand for?","International Tennis Federation"],
+["🎾 Tennis","What piece of equipment is used to hit the tennis ball?","Racket"],
+
+
+/* ================= BADMINTON 101-110 ================= */
+
+["🏸 Badminton","What is the object hit with a badminton racket called?","Shuttlecock"],
+["🏸 Badminton","What organization governs world badminton?","BWF"],
+["🏸 Badminton","What does BWF stand for?","Badminton World Federation"],
+["🏸 Badminton","How many players compete in a singles badminton match?","2"],
+["🏸 Badminton","How many players are on one side in badminton doubles?","2"],
+["🏸 Badminton","Does badminton use a net?","Yes"],
+["🏸 Badminton","What equipment is used to hit the shuttlecock?","Racket"],
+["🏸 Badminton","What is the major world championship organized by BWF called?","BWF World Championships"],
+["🏸 Badminton","Is badminton played indoors in most major competitions?","Yes"],
+["🏸 Badminton","What is a serve in badminton?","The shot that starts a rally"],
+
+
+/* ================= BOXING / MARTIAL ARTS 111-120 ================= */
+
+["🥊 Combat Sports","What equipment protects a boxer's hands?","Boxing gloves"],
+["🥊 Combat Sports","What does KO stand for in boxing?","Knockout"],
+["🥊 Combat Sports","What area is boxing contested in?","Ring"],
+["🥊 Combat Sports","Who enforces the rules during a boxing bout?","Referee"],
+["🥊 Combat Sports","What is a period of boxing called?","Round"],
+["🥋 Combat Sports","Which country is the traditional birthplace of judo?","Japan"],
+["🥋 Combat Sports","Which country is strongly associated with the development of taekwondo?","South Korea"],
+["🥋 Combat Sports","Which Japanese martial art uses a colored belt ranking system?","Karate"],
+["🥋 Combat Sports","What is wrestling primarily based on?","Grappling and controlling an opponent"],
+["🥊 Combat Sports","Are boxing gloves used in boxing competitions?","Yes"],
+
+
+/* ================= OLYMPICS 121-135 ================= */
+
+["🏅 Olympics","What does IOC stand for?","International Olympic Committee"],
+["🏅 Olympics","How many Olympic rings are there?","5"],
+["🏅 Olympics","What do the Olympic rings represent?","The Olympic movement and the union of the world's inhabited continents"],
+["🏅 Olympics","Where were the first modern Olympic Games held?","Athens"],
+["🏅 Olympics","In which year were the first modern Olympic Games held?","1896"],
+["🏅 Olympics","How often are Summer Olympic Games normally held?","Every 4 years"],
+["🏅 Olympics","What medal is awarded for first place?","Gold"],
+["🏅 Olympics","What medal is awarded for second place?","Silver"],
+["🏅 Olympics","What medal is awarded for third place?","Bronze"],
+["🏅 Olympics","What flame is associated with the Olympic Games?","Olympic flame"],
+["🏅 Olympics","What is the Olympic motto traditionally associated with the Games?","Faster, Higher, Stronger – Together"],
+["🏅 Olympics","Which city hosted the 2012 Summer Olympics?","London"],
+["🏅 Olympics","Which city hosted the 2016 Summer Olympics?","Rio de Janeiro"],
+["🏅 Olympics","Which city hosted the 2020 Summer Olympics, held in 2021?","Tokyo"],
+["🏅 Olympics","Which city hosted the 2024 Summer Olympics?","Paris"],
+
+
+/* ================= ATHLETICS 136-145 ================= */
+
+["🏃 Athletics","What is the standard marathon distance?","42.195 km"],
+["🏃 Athletics","What is the 100 metres primarily classified as?","Sprint"],
+["🏃 Athletics","What is the event where athletes jump horizontally for distance?","Long jump"],
+["🏃 Athletics","What event involves jumping over a horizontal bar?","High jump"],
+["🏃 Athletics","What is thrown in the javelin event?","Javelin"],
+["🏃 Athletics","What is thrown in the discus event?","Discus"],
+["🏃 Athletics","What is thrown in the shot put event?","Shot"],
+["🏃 Athletics","What is passed between runners in a relay race?","Baton"],
+["🏃 Athletics","Is athletics an Olympic sport?","Yes"],
+["🏃 Athletics","What is the 200 metres classified as?","Sprint"],
+
+
+/* ================= NEPAL SPORTS 146-150 ================= */
+
+["🇳🇵 Nepal Sports","What is Nepal's national sport?","Volleyball"],
+["🇳🇵 Nepal Sports","What is the governing body of football in Nepal commonly known as?","ANFA"],
+["🇳🇵 Nepal Sports","What is the governing body of cricket in Nepal commonly known as?","CAN"],
+["🇳🇵 Nepal Sports","What is the Nepal Olympic Committee commonly abbreviated as?","NOC"],
+["🇳🇵 Nepal Sports","What is the main international multi-sport event for South Asian countries called?","South Asian Games"]
+
+];
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffle(array){
+  let a=[...array];
+
+  for(let i=a.length-1;i>0;i--){
+    let j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+
+  return a;
+}
+
+
+/* =====================================================
+   QUESTION BANK
+===================================================== */
+
+function displayBank(){
+
+  const search=document
+    .getElementById("search")
+    .value
+    .toLowerCase();
+
+  let html="";
+
+  questions.forEach((q,index)=>{
+
+    if(
+      !q[1].toLowerCase().includes(search) &&
+      !q[2].toLowerCase().includes(search)
+    ){
+      return;
+    }
+
+    html+=`
+      <div class="card">
+        <div class="category">${q[0]}</div>
+
+        <div class="question">
+          ${index+1}. ${q[1]}
+        </div>
+
+        <div class="answer">
+          ✅ Answer: ${q[2]}
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById("bankList").innerHTML=html;
+}
+
+
+/* =====================================================
+   GAME VARIABLES
+===================================================== */
+
+let gameQuestions=[];
+let currentQuestion=0;
+let score=0;
+let lives=3;
+let answered=false;
+
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+function startGame(){
+
+  gameQuestions=shuffle(questions);
+  currentQuestion=0;
+  score=0;
+  lives=3;
+  answered=false;
+
+  document.getElementById("bank").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+
+  loadQuestion();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =====================================================
+   CREATE OPTIONS
+===================================================== */
+
+function createOptions(correct){
+
+  let wrongAnswers=questions
+    .map(q=>q[2])
+    .filter(a=>a!==correct);
+
+  wrongAnswers=[...new Set(wrongAnswers)];
+
+  wrongAnswers=shuffle(wrongAnswers).slice(0,3);
+
+  return shuffle([
+    correct,
+    ...wrongAnswers
+  ]);
+}
+
+
+/* =====================================================
+   LOAD QUESTION
+===================================================== */
+
+function loadQuestion(){
+
+  answered=false;
+
+  const q=gameQuestions[currentQuestion];
+
+  document.getElementById("questionNumber")
+    .textContent=currentQuestion+1;
+
+  document.getElementById("score")
+    .textContent=score;
+
+  document.getElementById("lives")
+    .textContent=lives;
+
+  document.getElementById("progressBar")
+    .style.width=
+    ((currentQuestion/questions.length)*100)+"%";
+
+  document.getElementById("gameQuestion")
+    .textContent=q[1];
+
+  const optionsBox=document.getElementById("options");
+
+  optionsBox.innerHTML="";
+
+  const options=createOptions(q[2]);
+
+  options.forEach(answer=>{
+
+    const button=document.createElement("button");
+
+    button.className="option";
+    button.textContent=answer;
+
+    button.onclick=()=>{
+      checkAnswer(button,answer,q[2]);
+    };
+
+    optionsBox.appendChild(button);
+  });
+
+  document.getElementById("nextButton").disabled=true;
+}
+
+
+/* =====================================================
+   CHECK ANSWER
+===================================================== */
+
+function checkAnswer(button,selected,correct){
+
+  if(answered)return;
+
+  answered=true;
+
+  const buttons=
+    document.querySelectorAll(".option");
+
+  buttons.forEach(b=>{
+    b.disabled=true;
+  });
+
+  if(selected===correct){
+
+    button.classList.add("correct");
+
+    score++;
+
+  }else{
+
+    button.classList.add("wrong");
+
+    lives--;
+
+    buttons.forEach(b=>{
+
+      if(b.textContent===correct){
+        b.classList.add("correct");
+      }
+
+    });
+  }
+
+  document.getElementById("score")
+    .textContent=score;
+
+  document.getElementById("lives")
+    .textContent=lives;
+
+  if(lives<=0){
+
+    setTimeout(gameOver,600);
+
+  }else{
+
+    document.getElementById("nextButton")
+      .disabled=false;
+  }
+}
+
+
+/* =====================================================
+   NEXT QUESTION
+===================================================== */
+
+function nextQuestion(){
+
+  if(!answered)return;
+
+  currentQuestion++;
+
+  if(currentQuestion>=gameQuestions.length){
+
+    finishGame();
+
+  }else{
+
+    loadQuestion();
+  }
+}
+
+
+/* =====================================================
+   GAME OVER
+===================================================== */
+
+function gameOver(){
+
+  document.getElementById("game")
+    .classList.add("hidden");
+
+  document.getElementById("result")
+    .classList.remove("hidden");
+
+  document.getElementById("resultScore")
+    .textContent=
+    `💔 Game Over — ${score}/${questions.length}`;
+
+  document.getElementById("resultMessage")
+    .textContent=
+    "तपाईंका 3 वटा Life सकिए। फेरि खेल्न सक्नुहुन्छ।";
+}
+
+
+/* =====================================================
+   FINISH
+===================================================== */
+
+function finishGame(){
+
+  document.getElementById("game")
+    .classList.add("hidden");
+
+  document.getElementById("result")
+    .classList.remove("hidden");
+
+  const percentage=
+    Math.round((score/questions.length)*100);
+
+  document.getElementById("resultScore")
+    .textContent=
+    `🏆 Final Score: ${score}/${questions.length}`;
+
+  document.getElementById("resultMessage")
+    .textContent=
+    `📊 Your Percentage: ${percentage}%`;
+}
+
+
+/* =====================================================
+   SHOW QUESTION BANK
+===================================================== */
+
+function showBank(){
+
+  document.getElementById("game")
+    .classList.add("hidden");
+
+  document.getElementById("result")
+    .classList.add("hidden");
+
+  document.getElementById("bank")
+    .classList.remove("hidden");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+displayBank();
+
+</script>
+
+</body>
+</html>

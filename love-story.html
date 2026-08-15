@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>❤️ प्रेमकथा पुस्तकालय</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+ margin:0;
+ background:#f9e8ec;
+ color:#40252d;
+ font-family:"Noto Serif Devanagari","Nirmala UI",Georgia,serif;
+ transition:.4s;
+}
+
+/* Floating hearts */
+.hearts{
+ position:fixed;
+ inset:0;
+ overflow:hidden;
+ pointer-events:none;
+ z-index:-1;
+}
+.heart{
+ position:absolute;
+ bottom:-50px;
+ animation:float 8s linear forwards;
+ opacity:.5;
+}
+@keyframes float{
+ 0%{transform:translateY(0) rotate(0);opacity:0}
+ 15%{opacity:.7}
+ 100%{transform:translateY(-110vh) rotate(360deg);opacity:0}
+}
+
+/* Header */
+header{
+ text-align:center;
+ color:white;
+ padding:45px 15px;
+ background:linear-gradient(135deg,#7c1636,#d95d7e,#7c1636);
+ box-shadow:0 8px 30px #7b244055;
+}
+header h1{
+ margin:0;
+ font-size:clamp(38px,8vw,68px);
+ text-shadow:0 4px 15px #0005;
+}
+header p{opacity:.9}
+
+.controls{
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-top:20px;
+}
+
+button{
+ border:0;
+ border-radius:9px;
+ padding:11px 15px;
+ background:#fff;
+ color:#7b2442;
+ font-weight:bold;
+ cursor:pointer;
+}
+button:hover{transform:translateY(-2px)}
+
+/* Search */
+.search{
+ width:min(700px,92%);
+ margin:25px auto 0;
+ display:block;
+ padding:15px 20px;
+ border:0;
+ border-radius:30px;
+ outline:none;
+ font-size:17px;
+}
+
+/* Library */
+.library{
+ width:min(1200px,94%);
+ margin:35px auto;
+}
+
+.library h2{
+ text-align:center;
+ color:#9e284c;
+ font-size:32px;
+}
+
+.filters{
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:8px;
+ margin:20px 0 30px;
+}
+
+/* Book cards */
+.books{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:22px;
+}
+
+.card{
+ background:#fffdfb;
+ border:2px solid #e4a7b7;
+ border-radius:18px;
+ overflow:hidden;
+ box-shadow:0 10px 30px #7b244220;
+ cursor:pointer;
+ transition:.35s;
+}
+
+.card:hover{
+ transform:translateY(-8px) scale(1.02);
+ box-shadow:0 18px 40px #7b244240;
+}
+
+.cover{
+ height:230px;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ text-align:center;
+ padding:20px;
+ color:white;
+ background:linear-gradient(145deg,#7c1636,#d95d7e);
+}
+
+.cover .emoji{
+ font-size:65px;
+ margin-bottom:15px;
+}
+
+.cover h3{
+ margin:0;
+ font-size:23px;
+}
+
+.card-body{
+ padding:17px;
+}
+
+.card-body p{
+ color:#76515c;
+ line-height:1.6;
+}
+
+.badge{
+ display:inline-block;
+ background:#f5d1dc;
+ color:#922749;
+ padding:5px 9px;
+ border-radius:20px;
+ font-size:13px;
+}
+
+/* Reader */
+.reader{
+ display:none;
+ width:min(1000px,94%);
+ margin:35px auto;
+}
+
+.book{
+ background:#fffdfb;
+ border:2px solid #e4a7b7;
+ border-radius:18px;
+ padding:clamp(25px,6vw,70px);
+ box-shadow:0 12px 40px #7b244220;
+}
+
+.book-title{
+ text-align:center;
+ color:#9e284c;
+ font-size:clamp(32px,7vw,55px);
+}
+
+.subtitle{
+ text-align:center;
+ color:#b75c76;
+ margin-bottom:45px;
+}
+
+.chapter-title{
+ text-align:center;
+ color:#9e284c;
+ border-bottom:2px solid #edb7c5;
+ padding-bottom:18px;
+}
+
+.story{
+ font-size:20px;
+ line-height:2.05;
+}
+
+.story p{
+ text-align:justify;
+ margin:25px 0;
+}
+
+.quote{
+ text-align:center!important;
+ color:#a52c50;
+ font-style:italic;
+ font-weight:bold;
+ margin:35px 8%!important;
+}
+
+.navigation{
+ display:flex;
+ gap:10px;
+ margin-top:55px;
+}
+
+.navigation button{
+ flex:1;
+ background:#a52c50;
+ color:white;
+}
+
+/* Dark */
+body.dark{
+ background:#180d12;
+ color:#ead6dc;
+}
+
+body.dark .card,
+body.dark .book{
+ background:#25151c;
+ border-color:#693143;
+}
+
+body.dark .card-body p{
+ color:#d5b9c3;
+}
+
+body.dark .book-title,
+body.dark .chapter-title,
+body.dark .library h2{
+ color:#f08ba8;
+}
+
+body.dark .subtitle{
+ color:#d58ba1;
+}
+
+/* Mobile */
+@media(max-width:700px){
+ .books{
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+ }
+ .cover{
+  height:190px;
+ }
+ .cover .emoji{font-size:45px}
+ .cover h3{font-size:18px}
+ .story{
+  font-size:18px;
+  line-height:1.9;
+ }
+ .story p{text-align:left}
+ .navigation{flex-direction:column}
+}
+
+@media(max-width:430px){
+ .books{grid-template-columns:1fr}
+ .cover{height:220px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<header>
+
+<h1>❤️ प्रेमकथा पुस्तकालय</h1>
+
+<p>
+दस मौलिक प्रेमकथाहरू — एउटा डिजिटल पुस्तक संसार
+</p>
+
+<input
+ id="search"
+ class="search"
+ type="search"
+ placeholder="🔍 किताब खोज्नुहोस्..."
+ oninput="searchBooks()"
+>
+
+<div class="controls">
+<button onclick="toggleDark()">🌙 Dark Mode</button>
+<button onclick="goHome()">🏠 Library</button>
+<button onclick="changeFont(1)">A+</button>
+<button onclick="changeFont(-1)">A−</button>
+<button onclick="saveBookmark()">🔖 Bookmark</button>
+<button onclick="continueBook()">📖 Continue</button>
+</div>
+
+</header>
+
+
+<!-- LIBRARY -->
+
+<section class="library" id="library">
+
+<h2>📚 मेरा प्रेमकथाहरू</h2>
+
+<div class="filters">
+<button onclick="filterBooks('all')">सबै</button>
+<button onclick="filterBooks('Romance')">Romance</button>
+<button onclick="filterBooks('Emotional')">Emotional</button>
+<button onclick="filterBooks('Cute')">Cute</button>
+<button onclick="filterBooks('Long Distance')">Long Distance</button>
+</div>
+
+<div class="books" id="books"></div>
+
+</section>
+
+
+<!-- READER -->
+
+<section class="reader" id="reader">
+
+<div class="book">
+
+<h1 id="bookTitle" class="book-title"></h1>
+
+<div id="bookSubtitle" class="subtitle"></div>
+
+<h2 id="chapterTitle" class="chapter-title"></h2>
+
+<div id="story" class="story"></div>
+
+<div class="navigation">
+
+<button onclick="previousChapter()">
+⬅️ अघिल्लो
+</button>
+
+<button onclick="nextChapter()">
+अर्को ➡️
+</button>
+
+</div>
+
+<br>
+
+<button onclick="goHome()" style="width:100%">
+🏠 पुस्तकालयमा फर्कनुहोस्
+</button>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* =========================================
+   10 ORIGINAL BOOKS
+========================================= */
+
+const books=[
+
+{
+title:"तिमी भेटिएपछि",
+emoji:"❤️",
+category:"Romance",
+desc:"एउटा सामान्य भेट कसरी जीवनभरको प्रेममा बदलियो।",
+chapters:[
+["पहिलो भेट",`
+<p>आरवलाई पुस्तकालय मन पर्थ्यो। एक दिन किताब खोज्दै गर्दा एउटा युवतीको किताब भुइँमा खस्यो। आरवले किताब उठाएर उनलाई दियो।</p>
+<p>“धन्यवाद,” उनले मुस्कुराउँदै भनिन्।</p>
+<p>उनको नाम अनाया थियो। त्यो सानो भेट आरवको जीवनको सबैभन्दा ठूलो सम्झना बन्नेछ भन्ने उसलाई त्यतिबेला थाहा थिएन।</p>
+<p class="quote">“कहिलेकाहीँ प्रेमको सुरुवात एउटा सानो मुस्कानबाट हुन्छ।”</p>
+`],
+["बिस्तारै नजिक",`
+<p>उनीहरू हरेक दिन पुस्तकालयमा भेटिन थाले। पहिले किताबको कुरा हुन्थ्यो, त्यसपछि सपनाको, अनि अन्ततः मनको।</p>
+<p>आरवले महसुस गर्‍यो—अनायासँग बितेको एक घण्टा अरू सबै समयभन्दा छोटो लाग्थ्यो।</p>
+`],
+["मनको कुरा",`
+<p>एक साँझ आरवले आफ्नो डर छोड्यो। “अनाया, तिमी मेरो लागि साथीभन्दा धेरै भइसकेकी छौ।”</p>
+<p>अनाया मुस्कुराइन्। “म पनि यही कुरा तिमीबाट सुन्न पर्खिरहेकी थिएँ।”</p>
+<p class="quote">त्यो दिन उनीहरूको मित्रता प्रेममा बदलियो।</p>
+`]
+]
+},
+
+{
+title:"अधुरो प्रेम",
+emoji:"💔",
+category:"Emotional",
+desc:"समयले टाढा पारे पनि मनले छोड्न नसकेको प्रेम।",
+chapters:[
+["अचानक भेट",`
+<p>समीर र माया एउटै कलेजमा पढ्थे। उनीहरूबीच धेरै कुरा थिएन, तर हरेकपटक आँखा जुध्दा एउटा अनौठो मौनता हुन्थ्यो।</p>
+`],
+["नभनेको कुरा",`
+<p>समीरले आफ्नो भावना भन्न चाहन्थ्यो। तर हरेकपटक शब्दहरू उसको ओठमै रोकिए।</p>
+<p>एक दिन मायाले अर्को शहर जाने खबर दिइन्।</p>
+`],
+["अधुरो",`
+<p>रेल छुट्यो। माया गइन्। समीर स्टेशनमा उभिएर टाढिँदै गरेको रेल हेरिरह्यो।</p>
+<p class="quote">केही प्रेमहरू समाप्त हुँदैनन्—तिनीहरू केवल अधुरा रहन्छन्।</p>
+`]
+]
+},
+
+{
+title:"वर्षामा भेटिएको मान्छे",
+emoji:"🌧️",
+category:"Cute",
+desc:"एउटा छाता, दुई अपरिचित र एउटा सुन्दर सुरुवात।",
+chapters:[
+["वर्षाको दिन",`
+<p>ठूलो पानी परिरहेको थियो। रिया बस स्टपमा छाता बिना उभिएकी थिइन्।</p>
+<p>अर्जुनले आफ्नो छाता उनकोतिर बढायो। “सँगै हिँड्ने?”</p>
+`],
+["एउटै छाता",`
+<p>सानो छातामुनि उनीहरू नजिकै हिँडे। पानी धेरै थियो, तर कुरा अझ धेरै थियो।</p>
+<p>उनीहरूलाई त्यो बाटो धेरै लामो हुनुपर्छ जस्तो लाग्यो।</p>
+`],
+["फेरि पानी परोस्",`
+<p>अर्को दिन रियाले अर्जुनलाई सोधिन्, “आज पनि पानी पर्ला?”</p>
+<p>अर्जुन हाँस्यो। “किन?”</p>
+<p>“सायद फेरि एउटै छातामुनि हिँड्न मन लाग्यो।”</p>
+`]
+]
+},
+
+{
+title:"तिम्रो नामको चिठी",
+emoji:"💌",
+category:"Romance",
+desc:"कहिल्यै नपठाइएको एउटा प्रेमपत्र।",
+chapters:[
+["पहिलो चिठी",`
+<p>विवेकले सन्ध्यालाई प्रेम गर्थ्यो। तर बोल्न सक्दैनथ्यो। त्यसैले उसले एउटा चिठी लेख्यो।</p>
+<p>“प्रिय सन्ध्या, तिमी हाँस्दा मेरो दिन उज्यालो हुन्छ...”</p>
+`],
+["चिठीहरू",`
+<p>उसले हरेक हप्ता नयाँ चिठी लेख्यो। तर कुनै पनि चिठी दिएन।</p>
+<p>उसको दराजमा प्रेमका दर्जनौँ शब्दहरू जम्मा भए।</p>
+`],
+["जवाफ",`
+<p>एक दिन सन्ध्याले ती सबै चिठी भेटिन्।</p>
+<p>उनले अन्तिम पृष्ठमा लेखिन्—“मैले पनि धेरै पहिले तिमीलाई यही कुरा भन्न खोजेकी थिएँ।”</p>
+`]
+]
+},
+
+{
+title:"फेरि भेटौँला",
+emoji:"🌹",
+category:"Long Distance",
+desc:"दूरीले छुट्याएको दुई मनको कथा।",
+chapters:[
+["विदाइ",`
+<p>आदित्य पढ्न विदेश जाँदै थियो। स्टेशनमा उसको अगाडि निहारिका उभिएकी थिइन्।</p>
+<p>“फर्किन्छौ?” उनले सोधिन्।</p>
+<p>“तिमी पर्खिन्छौ भने।”</p>
+`],
+["दूरी",`
+<p>महिनौँसम्म फोन र भिडियो कल नै उनीहरूको संसार बन्यो। कहिलेकाहीँ नेटवर्कले कुरा काट्थ्यो, तर उनीहरूको सम्बन्ध काटिएन।</p>
+`],
+["फर्काइ",`
+<p>एक बिहान निहारिकाले ढोका खोल्दा अगाडि आदित्य उभिएको थियो।</p>
+<p>“मैले भनेको थिएँ नि—फर्किन्छु।”</p>
+`]
+]
+},
+
+{
+title:"जुन रात तिमी आएकी थियौ",
+emoji:"🌙",
+category:"Romance",
+desc:"एक शान्त रातमा सुरु भएको अनौठो सम्बन्ध।",
+chapters:[
+["मध्यरात",`
+<p>सहर शान्त थियो। निश्चल छतमा बसेर आकाश हेर्दै थियो। त्यही बेला उसको फोनमा एउटा अपरिचित सन्देश आयो।</p>
+<p>“तिमी पनि निदाएका छैनौ?”</p>
+`],
+["कुराकानी",`
+<p>त्यो रात उनीहरूले घण्टौँ कुरा गरे। अर्को दिन उनीहरू भेटे। अनि त्यो सन्देश पठाउने युवतीको नाम थियो—सारा।</p>
+`],
+["त्यही रात",`
+<p>वर्षौँपछि पनि उनीहरू पहिलो रात सम्झिन्थे।</p>
+<p class="quote">कहिलेकाहीँ जीवनको सबैभन्दा सुन्दर अध्याय निदाउन नसकेको रातमा सुरु हुन्छ।</p>
+`]
+]
+},
+
+{
+title:"हामीले गुमाएको समय",
+emoji:"🥀",
+category:"Emotional",
+desc:"समयमै भन्न नसकेको प्रेमको कथा।",
+chapters:[
+["पुरानो साथी",`
+<p>किरण र स्नेहा बाल्यकालदेखि साथी थिए। दुवैले एकअर्कालाई माया गर्थे, तर कसैले भन्न सकेन।</p>
+`],
+["समय",`
+<p>जीवन अगाडि बढ्यो। उनीहरू अलग भए। तर पुराना सम्झनाहरू कहिल्यै मेटिएनन्।</p>
+`],
+["ढिलो भएको भेट",`
+<p>वर्षौँपछि भेट हुँदा दुवै मुस्कुराए। आँखामा धेरै कुरा थिए, तर समय निकै अगाडि बढिसकेको थियो।</p>
+<p class="quote">“हामीसँग प्रेम थियो, केवल समय थिएन।”</p>
+`]
+]
+},
+
+{
+title:"मेरो अन्तिम प्रेम",
+emoji:"💕",
+category:"Emotional",
+desc:"सबैभन्दा कठिन समयमा भेटिएको साँचो साथ।",
+chapters:[
+["अपरिचित",`
+<p>रोहनले प्रेममा विश्वास गर्न छोडिसकेको थियो। त्यही बेला उसले प्रिन्सालाई भेट्यो।</p>
+`],
+["साथ",`
+<p>प्रिन्सा उसलाई बदल्न चाहन्नथिन्। उनी केवल उसको साथमा बस्न चाहन्थिन्।</p>
+<p>त्यही सरल साथले रोहनको मन फेरि प्रेममा विश्वास गर्न थाल्यो।</p>
+`],
+["अन्तिम होइन",`
+<p>रोहनले भन्यो, “तिमी मेरो अन्तिम प्रेम हौ।”</p>
+<p>प्रिन्सा हाँसिन्। “अन्तिम होइन, जीवनभरको प्रेम भन।”</p>
+`]
+]
+},
+
+{
+title:"एक कप चिया र तिमी",
+emoji:"☕",
+category:"Cute",
+desc:"चियाको सानो पसलबाट सुरु भएको मीठो प्रेम।",
+chapters:[
+["चिया",`
+<p>प्रत्येक बिहान एउटै चिया पसलमा एउटी युवती आउँथिन्। विवेक उनलाई चुपचाप हेर्थ्यो।</p>
+<p>एक दिन उसले सोध्यो, “सधैँ एउटै चिया किन?”</p>
+<p>उनले भनिन्, “सायद चियाभन्दा यहाँ आउने मान्छे मन पर्छ।”</p>
+`],
+["दुई कप",`
+<p>त्यस दिनदेखि चिया दुई कप आउन थाल्यो।</p>
+<p>एक उनको लागि, अर्को विवेकको लागि।</p>
+`],
+["सधैँ",`
+<p>वर्षौँपछि उनीहरूको आफ्नै सानो क्याफे भयो। ढोकामा लेखिएको थियो—“एक कप चिया र तिमी।”</p>
+`]
+]
+},
+
+{
+title:"हाम्रो अर्को अध्याय",
+emoji:"💍",
+category:"Romance",
+desc:"प्रेमबाट जीवनसाथीसम्मको सुन्दर यात्रा।",
+chapters:[
+["सुरुवात",`
+<p>आकाश र मीरा साथी थिए। मित्रता बिस्तारै प्रेममा बदलियो।</p>
+`],
+["निर्णय",`
+<p>उनीहरूले बुझिसकेका थिए—जीवन केवल राम्रो दिनहरूको नाम होइन। कठिन दिनमा पनि एकअर्काको हात समात्नु नै प्रेम हो।</p>
+`],
+["अर्को अध्याय",`
+<p>विवाहको दिन मीराले आकाशलाई भनिन्, “हाम्रो कथा यहाँ समाप्त भयो?”</p>
+<p>आकाशले मुस्कुराउँदै भन्यो, “होइन। आज त अर्को अध्याय सुरु भयो।”</p>
+<p class="quote">❤️ केही प्रेमकथा विवाहमा समाप्त हुँदैनन्; त्यहीँबाट नयाँ कथा सुरु हुन्छ।</p>
+`]
+]
+}
+
+];
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let currentBook=0;
+let currentChapter=0;
+let font=20;
+let currentFilter="all";
+
+
+/* =========================================
+   CREATE LIBRARY
+========================================= */
+
+function renderBooks(){
+
+ const area=document.getElementById("books");
+
+ area.innerHTML="";
+
+ books.forEach((book,index)=>{
+
+   const search=
+   document.getElementById("search").value.toLowerCase();
+
+   const matchesSearch=
+   book.title.toLowerCase().includes(search) ||
+   book.desc.toLowerCase().includes(search);
+
+   const matchesFilter=
+   currentFilter==="all" ||
+   book.category===currentFilter;
+
+   if(!matchesSearch || !matchesFilter)
+   return;
+
+   const card=document.createElement("div");
+
+   card.className="card";
+
+   card.innerHTML=`
+   <div class="cover">
+     <div class="emoji">${book.emoji}</div>
+     <h3>${book.title}</h3>
+   </div>
+
+   <div class="card-body">
+     <span class="badge">${book.category}</span>
+     <p>${book.desc}</p>
+     <button onclick="openBook(${index})">
+       📖 पढ्न सुरु गर्नुहोस्
+     </button>
+   </div>
+   `;
+
+   area.appendChild(card);
+
+ });
+
+}
+
+
+/* =========================================
+   OPEN BOOK
+========================================= */
+
+function openBook(index){
+
+ currentBook=index;
+ currentChapter=0;
+
+ document.getElementById("library")
+ .style.display="none";
+
+ document.getElementById("reader")
+ .style.display="block";
+
+ showChapter();
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+
+}
+
+
+/* =========================================
+   SHOW CHAPTER
+========================================= */
+
+function showChapter(){
+
+ const book=books[currentBook];
+ const chapter=book.chapters[currentChapter];
+
+ document.getElementById("bookTitle")
+ .textContent=book.emoji+" "+book.title;
+
+ document.getElementById("bookSubtitle")
+ .textContent=
+ book.category+" • "+book.chapters.length+" अध्याय";
+
+ document.getElementById("chapterTitle")
+ .textContent=
+ "अध्याय "+(currentChapter+1)+" — "+chapter[0];
+
+ document.getElementById("story")
+ .innerHTML=chapter[1];
+
+ document.getElementById("story")
+ .style.fontSize=font+"px";
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+
+}
+
+
+/* =========================================
+   NEXT / PREVIOUS
+========================================= */
+
+function nextChapter(){
+
+ const book=books[currentBook];
+
+ if(currentChapter < book.chapters.length-1){
+
+   currentChapter++;
+   showChapter();
+
+ }else{
+
+   if(currentBook < books.length-1){
+
+     if(confirm(
+       "यो किताब पूरा भयो ❤️\n\nअर्को किताब खोल्ने?"
+     )){
+       openBook(currentBook+1);
+     }
+
+   }else{
+
+     alert(
+       "🎉 तपाईंले सबै किताब पढिसक्नुभयो!"
+     );
+
+   }
+
+ }
+
+}
+
+
+function previousChapter(){
+
+ if(currentChapter>0){
+
+   currentChapter--;
+   showChapter();
+
+ }
+
+}
+
+
+/* =========================================
+   HOME
+========================================= */
+
+function goHome(){
+
+ document.getElementById("reader")
+ .style.display="none";
+
+ document.getElementById("library")
+ .style.display="block";
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+function searchBooks(){
+
+ renderBooks();
+
+}
+
+
+/* =========================================
+   FILTER
+========================================= */
+
+function filterBooks(category){
+
+ currentFilter=category;
+
+ renderBooks();
+
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+function toggleDark(){
+
+ document.body.classList.toggle("dark");
+
+}
+
+
+/* =========================================
+   FONT SIZE
+========================================= */
+
+function changeFont(value){
+
+ font+=value;
+
+ if(font<15) font=15;
+ if(font>34) font=34;
+
+ document.getElementById("story")
+ .style.fontSize=font+"px";
+
+}
+
+
+/* =========================================
+   BOOKMARK
+========================================= */
+
+function saveBookmark(){
+
+ localStorage.setItem(
+  "loveBook",
+  currentBook
+ );
+
+ localStorage.setItem(
+  "loveChapter",
+  currentChapter
+ );
+
+ alert("🔖 Bookmark सुरक्षित भयो!");
+
+}
+
+
+function continueBook(){
+
+ const b=
+ localStorage.getItem("loveBook");
+
+ const c=
+ localStorage.getItem("loveChapter");
+
+ if(b!==null){
+
+   currentBook=Number(b);
+   currentChapter=Number(c||0);
+
+   document.getElementById("library")
+   .style.display="none";
+
+   document.getElementById("reader")
+   .style.display="block";
+
+   showChapter();
+
+ }else{
+
+   alert(
+    "अहिलेसम्म कुनै Bookmark छैन।"
+   );
+
+ }
+
+}
+
+
+/* =========================================
+   FLOATING HEARTS
+========================================= */
+
+function createHeart(){
+
+ const heart=
+ document.createElement("div");
+
+ heart.className="heart";
+
+ heart.textContent=
+ ["❤️","💕","💗","💖","💘","🌹"]
+ [Math.floor(Math.random()*6)];
+
+ heart.style.left=
+ Math.random()*100+"%";
+
+ heart.style.fontSize=
+ (18+Math.random()*25)+"px";
+
+ heart.style.animationDuration=
+ (5+Math.random()*6)+"s";
+
+ document.getElementById("hearts")
+ .appendChild(heart);
+
+ setTimeout(()=>{
+  heart.remove();
+ },11000);
+
+}
+
+
+/* START */
+
+renderBooks();
+
+setInterval(createHeart,700);
+
+</script>
+
+</body>
+</html>

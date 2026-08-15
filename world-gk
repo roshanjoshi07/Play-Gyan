@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🌍 World GK — 500 Questions</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Arial,"Noto Sans Devanagari",sans-serif;
+ background:linear-gradient(135deg,#061b38,#075985,#0891b2);
+ color:#222;
+}
+
+header{
+ color:white;
+ text-align:center;
+ padding:35px 15px;
+}
+
+header h1{
+ font-size:clamp(35px,8vw,60px);
+ margin:0;
+}
+
+header p{
+ font-size:18px;
+}
+
+.nav{
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:10px;
+ margin:20px 0;
+}
+
+.nav button{
+ padding:13px 20px;
+ border:0;
+ border-radius:12px;
+ cursor:pointer;
+ font-weight:bold;
+ font-size:16px;
+}
+
+.container{
+ width:min(1100px,94%);
+ margin:auto;
+}
+
+.panel{
+ background:white;
+ border-radius:22px;
+ padding:25px;
+ margin-bottom:30px;
+ box-shadow:0 15px 50px #0004;
+}
+
+.hidden{
+ display:none!important;
+}
+
+/* QUESTION BANK */
+
+.search{
+ width:100%;
+ padding:14px;
+ border:2px solid #ddd;
+ border-radius:12px;
+ font-size:16px;
+ margin-bottom:20px;
+}
+
+.question-card{
+ padding:18px;
+ margin:15px 0;
+ background:#f7fbff;
+ border-left:6px solid #087fbd;
+ border-radius:12px;
+}
+
+.question-number{
+ font-weight:bold;
+ color:#087fbd;
+}
+
+.question-text{
+ font-size:18px;
+ font-weight:bold;
+ margin:8px 0;
+}
+
+.answer{
+ padding:10px 14px;
+ background:#d9fbe5;
+ color:#087b38;
+ border-radius:10px;
+ font-weight:bold;
+}
+
+/* GAME */
+
+.stats{
+ display:flex;
+ justify-content:space-between;
+ flex-wrap:wrap;
+ gap:10px;
+}
+
+.stat{
+ padding:10px 15px;
+ background:#edf5ff;
+ border-radius:20px;
+ font-weight:bold;
+}
+
+.progress{
+ height:10px;
+ background:#ddd;
+ border-radius:20px;
+ overflow:hidden;
+ margin:20px 0;
+}
+
+.progress-bar{
+ height:100%;
+ width:0%;
+ background:#087fbd;
+ transition:.3s;
+}
+
+.game-question{
+ font-size:25px;
+ font-weight:bold;
+ line-height:1.5;
+ margin:30px 0;
+}
+
+.options{
+ display:grid;
+ gap:12px;
+}
+
+.option{
+ padding:16px;
+ border:2px solid #dce5ee;
+ background:#fff;
+ border-radius:14px;
+ cursor:pointer;
+ text-align:left;
+ font-size:17px;
+ transition:.2s;
+}
+
+.option:hover{
+ background:#eef8ff;
+ transform:translateX(4px);
+}
+
+.correct{
+ background:#c9f7d5!important;
+ border-color:#16a34a!important;
+}
+
+.wrong{
+ background:#ffd2d2!important;
+ border-color:#dc2626!important;
+}
+
+.next{
+ width:100%;
+ padding:15px;
+ margin-top:20px;
+ border:0;
+ border-radius:14px;
+ background:#087fbd;
+ color:white;
+ font-size:18px;
+ cursor:pointer;
+}
+
+.next:disabled{
+ opacity:.5;
+ cursor:not-allowed;
+}
+
+.result{
+ text-align:center;
+}
+
+.restart{
+ padding:14px 25px;
+ border:0;
+ border-radius:12px;
+ background:#16a34a;
+ color:white;
+ font-size:17px;
+ cursor:pointer;
+}
+
+@media(max-width:600px){
+
+ .panel{
+  padding:16px;
+ }
+
+ .game-question{
+  font-size:20px;
+ }
+
+ .option{
+  font-size:16px;
+ }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>🌍 WORLD GK</h1>
+
+<p>
+500 Questions • Countries • Capitals • Currencies • Famous Places
+</p>
+
+<div class="nav">
+
+<button onclick="showBank()">
+📚 Question Bank
+</button>
+
+<button onclick="showGame()">
+🎮 Play Quiz
+</button>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+<!-- ===================================
+     QUESTION BANK
+=================================== -->
+
+<section id="bank" class="panel">
+
+<h2>📚 1–500 World GK Questions</h2>
+
+<p>
+यहाँ सबै प्रश्न र तिनका सही उत्तरहरू देखिन्छन्।
+</p>
+
+<input
+ id="search"
+ class="search"
+ placeholder="🔍 प्रश्न वा उत्तर खोज्नुहोस्..."
+ oninput="renderBank()"
+>
+
+<div id="questionBank"></div>
+
+</section>
+
+
+<!-- ===================================
+     GAME
+=================================== -->
+
+<section id="game" class="panel hidden">
+
+<div class="stats">
+
+<div class="stat">
+📌 Question:
+<span id="qNo">1</span>/500
+</div>
+
+<div class="stat">
+🏆 Score:
+<span id="score">0</span>
+</div>
+
+<div class="stat">
+❤️ Life:
+<span id="life">3</span>
+</div>
+
+</div>
+
+<div class="progress">
+<div id="progressBar" class="progress-bar"></div>
+</div>
+
+<div
+ id="gameQuestion"
+ class="game-question">
+</div>
+
+<div
+ id="options"
+ class="options">
+</div>
+
+<button
+ id="nextButton"
+ class="next"
+ onclick="nextQuestion()"
+ disabled>
+
+अर्को प्रश्न ➡️
+
+</button>
+
+</section>
+
+
+<!-- RESULT -->
+
+<section
+id="result"
+class="panel result hidden">
+
+<h2>🎉 Quiz समाप्त!</h2>
+
+<h3 id="resultScore"></h3>
+
+<p id="resultPercent"></p>
+
+<button
+class="restart"
+onclick="restartGame()">
+
+🔄 फेरि खेल्नुहोस्
+
+</button>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   VERIFIED CORE DATA
+
+   Format:
+   [Country, Capital, Currency, Continent]
+===================================================== */
+
+const countries=[
+
+["नेपाल","काठमाडौं","नेपाली रुपैयाँ","एशिया"],
+["भारत","नयाँ दिल्ली","भारतीय रुपैयाँ","एशिया"],
+["चीन","बेइजिङ","युआन","एशिया"],
+["जापान","टोकियो","जापानी येन","एशिया"],
+["दक्षिण कोरिया","सियोल","दक्षिण कोरियाली वोन","एशिया"],
+["उत्तर कोरिया","प्योङयाङ","उत्तर कोरियाली वोन","एशिया"],
+["पाकिस्तान","इस्लामाबाद","पाकिस्तानी रुपैयाँ","एशिया"],
+["बंगलादेश","ढाका","बंगलादेशी टका","एशिया"],
+["भुटान","थिम्फु","ङ्गुल्ट्रुम","एशिया"],
+["माल्दिभ्स","माले","रुफिया","एशिया"],
+["अफगानिस्तान","काबुल","अफगानी","एशिया"],
+["म्यानमार","नेपिडो","म्यानमार क्यात","एशिया"],
+["थाइल्यान्ड","बैंकक","थाई बात","एशिया"],
+["भियतनाम","हनोई","भियतनामी डोङ","एशिया"],
+["कम्बोडिया","फ्नोम पेन्ह","कम्बोडियन रियल","एशिया"],
+["लाओस","भियन्टियान","लाओ किप","एशिया"],
+["मलेसिया","क्वालालम्पुर","मलेसियन रिङ्गिट","एशिया"],
+["सिंगापुर","सिंगापुर","सिंगापुर डलर","एशिया"],
+["इन्डोनेसिया","जकार्ता","इन्डोनेसियन रुपिया","एशिया"],
+["फिलिपिन्स","मनिला","फिलिपिन्स पेसो","एशिया"],
+["ब्रुनाइ","बन्दर सेरी बेगावान","ब्रुनाइ डलर","एशिया"],
+["मंगोलिया","उलानबाटर","मंगोलियन तुग्रिक","एशिया"],
+["साउदी अरब","रियाद","साउदी रियाल","एशिया"],
+["संयुक्त अरब इमिरेट्स","अबुधाबी","UAE दिरहम","एशिया"],
+["कतार","दोहा","कतारी रियाल","एशिया"],
+["कुवेत","कुवेत सिटी","कुवेती दिनार","एशिया"],
+["ओमान","मस्कट","ओमानी रियाल","एशिया"],
+["बहराइन","मनामा","बहराइनी दिनार","एशिया"],
+["जोर्डन","अम्मान","जोर्डनियन दिनार","एशिया"],
+["इराक","बगदाद","इराकी दिनार","एशिया"],
+["इरान","तेहरान","इरानी रियाल","एशिया"],
+["टर्की","अंकारा","टर्किस लिरा","एशिया"],
+
+["युनाइटेड किङ्गडम","लन्डन","पाउन्ड स्टर्लिङ","युरोप"],
+["फ्रान्स","पेरिस","युरो","युरोप"],
+["जर्मनी","बर्लिन","युरो","युरोप"],
+["इटाली","रोम","युरो","युरोप"],
+["स्पेन","म्याड्रिड","युरो","युरोप"],
+["पोर्चुगल","लिस्बन","युरो","युरोप"],
+["स्विट्जरल्यान्ड","बर्न","स्विस फ्रैंक","युरोप"],
+["अस्ट्रिया","भियना","युरो","युरोप"],
+["बेल्जियम","ब्रसेल्स","युरो","युरोप"],
+["नेदरल्यान्ड्स","एम्स्टर्डम","युरो","युरोप"],
+["नर्वे","ओस्लो","नर्वेजियन क्रोन","युरोप"],
+["स्विडेन","स्टकहोम","स्विडिस क्रोना","युरोप"],
+["डेनमार्क","कोपेनहेगन","डेनिस क्रोन","युरोप"],
+["फिनल्यान्ड","हेलसिन्की","युरो","युरोप"],
+["आइसल्यान्ड","रेक्याभिक","आइसल्यान्डिक क्रोना","युरोप"],
+["आयरल्यान्ड","डब्लिन","युरो","युरोप"],
+["ग्रीस","एथेन्स","युरो","युरोप"],
+["पोल्यान्ड","वार्सा","पोलिस ज्लोटी","युरोप"],
+["चेकिया","प्राग","चेक कोरुना","युरोप"],
+["हंगेरी","बुडापेस्ट","हंगेरी फोरिन्ट","युरोप"],
+["रोमानिया","बुखारेस्ट","रोमानियन ल्यु","युरोप"],
+["बुल्गेरिया","सोफिया","युरो","युरोप"],
+["क्रोएसिया","जाग्रेब","युरो","युरोप"],
+["सर्बिया","बेलग्रेड","सर्बियन दिनार","युरोप"],
+["अल्बानिया","तिराना","अल्बानियन लेक","युरोप"],
+["रुस","मस्को","रुसी रुबल","युरोप/एशिया"],
+["युक्रेन","किभ","युक्रेनी ह्रिभ्निया","युरोप"],
+["जर्जिया","त्बिलिसी","जर्जियन लारी","युरोप/एशिया"],
+
+["इजिप्ट","कायरो","इजिप्सियन पाउन्ड","अफ्रिका"],
+["दक्षिण अफ्रिका","प्रिटोरिया","दक्षिण अफ्रिकी र्यान्ड","अफ्रिका"],
+["नाइजेरिया","अबुजा","नाइरा","अफ्रिका"],
+["केन्या","नैरोबी","केन्याली शिलिङ","अफ्रिका"],
+["इथियोपिया","अदिस अबाबा","इथियोपियन बिर","अफ्रिका"],
+["घाना","अक्रा","घाना सेडी","अफ्रिका"],
+["मोरक्को","रबात","मोरक्कन दिरहम","अफ्रिका"],
+["अल्जेरिया","अल्जियर्स","अल्जेरियन दिनार","अफ्रिका"],
+["ट्युनिसिया","ट्युनिस","ट्युनिसियन दिनार","अफ्रिका"],
+["युगान्डा","कम्पाला","युगान्डाली शिलिङ","अफ्रिका"],
+["तान्जानिया","डोडोमा","तान्जानियन शिलिङ","अफ्रिका"],
+["जाम्बिया","लुसाका","जाम्बियन क्वाचा","अफ्रिका"],
+["जिम्बाब्वे","हरारे","जिम्बाब्वे गोल्ड","अफ्रिका"],
+["बोत्सवाना","गाबोरोन","बोत्सवाना पुला","अफ्रिका"],
+["नामिबिया","विन्डहोक","नामिबियन डलर","अफ्रिका"],
+["मोजाम्बिक","मापुटो","मेटिकल","अफ्रिका"],
+["मेडागास्कर","अन्तानानारिभो","आरियारी","अफ्रिका"],
+["सेनेगल","डाकार","CFA फ्रैंक","अफ्रिका"],
+["माली","बामाको","CFA फ्रैंक","अफ्रिका"],
+["नाइजर","नियामे","CFA फ्रैंक","अफ्रिका"],
+["चाड","एन'जामेना","CFA फ्रैंक","अफ्रिका"],
+["क्यामरुन","याउन्डे","CFA फ्रैंक","अफ्रिका"],
+["गाबोन","लिब्रेभिल","CFA फ्रैंक","अफ्रिका"],
+
+["संयुक्त राज्य अमेरिका","वासिङ्टन डी.सी.","अमेरिकी डलर","उत्तर अमेरिका"],
+["क्यानडा","ओटावा","क्यानाडियन डलर","उत्तर अमेरिका"],
+["मेक्सिको","मेक्सिको सिटी","मेक्सिकन पेसो","उत्तर अमेरिका"],
+["क्युबा","हवाना","क्युबाली पेसो","उत्तर अमेरिका"],
+["जमैका","किङ्स्टन","जमैकन डलर","उत्तर अमेरिका"],
+["कोस्टारिका","सान होसे","कोस्टारिकन कोलोन","उत्तर अमेरिका"],
+["पनामा","पनामा सिटी","बाल्बोआ","उत्तर अमेरिका"],
+["ग्वाटेमाला","ग्वाटेमाला सिटी","क्वेट्जाल","उत्तर अमेरिका"],
+
+["ब्राजिल","ब्रासिलिया","ब्राजिलियन रियाल","दक्षिण अमेरिका"],
+["अर्जेन्टिना","ब्युनस आयर्स","अर्जेन्टाइन पेसो","दक्षिण अमेरिका"],
+["चिली","सान्टियागो","चिलियन पेसो","दक्षिण अमेरिका"],
+["पेरु","लिमा","पेरुभियन सोल","दक्षिण अमेरिका"],
+["कोलम्बिया","बोगोटा","कोलम्बियन पेसो","दक्षिण अमेरिका"],
+["इक्वेडर","क्विटो","अमेरिकी डलर","दक्षिण अमेरिका"],
+["उरुग्वे","मोन्टेभिडियो","उरुग्वेयन पेसो","दक्षिण अमेरिका"],
+["पाराग्वे","असुनसियोन","गुआरानी","दक्षिण अमेरिका"],
+["बोलिभिया","सुक्रे","बोलिभियानो","दक्षिण अमेरिका"],
+["भेनेजुएला","काराकास","बोलिभार","दक्षिण अमेरिका"],
+
+["अष्ट्रेलिया","क्यानबेरा","अष्ट्रेलियन डलर","ओसिनिया"],
+["न्युजिल्यान्ड","वेलिङ्टन","न्युजिल्यान्ड डलर","ओसिनिया"],
+["फिजी","सुवा","फिजियन डलर","ओसिनिया"],
+["पपुवा न्यू गिनी","पोर्ट मोर्स्बी","किना","ओसिनिया"]
+
+];
+
+
+/* ==========================================
+   FAMOUS PLACES
+
+   These are used only for place questions.
+========================================== */
+
+const places=[
+
+["सगरमाथा","नेपाल"],
+["लुम्बिनी","नेपाल"],
+["ताजमहल","भारत"],
+["ग्रेट वाल अफ चाइना","चीन"],
+["फुजी पर्वत","जापान"],
+["अंगकोर वाट","कम्बोडिया"],
+["बोरोबुदुर","इन्डोनेसिया"],
+["पेट्रा","जोर्डन"],
+["बुर्ज खलिफा","संयुक्त अरब इमिरेट्स"],
+["एफिल टावर","फ्रान्स"],
+["कोलोसियम","इटाली"],
+["स्टोनहेन्ज","युनाइटेड किङ्गडम"],
+["स्ट्याच्यु अफ लिबर्टी","संयुक्त राज्य अमेरिका"],
+["ग्रान्ड क्यान्यन","संयुक्त राज्य अमेरिका"],
+["नियाग्रा फल्स","क्यानडा"],
+["माचु पिचु","पेरु"],
+["क्राइस्ट द रिडिमर","ब्राजिल"],
+["सिड्नी ओपेरा हाउस","अष्ट्रेलिया"],
+["पिरामिड अफ गिजा","इजिप्ट"],
+["माउन्ट किलिमन्जारो","तान्जानिया"],
+["भिक्टोरिया फल्स","जाम्बिया/जिम्बाब्वे"],
+["सिगिरिया","श्रीलंका"],
+["बागान","म्यानमार"],
+["पोटाला दरबार","चीन"],
+["काठमाण्डौ उपत्यका","नेपाल"],
+["चितवन राष्ट्रिय निकुञ्ज","नेपाल"],
+["सगरमाथा राष्ट्रिय निकुञ्ज","नेपाल"],
+["भेनिस र यसको लगुन","इटाली"],
+["अक्रोपोलिस","ग्रीस"],
+["अल्हाम्ब्रा","स्पेन"],
+["मोन्ट सेन्ट-मिशेल","फ्रान्स"],
+["प्रागको ऐतिहासिक केन्द्र","चेकिया"],
+["ब्रान्डेनबर्ग गेट","जर्मनी"],
+["मास्को क्रेमलिन","रुस"],
+["पामुक्कले","टर्की"],
+["ब्लू मस्जिद","टर्की"],
+["कप्पाडोसिया","टर्की"],
+["मोन्ट ब्लांक","फ्रान्स/इटाली"],
+["सहारा मरुभूमि","अफ्रिका"],
+["अमेजन वर्षावन","दक्षिण अमेरिका"],
+["गालापागोस टापु","इक्वेडर"],
+["ईस्टर आइल्याण्ड","चिली"],
+["उशुआइया","अर्जेन्टिना"],
+["पानामा नहर","पनामा"],
+["चिचेन इत्जा","मेक्सिको"],
+["हवाना पुरानो शहर","क्युबा"],
+["केप टाउन","दक्षिण अफ्रिका"],
+["टेबल माउन्टेन","दक्षिण अफ्रिका"],
+["सेरेन्गेटी राष्ट्रिय निकुञ्ज","तान्जानिया"],
+["ओकाभाङ्गो डेल्टा","बोत्सवाना"],
+["मेडागास्करका वर्षावन","मेडागास्कर"]
+
+];
+
+
+/* ==========================================
+   GENERATE EXACTLY 500 QUESTIONS
+========================================== */
+
+let questions=[];
+
+
+/* 4 questions per country */
+
+countries.forEach(c=>{
+
+ let country=c[0];
+ let capital=c[1];
+ let currency=c[2];
+ let continent=c[3];
+
+ questions.push({
+  q:`${country} को राजधानी कुन हो?`,
+  a:capital
+ });
+
+ questions.push({
+  q:`${country} को मुद्रा कुन हो?`,
+  a:currency
+ });
+
+ questions.push({
+  q:`${capital} कुन देशको राजधानी हो?`,
+  a:country
+ });
+
+ questions.push({
+  q:`${country} कुन महादेशमा पर्छ?`,
+  a:continent
+ });
+
+});
+
+
+/*
+50 places × 2 = 100
+100 countries × 4 = 400
+TOTAL = 500
+*/
+
+places.forEach(p=>{
+
+ questions.push({
+  q:`${p[0]} कुन देश/देशहरूमा अवस्थित छ?`,
+  a:p[1]
+ });
+
+ questions.push({
+  q:`${p[1]} सँग सम्बन्धित प्रसिद्ध स्थान कुन हो?`,
+  a:p[0]
+ });
+
+});
+
+
+/* Keep exactly 500 */
+
+questions=questions.slice(0,500);
+
+
+/* ==========================================
+   SHUFFLE
+========================================== */
+
+function shuffle(arr){
+
+ for(let i=arr.length-1;i>0;i--){
+
+  let j=Math.floor(
+   Math.random()*(i+1)
+  );
+
+  [arr[i],arr[j]]=
+  [arr[j],arr[i]];
+
+ }
+
+ return arr;
+}
+
+
+/* ==========================================
+   QUESTION BANK
+========================================== */
+
+function renderBank(){
+
+ let search=
+ document.getElementById("search")
+ .value
+ .toLowerCase();
+
+ let box=
+ document.getElementById("questionBank");
+
+ box.innerHTML="";
+
+ questions.forEach((item,index)=>{
+
+  let text=
+  (item.q+" "+item.a)
+  .toLowerCase();
+
+  if(!text.includes(search))return;
+
+  let div=
+  document.createElement("div");
+
+  div.className="question-card";
+
+  div.innerHTML=`
+
+  <div class="question-number">
+  प्रश्न ${index+1}
+  </div>
+
+  <div class="question-text">
+  ${item.q}
+  </div>
+
+  <div class="answer">
+  ✅ सही Answer: ${item.a}
+  </div>
+
+  `;
+
+  box.appendChild(div);
+
+ });
+
+}
+
+
+/* ==========================================
+   SHOW / HIDE
+========================================== */
+
+function showBank(){
+
+ document.getElementById("bank")
+ .classList.remove("hidden");
+
+ document.getElementById("game")
+ .classList.add("hidden");
+
+ document.getElementById("result")
+ .classList.add("hidden");
+
+ window.scrollTo(0,0);
+
+}
+
+
+function showGame(){
+
+ document.getElementById("bank")
+ .classList.add("hidden");
+
+ document.getElementById("game")
+ .classList.remove("hidden");
+
+ document.getElementById("result")
+ .classList.add("hidden");
+
+ startGame();
+
+ window.scrollTo(0,0);
+
+}
+
+
+/* ==========================================
+   GAME
+========================================== */
+
+let gameQuestions=[];
+let current=0;
+let score=0;
+let lives=3;
+let answered=false;
+
+
+function startGame(){
+
+ gameQuestions=
+ shuffle([...questions]);
+
+ current=0;
+ score=0;
+ lives=3;
+
+ loadQuestion();
+
+}
+
+
+function makeOptions(correct){
+
+ let values=
+ questions
+ .map(x=>x.a)
+ .filter(x=>x!==correct);
+
+ values=shuffle([...new Set(values)]);
+
+ let options=
+ values.slice(0,3);
+
+ options.push(correct);
+
+ return shuffle(options);
+
+}
+
+
+function loadQuestion(){
+
+ answered=false;
+
+ let item=
+ gameQuestions[current];
+
+ document.getElementById("qNo")
+ .textContent=current+1;
+
+ document.getElementById("score")
+ .textContent=score;
+
+ document.getElementById("life")
+ .textContent=lives;
+
+ document.getElementById("gameQuestion")
+ .textContent=item.q;
+
+ document.getElementById("progressBar")
+ .style.width=
+ ((current/500)*100)+"%";
+
+ let box=
+ document.getElementById("options");
+
+ box.innerHTML="";
+
+ let options=
+ makeOptions(item.a);
+
+ options.forEach(option=>{
+
+  let button=
+  document.createElement("button");
+
+  button.className="option";
+
+  button.textContent=option;
+
+  button.onclick=()=>{
+
+   checkAnswer(
+    button,
+    option,
+    item.a
+   );
+
+  };
+
+  box.appendChild(button);
+
+ });
+
+ document.getElementById("nextButton")
+ .disabled=true;
+
+}
+
+
+/* ==========================================
+   CHECK ANSWER
+========================================== */
+
+function checkAnswer(button,selected,correct){
+
+ if(answered)return;
+
+ answered=true;
+
+ document
+ .querySelectorAll(".option")
+ .forEach(x=>x.disabled=true);
+
+ if(selected===correct){
+
+  button.classList.add("correct");
+
+  score++;
+
+ }else{
+
+  button.classList.add("wrong");
+
+  lives--;
+
+  document
+  .querySelectorAll(".option")
+  .forEach(x=>{
+
+   if(x.textContent===correct){
+
+    x.classList.add("correct");
+
+   }
+
+  });
+
+ }
+
+ document.getElementById("score")
+ .textContent=score;
+
+ document.getElementById("life")
+ .textContent=lives;
+
+ if(lives<=0){
+
+  setTimeout(gameOver,500);
+
+ }else{
+
+  document.getElementById("nextButton")
+  .disabled=false;
+
+ }
+
+}
+
+
+/* ==========================================
+   NEXT
+========================================== */
+
+function nextQuestion(){
+
+ if(!answered)return;
+
+ current++;
+
+ if(current>=500){
+
+  finishGame();
+
+ }else{
+
+  loadQuestion();
+
+ }
+
+}
+
+
+/* ==========================================
+   FINISH
+========================================== */
+
+function finishGame(){
+
+ document.getElementById("game")
+ .classList.add("hidden");
+
+ document.getElementById("result")
+ .classList.remove("hidden");
+
+ let percent=
+ Math.round(score/500*100);
+
+ document.getElementById("resultScore")
+ .textContent=
+ `🏆 Score: ${score}/500`;
+
+ document.getElementById("resultPercent")
+ .textContent=
+ `📊 Percentage: ${percent}%`;
+
+}
+
+
+/* ==========================================
+   GAME OVER
+========================================== */
+
+function gameOver(){
+
+ document.getElementById("game")
+ .classList.add("hidden");
+
+ document.getElementById("result")
+ .classList.remove("hidden");
+
+ document.getElementById("resultScore")
+ .textContent=
+ `💔 Game Over — Score: ${score}`;
+
+ document.getElementById("resultPercent")
+ .textContent=
+ "❤️ तपाईंका 3 Life सकिए।";
+
+}
+
+
+/* ==========================================
+   RESTART
+========================================== */
+
+function restartGame(){
+
+ document.getElementById("result")
+ .classList.add("hidden");
+
+ document.getElementById("game")
+ .classList.remove("hidden");
+
+ startGame();
+
+}
+
+
+/* START */
+
+renderBank();
+
+</script>
+
+</body>
+</html>

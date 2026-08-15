@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>👻 डरको पुस्तकालय</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+    margin:0;
+    background:#070707;
+    color:#ddd;
+    font-family:"Noto Serif Devanagari","Nirmala UI",Georgia,serif;
+    transition:.4s;
+}
+
+/* FLOATING GHOSTS */
+
+.fog{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.ghost{
+    position:absolute;
+    bottom:-70px;
+    opacity:0;
+    font-size:30px;
+    animation:rise 9s linear forwards;
+}
+
+@keyframes rise{
+    0%{
+        transform:translateY(0) scale(.7);
+        opacity:0;
+    }
+    15%{opacity:.45}
+    100%{
+        transform:translateY(-115vh) scale(1.4);
+        opacity:0;
+    }
+}
+
+/* HEADER */
+
+header{
+    text-align:center;
+    padding:50px 15px;
+    color:white;
+    background:
+    radial-gradient(circle,#420909,#130000 55%,#020202);
+    box-shadow:0 0 70px #8b000055;
+}
+
+header h1{
+    margin:0;
+    font-size:clamp(40px,9vw,75px);
+    text-shadow:0 0 25px #f00000;
+}
+
+header h2{
+    color:#d00000;
+    letter-spacing:3px;
+}
+
+.search{
+    display:block;
+    width:min(700px,92%);
+    margin:25px auto 0;
+    padding:15px 20px;
+    border:0;
+    border-radius:30px;
+    outline:none;
+    font-size:17px;
+}
+
+/* BUTTONS */
+
+.controls,
+.filters{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:20px;
+}
+
+button{
+    border:1px solid #650000;
+    background:#170000;
+    color:#ddd;
+    padding:11px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#650000;
+    box-shadow:0 0 15px #900;
+}
+
+/* LIBRARY */
+
+.library{
+    width:min(1200px,94%);
+    margin:35px auto;
+}
+
+.library h2{
+    text-align:center;
+    color:#d00000;
+    font-size:32px;
+}
+
+/* CARDS */
+
+.books{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+    gap:22px;
+}
+
+.card{
+    background:#111;
+    border:1px solid #4d1111;
+    border-radius:15px;
+    overflow:hidden;
+    cursor:pointer;
+    box-shadow:0 10px 30px #000;
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 15px 45px #70000066;
+}
+
+.cover{
+    height:230px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    color:white;
+
+    background:
+    radial-gradient(circle,#4a0b0b,#090000);
+}
+
+.cover .emoji{
+    font-size:65px;
+    margin-bottom:15px;
+    filter:drop-shadow(0 0 15px #f00000);
+}
+
+.cover h3{
+    margin:0;
+    font-size:22px;
+}
+
+.card-body{
+    padding:17px;
+}
+
+.card-body p{
+    color:#aaa;
+    line-height:1.6;
+}
+
+.badge{
+    background:#420909;
+    color:#e44;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.card-body button{
+    width:100%;
+}
+
+/* READER */
+
+.reader{
+    display:none;
+    width:min(1000px,94%);
+    margin:35px auto;
+}
+
+.book{
+    background:
+    radial-gradient(circle at center,#181010,#090909);
+    border:1px solid #541111;
+    border-radius:15px;
+    padding:clamp(25px,6vw,70px);
+
+    box-shadow:
+    0 0 60px #000,
+    inset 0 0 50px #250000;
+}
+
+.book-title{
+    text-align:center;
+    color:#ddd;
+    font-size:clamp(32px,7vw,55px);
+    text-shadow:0 0 15px #900;
+}
+
+.subtitle{
+    text-align:center;
+    color:#a33;
+    margin-bottom:45px;
+}
+
+.chapter-title{
+    text-align:center;
+    color:#d00000;
+    border-bottom:1px solid #551111;
+    padding-bottom:18px;
+}
+
+.story{
+    font-size:20px;
+    line-height:2.05;
+}
+
+.story p{
+    text-align:justify;
+    margin:25px 0;
+}
+
+.story h3{
+    color:#d00000;
+    text-align:center;
+    margin-top:45px;
+}
+
+.whisper{
+    text-align:center!important;
+    color:#999;
+    font-style:italic;
+}
+
+/* NAVIGATION */
+
+.navigation{
+    display:flex;
+    gap:10px;
+    margin-top:55px;
+}
+
+.navigation button{
+    flex:1;
+    background:#500000;
+}
+
+/* DARK RED MODE */
+
+body.red{
+    background:#120000;
+}
+
+body.red .book{
+    box-shadow:
+    0 0 100px #800000,
+    inset 0 0 70px #400000;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .books{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    .cover{
+        height:190px;
+    }
+
+    .cover .emoji{
+        font-size:45px;
+    }
+
+    .cover h3{
+        font-size:18px;
+    }
+
+    .story{
+        font-size:18px;
+        line-height:1.9;
+    }
+
+    .story p{
+        text-align:left;
+    }
+
+    .navigation{
+        flex-direction:column;
+    }
+}
+
+@media(max-width:430px){
+
+    .books{
+        grid-template-columns:1fr;
+    }
+
+    .cover{
+        height:220px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="fog" id="fog"></div>
+
+
+<header>
+
+<h1>👻 डरको पुस्तकालय</h1>
+
+<h2>HORROR STORY COLLECTION</h2>
+
+<p>
+राति एक्लै नपढ्नुहोस्... 👁️
+</p>
+
+<input
+class="search"
+id="search"
+type="search"
+placeholder="🔍 कथा खोज्नुहोस्..."
+oninput="renderBooks()"
+>
+
+<div class="controls">
+
+<button onclick="toggleRed()">
+🩸 Horror Mode
+</button>
+
+<button onclick="toggleLibrary()">
+📚 Library
+</button>
+
+<button onclick="fontChange(1)">
+A+
+</button>
+
+<button onclick="fontChange(-1)">
+A−
+</button>
+
+<button onclick="saveBookmark()">
+🔖 Save
+</button>
+
+<button onclick="continueBook()">
+📖 Continue
+</button>
+
+</div>
+
+</header>
+
+
+<!-- LIBRARY -->
+
+<section class="library" id="library">
+
+<h2>📚 Horror Stories</h2>
+
+<div class="filters">
+
+<button onclick="setFilter('all')">
+सबै
+</button>
+
+<button onclick="setFilter('Ghost')">
+👻 Ghost
+</button>
+
+<button onclick="setFilter('Mystery')">
+🔎 Mystery
+</button>
+
+<button onclick="setFilter('Dark')">
+🌑 Dark
+</button>
+
+</div>
+
+<div class="books" id="books"></div>
+
+</section>
+
+
+<!-- READER -->
+
+<section class="reader" id="reader">
+
+<div class="book">
+
+<h1 id="bookTitle"
+class="book-title"></h1>
+
+<div id="bookSubtitle"
+class="subtitle"></div>
+
+<h2 id="chapterTitle"
+class="chapter-title"></h2>
+
+<div id="story"
+class="story"></div>
+
+<div class="navigation">
+
+<button onclick="previousChapter()">
+⬅️ अघिल्लो
+</button>
+
+<button onclick="nextChapter()">
+अर्को ➡️
+</button>
+
+</div>
+
+<br>
+
+<button
+onclick="toggleLibrary()"
+style="width:100%">
+📚 पुस्तकालय
+</button>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* =====================================
+   MANY ORIGINAL HORROR STORIES
+===================================== */
+
+const books=[
+
+/* STORY 1 */
+
+{
+title:"मध्यरातको घर",
+emoji:"🏚️",
+category:"Ghost",
+desc:"राति १२ बजेपछि आफैँ खुल्ने एउटा पुरानो घर।",
+
+chapters:[
+
+["ढोका",`
+<p>आर्यनले गाउँको अन्तिम छेउमा रहेको पुरानो घरबारे धेरै कथा सुनेको थियो। तर उसलाई भूतप्रेतमा विश्वास थिएन।</p>
+<p>एक रात उसले घरभित्र जाने निर्णय गर्‍यो।</p>
+<p>राति ठीक १२ बजे ढोका आफैँ खुल्यो।</p>
+<p class="whisper">“भित्र आऊ...”</p>
+`],
+
+["ऐना",`
+<p>घरभित्र एउटा ठूलो पुरानो ऐना थियो। आर्यनले त्यसमा हेर्दा आफ्नो पछाडि एउटा छायाँ देख्यो।</p>
+<p>ऊ तुरुन्त पछाडि फर्कियो। त्यहाँ कोही थिएन।</p>
+<p>फेरि ऐनातिर हेर्दा छायाँ अझ नजिक आइसकेको थियो।</p>
+`],
+
+["अन्तिम आवाज",`
+<p>बिहान गाउँलेहरूले घरबाहिर आर्यनको मोबाइल मात्र भेटे।</p>
+<p>मोबाइलको अन्तिम recording मा उसको आवाज थियो।</p>
+<p class="whisper">“ढोका नखोल्नु... म अझै यहाँ छु।”</p>
+`]
+
+]
+},
+
+
+/* STORY 2 */
+
+{
+title:"ऐनाभित्रको मान्छे",
+emoji:"🪞",
+category:"Ghost",
+desc:"एउटा ऐना जसले वर्तमान होइन, भोलि देखाउँछ।",
+
+chapters:[
+
+["पुरानो ऐना",`
+<p>मायाले आफ्नो हजुरआमाको घरबाट एउटा पुरानो ऐना पाई।</p>
+<p>ऐना हेर्दा उसले आफ्नो कोठा देख्थी, तर कहिलेकाहीँ कोठामा आफू बाहेक अर्को व्यक्ति पनि देखिन्थ्यो।</p>
+`],
+
+["भोलिको दृश्य",`
+<p>एक रात ऐनामा उसले आफूलाई भुइँमा लडेको देखी।</p>
+<p>भोलिपल्ट ठीक त्यही ठाउँमा ऊ चिप्लिइन्।</p>
+<p>अब ऐनाले भविष्य देखाइरहेको थियो।</p>
+`],
+
+["ऐनाको ढोका",`
+<p>अन्तिम रात ऐनामा एउटा ढोका देखियो। त्यो ढोका मायाको कोठामा थिएन।</p>
+<p>तर केही क्षणपछि उसको कोठाको भित्तामा त्यही ढोका देखा पर्यो।</p>
+<p class="whisper">ढोका आफैँ खुल्यो...</p>
+`]
+
+]
+},
+
+
+/* STORY 3 */
+
+{
+title:"तेस्रो ढोका",
+emoji:"🚪",
+category:"Mystery",
+desc:"एउटा घरमा दुईवटा मात्र ढोका थिए... तर राति तेस्रो ढोका देखा पर्थ्यो।",
+
+chapters:[
+
+["घर",`
+<p>निशानले नयाँ घर किने। घरमा दुईवटा कोठा र दुईवटा ढोका थिए।</p>
+<p>पहिलो रात उसले भित्तामा तेस्रो ढोका देख्यो।</p>
+`],
+
+["नखोल्नु",`
+<p>उसको भाइले फोन गरेर भन्यो, “त्यो ढोका नखोल।”</p>
+<p>निशान अचम्ममा पर्यो। भाइलाई उसले घरबारे भनेकै थिएन।</p>
+`],
+
+["भित्र",`
+<p>राति ढोका आफैँ खुल्यो। भित्र उसको आफ्नै घर थियो।</p>
+<p>तर त्यस घरभित्र निशानको अर्को रूप उभिएको थियो।</p>
+<p class="whisper">“तिमी ढिला आयौ।”</p>
+`]
+
+]
+},
+
+
+/* STORY 4 */
+
+{
+title:"कालो जंगल",
+emoji:"🌲",
+category:"Dark",
+desc:"जंगल जहाँ बाटो हिँड्ने मानिसहरू फेरि उही ठाउँमा फर्किन्छन्।",
+
+chapters:[
+
+["जंगलको बाटो",`
+<p>चार साथीहरू पहाडको जंगल घुम्न गए। स्थानीय मानिसहरूले रात पर्नुअघि फर्कन चेतावनी दिएका थिए।</p>
+<p>तर उनीहरूले कुरा मानेनन्।</p>
+`],
+
+["एउटै रूख",`
+<p>घण्टौँ हिँडेपछि उनीहरूले एउटै ठूलो रूख फेरि देखे।</p>
+<p>उनीहरू त्यही ठाउँमा घुमिरहेका थिए।</p>
+`],
+
+["पाँचौँ साथी",`
+<p>अँध्यारो भएपछि उनीहरूले एउटा पाँचौँ मानिससँग भेट गरे।</p>
+<p>तर उनीहरू त चार जना मात्र थिए।</p>
+<p class="whisper">“मलाई पनि घरसम्म लैजानुहोस्...”</p>
+`]
+
+]
+},
+
+
+/* STORY 5 */
+
+{
+title:"रातिको फोन",
+emoji:"📞",
+category:"Mystery",
+desc:"हरेक रात ३:०३ बजे आउने एउटा फोन।",
+
+chapters:[
+
+["पहिलो फोन",`
+<p>सुमनको फोन हरेक रात ३:०३ बजे बज्थ्यो। फोन उठाउँदा कसैले बोल्दैनथ्यो।</p>
+`],
+
+["आफ्नै आवाज",`
+<p>एक रात फोन उठाउँदा उसले आफ्नै आवाज सुन्यो।</p>
+<p class="whisper">“भोलि राति फोन नउठाउनु।”</p>
+`],
+
+["३:०३",`
+<p>भोलिपल्ट राति फोन फेरि बज्यो। समय थियो ३:०३।</p>
+<p>सुमनले फोन हेरेर राख्न खोज्यो।</p>
+<p>तर screen मा caller name लेखिएको थियो—“सुमन।”</p>
+`]
+
+]
+},
+
+
+/* STORY 6 */
+
+{
+title:"अन्तिम रेल",
+emoji:"🚂",
+category:"Dark",
+desc:"रातको अन्तिम रेलमा चढेपछि यात्रुहरूले एउटा अनौठो स्टेशन भेट्छन्।",
+
+chapters:[
+
+["रेल",`
+<p>रातको अन्तिम रेलमा अर्जुन एक्लै यात्रा गरिरहेको थियो।</p>
+<p>टिकटमा उसको गन्तव्यको नाम थिएन।</p>
+`],
+
+["स्टेशन",`
+<p>रेल एउटा सुनसान स्टेशनमा रोकियो। बोर्डमा लेखिएको थियो—“अन्तिम स्टेशन।”</p>
+<p>तर अर्जुनले त्यहाँबाट आफ्नो शहर अझ धेरै टाढा रहेको जान्दथ्यो।</p>
+`],
+
+["यात्रु",`
+<p>रेलभित्र फर्किँदा सबै सिटमा मानिसहरू बसेका थिए।</p>
+<p>अर्जुनले तीमध्ये एकलाई सोध्यो, “यो रेल कहाँ जान्छ?”</p>
+<p class="whisper">“जहाँबाट कोही फर्किँदैन।”</p>
+`]
+
+]
+},
+
+
+/* STORY 7 */
+
+{
+title:"बन्द विद्यालय",
+emoji:"🏫",
+category:"Ghost",
+desc:"बीस वर्षदेखि बन्द विद्यालयमा राति घण्टी किन बज्छ?",
+
+chapters:[
+
+["विद्यालय",`
+<p>पुरानो विद्यालय बीस वर्षदेखि बन्द थियो। तर हरेक रात ठीक १० बजे त्यहाँ घण्टी बज्थ्यो।</p>
+`],
+
+["कक्षा",`
+<p>रोहित र उसका साथीहरू विद्यालयभित्र गए। कक्षाकोठामा बोर्डमा उनीहरूको नाम लेखिएको थियो।</p>
+`],
+
+["हाजिरी",`
+<p>अचानक शिक्षकको आवाज आयो।</p>
+<p class="whisper">“आजको हाजिरी सुरु गरौँ।”</p>
+<p>बोर्डमा चार नाम थिए। उनीहरू तीन जना मात्र थिए।</p>
+`]
+
+]
+},
+
+
+/* STORY 8 */
+
+{
+title:"पुरानो गुडिया",
+emoji:"🪆",
+category:"Ghost",
+desc:"बच्चाको कोठामा राखिएको एउटा गुडिया राति ठाउँ बदल्थ्यो।",
+
+chapters:[
+
+["गुडिया",`
+<p>सानो घरमा एउटा पुरानो गुडिया भेटियो। त्यसको आँखाले मानिसलाई पछ्याएजस्तो लाग्थ्यो।</p>
+`],
+
+["रात",`
+<p>हरेक बिहान गुडिया फरक ठाउँमा भेटिन्थ्यो। परिवारले यसलाई मजाक ठान्यो।</p>
+`],
+
+["नाम",`
+<p>एक रात गुडियाले पहिलोपटक बोल्यो।</p>
+<p class="whisper">“मलाई मेरो नाम याद आयो।”</p>
+<p>त्यसपछि घरको बत्ती निभ्यो।</p>
+`]
+
+]
+},
+
+
+/* STORY 9 */
+
+{
+title:"कोठा नम्बर 13",
+emoji:"🏨",
+category:"Mystery",
+desc:"होटलमा कोठा १३ थियो, तर hotel को नक्शामा त्यो कोठा थिएन।",
+
+chapters:[
+
+["होटल",`
+<p>विकासले पुरानो होटलमा कोठा माग्यो। receptionist ले उसलाई १२ नम्बर कोठा दियो।</p>
+<p>तर ढोकाको अगाडि १३ नम्बर पनि थियो।</p>
+`],
+
+["कोही बोल्यो",`
+<p>राति ढोकाबाट आवाज आयो।</p>
+<p class="whisper">“मलाई बाहिर निकाल।”</p>
+`],
+
+["रजिस्टर",`
+<p>बिहान reception मा पुग्दा विकासले register हेऱ्यो।</p>
+<p>उसको नाम कोठा १३ मा लेखिएको थियो।</p>
+<p>तर उसले कोठा १२ मा रात बिताएको थियो।</p>
+`]
+
+]
+},
+
+
+/* STORY 10 */
+
+{
+title:"छायाँ",
+emoji:"👤",
+category:"Dark",
+desc:"उसको छायाँ उसको शरीरभन्दा पहिले हिँड्न थाल्यो।",
+
+chapters:[
+
+["छायाँ",`
+<p>अमनले एक दिन आफ्नो छायाँ असामान्य भएको देख्यो।</p>
+<p>ऊ रोकिँदा छायाँ अझै हिँडिरहेको थियो।</p>
+`],
+
+["आफ्नै रूप",`
+<p>छायाँ बिस्तारै मानिसको आकारजस्तो बन्न थाल्यो।</p>
+<p>एक रात त्यो अमनभन्दा अगाडि उभियो।</p>
+`],
+
+["अन्त्य",`
+<p>बिहान अमन घरमा थिएन।</p>
+<p>तर उसको छायाँ भने भित्तामा अझै देखिन्थ्यो।</p>
+<p class="whisper">अब त्यो छायाँ एक्लै हिँड्थ्यो...</p>
+`]
+
+]
+}
+
+];
+
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+let currentBook=0;
+let currentChapter=0;
+let font=20;
+let filter="all";
+
+
+/* =====================================
+   RENDER BOOKS
+===================================== */
+
+function renderBooks(){
+
+const area=
+document.getElementById("books");
+
+area.innerHTML="";
+
+const search=
+document.getElementById("search")
+.value.toLowerCase();
+
+books.forEach((book,index)=>{
+
+const matchesSearch=
+book.title.toLowerCase()
+.includes(search) ||
+book.desc.toLowerCase()
+.includes(search);
+
+const matchesFilter=
+filter==="all" ||
+book.category===filter;
+
+if(!matchesSearch ||
+!matchesFilter) return;
+
+const card=
+document.createElement("div");
+
+card.className="card";
+
+card.innerHTML=`
+
+<div class="cover">
+
+<div class="emoji">
+${book.emoji}
+</div>
+
+<h3>
+${book.title}
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<span class="badge">
+${book.category}
+</span>
+
+<p>
+${book.desc}
+</p>
+
+<button onclick="openBook(${index})">
+👁️ पढ्न सुरु गर्नुहोस्
+</button>
+
+</div>
+`;
+
+area.appendChild(card);
+
+});
+
+}
+
+
+/* =====================================
+   OPEN BOOK
+===================================== */
+
+function openBook(index){
+
+currentBook=index;
+currentChapter=0;
+
+document.getElementById("library")
+.style.display="none";
+
+document.getElementById("reader")
+.style.display="block";
+
+showChapter();
+
+}
+
+
+/* =====================================
+   SHOW CHAPTER
+===================================== */
+
+function showChapter(){
+
+const book=
+books[currentBook];
+
+const chapter=
+book.chapters[currentChapter];
+
+document.getElementById("bookTitle")
+.textContent=
+book.emoji+" "+book.title;
+
+document.getElementById("bookSubtitle")
+.textContent=
+book.category+
+" • "+
+book.chapters.length+
+" chapters";
+
+document.getElementById("chapterTitle")
+.textContent=
+"अध्याय "+
+(currentChapter+1)+
+" — "+
+chapter[0];
+
+document.getElementById("story")
+.innerHTML=
+chapter[1];
+
+document.getElementById("story")
+.style.fontSize=
+font+"px";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* =====================================
+   NEXT
+===================================== */
+
+function nextChapter(){
+
+const book=
+books[currentBook];
+
+if(currentChapter <
+book.chapters.length-1){
+
+currentChapter++;
+
+showChapter();
+
+}else{
+
+if(currentBook <
+books.length-1){
+
+if(confirm(
+"👻 यो कथा समाप्त भयो।\n\nअर्को horror story पढ्ने?"
+)){
+
+openBook(currentBook+1);
+
+}
+
+}else{
+
+alert(
+"☠️ सबै horror stories समाप्त भयो..."
+);
+
+}
+
+}
+
+}
+
+
+/* =====================================
+   PREVIOUS
+===================================== */
+
+function previousChapter(){
+
+if(currentChapter>0){
+
+currentChapter--;
+
+showChapter();
+
+}
+
+}
+
+
+/* =====================================
+   FILTER
+===================================== */
+
+function setFilter(value){
+
+filter=value;
+
+renderBooks();
+
+}
+
+
+/* =====================================
+   SEARCH
+===================================== */
+
+document.getElementById("search")
+.addEventListener("input",renderBooks);
+
+
+/* =====================================
+   LIBRARY
+===================================== */
+
+function toggleLibrary(){
+
+document.getElementById("reader")
+.style.display="none";
+
+document.getElementById("library")
+.style.display="block";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* =====================================
+   RED MODE
+===================================== */
+
+function toggleRed(){
+
+document.body
+.classList.toggle("red");
+
+}
+
+
+/* =====================================
+   FONT
+===================================== */
+
+function fontChange(value){
+
+font+=value;
+
+if(font<15) font=15;
+
+if(font>34) font=34;
+
+document.getElementById("story")
+.style.fontSize=font+"px";
+
+}
+
+
+/* =====================================
+   BOOKMARK
+===================================== */
+
+function saveBookmark(){
+
+localStorage.setItem(
+"horrorBook",
+currentBook
+);
+
+localStorage.setItem(
+"horrorChapter",
+currentChapter
+);
+
+alert(
+"🔖 Bookmark सुरक्षित भयो।"
+);
+
+}
+
+
+function continueBook(){
+
+const b=
+localStorage.getItem("horrorBook");
+
+const c=
+localStorage.getItem("horrorChapter");
+
+if(b!==null){
+
+currentBook=
+Number(b);
+
+currentChapter=
+Number(c||0);
+
+document.getElementById("library")
+.style.display="none";
+
+document.getElementById("reader")
+.style.display="block";
+
+showChapter();
+
+}else{
+
+alert(
+"अहिलेसम्म Bookmark छैन।"
+);
+
+}
+
+}
+
+
+/* =====================================
+   FLOATING GHOSTS
+===================================== */
+
+function createGhost(){
+
+const ghost=
+document.createElement("div");
+
+ghost.className="ghost";
+
+ghost.textContent=
+["👻","💀","👁️","🕷️"]
+[Math.floor(Math.random()*4)];
+
+ghost.style.left=
+Math.random()*100+"%";
+
+ghost.style.fontSize=
+(20+Math.random()*30)+"px";
+
+ghost.style.animationDuration=
+(6+Math.random()*6)+"s";
+
+document.getElementById("fog")
+.appendChild(ghost);
+
+setTimeout(()=>{
+ghost.remove();
+},12000);
+
+}
+
+
+/* START */
+
+renderBooks();
+
+setInterval(createGhost,900);
+
+</script>
+
+</body>
+</html>
