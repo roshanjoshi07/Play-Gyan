@@ -1,11 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>रामायण — Animated Story Book</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>रामायण — सम्पूर्ण कथा</title>
 
 <style>
 *{
@@ -15,210 +13,172 @@
 }
 
 body{
-    font-family:"Noto Serif Devanagari",Georgia,serif;
-    background:#1c1008;
-    color:#35200f;
+    font-family:"Noto Serif Devanagari", Georgia, serif;
+    background:#20150d;
+    color:#33200f;
 }
 
 /* HEADER */
-
 header{
-    min-height:280px;
+    min-height:300px;
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
+    flex-direction:column;
     text-align:center;
-    color:#fff1c9;
-    padding:30px 15px;
+    padding:30px 20px;
+    color:#fff4d5;
 
     background:
-    radial-gradient(circle at 50% 35%,
-    #e2a33e 0%,
-    #8b4c18 42%,
-    #210e05 100%);
+    radial-gradient(circle at center,
+    #c88628,
+    #633511 45%,
+    #1b0d06 100%);
 }
 
 .om{
-    font-size:65px;
+    font-size:70px;
+    margin-bottom:10px;
 }
 
 header h1{
-    font-size:clamp(42px,8vw,72px);
-    text-shadow:0 5px 15px #000;
+    font-size:clamp(40px,8vw,70px);
+    text-shadow:0 5px 20px #000;
 }
 
 header p{
-    margin-top:8px;
+    margin-top:12px;
     font-size:18px;
 }
 
-/* MAIN */
-
+/* BOOK */
 .book-area{
-    width:min(1050px,94%);
-    margin:30px auto 70px;
+    width:min(1000px,94%);
+    margin:30px auto 80px;
 }
 
 /* CHAPTER MENU */
-
 .chapter-menu{
-    background:#3a220e;
+    background:#3c2410;
     padding:18px;
     border-radius:18px;
-    box-shadow:0 10px 35px #0009;
+    box-shadow:0 10px 30px #0008;
     margin-bottom:25px;
 }
 
 .chapter-menu h2{
-    color:#ffd98c;
+    color:#ffd98b;
     text-align:center;
     margin-bottom:15px;
 }
 
 .chapter-buttons{
     display:flex;
+    gap:10px;
     flex-wrap:wrap;
     justify-content:center;
-    gap:9px;
 }
 
 .chapter-buttons button{
     border:0;
-    padding:10px 16px;
+    padding:10px 15px;
     border-radius:25px;
     cursor:pointer;
-    background:#ce913e;
+    background:#d49a45;
     color:#251406;
     font-weight:bold;
 }
 
 .chapter-buttons button.active{
-    background:#ffe5ad;
+    background:#ffe1a1;
 }
 
 /* PAPER */
-
 .paper{
     background:#fff8e8;
-    padding:clamp(25px,6vw,70px);
+    min-height:700px;
+    padding:clamp(30px,7vw,75px);
     position:relative;
-    box-shadow:0 25px 80px #000c;
+
+    box-shadow:0 20px 70px #000b;
 }
 
 .paper:before{
     content:"";
     position:absolute;
     inset:15px;
-    border:2px solid #d4a765;
+    border:2px solid #d5ad69;
     pointer-events:none;
 }
 
 .chapter-label{
     text-align:center;
-    color:#a26518;
+    color:#a46618;
     font-weight:bold;
     letter-spacing:2px;
-    margin-bottom:12px;
+    margin-bottom:15px;
 }
 
-.paper h2{
+h2{
+    color:#703b0b;
     text-align:center;
-    color:#713d0b;
     font-size:clamp(28px,6vw,46px);
-    margin-bottom:10px;
+    margin-bottom:12px;
 }
 
 .subtitle{
     text-align:center;
-    color:#957553;
-    margin-bottom:28px;
+    color:#927453;
+    margin-bottom:40px;
+    font-style:italic;
 }
-
-/* ANIMATION */
-
-.animation-box{
-    position:relative;
-    width:100%;
-    max-width:950px;
-    margin:auto;
-    overflow:hidden;
-    border-radius:20px;
-    background:#111;
-    box-shadow:0 15px 45px #0009;
-}
-
-canvas{
-    display:block;
-    width:100%;
-    height:auto;
-}
-
-.scene-name{
-    position:absolute;
-    top:12px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#0009;
-    color:white;
-    padding:8px 18px;
-    border-radius:30px;
-    font-family:Arial,sans-serif;
-    font-size:14px;
-}
-
-/* STORY */
 
 .story{
-    margin-top:35px;
     font-size:19px;
-    line-height:2.05;
+    line-height:2.1;
     text-align:justify;
 }
 
 .story p{
-    margin-bottom:22px;
+    margin-bottom:23px;
     text-indent:40px;
 }
 
 .quote{
-    text-indent:0!important;
+    text-indent:0 !important;
     text-align:center;
-    color:#8c591a;
-    border-top:1px solid #cda76b;
-    border-bottom:1px solid #cda76b;
-    padding:20px;
-    margin:30px 0;
+    margin:35px 0;
+    padding:22px;
+    border-top:1px solid #cfa76b;
+    border-bottom:1px solid #cfa76b;
+    color:#8b581b;
+    font-size:21px;
     font-style:italic;
 }
 
-/* BUTTONS */
-
+/* NAVIGATION */
 .navigation{
     display:flex;
+    justify-content:space-between;
     gap:15px;
     margin-top:25px;
 }
 
-.navigation button,
-.home-btn{
+.navigation button{
+    flex:1;
     border:0;
-    cursor:pointer;
-    font-weight:bold;
+    padding:16px;
     border-radius:35px;
-    background:#bd7924;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    background:#bd7b25;
     color:white;
-    padding:15px;
     box-shadow:0 8px 20px #0005;
 }
 
-.navigation button{
-    flex:1;
-}
-
-.navigation button:hover,
-.home-btn:hover{
-    background:#df9b3e;
+.navigation button:hover{
+    background:#e0a64c;
 }
 
 .navigation button:disabled{
@@ -229,24 +189,32 @@ canvas{
 .home-btn{
     width:100%;
     margin-top:12px;
+    padding:13px;
+    border:1px solid #b78340;
     background:#3b2410;
-    color:#ffe0a0;
+    color:#ffe1a3;
+    border-radius:30px;
+    cursor:pointer;
 }
 
 /* MOBILE */
-
 @media(max-width:600px){
-
-    .paper{
-        padding:25px 19px;
-    }
 
     .story{
         font-size:17px;
+        line-height:2;
     }
 
     .story p{
         text-indent:25px;
+    }
+
+    .paper{
+        padding:30px 23px;
+    }
+
+    .navigation button{
+        font-size:14px;
     }
 }
 </style>
@@ -255,91 +223,44 @@ canvas{
 <body>
 
 <header>
-
-<div class="om">ॐ</div>
-
-<h1>रामायण</h1>
-
-<p>Animated Story Book</p>
-
+    <div class="om">ॐ</div>
+    <h1>रामायण</h1>
+    <p>श्रीरामको जीवन र धर्मयात्राको सम्पूर्ण कथा</p>
 </header>
-
 
 <main class="book-area">
 
 <div class="chapter-menu">
-
-<h2>Chapters</h2>
-
-<div
-class="chapter-buttons"
-id="chapterButtons">
+    <h2>Chapters</h2>
+    <div class="chapter-buttons" id="chapterButtons"></div>
 </div>
-
-</div>
-
 
 <article class="paper">
 
-<div
-class="chapter-label"
-id="chapterLabel">
-</div>
+    <div class="chapter-label" id="chapterLabel"></div>
 
-<h2 id="chapterTitle"></h2>
+    <h2 id="chapterTitle"></h2>
 
-<div class="subtitle">
-श्रीरामको जीवनकथामा आधारित मौलिक animated पुनर्कथन
-</div>
+    <div class="subtitle">
+        रामायणको कथा — सरल नेपाली पुनर्कथन
+    </div>
 
-
-<!-- ANIMATION -->
-
-<div class="animation-box">
-
-<div class="scene-name">
-🎬 Animated Scene
-</div>
-
-<canvas
-id="canvas"
-width="1000"
-height="560">
-</canvas>
-
-</div>
-
-
-<!-- STORY -->
-
-<div
-class="story"
-id="story">
-</div>
+    <div class="story" id="story"></div>
 
 </article>
 
-
 <div class="navigation">
+    <button id="backBtn" onclick="previousChapter()">
+        ← Back
+    </button>
 
-<button
-id="backBtn"
-onclick="previousChapter()">
-← Back
-</button>
-
-<button
-id="nextBtn"
-onclick="nextChapter()">
-Next →
-</button>
-
+    <button id="nextBtn" onclick="nextChapter()">
+        Next →
+    </button>
 </div>
 
-<button
-class="home-btn"
-onclick="goHome()">
-🏠 Home
+<button class="home-btn" onclick="goHome()">
+    🏠 Home
 </button>
 
 </main>
@@ -347,219 +268,730 @@ onclick="goHome()">
 
 <script>
 
-/* =====================================================
-   CHAPTER DATA
-===================================================== */
+/*
+=========================================================
+रामायण — सम्पूर्ण कथा
+परम्परागत रामायण कथामा आधारित सरल नेपाली पुनर्कथन।
+=========================================================
+*/
 
-const chapters=[
+const chapters = [
 
+/* 1 */
 {
-title:"अयोध्याबाट वनतर्फ",
+title:"अयोध्या र राजा दशरथ",
 
 story:`
 
 <p>
-अयोध्याका राजा दशरथका ज्येष्ठ पुत्र राम अत्यन्त
-धर्मनिष्ठ र जनप्रिय थिए। रामलाई राजा बनाउने तयारी
-भइरहेको समयमा परिस्थितिले अचानक अर्को मोड लियो।
+सरयू नदीको किनारमा अयोध्या नामको प्रसिद्ध र समृद्ध
+राज्य थियो। त्यहाँ इक्ष्वाकु वंशका राजा दशरथले शासन
+गर्थे। अयोध्या ठूलो, सुन्दर र व्यवस्थित नगर थियो।
+त्यहाँका मानिसहरू सुखी थिए र राजाप्रति सम्मान राख्थे।
 </p>
 
 <p>
-रामले पिताको वचनलाई सम्मान गर्दै चौध वर्ष वनवास
-स्वीकार गरे। सीता र लक्ष्मणले पनि रामलाई साथ दिने
-निर्णय गरे।
+राजा दशरथ वीर र पराक्रमी थिए। उनले धेरै युद्धहरूमा
+भाग लिएका थिए र आफ्ना प्रजाको रक्षा गर्न सधैँ तयार
+रहन्थे। उनका तीन रानी थिए—कौशल्या, कैकेयी र सुमित्रा।
 </p>
 
 <p>
-राजकीय वस्त्र र सुविधा छोडेर तीनै जना वनतर्फ लागे।
-अयोध्याका मानिसहरू दुःखी भएर उनीहरूलाई बिदाइ गर्न
-आए।
+तर राजाको मनमा एउटा ठूलो दुःख थियो। धेरै वर्ष बितिसक्दा
+पनि उनको सन्तान थिएन। आफू पछि अयोध्याको राज्य कसले
+सम्हाल्ने भन्ने चिन्ताले उनलाई सताइरहन्थ्यो।
+</p>
+
+<p>
+अन्ततः ऋषिहरूको सल्लाहअनुसार राजा दशरथले पुत्रेष्टि
+यज्ञ गरे। यज्ञको फलस्वरूप उनलाई दिव्य प्रसाद प्राप्त भयो।
+त्यो प्रसाद आफ्ना रानीहरूलाई बाँडे।
 </p>
 
 <p class="quote">
-धर्म र कर्तव्यलाई आफ्नो सुखभन्दा माथि राख्ने निर्णयले
-रामको वनयात्रा सुरु भयो।
+समय बित्दै जाँदा अयोध्याको राजपरिवारमा चार महान्
+राजकुमारहरूको जन्म भयो।
 </p>
 `
 },
 
+/* 2 */
 {
-title:"पञ्चवटीको जीवन",
+title:"श्रीराम, भरत, लक्ष्मण र शत्रुघ्नको जन्म",
 
 story:`
 
 <p>
-राम, सीता र लक्ष्मण विभिन्न वन र आश्रम पार गर्दै
-पञ्चवटी क्षेत्रमा पुगे। त्यहाँ उनीहरूले सुन्दर
-कुटी बनाएर बस्न थाले।
+कौशल्याबाट श्रीरामको जन्म भयो। कैकेयीबाट भरत जन्मिए
+र सुमित्राबाट लक्ष्मण तथा शत्रुघ्न जन्मिए।
 </p>
 
 <p>
-वनको शान्त वातावरणमा उनीहरूको जीवन सरल थियो।
-राम र लक्ष्मण वनमा घुम्थे र सीता कुटी वरिपरि
-आफ्ना दैनिक काम गर्थिन्।
+चारै राजकुमार बाल्यकालदेखि नै गुणवान् थिए। राम
+शान्त, सत्यवादी, दयालु र कर्तव्यनिष्ठ थिए। भरत
+नम्र र धर्मप्रेमी थिए। लक्ष्मण रामप्रति अत्यन्त
+समर्पित थिए भने शत्रुघ्न भरतसँग विशेष नजिक थिए।
 </p>
 
 <p>
-तर यही स्थानमा भविष्यका धेरै महत्वपूर्ण घटनाहरूको
-बीउ रोपियो।
+चारै भाइबीच गहिरो प्रेम थियो। उनीहरू सँगै खेल्थे,
+शिक्षा लिन्थे र राजकुलका नियमहरू सिक्थे।
+</p>
+
+<p>
+राजकुमारहरूले गुरुहरूबाट वेद, शास्त्र, राजनीति,
+धनुर्विद्या र युद्धकलाको शिक्षा लिए।
+</p>
+
+<p>
+रामको स्वभाव सबैभन्दा विशेष थियो। उनी कहिल्यै
+अहंकार गर्दैनथे र आफूभन्दा सानालाई पनि सम्मान गर्थे।
 </p>
 `
 },
 
+/* 3 */
 {
-title:"सुनौलो मृग र सीता हरण",
+title:"विश्वामित्रको आगमन",
 
 story:`
 
 <p>
-एक दिन सीताले कुटी नजिक एउटा अत्यन्त सुन्दर
-सुनौलो मृग देखिन्। त्यो दृश्य असाधारण थियो।
-सीताले रामलाई त्यो मृग समातेर ल्याइदिन आग्रह गरिन्।
+एक दिन महर्षि विश्वामित्र अयोध्या आए। उनले राजा
+दशरथसँग एउटा महत्वपूर्ण सहायता मागे।
 </p>
 
 <p>
-राम मृगको पछि लागे। वास्तवमा त्यो मृग मारीचको
-रूप थियो, जसले रावणको योजनामा रामलाई कुटीबाट
-टाढा लैजान सहयोग गरेको थियो।
+ऋषिहरूले वनमा यज्ञ गर्दा राक्षसहरूले बारम्बार
+यज्ञ नष्ट गर्ने गरेका थिए। त्यसैले विश्वामित्रले
+रामलाई आफूसँग वनमा पठाउन आग्रह गरे।
 </p>
 
 <p>
-मारीचले अन्तिम समयमा रामकै जस्तो आवाजमा
-“लक्ष्मण!” भनेर सहायता माग्यो। सीता चिन्तित भइन्
-र लक्ष्मणलाई रामको खोजीमा जान आग्रह गरिन्।
+राजा दशरथ रामलाई राक्षसहरूसँग लड्न पठाउन डराए।
+तर गुरु वशिष्ठले विश्वामित्रको अनुरोध स्वीकार गर्नु
+धर्म र राजकुमारको कर्तव्य भएको बताए।
 </p>
 
 <p>
-लक्ष्मण पनि गएपछि रावण साधुको भेषमा कुटीमा आयो।
-उसले आफ्नो वास्तविक रूप लुकाएर सीतासँग कुरा गर्यो।
-पछि अवसर पाएर सीतालाई लङ्कातर्फ लिएर गयो।
+रामसँग लक्ष्मण पनि गए। विश्वामित्रले उनीहरूलाई
+धेरै दिव्य अस्त्रहरूको ज्ञान दिए।
 </p>
 
 <p>
-जटायु नामका पक्षीराजले सीतालाई बचाउन रावणसँग
-बहादुरीपूर्वक युद्ध गरे। तर रावणसँगको युद्धमा
-जटायु गम्भीर रूपमा घाइते भए।
+राम र लक्ष्मणले ऋषिको यज्ञको रक्षा गरे र वनमा
+आतंक फैलाउने ताडका लगायतका राक्षसी शक्तिहरूलाई
+पराजित गरे।
+</p>
+`
+},
+
+/* 4 */
+{
+title:"मिथिलाको यात्रा र सीता",
+
+story:`
+
+<p>
+विश्वामित्र राम र लक्ष्मणलाई लिएर मिथिलातर्फ गए।
+मिथिलाका राजा जनक अत्यन्त ज्ञानी र धर्मात्मा राजा थिए।
+</p>
+
+<p>
+राजा जनककी पुत्री सीता अत्यन्त गुणवान् र तेजस्वी थिइन्।
+सीताको स्वयंवरको तयारी भइरहेको थियो।
+</p>
+
+<p>
+राजा जनकसँग भगवान् शिवसँग सम्बन्धित एउटा महान् धनुष
+थियो। जसले त्यो धनुष उठाएर प्रत्यञ्चा चढाउन सक्थ्यो,
+उसैले सीतासँग विवाह गर्ने शर्त राखिएको थियो।
+</p>
+
+<p>
+धेरै शक्तिशाली राजाहरू आए तर कसैले पनि धनुषलाई
+सजिलै उठाउन सकेनन्।
+</p>
+
+<p>
+विश्वामित्रको आज्ञामा राम धनुष नजिक गए। उनले धनुष
+उठाएर प्रत्यञ्चा चढाउन खोज्दा धनुष भाँचियो।
+</p>
+
+<p>
+यसरी राम र सीताको विवाह निश्चित भयो।
+</p>
+`
+},
+
+/* 5 */
+{
+title:"राम र सीताको विवाह",
+
+story:`
+
+<p>
+रामले सीतासँग विवाह गरे। त्यसै अवसरमा दशरथका अन्य
+पुत्रहरूको पनि विवाह सम्पन्न भयो।
+</p>
+
+<p>
+लक्ष्मणले उर्मिलासँग, भरतले माण्डवीसँग र शत्रुघ्नले
+श्रुतकीर्तिसँग विवाह गरे।
+</p>
+
+<p>
+अयोध्या र मिथिलामा विवाहको ठूलो उत्सव भयो। सबैले
+राजपरिवारको सुखको कामना गरे।
+</p>
+
+<p>
+राम र सीताको सम्बन्ध केवल पति-पत्नीको मात्र थिएन।
+उनीहरू एकअर्काका सहयात्री र दुःख-सुखका साथी थिए।
+</p>
+
+<p>
+विवाहपछि राम अयोध्या फर्किए। केही समयसम्म अयोध्यामा
+शान्ति र समृद्धि कायम रह्यो।
+</p>
+`
+},
+
+/* 6 */
+{
+title:"रामलाई युवराज बनाउने निर्णय",
+
+story:`
+
+<p>
+समय बित्दै जाँदा राजा दशरथ वृद्ध भए। उनले अयोध्याको
+राज्य रामलाई सुम्पने निर्णय गरे।
+</p>
+
+<p>
+अयोध्याका नागरिकहरू यो निर्णयबाट अत्यन्त खुसी भए।
+रामको न्यायप्रिय स्वभावका कारण सबै उनलाई भविष्यको
+राजाका रूपमा हेर्न चाहन्थे।
+</p>
+
+<p>
+तर दरबारभित्र एउटा घटना घट्यो जसले सम्पूर्ण
+अयोध्याको भविष्य परिवर्तन गरिदियो।
+</p>
+
+<p>
+कैकेयीकी दासी मन्थराले कैकेयीलाई राम राजा बनेपछि
+भरतको भविष्य कमजोर हुने कुरा सम्झाएर उत्तेजित गरिन्।
+</p>
+
+<p>
+कैकेयीले राजा दशरथसँग पहिले प्राप्त गरेका दुई वरदान
+मागिन्। पहिलो—भरतलाई राजा बनाउने। दोस्रो—रामलाई
+चौध वर्ष वनवास पठाउने।
+</p>
+`
+},
+
+/* 7 */
+{
+title:"रामको वनवास",
+
+story:`
+
+<p>
+राजा दशरथले कैकेयीको माग सुनेर गहिरो दुःख पाए।
+उनी रामलाई वनवास पठाउन चाहँदैनथे।
+</p>
+
+<p>
+तर उनले पहिले दिएको वचन तोड्न सकेनन्।
+जब रामले कुरा थाहा पाए, उनले कुनै विरोध गरेनन्।
+</p>
+
+<p>
+रामले भने कि पिताको वचन पूरा गर्नु आफ्नो कर्तव्य हो।
+</p>
+
+<p>
+सीताले पनि रामलाई एक्लै वन जान नदिने निर्णय गरिन्।
+उनले पति जहाँ जान्छन् आफू पनि त्यहीँ जाने बताइन्।
+</p>
+
+<p>
+लक्ष्मणले पनि दाजु रामको साथ नछोड्ने प्रतिज्ञा गरे।
+यसरी राम, सीता र लक्ष्मण अयोध्याबाट वनतर्फ लागे।
 </p>
 
 <p class="quote">
-राम वनमा फर्किएपछि सीता नभएको देखेर उनको खोजीको
-महान् यात्रा सुरु भयो।
+रामले राज्यभन्दा धर्म र पिताको वचनलाई ठूलो माने।
 </p>
 `
 },
 
+/* 8 */
 {
-title:"हनुमानसँग भेट",
+title:"दशरथको मृत्यु र भरतको त्याग",
 
 story:`
 
 <p>
-सीताको खोजी गर्दै राम र लक्ष्मण अगाडि बढ्दै गए।
-यही यात्रामा उनीहरूको भेट हनुमानसँग भयो।
+राम वन गएपछि राजा दशरथ अत्यन्त दुःखी भए। रामसँग
+बिछोडको पीडाले उनको स्वास्थ्य बिग्रियो।
 </p>
 
 <p>
-हनुमान सुग्रीवका अत्यन्त विश्वासिला सहयोगी थिए।
-उनले राम र सुग्रीवबीच मित्रता गराए।
+केही समयपछि राजा दशरथको मृत्यु भयो।
 </p>
 
 <p>
-रामले सुग्रीवलाई सहयोग गरेपछि सुग्रीवले सीताको
-खोजीमा आफ्ना वानर योद्धाहरू परिचालन गरे।
+त्यतिबेला भरत अयोध्यामा थिएनन्। फर्किएपछि उनले
+रामलाई वन पठाइएको कुरा थाहा पाए।
+</p>
+
+<p>
+भरतले आफ्नी आमाको निर्णय स्वीकार गरेनन्। उनले
+रामलाई नै अयोध्याको वास्तविक राजा माने।
+</p>
+
+<p>
+भरत वनमा गएर रामलाई फर्कन आग्रह गरे। तर रामले
+पिताको वचन पूरा नभएसम्म अयोध्या फर्कन नसक्ने बताए।
+</p>
+
+<p>
+भरतले रामका पादुका लिएर अयोध्या फर्किए र त्यसलाई
+राजसिंहासनमा राखेर आफू रामको प्रतिनिधिका रूपमा
+राज्य सञ्चालन गर्न थाले।
 </p>
 `
 },
 
+/* 9 */
+{
+title:"वनको जीवन",
+
+story:`
+
+<p>
+राम, सीता र लक्ष्मण विभिन्न वनहरू हुँदै अगाडि बढे।
+उनीहरूले धेरै ऋषिहरूलाई भेटे र उनीहरूको आश्रममा
+केही समय बिताए।
+</p>
+
+<p>
+वनको जीवन कठिन थियो। उनीहरूले राजमहलको सुविधा
+छोडेर साधारण जीवन बिताए।
+</p>
+
+<p>
+रामले वनमा बस्ने ऋषिहरू र साधुहरूको रक्षा गर्ने
+प्रतिज्ञा गरे।
+</p>
+
+<p>
+यस क्रममा उनीहरूको भेट धेरै ऋषि र वनवासीहरूसँग भयो।
+उनीहरूले धर्म, कर्तव्य र जीवनका बारेमा धेरै कुरा
+सुने।
+</p>
+
+<p>
+अन्ततः उनीहरू पञ्चवटी क्षेत्रमा पुगे र त्यहीँ
+आश्रम बनाएर बस्न थाले।
+</p>
+`
+},
+
+/* 10 */
+{
+title:"शूर्पणखा र लङ्काको घटना सुरु",
+
+story:`
+
+<p>
+पञ्चवटीमा बस्दा रावणकी बहिनी शूर्पणखा त्यहाँ आइन्।
+रामलाई देखेपछि उनले विवाहको इच्छा व्यक्त गरिन्।
+</p>
+
+<p>
+रामले आफू विवाहित भएको बताए। त्यसपछि उनले लक्ष्मणतर्फ
+आफ्नो ध्यान लगाइन्।
+</p>
+
+<p>
+घटनाक्रम बिग्रिएपछि शूर्पणखा आफ्ना भाइहरू खर र दूषणसँग
+सहायता माग्न गइन्।
+</p>
+
+<p>
+रामले खर र दूषणसहित आएका धेरै राक्षसहरूलाई पराजित गरे।
+यस घटनाले लङ्काका राजा रावणको ध्यान रामतर्फ गयो।
+</p>
+
+<p>
+रावणले सीताको सौन्दर्य र रामसँग भएको घटनाबारे सुने।
+त्यसपछि उनले सीतालाई अपहरण गर्ने योजना बनाए।
+</p>
+`
+},
+
+/* 11 */
+{
+title:"सीता हरण",
+
+story:`
+
+<p>
+रावणले मारीचको सहायता लिए। मारीचले सुनौलो मृगको
+रूप धारण गरेर रामको आश्रम नजिक देखा परे।
+</p>
+
+<p>
+सीताले त्यो अद्भुत मृग देखेर रामलाई त्यसलाई ल्याउन
+अनुरोध गरिन्।
+</p>
+
+<p>
+राम मृगको पछि लागे। केही समयपछि मारीचले रामकै
+स्वरमा सहायता मागेको आवाज निकाल्यो।
+</p>
+
+<p>
+सीता चिन्तित भइन् र लक्ष्मणलाई रामको खोजीमा जान
+आग्रह गरिन्। लक्ष्मण गएपछि रावण साधुको भेषमा
+आश्रममा आए।
+</p>
+
+<p>
+रावणले छल गरेर सीतालाई अपहरण गरे र उनलाई लङ्कातर्फ
+लिएर गए।
+</p>
+
+<p>
+जटायु नामका वृद्ध पक्षीराजले सीतालाई बचाउन रावणसँग
+युद्ध गरे। तर रावणले जटायुलाई गम्भीर रूपमा घाइते बनाए।
+</p>
+`
+},
+
+/* 12 */
+{
+title:"रामको सीताको खोजी",
+
+story:`
+
+<p>
+राम र लक्ष्मण आश्रममा फर्किंदा सीता त्यहाँ थिइनन्।
+उनीहरूले चारैतिर खोजे।
+</p>
+
+<p>
+घाइते जटायुले उनीहरूलाई रावणले सीतालाई दक्षिणतर्फ
+लिएर गएको जानकारी दिए।
+</p>
+
+<p>
+जटायुको मृत्यु भएपछि रामले उनको अन्तिम संस्कार गरे।
+</p>
+
+<p>
+सीताको खोजी गर्दै राम र लक्ष्मण अगाडि बढे।
+यस क्रममा उनीहरूको भेट हनुमानसँग भयो।
+</p>
+
+<p>
+हनुमान सुग्रीवका विश्वासी सहयोगी थिए। हनुमानले
+राम र सुग्रीवबीच मित्रता गराए।
+</p>
+
+<p>
+रामले सुग्रीवलाई सहयोग गर्ने र सुग्रीवले सीताको
+खोजीमा सहायता गर्ने सहमति भयो।
+</p>
+`
+},
+
+/* 13 */
+{
+title:"सुग्रीव र बाली",
+
+story:`
+
+<p>
+सुग्रीव र उनका दाजु बालीबीच गम्भीर विवाद भएको थियो।
+बाली अत्यन्त शक्तिशाली थिए र सुग्रीव आफ्नो राज्यबाट
+टाढा बस्न बाध्य भएका थिए।
+</p>
+
+<p>
+रामले सुग्रीवलाई उनको राज्य फिर्ता दिलाउने वाचा गरे।
+घटनाक्रमपछि बालीको मृत्यु भयो र सुग्रीव फेरि
+किष्किन्धाको राजा बने।
+</p>
+
+<p>
+अब सुग्रीवले आफ्नो वाचा पूरा गर्दै चारैतिर
+वानरहरूको टोली पठाए।
+</p>
+
+<p>
+हनुमान, अंगद, जाम्बवान् र अन्य वानरहरू दक्षिणतर्फ
+सीताको खोजीमा गए।
+</p>
+
+<p>
+उनीहरूले समुद्रपारि लङ्का रहेको कुरा थाहा पाए।
+अब सीताको वास्तविक स्थान पत्ता लगाउने जिम्मेवारी
+हनुमानले लिए।
+</p>
+`
+},
+
+/* 14 */
 {
 title:"हनुमानको लङ्का यात्रा",
 
 story:`
 
 <p>
-सीता लङ्कामा रहेको पत्ता लागेपछि हनुमानले समुद्र
-पार गर्ने जिम्मेवारी लिए। आफ्नो शक्ति र आत्मविश्वास
-सम्झिएर उनी विशाल छलाङ लगाउँदै समुद्र पार गरे।
+हनुमानले आफ्नो असाधारण शक्ति सम्झिए र विशाल रूप
+धारण गरेर समुद्र पार गर्ने निर्णय गरे।
 </p>
 
 <p>
-लङ्का पुगेपछि उनले आफूलाई सानो बनाएर शहरमा प्रवेश
-गरे। धेरै खोजी गरेपछि उनले अशोक वाटिकामा सीतालाई
-देखे।
+उनले समुद्र पार गर्दै धेरै बाधाहरू सामना गरे।
+अन्ततः उनी लङ्का पुगे।
 </p>
 
 <p>
-हनुमानले रामको चिनारीका रूपमा औँठी दिए। सीताले
-पनि रामलाई देखाउन आफ्नो चिनारी हनुमानलाई दिइन्।
+हनुमानले रातको समयमा लङ्का प्रवेश गरे र धेरै
+स्थान खोजे।
+</p>
+
+<p>
+अन्ततः उनले अशोक वाटिकामा सीतालाई देखे।
+सीता दुःखी अवस्थामा थिइन् तर रामप्रतिको आफ्नो
+विश्वासमा अडिग थिइन्।
+</p>
+
+<p>
+हनुमानले रामको चिनारीका रूपमा औँठी दिए।
+सीताले पनि रामका लागि आफ्नो चिनारी दिएर
+हनुमानलाई फर्काइन्।
 </p>
 `
 },
 
+/* 15 */
 {
 title:"लङ्का दहन",
 
 story:`
 
 <p>
-हनुमानले रावणलाई सीता फिर्ता गर्न चेतावनी दिए।
-तर रावणले उनको कुरा स्वीकार गरेन।
+सीतालाई भेटेपछि हनुमानले लङ्काको शक्ति बुझ्न
+रावणको दरबारमा पुग्ने निर्णय गरे।
 </p>
 
 <p>
-हनुमानलाई दण्ड दिन उनको पुच्छरमा कपडा बेरेर आगो
-लगाइयो। हनुमानले आफ्नो शक्ति प्रयोग गर्दै
-लङ्काका विभिन्न भागमा आगो फैलाए।
+राक्षसहरूले उनलाई समाते र रावणको दरबारमा लगे।
+रावणले हनुमानलाई धम्काए।
+</p>
+
+<p>
+हनुमानले रामसँग युद्ध गर्नु र सीतालाई फिर्ता
+नदिनु लङ्काका लागि ठूलो संकट हुने चेतावनी दिए।
+</p>
+
+<p>
+रावणको आदेशमा हनुमानको पुच्छरमा आगो लगाइयो।
+हनुमानले त्यसै आगोलाई प्रयोग गरेर लङ्काका धेरै
+भागमा आगो फैलाए।
 </p>
 
 <p>
 त्यसपछि उनी समुद्र पार गरेर रामकहाँ फर्किए र
-सीता सुरक्षित रहेको समाचार दिए।
+सीताको समाचार सुनाए।
 </p>
 `
 },
 
+/* 16 */
 {
-title:"राम–रावण युद्ध",
+title:"समुद्रमाथि सेतु निर्माण",
 
 story:`
 
 <p>
-रामले वानर सेना लिएर लङ्कातर्फ प्रस्थान गरे।
-समुद्रमाथि सेतु निर्माण भएपछि सेना लङ्कामा पुग्यो।
+सीता लङ्कामा रहेको निश्चित भएपछि रामले ठूलो
+वानरसेना लिएर समुद्रको किनारमा पुगे।
 </p>
 
 <p>
-रामको सेना र रावणको सेनाबीच ठूलो युद्ध भयो।
-धेरै शक्तिशाली योद्धाहरू युद्धमा सहभागी भए।
+लङ्कासम्म पुग्न समुद्र पार गर्नुपर्ने थियो।
+वानरहरूले ठूलो प्रयास गरेर समुद्रमाथि पुल
+निर्माण गरे।
 </p>
 
 <p>
-अन्ततः राम र रावणबीच निर्णायक युद्ध भयो।
-लामो संघर्षपछि रामले रावणलाई पराजित गरे।
+सेतु निर्माणपछि राम, लक्ष्मण, हनुमान, सुग्रीव,
+अंगद र विशाल वानरसेना लङ्कातर्फ अघि बढे।
+</p>
+
+<p>
+लङ्कामा युद्धको तयारी भयो। रावणका सेनापतिहरू
+आफ्नो राज्यको रक्षा गर्न तयार भए।
+</p>
+
+<p>
+यसरी राम र रावणबीचको महान् युद्धको सुरुवात भयो।
 </p>
 `
 },
 
+/* 17 */
+{
+title:"लङ्काको महान् युद्ध",
+
+story:`
+
+<p>
+रामको सेना र रावणको सेनाबीच भीषण युद्ध भयो।
+दुवै पक्षका धेरै योद्धाहरू मैदानमा उत्रिए।
+</p>
+
+<p>
+रावणका शक्तिशाली भाइ कुम्भकर्ण युद्धमा आए।
+उनले वानर सेनामा ठूलो क्षति पुर्‍याए।
+</p>
+
+<p>
+तर अन्ततः रामको पक्षले कुम्भकर्णलाई पराजित गर्‍यो।
+</p>
+
+<p>
+रावणका पुत्र इन्द्रजित पनि अत्यन्त शक्तिशाली
+योद्धा थिए। उनले विभिन्न दिव्य अस्त्र प्रयोग गरे।
+</p>
+
+<p>
+लक्ष्मणले कठिन युद्धपछि इन्द्रजितलाई पराजित गरे।
+यो घटनाले रावणलाई अझ क्रोधित बनायो।
+</p>
+`
+},
+
+/* 18 */
+{
+title:"रावणसँग अन्तिम युद्ध",
+
+story:`
+
+<p>
+लङ्काको युद्ध अन्तिम चरणमा पुग्यो। रावण स्वयं
+युद्धभूमिमा आए।
+</p>
+
+<p>
+राम र रावणबीच लामो र कठिन युद्ध भयो।
+दुवै महान् योद्धा थिए र अनेक अस्त्र प्रयोग गरे।
+</p>
+
+<p>
+अन्ततः रामले दिव्य अस्त्रको प्रयोग गरेर रावणलाई
+पराजित गरे।
+</p>
+
+<p>
+रावणको मृत्यु भएपछि लङ्काको युद्ध समाप्त भयो।
+विभीषणलाई लङ्काको राजा बनाइयो।
+</p>
+
+<p>
+रामले सीतालाई भेटे। लामो समयको दुःख र संघर्षपछि
+राम, सीता र लक्ष्मण अयोध्या फर्कने तयारीमा लागे।
+</p>
+`
+},
+
+/* 19 */
 {
 title:"अयोध्या फर्किएको दिन",
 
 story:`
 
 <p>
-वनवासको अवधि पूरा भएपछि राम, सीता र लक्ष्मण
-अयोध्या फर्किए। भरत र अयोध्यावासीहरूले
-उनीहरूलाई ठूलो खुसीका साथ स्वागत गरे।
+चौध वर्षको वनवास पूरा भएपछि राम अयोध्यातर्फ फर्किए।
+भरतले रामको आगमनको प्रतीक्षा गरिरहेका थिए।
 </p>
 
 <p>
-रामको राज्याभिषेक भयो। उनले अयोध्याको शासन
-सम्हाले र प्रजाको हितलाई आफ्नो प्रमुख कर्तव्य
-बनाए।
+राम फर्किएको समाचार अयोध्यामा फैलियो। नगरभरि
+खुसी छायो।
+</p>
+
+<p>
+भरतले रामलाई सम्मानपूर्वक राज्य सुम्पिए।
+राम अयोध्याको राजा बने।
+</p>
+
+<p>
+रामको राज्याभिषेक ठूलो उत्सवका साथ सम्पन्न भयो।
+सीता र रामको पुनर्मिलनले पनि सबैलाई खुसी बनायो।
 </p>
 
 <p class="quote">
-रामको अयोध्या आगमनलाई परम्परामा विजय,
-आशा र धर्मको प्रतीकका रूपमा स्मरण गरिन्छ।
+रामको राज्यलाई परम्परामा “रामराज्य” भनेर स्मरण गरिन्छ—
+जहाँ न्याय, कर्तव्य र प्रजाको हितलाई विशेष महत्व दिइएको
+मानिन्छ।
+</p>
+`
+},
+
+/* 20 */
+{
+title:"रामराज्य र कथाको अन्त्य",
+
+story:`
+
+<p>
+रामले अयोध्यामा शासन गर्दा प्रजाको हितलाई सर्वोच्च
+महत्व दिए। राज्यमा न्याय र कर्तव्यलाई विशेष स्थान
+दिइयो।
+</p>
+
+<p>
+रामायणको परम्परामा रामको जीवनलाई सत्य, धर्म,
+त्याग, कर्तव्य र आदर्शको उदाहरणका रूपमा वर्णन गरिन्छ।
+</p>
+
+<p>
+उनको जीवनमा सुखभन्दा दुःखका क्षण पनि धेरै आए।
+राज्य छोड्नुपर्‍यो, वनमा बस्नुपर्‍यो, सीताबाट
+वियोग सहनुपर्‍यो र ठूलो युद्धको सामना गर्नुपर्‍यो।
+</p>
+
+<p>
+तर प्रत्येक कठिन अवस्थामा रामले आफ्नो कर्तव्य,
+धर्म र वचनलाई महत्व दिएको कथा परम्परामा प्रस्तुत हुन्छ।
+</p>
+
+<p>
+रामायणको कथा केवल युद्ध र विजयको कथा मात्र होइन।
+यो परिवार, मित्रता, त्याग, प्रेम, कर्तव्य, सत्य,
+निष्ठा र धर्मबारे सोच्न प्रेरित गर्ने महाकाव्यको
+रूपमा पनि पढिन्छ।
+</p>
+
+<p class="quote">
+“रामायणको मूल सन्देशका रूपमा सत्य, कर्तव्य,
+त्याग र धर्मको मार्गलाई स्मरण गरिन्छ।”
+</p>
+
+<p>
+यसरी रामको जीवनसँग सम्बन्धित प्रमुख घटनाहरू—
+जन्मदेखि बाल्यकाल, सीतासँग विवाह, वनवास, सीता हरण,
+हनुमानसँग भेट, लङ्काको यात्रा, रावणसँग युद्ध,
+सीताको उद्धार र अयोध्या फिर्तीसम्मको कथा पूरा हुन्छ।
 </p>
 `
 }
@@ -568,35 +1000,28 @@ story:`
 
 
 /* =====================================================
-   BASIC VARIABLES
+   VARIABLES
 ===================================================== */
 
-let current=0;
-let animationStart=performance.now();
+let current = 0;
 
-const canvas=
-document.getElementById("canvas");
-
-const ctx=
-canvas.getContext("2d");
-
-const title=
+const title =
 document.getElementById("chapterTitle");
 
-const label=
+const label =
 document.getElementById("chapterLabel");
 
-const story=
+const story =
 document.getElementById("story");
 
-const chapterButtons=
-document.getElementById("chapterButtons");
-
-const backBtn=
+const backBtn =
 document.getElementById("backBtn");
 
-const nextBtn=
+const nextBtn =
 document.getElementById("nextBtn");
+
+const chapterButtons =
+document.getElementById("chapterButtons");
 
 
 /* =====================================================
@@ -605,16 +1030,16 @@ document.getElementById("nextBtn");
 
 chapters.forEach((chapter,index)=>{
 
-const btn=
-document.createElement("button");
+    const button =
+    document.createElement("button");
 
-btn.textContent=index+1;
+    button.textContent = index + 1;
 
-btn.onclick=()=>{
-loadChapter(index);
-};
+    button.onclick = () => {
+        loadChapter(index);
+    };
 
-chapterButtons.appendChild(btn);
+    chapterButtons.appendChild(button);
 
 });
 
@@ -625,1523 +1050,80 @@ chapterButtons.appendChild(btn);
 
 function loadChapter(index){
 
-current=index;
+    current = index;
 
-title.textContent=
-chapters[index].title;
+    const chapter =
+    chapters[current];
 
-label.textContent=
-"CHAPTER "+(index+1);
+    label.textContent =
+    "CHAPTER " + (current + 1);
 
-story.innerHTML=
-chapters[index].story;
+    title.textContent =
+    chapter.title;
 
-document
-.querySelectorAll(".chapter-buttons button")
-.forEach((btn,i)=>{
+    story.innerHTML =
+    chapter.story;
 
-btn.classList.toggle(
-"active",
-i===current
-);
+    document
+    .querySelectorAll(".chapter-buttons button")
+    .forEach((btn,i)=>{
 
-});
+        btn.classList.toggle(
+            "active",
+            i === current
+        );
 
-backBtn.disabled=
-current===0;
+    });
 
-nextBtn.disabled=
-current===chapters.length-1;
+    backBtn.disabled =
+    current === 0;
 
-animationStart=
-performance.now();
+    nextBtn.disabled =
+    current === chapters.length - 1;
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 }
 
 
 /* =====================================================
-   BACKGROUND
-===================================================== */
-
-function background(){
-
-/* sky */
-
-const sky=
-ctx.createLinearGradient(
-0,0,
-0,560
-);
-
-sky.addColorStop(
-0,
-"#172c5c"
-);
-
-sky.addColorStop(
-0.55,
-"#d47d42"
-);
-
-sky.addColorStop(
-1,
-"#f0b85d"
-);
-
-ctx.fillStyle=sky;
-
-ctx.fillRect(
-0,0,
-1000,560
-);
-
-
-/* sun */
-
-ctx.beginPath();
-
-ctx.arc(
-820,
-100,
-55,
-0,
-Math.PI*2
-);
-
-ctx.fillStyle="#ffd84d";
-
-ctx.fill();
-
-
-/* mountains */
-
-ctx.fillStyle="#3a443b";
-
-ctx.beginPath();
-
-ctx.moveTo(0,360);
-ctx.lineTo(170,210);
-ctx.lineTo(300,360);
-ctx.lineTo(470,180);
-ctx.lineTo(650,360);
-ctx.lineTo(820,210);
-ctx.lineTo(1000,360);
-
-ctx.closePath();
-
-ctx.fill();
-
-
-/* ground */
-
-ctx.fillStyle="#345b2e";
-
-ctx.fillRect(
-0,
-360,
-1000,
-200
-);
-
-}
-
-
-/* =====================================================
-   TREE
-===================================================== */
-
-function tree(x,y){
-
-ctx.fillStyle="#57381e";
-
-ctx.fillRect(
-x-14,
-y,
-28,
-150
-);
-
-ctx.fillStyle="#1e642d";
-
-ctx.beginPath();
-
-ctx.arc(
-x,
-y,
-65,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-ctx.beginPath();
-
-ctx.arc(
-x-40,
-y+25,
-45,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-ctx.beginPath();
-
-ctx.arc(
-x+40,
-y+25,
-45,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-}
-
-
-/* =====================================================
-   RAM — IMPROVED CARTOON CHARACTER
-===================================================== */
-
-function ram(x,y,scale=1,walking=0){
-
-ctx.save();
-
-ctx.translate(
-x,
-y
-);
-
-ctx.scale(
-scale,
-scale
-);
-
-
-/* shadow */
-
-ctx.fillStyle="#0004";
-
-ctx.beginPath();
-
-ctx.ellipse(
-0,
-115,
-55,
-12,
-0,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* legs */
-
-ctx.strokeStyle="#4b3022";
-ctx.lineWidth=13;
-ctx.lineCap="round";
-
-let step=
-Math.sin(walking)*10;
-
-ctx.beginPath();
-
-ctx.moveTo(-22,60);
-ctx.lineTo(-28-step,112);
-
-ctx.stroke();
-
-ctx.beginPath();
-
-ctx.moveTo(22,60);
-ctx.lineTo(28+step,112);
-
-ctx.stroke();
-
-
-/* golden clothing */
-
-ctx.fillStyle="#e4ad45";
-
-ctx.beginPath();
-
-ctx.roundRect(
--48,
--20,
-96,
-100,
-25
-);
-
-ctx.fill();
-
-
-/* blue shawl */
-
-ctx.fillStyle="#2863a8";
-
-ctx.beginPath();
-
-ctx.moveTo(-42,-15);
-ctx.lineTo(-70,75);
-ctx.lineTo(-30,85);
-ctx.lineTo(0,20);
-
-ctx.closePath();
-
-ctx.fill();
-
-
-/* neck */
-
-ctx.fillStyle="#b8784e";
-
-ctx.fillRect(
--13,
--48,
-26,
-30
-);
-
-
-/* face */
-
-ctx.fillStyle="#c8875b";
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--80,
-48,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* long hair */
-
-ctx.fillStyle="#21140d";
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--105,
-43,
-Math.PI,
-Math.PI*2
-);
-
-ctx.fill();
-
-ctx.fillRect(
--40,
--105,
-80,
-35
-);
-
-
-/* hair top ornament */
-
-ctx.fillStyle="#e8b94e";
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--130,
-12,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* eyes */
-
-ctx.fillStyle="#17110c";
-
-ctx.beginPath();
-
-ctx.ellipse(
--17,
--83,
-6,
-9,
-0,
-0,
-Math.PI*2
-);
-
-ctx.ellipse(
-17,
--83,
-6,
-9,
-0,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* eyebrows */
-
-ctx.strokeStyle="#3a2013";
-ctx.lineWidth=4;
-
-ctx.beginPath();
-
-ctx.moveTo(-27,-98);
-ctx.lineTo(-8,-102);
-
-ctx.moveTo(8,-102);
-ctx.lineTo(27,-98);
-
-ctx.stroke();
-
-
-/* nose */
-
-ctx.beginPath();
-
-ctx.moveTo(0,-80);
-ctx.lineTo(-4,-65);
-ctx.lineTo(5,-64);
-
-ctx.stroke();
-
-
-/* smile */
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--61,
-14,
-0,
-Math.PI
-);
-
-ctx.stroke();
-
-
-/* bow */
-
-ctx.strokeStyle="#633a19";
-ctx.lineWidth=6;
-
-ctx.beginPath();
-
-ctx.arc(
-70,
-5,
-72,
--Math.PI/2,
-Math.PI/2
-);
-
-ctx.stroke();
-
-
-/* arrow */
-
-ctx.strokeStyle="#d6b25b";
-ctx.lineWidth=4;
-
-ctx.beginPath();
-
-ctx.moveTo(20,5);
-ctx.lineTo(125,5);
-
-ctx.stroke();
-
-
-ctx.restore();
-
-}
-
-
-/* =====================================================
-   SITA — IMPROVED
-===================================================== */
-
-function sita(x,y,scale=1){
-
-ctx.save();
-
-ctx.translate(x,y);
-
-ctx.scale(
-scale,
-scale
-);
-
-
-/* shadow */
-
-ctx.fillStyle="#0004";
-
-ctx.beginPath();
-
-ctx.ellipse(
-0,
-112,
-50,
-11,
-0,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* dress */
-
-ctx.fillStyle="#b92f54";
-
-ctx.beginPath();
-
-ctx.moveTo(-50,-5);
-ctx.lineTo(-75,110);
-ctx.lineTo(75,110);
-ctx.lineTo(50,-5);
-
-ctx.closePath();
-
-ctx.fill();
-
-
-/* golden border */
-
-ctx.strokeStyle="#f1c34f";
-ctx.lineWidth=8;
-
-ctx.beginPath();
-
-ctx.moveTo(-50,0);
-ctx.lineTo(-75,110);
-ctx.lineTo(75,110);
-ctx.lineTo(50,0);
-
-ctx.stroke();
-
-
-/* upper cloth */
-
-ctx.fillStyle="#eab64e";
-
-ctx.beginPath();
-
-ctx.moveTo(-48,-10);
-ctx.lineTo(0,40);
-ctx.lineTo(48,-10);
-ctx.lineTo(35,-35);
-ctx.lineTo(0,5);
-ctx.lineTo(-35,-35);
-
-ctx.closePath();
-
-ctx.fill();
-
-
-/* neck */
-
-ctx.fillStyle="#c8875b";
-
-ctx.fillRect(
--12,
--50,
-24,
-30
-);
-
-
-/* face */
-
-ctx.fillStyle="#c8875b";
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--78,
-43,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* hair */
-
-ctx.fillStyle="#21140d";
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--98,
-42,
-Math.PI,
-Math.PI*2
-);
-
-ctx.fill();
-
-ctx.fillRect(
--40,
--98,
-80,
-28
-);
-
-
-/* veil */
-
-ctx.fillStyle="#e6ad45aa";
-
-ctx.beginPath();
-
-ctx.moveTo(
--40,
--105
-);
-
-ctx.quadraticCurveTo(
-0,
--145,
-45,
--105
-);
-
-ctx.lineTo(
-65,
-10
-);
-
-ctx.lineTo(
-40,
--5
-);
-
-ctx.lineTo(
-25,
--75
-);
-
-ctx.closePath();
-
-ctx.fill();
-
-
-/* eyes */
-
-ctx.fillStyle="#17110c";
-
-ctx.beginPath();
-
-ctx.ellipse(
--15,
--80,
-5,
-8,
-0,
-0,
-Math.PI*2
-);
-
-ctx.ellipse(
-15,
--80,
-5,
-8,
-0,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* bindi */
-
-ctx.fillStyle="#9e1c29";
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--65,
-4,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* smile */
-
-ctx.strokeStyle="#522319";
-ctx.lineWidth=3;
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--58,
-11,
-0,
-Math.PI
-);
-
-ctx.stroke();
-
-
-/* necklace */
-
-ctx.strokeStyle="#f4c84b";
-ctx.lineWidth=5;
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--35,
-25,
-0,
-Math.PI
-);
-
-ctx.stroke();
-
-
-ctx.restore();
-
-}
-
-
-/* =====================================================
-   HANUMAN — IMPROVED
-===================================================== */
-
-function hanuman(x,y,scale=1,fly=0){
-
-ctx.save();
-
-ctx.translate(x,y);
-
-ctx.scale(
-scale,
-scale
-);
-
-
-/* flying shadow */
-
-ctx.fillStyle="#0003";
-
-ctx.beginPath();
-
-ctx.ellipse(
-0,
-105,
-65,
-10,
-0,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* tail */
-
-ctx.strokeStyle="#8c4d24";
-ctx.lineWidth=15;
-ctx.lineCap="round";
-
-ctx.beginPath();
-
-ctx.moveTo(
--35,
-55
-);
-
-ctx.quadraticCurveTo(
--100,
-0,
--65,
--65
-);
-
-ctx.stroke();
-
-
-/* legs */
-
-ctx.strokeStyle="#7b421f";
-ctx.lineWidth=18;
-
-ctx.beginPath();
-
-ctx.moveTo(-20,45);
-ctx.lineTo(-45,100);
-
-ctx.moveTo(20,45);
-ctx.lineTo(45,100);
-
-ctx.stroke();
-
-
-/* body */
-
-ctx.fillStyle="#914c25";
-
-ctx.beginPath();
-
-ctx.ellipse(
-0,
-15,
-48,
-65,
-0,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* arms */
-
-ctx.strokeStyle="#914c25";
-ctx.lineWidth=20;
-
-ctx.beginPath();
-
-ctx.moveTo(-35,-5);
-ctx.lineTo(-75,-55);
-
-ctx.moveTo(35,-5);
-ctx.lineTo(75,-55);
-
-ctx.stroke();
-
-
-/* head */
-
-ctx.fillStyle="#a75a2c";
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--65,
-48,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* ears */
-
-ctx.beginPath();
-
-ctx.arc(
--45,
--65,
-20,
-0,
-Math.PI*2
-);
-
-ctx.arc(
-45,
--65,
-20,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* crown */
-
-ctx.fillStyle="#e6ae39";
-
-ctx.beginPath();
-
-ctx.moveTo(
--30,
--105
-);
-
-ctx.lineTo(
-0,
--145
-);
-
-ctx.lineTo(
-30,
--105
-);
-
-ctx.closePath();
-
-ctx.fill();
-
-
-/* eyes */
-
-ctx.fillStyle="white";
-
-ctx.beginPath();
-
-ctx.arc(
--16,
--70,
-9,
-0,
-Math.PI*2
-);
-
-ctx.arc(
-16,
--70,
-9,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-ctx.fillStyle="#111";
-
-ctx.beginPath();
-
-ctx.arc(
--16,
--70,
-4,
-0,
-Math.PI*2
-);
-
-ctx.arc(
-16,
--70,
-4,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* smile */
-
-ctx.strokeStyle="#29140c";
-ctx.lineWidth=5;
-
-ctx.beginPath();
-
-ctx.arc(
-0,
--48,
-20,
-0,
-Math.PI
-);
-
-ctx.stroke();
-
-
-/* gada */
-
-ctx.strokeStyle="#8a551f";
-ctx.lineWidth=8;
-
-ctx.beginPath();
-
-ctx.moveTo(
-75,
-20
-);
-
-ctx.lineTo(
-75,
--80
-);
-
-ctx.stroke();
-
-ctx.fillStyle="#d5a238";
-
-ctx.beginPath();
-
-ctx.arc(
-75,
--90,
-23,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-ctx.restore();
-
-}
-
-
-/* =====================================================
-   RAVAN — IMPROVED
-===================================================== */
-
-function ravan(x,y,scale=1){
-
-ctx.save();
-
-ctx.translate(x,y);
-
-ctx.scale(
-scale,
-scale
-);
-
-
-/* body */
-
-ctx.fillStyle="#581d25";
-
-ctx.beginPath();
-
-ctx.ellipse(
-0,
-30,
-65,
-105,
-0,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-/* armor */
-
-ctx.fillStyle="#d59a32";
-
-ctx.fillRect(
--55,
--5,
-110,
-25
-);
-
-
-/* ten heads */
-
-for(let i=0;i<5;i++){
-
-let px=
-(i-2)*42;
-
-drawRavanHead(
-px,
--110
-);
-
-}
-
-for(let i=0;i<5;i++){
-
-let px=
-(i-2)*42;
-
-drawRavanHead(
-px,
--170
-);
-
-}
-
-
-/* arms */
-
-ctx.strokeStyle="#6c2630";
-ctx.lineWidth=20;
-
-for(let side of [-1,1]){
-
-ctx.beginPath();
-
-ctx.moveTo(
-side*50,
-0
-);
-
-ctx.lineTo(
-side*110,
-60
-);
-
-ctx.stroke();
-
-}
-
-
-/* sword */
-
-ctx.strokeStyle="#d8b766";
-ctx.lineWidth=7;
-
-ctx.beginPath();
-
-ctx.moveTo(
-110,
-60
-);
-
-ctx.lineTo(
-150,
--10
-);
-
-ctx.stroke();
-
-
-ctx.restore();
-
-}
-
-
-function drawRavanHead(x,y){
-
-ctx.fillStyle="#8d3036";
-
-ctx.beginPath();
-
-ctx.arc(
-x,
-y,
-30,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-ctx.fillStyle="#e3a574";
-
-ctx.beginPath();
-
-ctx.arc(
-x,
-y+3,
-22,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-ctx.fillStyle="#21100d";
-
-ctx.beginPath();
-
-ctx.arc(
-x,
-y-12,
-23,
-Math.PI,
-Math.PI*2
-);
-
-ctx.fill();
-
-
-ctx.fillStyle="#111";
-
-ctx.beginPath();
-
-ctx.arc(
-x-8,
-y+2,
-3,
-0,
-Math.PI*2
-);
-
-ctx.arc(
-x+8,
-y+2,
-3,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-}
-
-
-/* =====================================================
-   ARROW
-===================================================== */
-
-function arrow(x,y){
-
-ctx.strokeStyle="#e7cf91";
-ctx.lineWidth=5;
-
-ctx.beginPath();
-
-ctx.moveTo(
-x,
-y
-);
-
-ctx.lineTo(
-x+120,
-y
-);
-
-ctx.stroke();
-
-
-ctx.beginPath();
-
-ctx.moveTo(
-x+120,
-y
-);
-
-ctx.lineTo(
-x+98,
-y-13
-);
-
-ctx.moveTo(
-x+120,
-y
-);
-
-ctx.lineTo(
-x+98,
-y+13
-);
-
-ctx.stroke();
-
-}
-
-
-/* =====================================================
-   ANIMATION
-===================================================== */
-
-function animate(time){
-
-const t=
-(time-animationStart)/1000;
-
-
-/* background */
-
-background();
-
-tree(100,285);
-tree(900,280);
-
-
-/* CHAPTER 1 */
-
-if(current===0){
-
-ram(
-260+Math.sin(t)*8,
-350,
-1,
-t*3
-);
-
-sita(
-470,
-350,
-1
-);
-
-}
-
-
-/* CHAPTER 2 */
-
-else if(current===1){
-
-ram(
-250,
-350,
-1
-);
-
-sita(
-450,
-350,
-1
-);
-
-tree(720,285);
-
-}
-
-
-/* CHAPTER 3 — SITA HARIAN */
-
-else if(current===2){
-
-sita(
-320,
-350,
-1
-);
-
-ravan(
-720,
-320,
-0.8
-);
-
-
-/* flying movement */
-
-let ax=
-350+Math.sin(t*2)*130;
-
-arrow(
-ax,
-220
-);
-
-}
-
-
-/* CHAPTER 4 */
-
-else if(current===3){
-
-ram(
-220,
-350,
-1
-);
-
-sita(
-430,
-350,
-1
-);
-
-hanuman(
-700,
-330,
-0.9
-);
-
-}
-
-
-/* CHAPTER 5 — HANUMAN FLYING */
-
-else if(current===4){
-
-ram(
-180,
-350,
-0.8
-);
-
-let hx=
-350+(t*100)%450;
-
-let hy=
-260+Math.sin(t*3)*55;
-
-hanuman(
-hx,
-hy,
-0.8
-);
-
-}
-
-
-/* CHAPTER 6 — LANKA */
-
-else if(current===5){
-
-ravan(
-700,
-320,
-0.75
-);
-
-hanuman(
-280,
-350,
-0.75
-);
-
-
-/* fire */
-
-for(let i=0;i<7;i++){
-
-let fx=
-350+i*75;
-
-let fy=
-330+Math.sin(t*6+i)*25;
-
-ctx.fillStyle="#ff7a00";
-
-ctx.beginPath();
-
-ctx.arc(
-fx,
-fy,
-18,
-0,
-Math.PI*2
-);
-
-ctx.fill();
-
-}
-
-}
-
-
-/* CHAPTER 7 — WAR */
-
-else if(current===6){
-
-ram(
-210,
-350,
-0.9
-);
-
-ravan(
-720,
-320,
-0.72
-);
-
-let ax=
-300+Math.sin(t*2)*160;
-
-arrow(
-ax,
-230
-);
-
-}
-
-
-/* CHAPTER 8 */
-
-else{
-
-ram(
-330,
-350,
-1
-);
-
-sita(
-510,
-350,
-1
-);
-
-}
-
-
-/* LOOP */
-
-requestAnimationFrame(
-animate
-);
-
-}
-
-
-/* =====================================================
-   NAVIGATION
+   NEXT
 ===================================================== */
 
 function nextChapter(){
 
-if(current<chapters.length-1){
-
-loadChapter(
-current+1
-);
+    if(current < chapters.length - 1){
+        loadChapter(current + 1);
+    }
 
 }
 
-}
 
+/* =====================================================
+   BACK
+===================================================== */
 
 function previousChapter(){
 
-if(current>0){
-
-loadChapter(
-current-1
-);
+    if(current > 0){
+        loadChapter(current - 1);
+    }
 
 }
 
-}
 
+/* =====================================================
+   HOME
+===================================================== */
 
 function goHome(){
 
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
 
@@ -2152,12 +1134,7 @@ behavior:"smooth"
 
 loadChapter(0);
 
-requestAnimationFrame(
-animate
-);
-
 </script>
 
 </body>
 </html>
-```
