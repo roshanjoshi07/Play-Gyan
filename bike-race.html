@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+<title>Bike Race</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#111;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial,sans-serif;
+}
+
+#gameBox{
+    position:relative;
+    width:400px;
+    height:700px;
+    overflow:hidden;
+    border-radius:20px;
+    box-shadow:0 0 30px #000;
+}
+
+canvas{
+    width:100%;
+    height:100%;
+    display:block;
+    touch-action:none;
+}
+
+#hud{
+    position:absolute;
+    top:12px;
+    left:10px;
+    right:10px;
+    display:flex;
+    justify-content:space-between;
+    z-index:5;
+}
+
+.info{
+    background:rgba(0,0,0,.6);
+    color:white;
+    padding:8px 12px;
+    border-radius:12px;
+    font-weight:bold;
+}
+
+#start,
+#gameOver{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.78);
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    z-index:10;
+}
+
+#gameOver{
+    display:none;
+}
+
+h1{
+    font-size:42px;
+    margin:10px;
+    text-shadow:0 0 15px #00e5ff;
+}
+
+button{
+    border:0;
+    border-radius:12px;
+    padding:14px 30px;
+    font-size:20px;
+    font-weight:bold;
+    background:#00c853;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div id="gameBox">
+
+<canvas id="game"
+        width="400"
+        height="700">
+</canvas>
+
+<div id="hud">
+    <div class="info">
+        🏁 Score: <span id="score">0</span>
+    </div>
+
+    <div class="info">
+        🪙 Coins: <span id="coins">0</span>
+    </div>
+
+    <div class="info">
+        ⚡ <span id="speed">1</span>
+    </div>
+</div>
+
+<div id="start">
+
+    <h1>🏍️ BIKE RACE</h1>
+
+    <p>
+        Swipe Left / Right to move<br>
+        Collect coins and avoid vehicles
+    </p>
+
+    <button onclick="startGame()">
+        PLAY
+    </button>
+
+</div>
+
+<div id="gameOver">
+
+    <h1>GAME OVER</h1>
+
+    <p>
+        Score:
+        <span id="finalScore">0</span>
+    </p>
+
+    <button onclick="location.reload()">
+        PLAY AGAIN
+    </button>
+
+</div>
+
+</div>
+
+<script>
+
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
+
+const lanes=[70,175,280];
+
+let player={
+    lane:1,
+    x:175,
+    y:560
+};
+
+let traffic=[];
+let coinsList=[];
+
+let score=0;
+let coins=0;
+
+let speed=5;
+let running=false;
+let gameOver=false;
+
+let roadOffset=0;
+
+let touchStartX=0;
+
+
+/* =========================
+   START GAME
+========================= */
+
+function startGame(){
+
+    document.getElementById("start").style.display="none";
+
+    running=true;
+
+    requestAnimationFrame(gameLoop);
+}
+
+
+/* =========================
+   MOBILE SWIPE
+========================= */
+
+canvas.addEventListener(
+    "touchstart",
+    function(e){
+
+        touchStartX=e.touches[0].clientX;
+
+    }
+);
+
+canvas.addEventListener(
+    "touchend",
+    function(e){
+
+        let endX=e.changedTouches[0].clientX;
+
+        let difference=endX-touchStartX;
+
+        if(difference>40 && player.lane<2){
+
+            player.lane++;
+
+        }
+
+        if(difference<-40 && player.lane>0){
+
+            player.lane--;
+
+        }
+
+    }
+);
+
+
+/* =========================
+   KEYBOARD
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key==="ArrowLeft" && player.lane>0){
+
+            player.lane--;
+
+        }
+
+        if(e.key==="ArrowRight" && player.lane<2){
+
+            player.lane++;
+
+        }
+
+    }
+);
+
+
+/* =========================
+   ROAD
+========================= */
+
+function drawRoad(){
+
+    ctx.fillStyle="#555";
+
+    ctx.fillRect(
+        0,
+        0,
+        400,
+        700
+    );
+
+
+    /* Grass */
+
+    ctx.fillStyle="#159447";
+
+    ctx.fillRect(
+        0,
+        0,
+        35,
+        700
+    );
+
+    ctx.fillRect(
+        365,
+        0,
+        35,
+        700
+    );
+
+
+    /* Road Lines */
+
+    roadOffset+=speed;
+
+    if(roadOffset>60){
+
+        roadOffset=0;
+
+    }
+
+    ctx.strokeStyle="white";
+
+    ctx.lineWidth=6;
+
+    for(
+        let y=-60;
+        y<700;
+        y+=60
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            133,
+            y+roadOffset
+        );
+
+        ctx.lineTo(
+            133,
+            y+35+roadOffset
+        );
+
+        ctx.stroke();
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            266,
+            y+roadOffset
+        );
+
+        ctx.lineTo(
+            266,
+            y+35+roadOffset
+        );
+
+        ctx.stroke();
+
+    }
+
+}
+
+
+/* =========================
+   BIKE
+========================= */
+
+function drawBike(x,y){
+
+    ctx.save();
+
+    /* Shadow */
+
+    ctx.fillStyle="rgba(0,0,0,.35)";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x+25,
+        y+90,
+        25,
+        7,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Wheels */
+
+    ctx.fillStyle="#111";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x+25,
+        y+18,
+        12,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x+25,
+        y+75,
+        12,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Bike Body */
+
+    ctx.strokeStyle="#e91e63";
+
+    ctx.lineWidth=7;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+25,
+        y+18
+    );
+
+    ctx.lineTo(
+        x+10,
+        y+55
+    );
+
+    ctx.lineTo(
+        x+25,
+        y+75
+    );
+
+    ctx.lineTo(
+        x+40,
+        y+55
+    );
+
+    ctx.closePath();
+
+    ctx.stroke();
+
+
+    /* Seat */
+
+    ctx.fillStyle="#111";
+
+    ctx.fillRect(
+        x+12,
+        y+42,
+        26,
+        7
+    );
+
+
+    /* Rider */
+
+    ctx.fillStyle="#2196f3";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x+25,
+        y+35,
+        8,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Head */
+
+    ctx.fillStyle="#ffccbc";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x+25,
+        y+27,
+        6,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Handle */
+
+    ctx.strokeStyle="#aaa";
+
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+10,
+        y+45
+    );
+
+    ctx.lineTo(
+        x+40,
+        y+45
+    );
+
+    ctx.stroke();
+
+    ctx.restore();
+
+}
+
+
+/* =========================
+   TRAFFIC
+========================= */
+
+function createTraffic(){
+
+    traffic.push({
+
+        lane:
+        Math.floor(
+            Math.random()*3
+        ),
+
+        y:-100,
+
+        color:[
+            "#f44336",
+            "#2196f3",
+            "#ff9800",
+            "#9c27b0"
+        ][
+            Math.floor(
+                Math.random()*4
+            )
+        ]
+
+    });
+
+}
+
+
+setInterval(
+    function(){
+
+        if(running && !gameOver){
+
+            createTraffic();
+
+        }
+
+    },
+    1000
+);
+
+
+/* =========================
+   TRAFFIC DRAW
+========================= */
+
+function drawTraffic(){
+
+    traffic.forEach(
+        function(car){
+
+            car.y+=speed;
+
+            let x=
+                lanes[car.lane];
+
+            ctx.fillStyle=
+                car.color;
+
+            ctx.fillRect(
+                x,
+                car.y,
+                50,
+                90
+            );
+
+            ctx.fillStyle="#8be9ff";
+
+            ctx.fillRect(
+                x+8,
+                car.y+12,
+                34,
+                22
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   COINS
+========================= */
+
+function createCoin(){
+
+    coinsList.push({
+
+        lane:
+        Math.floor(
+            Math.random()*3
+        ),
+
+        y:-20
+
+    });
+
+}
+
+
+setInterval(
+    function(){
+
+        if(running && !gameOver){
+
+            createCoin();
+
+        }
+
+    },
+    1200
+);
+
+
+function drawCoins(){
+
+    coinsList.forEach(
+        function(coin){
+
+            coin.y+=speed;
+
+            let x=
+                lanes[coin.lane]+25;
+
+
+            ctx.fillStyle="gold";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                coin.y,
+                12,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fill();
+
+
+            ctx.fillStyle="#8d6e00";
+
+            ctx.font="bold 15px Arial";
+
+            ctx.textAlign="center";
+
+            ctx.fillText(
+                "$",
+                x,
+                coin.y+5
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   COLLISION
+========================= */
+
+function checkCollision(){
+
+    for(let car of traffic){
+
+        let carX=
+            lanes[car.lane];
+
+
+        if(
+
+            player.x+10<
+            carX+50 &&
+
+            player.x+40>
+            carX &&
+
+            player.y+15<
+            car.y+90 &&
+
+            player.y+85>
+            car.y
+
+        ){
+
+            endGame();
+
+        }
+
+    }
+
+
+    for(
+        let i=coinsList.length-1;
+        i>=0;
+        i--
+    ){
+
+        let coin=
+            coinsList[i];
+
+        let coinX=
+            lanes[coin.lane]+25;
+
+
+        if(
+
+            coinX>
+            player.x &&
+
+            coinX<
+            player.x+50 &&
+
+            coin.y>
+            player.y &&
+
+            coin.y<
+            player.y+100
+
+        ){
+
+            coins++;
+
+            score+=5;
+
+            coinsList.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   CLEAN OBJECTS
+========================= */
+
+function cleanObjects(){
+
+    traffic=
+        traffic.filter(
+            car=>car.y<750
+        );
+
+    coinsList=
+        coinsList.filter(
+            coin=>coin.y<750
+        );
+
+}
+
+
+/* =========================
+   GAME OVER
+========================= */
+
+function endGame(){
+
+    if(gameOver)return;
+
+    gameOver=true;
+
+    running=false;
+
+    document.getElementById(
+        "finalScore"
+    ).textContent=score;
+
+    document.getElementById(
+        "gameOver"
+    ).style.display="flex";
+
+}
+
+
+/* =========================
+   GAME LOOP
+========================= */
+
+function gameLoop(){
+
+    if(!running)return;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        400,
+        700
+    );
+
+
+    drawRoad();
+
+
+    /* Smooth Bike */
+
+    let targetX=
+        lanes[player.lane];
+
+    player.x+=
+        (targetX-player.x)*0.15;
+
+
+    drawTraffic();
+
+    drawCoins();
+
+    drawBike(
+        player.x,
+        player.y
+    );
+
+
+    checkCollision();
+
+    cleanObjects();
+
+
+    /* Speed */
+
+    speed=
+        5+
+        Math.floor(
+            score/15
+        );
+
+
+    document.getElementById(
+        "score"
+    ).textContent=score;
+
+
+    document.getElementById(
+        "coins"
+    ).textContent=coins;
+
+
+    document.getElementById(
+        "speed"
+    ).textContent=
+        Math.floor(speed);
+
+
+    /* Score */
+
+    if(
+        Math.random()<0.015
+    ){
+
+        score++;
+
+    }
+
+
+    requestAnimationFrame(
+        gameLoop
+    );
+
+}
+
+</script>
+
+</body>
+</html>

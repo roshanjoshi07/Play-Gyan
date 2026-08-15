@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>🍉 Fruit Cutting Game</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    font-family:Arial,sans-serif;
+
+    background:
+    linear-gradient(
+        180deg,
+        #58c7f3 0%,
+        #2696d6 55%,
+        #1267a3 100%
+    );
+
+    touch-action:none;
+}
+
+/* ==============================
+   GAME AREA
+============================== */
+
+#game{
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+    cursor:crosshair;
+
+    touch-action:none;
+}
+
+
+/* ==============================
+   BACKGROUND
+============================== */
+
+.cloud{
+    position:absolute;
+
+    width:120px;
+    height:45px;
+
+    background:#ffffffaa;
+
+    border-radius:50px;
+
+    filter:blur(2px);
+
+    animation:cloudMove 25s linear infinite;
+}
+
+.cloud:before,
+.cloud:after{
+    content:"";
+
+    position:absolute;
+
+    background:#ffffffaa;
+
+    border-radius:50%;
+}
+
+.cloud:before{
+    width:60px;
+    height:60px;
+
+    left:20px;
+    top:-25px;
+}
+
+.cloud:after{
+    width:70px;
+    height:70px;
+
+    right:15px;
+    top:-35px;
+}
+
+.cloud1{
+    top:20%;
+    left:-150px;
+}
+
+.cloud2{
+    top:40%;
+    left:-300px;
+
+    animation-delay:8s;
+}
+
+@keyframes cloudMove{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(
+            calc(100vw + 500px)
+        );
+    }
+}
+
+
+/* ==============================
+   HUD
+============================== */
+
+#hud{
+
+    position:absolute;
+
+    top:15px;
+
+    left:50%;
+
+    transform:
+    translateX(-50%);
+
+    width:min(94%,700px);
+
+    display:flex;
+
+    justify-content:
+    space-between;
+
+    gap:10px;
+
+    z-index:20;
+}
+
+.hudBox{
+
+    background:#0008;
+
+    color:white;
+
+    padding:11px 18px;
+
+    border-radius:16px;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    box-shadow:
+    0 5px 15px #0005;
+
+    backdrop-filter:
+    blur(7px);
+}
+
+
+/* ==============================
+   OBJECT CONTAINER
+============================== */
+
+#objects{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:5;
+}
+
+
+/* ==============================
+   FRUIT
+============================== */
+
+.fruit{
+
+    position:absolute;
+
+    font-size:65px;
+
+    width:75px;
+    height:75px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transform:
+    translate(-50%,-50%);
+
+    user-select:none;
+
+    pointer-events:none;
+
+    filter:
+    drop-shadow(
+        0 9px 5px #0007
+    );
+}
+
+
+/* ==============================
+   CUT EFFECT
+============================== */
+
+.cutFruit{
+
+    position:absolute;
+
+    font-size:65px;
+
+    pointer-events:none;
+
+    transform:
+    translate(-50%,-50%);
+
+    animation:
+    cutEffect .5s forwards;
+
+    z-index:10;
+}
+
+@keyframes cutEffect{
+
+    0%{
+        opacity:1;
+
+        transform:
+        translate(-50%,-50%)
+        scale(1)
+        rotate(0deg);
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:
+        translate(-50%,-50%)
+        scale(1.8)
+        rotate(40deg);
+    }
+}
+
+
+/* ==============================
+   SLASH LINE
+============================== */
+
+.slice{
+
+    position:absolute;
+
+    height:6px;
+
+    width:80px;
+
+    background:white;
+
+    border-radius:20px;
+
+    pointer-events:none;
+
+    box-shadow:
+    0 0 15px white;
+
+    z-index:30;
+
+    animation:
+    slashEffect .25s forwards;
+}
+
+@keyframes slashEffect{
+
+    from{
+        opacity:1;
+    }
+
+    to{
+        opacity:0;
+    }
+}
+
+
+/* ==============================
+   START / GAME OVER
+============================== */
+
+#startScreen,
+#gameOver{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:50;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:20px;
+
+    color:white;
+
+    background:
+    #05213ddd;
+
+    backdrop-filter:
+    blur(5px);
+}
+
+#gameOver{
+
+    display:none;
+}
+
+
+h1{
+
+    font-size:
+    clamp(
+        42px,
+        12vw,
+        75px
+    );
+
+    margin-bottom:12px;
+
+    text-shadow:
+    0 5px 12px #000;
+}
+
+
+.info{
+
+    font-size:18px;
+
+    line-height:1.7;
+
+    max-width:550px;
+}
+
+
+button{
+
+    border:none;
+
+    padding:
+    15px 35px;
+
+    margin-top:22px;
+
+    border-radius:18px;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff512f,
+        #dd2476
+    );
+
+    cursor:pointer;
+
+    box-shadow:
+    0 8px 20px #0007;
+
+    transition:.2s;
+}
+
+button:hover{
+
+    transform:
+    translateY(-3px);
+
+}
+
+button:active{
+
+    transform:
+    scale(.94);
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media(max-width:600px){
+
+    #hud{
+
+        top:10px;
+
+        width:96%;
+
+    }
+
+    .hudBox{
+
+        padding:
+        9px 12px;
+
+        font-size:16px;
+
+    }
+
+    .fruit{
+
+        font-size:58px;
+
+    }
+
+    .cutFruit{
+
+        font-size:58px;
+
+    }
+
+    h1{
+
+        font-size:45px;
+
+    }
+
+    .info{
+
+        font-size:16px;
+
+    }
+
+}
+
+
+/* ==============================
+   PC
+============================== */
+
+@media(min-width:900px){
+
+    .fruit{
+
+        font-size:72px;
+
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div id="game">
+
+
+    <!-- BACKGROUND CLOUDS -->
+
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+
+    <!-- HUD -->
+
+    <div id="hud">
+
+        <div class="hudBox">
+
+            🍉 Score:
+            <span id="score">
+                0
+            </span>
+
+        </div>
+
+
+        <div class="hudBox">
+
+            ❤️
+            <span id="lives">
+                1
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- OBJECTS -->
+
+    <div id="objects"></div>
+
+
+    <!-- START SCREEN -->
+
+    <div id="startScreen">
+
+        <h1>
+            🍉 Fruit Slash
+        </h1>
+
+        <div class="info">
+
+            🔪 फललाई
+            <b>Swipe</b>
+            गरेर काट्नुहोस्।<br>
+
+            📱 Mobile मा
+            औँलाले swipe गर्नुहोस्।<br>
+
+            💻 PC मा Mouse drag गर्नुहोस्।<br>
+
+            💣 Bomb नछुनुहोस्!<br>
+
+            ❤️ तपाईंसँग
+            <b>१ Life</b> मात्र छ।
+
+        </div>
+
+
+        <button
+        onclick="startGame()">
+
+            🎮 START GAME
+
+        </button>
+
+    </div>
+
+
+    <!-- GAME OVER -->
+
+    <div id="gameOver">
+
+        <h1>
+            💥 Game Over
+        </h1>
+
+
+        <div class="info">
+
+            तपाईंको Score:
+
+            <strong
+            id="finalScore">
+                0
+            </strong>
+
+            <br><br>
+
+            🏆 Best Score:
+
+            <strong
+            id="bestScore">
+                0
+            </strong>
+
+        </div>
+
+
+        <button
+        onclick="startGame()">
+
+            🔄 PLAY AGAIN
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+const game =
+document.getElementById(
+    "game"
+);
+
+const objects =
+document.getElementById(
+    "objects"
+);
+
+const scoreText =
+document.getElementById(
+    "score"
+);
+
+const livesText =
+document.getElementById(
+    "lives"
+);
+
+const startScreen =
+document.getElementById(
+    "startScreen"
+);
+
+const gameOver =
+document.getElementById(
+    "gameOver"
+);
+
+const finalScore =
+document.getElementById(
+    "finalScore"
+);
+
+const bestScore =
+document.getElementById(
+    "bestScore"
+);
+
+
+let score = 0;
+
+
+/*
+    ONLY ONE LIFE
+*/
+
+let lives = 1;
+
+
+let playing = false;
+
+let spawnTimer = null;
+
+let fruits = [];
+
+
+let mouseDown = false;
+
+let lastX = 0;
+
+let lastY = 0;
+
+
+/* =====================================
+   FRUITS
+===================================== */
+
+const fruitTypes = [
+
+    "🍎",
+    "🍉",
+    "🍊",
+    "🍌",
+    "🍓",
+    "🍍",
+    "🥝",
+    "🍇",
+    "🥭",
+    "🍑"
+
+];
+
+
+/* =====================================
+   START GAME
+===================================== */
+
+function startGame(){
+
+    score = 0;
+
+    /*
+        ONE LIFE
+    */
+
+    lives = 1;
+
+    playing = true;
+
+    fruits = [];
+
+    objects.innerHTML = "";
+
+
+    scoreText.textContent =
+        score;
+
+    livesText.textContent =
+        lives;
+
+
+    startScreen.style.display =
+        "none";
+
+    gameOver.style.display =
+        "none";
+
+
+    clearInterval(
+        spawnTimer
+    );
+
+
+    /*
+       NO TIMER HERE
+       Game continues until
+       the player cuts the bomb.
+    */
+
+
+    spawnTimer =
+        setInterval(
+            spawnObject,
+            600
+        );
+
+}
+
+
+/* =====================================
+   SPAWN OBJECT
+===================================== */
+
+function spawnObject(){
+
+    if(!playing)
+        return;
+
+
+    /*
+       Bomb chance
+    */
+
+    const isBomb =
+        Math.random() < 0.12;
+
+
+    const element =
+        document.createElement(
+            "div"
+        );
+
+
+    element.className =
+        "fruit";
+
+
+    element.textContent =
+        isBomb
+
+        ? "💣"
+
+        : fruitTypes[
+            Math.floor(
+                Math.random()
+                *
+                fruitTypes.length
+            )
+        ];
+
+
+    const x =
+        Math.random()
+        *
+        (
+            window.innerWidth
+            - 100
+        )
+        + 50;
+
+
+    const y =
+        window.innerHeight
+        + 60;
+
+
+    element.style.left =
+        x + "px";
+
+    element.style.top =
+        y + "px";
+
+
+    objects.appendChild(
+        element
+    );
+
+
+    const fruit = {
+
+        element:element,
+
+        x:x,
+
+        y:y,
+
+        vx:
+        (
+            Math.random()
+            - .5
+        ) * 4,
+
+        vy:
+        -(
+            Math.random()
+            * 10
+            + 13
+        ),
+
+        gravity:.35,
+
+        bomb:isBomb,
+
+        alive:true
+
+    };
+
+
+    fruits.push(
+        fruit
+    );
+
+}
+
+
+/* =====================================
+   GAME ANIMATION
+===================================== */
+
+function animate(){
+
+    if(playing){
+
+        fruits.forEach(
+        fruit=>{
+
+            if(!fruit.alive)
+                return;
+
+
+            fruit.vy +=
+                fruit.gravity;
+
+
+            fruit.x +=
+                fruit.vx;
+
+
+            fruit.y +=
+                fruit.vy;
+
+
+            fruit.element.style.left =
+                fruit.x + "px";
+
+
+            fruit.element.style.top =
+                fruit.y + "px";
+
+
+            fruit.element.style.transform =
+
+                `translate(-50%,-50%)
+                 rotate(${fruit.x}deg)`;
+
+
+            /*
+               Remove objects
+               after leaving screen
+            */
+
+            if(
+                fruit.y >
+                window.innerHeight
+                + 120
+            ){
+
+                fruit.alive = false;
+
+                fruit.element.remove();
+
+            }
+
+        });
+
+
+        fruits =
+            fruits.filter(
+                fruit =>
+                fruit.alive
+            );
+
+    }
+
+
+    requestAnimationFrame(
+        animate
+    );
+
+}
+
+
+animate();
+
+
+/* =====================================
+   MOUSE / TOUCH
+===================================== */
+
+game.addEventListener(
+    "pointerdown",
+    function(e){
+
+        if(!playing)
+            return;
+
+
+        mouseDown = true;
+
+        lastX =
+            e.clientX;
+
+        lastY =
+            e.clientY;
+
+    }
+);
+
+
+game.addEventListener(
+    "pointermove",
+    function(e){
+
+        if(
+            !playing ||
+            !mouseDown
+        )
+            return;
+
+
+        const x =
+            e.clientX;
+
+        const y =
+            e.clientY;
+
+
+        /*
+           Draw knife slash
+        */
+
+        drawSlash(
+            lastX,
+            lastY,
+            x,
+            y
+        );
+
+
+        /*
+           Check fruit
+        */
+
+        checkCut(
+            x,
+            y
+        );
+
+
+        lastX = x;
+
+        lastY = y;
+
+    }
+);
+
+
+game.addEventListener(
+    "pointerup",
+    function(){
+
+        mouseDown = false;
+
+    }
+);
+
+
+game.addEventListener(
+    "pointercancel",
+    function(){
+
+        mouseDown = false;
+
+    }
+);
+
+
+/* =====================================
+   SLASH EFFECT
+===================================== */
+
+function drawSlash(
+    x1,
+    y1,
+    x2,
+    y2
+){
+
+    const line =
+        document.createElement(
+            "div"
+        );
+
+
+    line.className =
+        "slice";
+
+
+    const dx =
+        x2 - x1;
+
+    const dy =
+        y2 - y1;
+
+
+    const length =
+        Math.sqrt(
+            dx * dx +
+            dy * dy
+        );
+
+
+    const angle =
+        Math.atan2(
+            dy,
+            dx
+        )
+        *
+        180
+        /
+        Math.PI;
+
+
+    line.style.width =
+        Math.min(
+            length,
+            150
+        )
+        + "px";
+
+
+    line.style.left =
+        x1 + "px";
+
+
+    line.style.top =
+        y1 + "px";
+
+
+    line.style.transform =
+        `rotate(${angle}deg)`;
+
+
+    game.appendChild(
+        line
+    );
+
+
+    setTimeout(
+        function(){
+
+            line.remove();
+
+        },
+        250
+    );
+
+}
+
+
+/* =====================================
+   CHECK CUT
+===================================== */
+
+function checkCut(
+    x,
+    y
+){
+
+    fruits.forEach(
+    fruit=>{
+
+        if(!fruit.alive)
+            return;
+
+
+        const dx =
+            fruit.x - x;
+
+        const dy =
+            fruit.y - y;
+
+
+        const distance =
+            Math.sqrt(
+                dx * dx +
+                dy * dy
+            );
+
+
+        if(
+            distance < 58
+        ){
+
+            cutFruit(
+                fruit
+            );
+
+        }
+
+    });
+
+}
+
+
+/* =====================================
+   CUT FRUIT
+===================================== */
+
+function cutFruit(
+    fruit
+){
+
+    if(!fruit.alive)
+        return;
+
+
+    fruit.alive = false;
+
+
+    const emoji =
+        fruit.element
+        .textContent;
+
+
+    fruit.element.remove();
+
+
+    /* ==============================
+       BOMB
+    ============================== */
+
+    if(fruit.bomb){
+
+        /*
+           ONE LIFE = GAME OVER
+        */
+
+        lives = 0;
+
+        livesText.textContent =
+            "0";
+
+
+        endGame();
+
+        return;
+
+    }
+
+
+    /* ==============================
+       NORMAL FRUIT
+    ============================== */
+
+    score += 10;
+
+
+    scoreText.textContent =
+        score;
+
+
+    /*
+       Cut animation
+    */
+
+    const effect =
+        document.createElement(
+            "div"
+        );
+
+
+    effect.className =
+        "cutFruit";
+
+
+    effect.textContent =
+        emoji;
+
+
+    effect.style.left =
+        fruit.x + "px";
+
+
+    effect.style.top =
+        fruit.y + "px";
+
+
+    objects.appendChild(
+        effect
+    );
+
+
+    setTimeout(
+        function(){
+
+            effect.remove();
+
+        },
+        500
+    );
+
+}
+
+
+/* =====================================
+   GAME OVER
+===================================== */
+
+function endGame(){
+
+    if(!playing)
+        return;
+
+
+    playing = false;
+
+
+    clearInterval(
+        spawnTimer
+    );
+
+
+    finalScore.textContent =
+        score;
+
+
+    /*
+       BEST SCORE
+    */
+
+    let best =
+        Number(
+            localStorage.getItem(
+                "fruitBestScore"
+            )
+        ) || 0;
+
+
+    if(score > best){
+
+        best = score;
+
+        localStorage.setItem(
+            "fruitBestScore",
+            best
+        );
+
+    }
+
+
+    bestScore.textContent =
+        best;
+
+
+    gameOver.style.display =
+        "flex";
+
+}
+
+
+/* =====================================
+   RESIZE
+===================================== */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        fruits.forEach(
+        fruit=>{
+
+            if(
+                fruit.x >
+                window.innerWidth
+            ){
+
+                fruit.x =
+                    window.innerWidth
+                    - 50;
+
+            }
+
+        });
+
+    }
+);
+
+</script>
+
+</body>
+</html>

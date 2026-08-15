@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🇳🇵 गाउँखाने कथा Quiz</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    font-family:"Noto Sans Devanagari",Arial,sans-serif;
+    background:
+        linear-gradient(135deg,#061b2e,#075985,#064e3b);
+    color:white;
+    padding:12px;
+}
+
+.container{
+    width:100%;
+    max-width:850px;
+    margin:auto;
+}
+
+header{
+    text-align:center;
+    padding:15px 5px 20px;
+}
+
+header h1{
+    font-size:clamp(26px,7vw,44px);
+    text-shadow:0 4px 12px #000;
+}
+
+header p{
+    color:#cde8e5;
+    margin-top:6px;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-bottom:12px;
+}
+
+.stat{
+    text-align:center;
+    padding:10px 4px;
+    border-radius:15px;
+    background:#ffffff12;
+    border:1px solid #ffffff25;
+}
+
+.stat small{
+    display:block;
+    color:#b9d2dc;
+    font-size:12px;
+}
+
+.stat strong{
+    font-size:19px;
+}
+
+/* GAME */
+
+.game{
+    background:#ffffff0d;
+    border:1px solid #ffffff25;
+    border-radius:22px;
+    padding:20px;
+    box-shadow:0 15px 40px #0008;
+    backdrop-filter:blur(10px);
+}
+
+.progress{
+    height:9px;
+    background:#ffffff18;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:20px;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#00d4ff,#00ff88);
+    transition:.3s;
+}
+
+.riddle-box{
+    background:#ffffff0d;
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:18px;
+    border:1px solid #ffffff20;
+}
+
+.label{
+    text-align:center;
+    color:#ffd166;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.riddle{
+    text-align:center;
+    font-size:clamp(20px,5vw,30px);
+    line-height:1.6;
+    font-weight:bold;
+}
+
+/* OPTIONS */
+
+.options{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.option{
+    min-height:60px;
+    padding:12px;
+    border-radius:15px;
+    border:2px solid #ffffff20;
+    background:#ffffff0c;
+    color:white;
+    font-size:16px;
+    font-family:inherit;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    transform:translateY(-3px);
+    background:#ffffff18;
+}
+
+.option.correct{
+    background:#087c4a;
+    border-color:#20e695;
+}
+
+.option.wrong{
+    background:#8d2020;
+    border-color:#ff6262;
+}
+
+.option:disabled{
+    cursor:not-allowed;
+}
+
+/* FEEDBACK */
+
+.feedback{
+    min-height:45px;
+    text-align:center;
+    font-size:17px;
+    font-weight:bold;
+    margin:15px 0 5px;
+    line-height:1.5;
+}
+
+/* BUTTON */
+
+.next,
+.restart{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:14px;
+    color:white;
+    font-size:17px;
+    font-family:inherit;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.next{
+    background:linear-gradient(135deg,#00aaff,#0066ff);
+}
+
+.restart{
+    background:#00b86b;
+}
+
+/* RESULT */
+
+.result{
+    display:none;
+    text-align:center;
+}
+
+.result h2{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.final-score{
+    font-size:55px;
+    font-weight:bold;
+    margin:10px;
+}
+
+.result-text{
+    line-height:1.7;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    body{
+        padding:7px;
+    }
+
+    .game{
+        padding:13px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .riddle{
+        font-size:21px;
+    }
+
+    .option{
+        min-height:55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+    <h1>🇳🇵 गाउँखाने कथा</h1>
+    <p>🧩 नेपाली पहेली Quiz Game</p>
+</header>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+    <div class="stat">
+        <small>प्रश्न</small>
+        <strong id="number">1</strong>
+    </div>
+
+    <div class="stat">
+        <small>स्कोर</small>
+        <strong id="score">0</strong>
+    </div>
+
+    <div class="stat">
+        <small>सही</small>
+        <strong id="right">0</strong>
+    </div>
+
+    <div class="stat">
+        <small>Life</small>
+        <strong id="lives">❤️❤️❤️</strong>
+    </div>
+
+</div>
+
+
+<!-- GAME -->
+
+<div class="game" id="game">
+
+    <div class="progress">
+        <div class="progress-bar" id="progress"></div>
+    </div>
+
+    <div class="riddle-box">
+
+        <div class="label">
+            🧩 गाउँखाने कथा
+        </div>
+
+        <div class="riddle" id="riddle"></div>
+
+    </div>
+
+    <div class="options" id="options"></div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <button class="next" onclick="nextQuestion()">
+        अर्को गाउँखाने कथा ➜
+    </button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div class="game result" id="result">
+
+    <h2 id="resultTitle">
+        🎉 खेल समाप्त!
+    </h2>
+
+    <div class="final-score" id="finalScore">
+        0
+    </div>
+
+    <div class="result-text" id="resultText"></div>
+
+    <br>
+
+    <button class="restart" onclick="restartGame()">
+        🎲 नयाँ प्रश्नबाट सुरु गर्नुहोस्
+    </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   QUESTION DATABASE
+   ===================================================== */
+
+const riddles = [
+
+{
+q:"सेतो घरमा कालो मान्छे, कालो मान्छेले सेतो लेख्छ। त्यो के हो?",
+a:["किताब","कलम","ढुंगा","झोला"],
+c:1
+},
+
+{
+q:"जति तान्यो उति छोटो हुन्छ। त्यो के हो?",
+a:["डोरी","मैनबत्ती","रबर","कपडा"],
+c:1
+},
+
+{
+q:"चार खुट्टा छन् तर हिँड्न सक्दैन। त्यो के हो?",
+a:["कुकुर","टेबल","घोडा","बिरालो"],
+c:1
+},
+
+{
+q:"मुख छैन तर बोल्छ, कान छैन तर सुन्छ। त्यो के हो?",
+a:["रेडियो","किताब","ढुंगा","रुख"],
+c:0
+},
+
+{
+q:"पखेटा छैन तर आकाशमा उड्छ। त्यो के हो?",
+a:["चरा","बादल","घोडा","माछा"],
+c:1
+},
+
+{
+q:"आँखा छ तर देख्दैन। त्यो के हो?",
+a:["सुई","मान्छे","कुकुर","चरा"],
+c:0
+},
+
+{
+q:"खुट्टा छैन तर दौडिरहन्छ। त्यो के हो?",
+a:["पानी","ढुंगा","कुर्सी","घर"],
+c:0
+},
+
+{
+q:"दाँत धेरै छन् तर खाना खाँदैन। त्यो के हो?",
+a:["काइँयो","कुकुर","बाघ","मान्छे"],
+c:0
+},
+
+{
+q:"घाम लाग्दा जन्मिन्छ, घाम अस्ताउँदा मर्छ। त्यो के हो?",
+a:["छायाँ","पानी","हावा","ढुंगा"],
+c:0
+},
+
+{
+q:"जति निकाल्यो उति ठूलो हुन्छ। त्यो के हो?",
+a:["खाल्डो","घर","रुख","बाटो"],
+c:0
+},
+
+{
+q:"टाउको छ, पुच्छर छ तर शरीर छैन। त्यो के हो?",
+a:["सिक्का","सर्प","कुकुर","माछा"],
+c:0
+},
+
+{
+q:"न पानी हो, न आगो हो, तर पानीमा बस्छ। त्यो के हो?",
+a:["माछा","ढुंगा","काग","घोडा"],
+c:0
+},
+
+{
+q:"आफैं हिँड्दैन तर संसार घुमाउँछ। त्यो के हो?",
+a:["सडक","गाडी","नक्सा","हावा"],
+c:1
+},
+
+{
+q:"घरभित्र बस्छ, घरलाई नै खाइरहन्छ। त्यो के हो?",
+a:["दीमक","कुकुर","बिरालो","मान्छे"],
+c:0
+},
+
+{
+q:"बिहान चार खुट्टा, दिउँसो दुई खुट्टा, साँझ तीन खुट्टा। त्यो के हो?",
+a:["मान्छे","कुकुर","घोडा","बिरालो"],
+c:0
+},
+
+{
+q:"दिनभरि दौडिन्छ तर एक कदम पनि अघि बढ्दैन। त्यो के हो?",
+a:["घडी","गाडी","मान्छे","कुकुर"],
+c:0
+},
+
+{
+q:"घर छ तर ढोका छैन, मानिस बस्छ तर झ्याल छैन। त्यो के हो?",
+a:["अण्डा","पाल","गुफा","घर"],
+c:0
+},
+
+{
+q:"पानीमा जन्मिन्छ, पानीमै मर्छ। त्यो के हो?",
+a:["माछा","बरफ","ढुंगा","कमल"],
+c:0
+},
+
+{
+q:"आफैं जलेर अरूलाई उज्यालो दिन्छ। त्यो के हो?",
+a:["मैनबत्ती","ढुंगा","कपडा","काठ"],
+c:0
+},
+
+{
+q:"जति पुरानो भयो उति मूल्यवान हुन्छ। त्यो के हो?",
+a:["ज्ञान","पानी","माटो","हावा"],
+c:0
+},
+
+{
+q:"आकाशमा हुन्छ तर बादल होइन, रातमा देखिन्छ तर तारा होइन। त्यो के हो?",
+a:["चन्द्रमा","सूर्य","पक्षी","हवाईजहाज"],
+c:0
+},
+
+{
+q:"पखेटा नभए पनि उड्छ, मुख नभए पनि गीत गाउँछ। त्यो के हो?",
+a:["हावा","ढुंगा","पानी","रुख"],
+c:0
+},
+
+{
+q:"जति खुवायो उति बढ्छ, पानी खुवायो भने मर्छ। त्यो के हो?",
+a:["आगो","रुख","मान्छे","माछा"],
+c:0
+},
+
+{
+q:"चारैतिर हरियो, बीचमा रातो। त्यो के हो?",
+a:["तरबुजा","स्याउ","काक्रो","केरा"],
+c:0
+},
+
+{
+q:"बाहिर हरियो, भित्र रातो, कालो बीउले भरिएको। त्यो के हो?",
+a:["तरबुजा","आलु","केरा","सुन्तला"],
+c:0
+},
+
+{
+q:"टाउकोमा टोपी, शरीरमा लुगा, खुट्टामा जुत्ता छैन। त्यो के हो?",
+a:["च्याउ","मान्छे","कुकुर","रुख"],
+c:0
+},
+
+{
+q:"जति काट्यो उति बढ्दै जान्छ। त्यो के हो?",
+a:["कपाल","खाल्डो","रुख","कपडा"],
+c:1
+},
+
+{
+q:"कानमा बस्छ तर कुरा सुन्दैन। त्यो के हो?",
+a:["झुम्का","काग","कपाल","टोपी"],
+c:0
+},
+
+{
+q:"आँखा धेरै छन् तर देख्दैन। त्यो के हो?",
+a:["आलु","मान्छे","चरा","घोडा"],
+c:0
+},
+
+{
+q:"दुई दाजुभाइ सँगै हिँड्छन् तर भेटिँदैनन्। त्यो के हो?",
+a:["आँखा","जुत्ता","हात","खुट्टा"],
+c:0
+},
+
+{
+q:"सधैं अगाडि जान्छ तर कहिल्यै फर्केर आउँदैन। त्यो के हो?",
+a:["समय","गाडी","मान्छे","हावा"],
+c:0
+},
+
+{
+q:"दिनमा लुक्छ, रातमा देखिन्छ। त्यो के हो?",
+a:["तारा","सूर्य","चन्द्रमा","बादल"],
+c:0
+},
+
+{
+q:"घरको छानोमा बस्छ तर घरभित्र पस्दैन। त्यो के हो?",
+a:["धुवाँ","मान्छे","कुकुर","किताब"],
+c:0
+},
+
+{
+q:"बिना खुट्टा दौडिन्छ, बिना मुख कराउँछ। त्यो के हो?",
+a:["नदी","मान्छे","घोडा","कुकुर"],
+c:0
+},
+
+{
+q:"नदेखिने तर महसुस गर्न सकिने कुरा के हो?",
+a:["हावा","ढुंगा","घर","किताब"],
+c:0
+},
+
+{
+q:"बाहिर कडा, भित्र नरम। त्यो के हो?",
+a:["अण्डा","ढुंगा","काठ","कागज"],
+c:0
+},
+
+{
+q:"बाहिर काँडा, भित्र मीठो। त्यो के हो?",
+a:["अनानास","स्याउ","केरा","अंगुर"],
+c:0
+},
+
+{
+q:"रातो टोपी लगाएको सेतो मान्छे। त्यो के हो?",
+a:["मुला","स्याउ","खरबुजा","आलु"],
+c:0
+},
+
+{
+q:"आकाशमा उड्छ तर चरा होइन, मानिस बोक्छ तर गाडी होइन। त्यो के हो?",
+a:["हवाईजहाज","बादल","पतंग","चन्द्रमा"],
+c:0
+},
+
+{
+q:"बिना मुख हाँस्छ, बिना आँखा रुन्छ। त्यो के हो?",
+a:["बादल","मान्छे","पानी","रुख"],
+c:0
+},
+
+{
+q:"पानी पर्दा जन्मिन्छ, घाम लाग्दा हराउँछ। त्यो के हो?",
+a:["इन्द्रेणी","बादल","नदी","माछा"],
+c:0
+},
+
+{
+q:"आफू उभिन्छ, अरूलाई बसाउँछ। त्यो के हो?",
+a:["कुर्सी","रुख","घर","टेबल"],
+c:0
+},
+
+{
+q:"दुई हात छन् तर ताली बजाउँदैन। त्यो के हो?",
+a:["घडी","मान्छे","कुर्सी","ढोका"],
+c:0
+},
+
+{
+q:"बाहिर पहेँलो, भित्र सेतो र बीचमा धेरै बीउ। त्यो के हो?",
+a:["मकै","केरा","सुन्तला","आलु"],
+c:0
+},
+
+{
+q:"नदीमा बग्छ तर पानी होइन। त्यो के हो?",
+a:["डुंगा","माछा","ढुंगा","बालुवा"],
+c:0
+},
+
+{
+q:"जति लेख्यो उति कालो हुन्छ। त्यो के हो?",
+a:["कागज","कालोपाटी","कलम","किताब"],
+c:1
+},
+
+{
+q:"आफ्नो घर बोकेर हिँड्छ। त्यो के हो?",
+a:["घोंघा","कुकुर","चरा","माछा"],
+c:0
+},
+
+{
+q:"दिनभरि सुत्छ, रातभरि जाग्छ। त्यो के हो?",
+a:["चमेरा","गाई","कुकुर","घोडा"],
+c:0
+},
+
+{
+q:"आकाशबाट आउँछ तर पानी होइन। त्यो के हो?",
+a:["घाम","बादल","पक्षी","हावा"],
+c:0
+},
+
+{
+q:"सानो हुँदा ठूलो हुन्छ, ठूलो भएपछि सानो हुन्छ। त्यो के हो?",
+a:["उमेर","मोमबत्ती","बच्चा","रुख"],
+c:1
+}
+
+];
+
+
+/* =====================================================
+   VARIABLES
+   ===================================================== */
+
+let current = 0;
+let score = 0;
+let right = 0;
+
+let lives = 3;
+
+let answered = false;
+
+let gameQuestions = [];
+
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
+
+const riddle =
+document.getElementById("riddle");
+
+const options =
+document.getElementById("options");
+
+const feedback =
+document.getElementById("feedback");
+
+const scoreEl =
+document.getElementById("score");
+
+const rightEl =
+document.getElementById("right");
+
+const numberEl =
+document.getElementById("number");
+
+const livesEl =
+document.getElementById("lives");
+
+const progress =
+document.getElementById("progress");
+
+const game =
+document.getElementById("game");
+
+const result =
+document.getElementById("result");
+
+const finalScore =
+document.getElementById("finalScore");
+
+const resultText =
+document.getElementById("resultText");
+
+const resultTitle =
+document.getElementById("resultTitle");
+
+
+/* =====================================================
+   SHUFFLE QUESTIONS
+   ===================================================== */
+
+function shuffleQuestions(){
+
+    gameQuestions =
+        [...riddles];
+
+    for(
+        let i = gameQuestions.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            gameQuestions[i],
+            gameQuestions[j]
+        ] =
+        [
+            gameQuestions[j],
+            gameQuestions[i]
+        ];
+    }
+}
+
+
+/* =====================================================
+   SHUFFLE OPTIONS
+   ===================================================== */
+
+function shuffleOptions(item){
+
+    let answers =
+        item.a.map(
+            (answer,index)=>({
+                text:answer,
+                correct:index === item.c
+            })
+        );
+
+    for(
+        let i = answers.length - 1;
+        i > 0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [
+            answers[i],
+            answers[j]
+        ] =
+        [
+            answers[j],
+            answers[i]
+        ];
+    }
+
+    return answers;
+}
+
+
+/* =====================================================
+   LOAD QUESTION
+   ===================================================== */
+
+function loadQuestion(){
+
+    answered = false;
+
+    const item =
+        gameQuestions[current];
+
+    numberEl.textContent =
+        current + 1;
+
+    scoreEl.textContent =
+        score;
+
+    rightEl.textContent =
+        right;
+
+    updateLives();
+
+    riddle.textContent =
+        item.q;
+
+    options.innerHTML = "";
+
+    feedback.textContent = "";
+
+    progress.style.width =
+        (
+            current /
+            gameQuestions.length *
+            100
+        ) + "%";
+
+
+    const answers =
+        shuffleOptions(item);
+
+
+    answers.forEach(
+        answer=>{
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "option";
+
+            button.textContent =
+                answer.text;
+
+            button.dataset.correct =
+                answer.correct;
+
+            button.onclick =
+                function(){
+
+                    checkAnswer(
+                        answer.correct,
+                        button,
+                        answers
+                    );
+
+                };
+
+            options.appendChild(button);
+
+        }
+    );
+}
+
+
+/* =====================================================
+   LIFE DISPLAY
+   ===================================================== */
+
+function updateLives(){
+
+    let hearts = "";
+
+    for(
+        let i = 0;
+        i < 3;
+        i++
+    ){
+
+        if(i < lives){
+
+            hearts += "❤️";
+
+        }else{
+
+            hearts += "🖤";
+
+        }
+    }
+
+    livesEl.textContent =
+        hearts;
+}
+
+
+/* =====================================================
+   CHECK ANSWER
+   ===================================================== */
+
+function checkAnswer(
+    isCorrect,
+    button,
+    answers
+){
+
+    if(answered){
+        return;
+    }
+
+    answered = true;
+
+
+    const all =
+        document.querySelectorAll(
+            ".option"
+        );
+
+
+    all.forEach(
+        b=>{
+            b.disabled = true;
+        }
+    );
+
+
+    if(isCorrect){
+
+        button.classList.add(
+            "correct"
+        );
+
+        feedback.innerHTML =
+            "🎉 बिल्कुल सही! +10 Points";
+
+        score += 10;
+
+        right++;
+
+    }else{
+
+        button.classList.add(
+            "wrong"
+        );
+
+
+        /* SHOW CORRECT ANSWER */
+
+        all.forEach(
+            b=>{
+
+                if(
+                    b.dataset.correct ===
+                    "true"
+                ){
+
+                    b.classList.add(
+                        "correct"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* REMOVE LIFE */
+
+        lives--;
+
+        updateLives();
+
+
+        let correctAnswer =
+            answers.find(
+                a=>a.correct
+            );
+
+
+        feedback.innerHTML =
+            "❌ गलत!<br>" +
+            "सही उत्तर: <b>" +
+            correctAnswer.text +
+            "</b><br>" +
+            "❤️ बाँकी Life: " +
+            lives;
+
+
+        /* 3 WRONG ANSWERS */
+
+        if(lives <= 0){
+
+            setTimeout(
+                gameOver,
+                1300
+            );
+
+            return;
+        }
+
+    }
+
+
+    scoreEl.textContent =
+        score;
+
+    rightEl.textContent =
+        right;
+}
+
+
+/* =====================================================
+   NEXT QUESTION
+   ===================================================== */
+
+function nextQuestion(){
+
+    if(!answered){
+
+        feedback.textContent =
+            "👇 पहिले एउटा उत्तर छान्नुहोस्।";
+
+        return;
+    }
+
+
+    current++;
+
+
+    if(
+        current >=
+        gameQuestions.length
+    ){
+
+        finishGame();
+
+        return;
+    }
+
+
+    loadQuestion();
+}
+
+
+/* =====================================================
+   GAME OVER
+   ===================================================== */
+
+function gameOver(){
+
+    game.style.display =
+        "none";
+
+    result.style.display =
+        "block";
+
+    resultTitle.textContent =
+        "💔 Game Over!";
+
+    finalScore.textContent =
+        score;
+
+
+    resultText.innerHTML =
+        "तपाईंका सबै ❤️ Life सकिए।" +
+        "<br><br>" +
+
+        "सही उत्तर: " +
+        right +
+        "<br>" +
+
+        "Score: " +
+        score +
+        "<br><br>" +
+
+        "🎲 फेरि खेल्दा प्रश्नहरू " +
+        "<b>नयाँ Random क्रम</b> मा आउनेछन्।";
+
+
+    document.querySelector(
+        ".restart"
+    ).textContent =
+        "🎲 नयाँ प्रश्नबाट फेरि खेल्नुहोस्";
+}
+
+
+/* =====================================================
+   FINISH GAME
+   ===================================================== */
+
+function finishGame(){
+
+    game.style.display =
+        "none";
+
+    result.style.display =
+        "block";
+
+    resultTitle.textContent =
+        "🏆 सबै प्रश्न सकियो!";
+
+    finalScore.textContent =
+        score;
+
+
+    const percent =
+        Math.round(
+            right /
+            gameQuestions.length *
+            100
+        );
+
+
+    if(percent >= 90){
+
+        resultText.innerHTML =
+            "🔥 शानदार!" +
+            "<br>" +
+            "तपाईं गाउँखाने कथा Master हुनुहुन्छ!";
+
+    }
+    else if(percent >= 70){
+
+        resultText.innerHTML =
+            "👏 धेरै राम्रो!" +
+            "<br>" +
+            "तपाईंलाई गाउँखाने कथा राम्रोसँग आउँछ।";
+
+    }
+    else if(percent >= 50){
+
+        resultText.innerHTML =
+            "👍 राम्रो प्रयास!" +
+            "<br>" +
+            "अझै केही अभ्यास गर्नुहोस्।";
+
+    }
+    else{
+
+        resultText.innerHTML =
+            "📚 अझै अभ्यास गर्नुहोस्!" +
+            "<br>" +
+            "फेरि खेल्दा अझ राम्रो गर्न सक्नुहुन्छ।";
+
+    }
+
+}
+
+
+/* =====================================================
+   RESTART WITH NEW RANDOM QUESTIONS
+   ===================================================== */
+
+function restartGame(){
+
+    current = 0;
+
+    score = 0;
+
+    right = 0;
+
+    lives = 3;
+
+    answered = false;
+
+
+    /* NEW RANDOM ORDER */
+
+    shuffleQuestions();
+
+
+    game.style.display =
+        "block";
+
+    result.style.display =
+        "none";
+
+
+    loadQuestion();
+}
+
+
+/* =====================================================
+   START GAME
+   ===================================================== */
+
+shuffleQuestions();
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>

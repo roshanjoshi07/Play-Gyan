@@ -1,0 +1,175 @@
+/* ===== GOOGLE FONT ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#050816,#0d1b2a,#111827);
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ===== HEADER ===== */
+
+header{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 8%;
+    position:sticky;
+    top:0;
+    backdrop-filter:blur(15px);
+    background:rgba(255,255,255,.08);
+    border-bottom:1px solid rgba(255,255,255,.15);
+    z-index:1000;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#00e5ff;
+    text-shadow:0 0 15px cyan;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    margin-left:25px;
+    transition:.3s;
+    font-weight:500;
+}
+
+nav a:hover{
+    color:#00ffff;
+}
+
+/* ===== HERO ===== */
+
+.hero{
+    text-align:center;
+    padding:100px 20px;
+}
+
+.hero h1{
+    font-size:55px;
+    color:#00ffff;
+    text-shadow:0 0 20px cyan;
+}
+
+.hero p{
+    margin-top:20px;
+    font-size:20px;
+    color:#ddd;
+}
+
+.hero button{
+    margin-top:35px;
+    padding:15px 35px;
+    border:none;
+    border-radius:40px;
+    background:#00e5ff;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 0 25px cyan;
+}
+
+.hero button:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 40px cyan;
+}
+
+/* ===== SECTION ===== */
+
+section{
+    padding:70px 8%;
+}
+
+section h2{
+    text-align:center;
+    font-size:38px;
+    color:#00ffff;
+    margin-bottom:35px;
+}
+
+/* ===== GRID ===== */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+/* ===== CARD ===== */
+
+.card{
+    background:rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:40px 20px;
+    text-align:center;
+    cursor:pointer;
+    transition:.35s;
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 0 15px rgba(0,255,255,.2);
+}
+
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:0 0 35px cyan;
+}
+
+.card{
+    font-size:22px;
+    font-weight:bold;
+}
+
+/* ===== FOOTER ===== */
+
+footer{
+    text-align:center;
+    padding:30px;
+    background:#020510;
+    color:#aaa;
+}
+
+/* ===== SCROLL BAR ===== */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:cyan;
+    border-radius:20px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+header{
+    flex-direction:column;
+    gap:15px;
+}
+
+.hero h1{
+    font-size:36px;
+}
+
+.hero p{
+    font-size:17px;
+}
+
+section h2{
+    font-size:28px;
+}
+
+}

@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>🏀 Basketball 10 Shot Challenge</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:white;
+    text-align:center;
+    overflow:hidden;
+    touch-action:none;
+
+    background:
+    radial-gradient(
+        circle at top,
+        #365d7d,
+        #0b1118 75%
+    );
+}
+
+h1{
+    margin-top:7px;
+    font-size:clamp(23px,7vw,36px);
+    text-shadow:0 3px 8px #000;
+}
+
+.subtitle{
+    margin:3px 0 6px;
+    color:#d0dfeb;
+    font-size:12px;
+}
+
+.scoreboard{
+    width:94%;
+    max-width:720px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+}
+
+.box{
+    padding:7px 3px;
+    border-radius:13px;
+
+    background:
+    linear-gradient(
+        145deg,
+        #24425a,
+        #09131d
+    );
+
+    border:1px solid #ffffff25;
+    box-shadow:0 5px 15px #0008;
+}
+
+.box small{
+    display:block;
+    color:#a9c0d0;
+    font-size:10px;
+}
+
+.box strong{
+    font-size:19px;
+}
+
+
+/* COURT */
+
+.court{
+    position:relative;
+
+    width:94%;
+    max-width:760px;
+
+    height:min(62vh,520px);
+    min-height:340px;
+
+    margin:8px auto;
+
+    overflow:hidden;
+
+    border:3px solid #ffffff35;
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        to bottom,
+        #293945 0 33%,
+        #bd743d 33% 100%
+    );
+
+    box-shadow:0 15px 40px #000b;
+}
+
+.crowd{
+    position:absolute;
+    top:14%;
+    left:0;
+
+    width:100%;
+    height:80px;
+
+    background:
+    repeating-linear-gradient(
+        90deg,
+        #171d24 0 14px,
+        #3a4650 14px 28px
+    );
+}
+
+.light{
+    position:absolute;
+    top:5%;
+
+    width:90px;
+    height:13px;
+
+    background:white;
+    border-radius:50%;
+
+    box-shadow:0 0 25px white;
+}
+
+.light1{
+    left:8%;
+}
+
+.light2{
+    right:8%;
+}
+
+.floor{
+    position:absolute;
+    left:0;
+    bottom:0;
+
+    width:100%;
+    height:70%;
+
+    background:
+    repeating-linear-gradient(
+        90deg,
+        #c77b43 0 55px,
+        #b86e39 55px 110px
+    );
+}
+
+.threePoint{
+    position:absolute;
+
+    left:10%;
+    right:10%;
+    bottom:0;
+
+    height:78%;
+
+    border:4px solid #ffffff80;
+    border-bottom:0;
+
+    border-radius:50% 50% 0 0;
+}
+
+.key{
+    position:absolute;
+
+    left:calc(50% - 75px);
+    bottom:0;
+
+    width:150px;
+    height:48%;
+
+    border:4px solid #ffffff80;
+    border-bottom:0;
+
+    background:#db894aaa;
+}
+
+
+/* HOOP */
+
+.hoop{
+    position:absolute;
+
+    width:175px;
+    height:150px;
+
+    left:50%;
+    top:9%;
+
+    transform:translateX(-50%);
+
+    z-index:12;
+}
+
+.backboard{
+    position:absolute;
+
+    width:110px;
+    height:74px;
+
+    left:32px;
+    top:0;
+
+    background:
+    linear-gradient(
+        145deg,
+        #ffffff,
+        #cbd4db
+    );
+
+    border:5px solid #59646d;
+    border-radius:4px;
+
+    box-shadow:0 5px 12px #0008;
+}
+
+.boardTarget{
+    position:absolute;
+
+    width:52px;
+    height:36px;
+
+    left:23px;
+    top:25px;
+
+    border:4px solid #e43e28;
+}
+
+.pole{
+    position:absolute;
+
+    width:11px;
+    height:80px;
+
+    left:80px;
+    top:70px;
+
+    background:#555f68;
+}
+
+.rim{
+    position:absolute;
+
+    width:74px;
+    height:23px;
+
+    left:50px;
+    top:70px;
+
+    border:7px solid #e84a25;
+    border-top:0;
+
+    border-radius:0 0 50px 50px;
+
+    z-index:5;
+}
+
+.net{
+    position:absolute;
+
+    width:63px;
+    height:50px;
+
+    left:56px;
+    top:85px;
+
+    border-left:2px solid white;
+    border-right:2px solid white;
+
+    background:
+    repeating-linear-gradient(
+        90deg,
+        transparent 0 9px,
+        white 9px 11px
+    );
+
+    clip-path:
+    polygon(
+        0 0,
+        100% 0,
+        78% 100%,
+        22% 100%
+    );
+
+    transition:transform .2s ease;
+}
+
+
+/* BALL */
+
+.ball{
+    position:absolute;
+
+    width:28px;
+    height:28px;
+
+    left:calc(50% - 14px);
+    bottom:20%;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle at 35% 28%,
+        #ffb743,
+        #ed7117 65%,
+        #9c380b
+    );
+
+    border:2px solid #863008;
+
+    box-shadow:0 4px 9px #0009;
+
+    z-index:30;
+
+    cursor:grab;
+    touch-action:none;
+
+    transition:
+    left .75s cubic-bezier(.15,.8,.2,1),
+    bottom .75s cubic-bezier(.15,.8,.2,1),
+    transform .75s ease;
+}
+
+.ball:before,
+.ball:after{
+    content:"";
+    position:absolute;
+    background:#702707;
+}
+
+.ball:before{
+    width:3px;
+    height:25px;
+
+    left:10px;
+    top:-1px;
+
+    transform:rotate(35deg);
+}
+
+.ball:after{
+    width:25px;
+    height:3px;
+
+    left:0;
+    top:10px;
+
+    transform:rotate(-35deg);
+}
+
+
+/* PLAYER */
+
+.player{
+    position:absolute;
+
+    width:115px;
+    height:190px;
+
+    left:calc(50% - 57px);
+    bottom:2%;
+
+    z-index:20;
+
+    transition:transform .2s ease;
+}
+
+.head{
+    position:absolute;
+
+    width:39px;
+    height:39px;
+
+    left:38px;
+    top:0;
+
+    background:#aa6d4c;
+
+    border:2px solid #5d3929;
+    border-radius:50%;
+}
+
+.hair{
+    position:absolute;
+
+    width:41px;
+    height:17px;
+
+    left:37px;
+    top:-5px;
+
+    background:#171717;
+
+    border-radius:20px 20px 5px 5px;
+}
+
+.body{
+    position:absolute;
+
+    width:54px;
+    height:67px;
+
+    left:31px;
+    top:40px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #e31b32,
+        #ff4657,
+        #b80a20
+    );
+
+    border:2px solid #780818;
+    border-radius:11px;
+}
+
+.number{
+    position:absolute;
+
+    left:48px;
+    top:54px;
+
+    font-size:20px;
+    font-weight:bold;
+}
+
+.arm{
+    position:absolute;
+
+    width:56px;
+    height:11px;
+
+    top:50px;
+
+    background:#aa6d4c;
+    border-radius:10px;
+
+    transition:transform .2s ease;
+}
+
+.armLeft{
+    left:-8px;
+    transform:rotate(25deg);
+}
+
+.armRight{
+    right:-8px;
+    transform:rotate(-25deg);
+}
+
+.shorts{
+    position:absolute;
+
+    width:58px;
+    height:33px;
+
+    left:29px;
+    top:99px;
+
+    background:#202633;
+    border-radius:5px;
+}
+
+.leg{
+    position:absolute;
+
+    width:15px;
+    height:66px;
+
+    top:126px;
+
+    background:#aa6d4c;
+    border-radius:8px;
+}
+
+.legLeft{
+    left:38px;
+    transform:rotate(7deg);
+}
+
+.legRight{
+    left:63px;
+    transform:rotate(-7deg);
+}
+
+.shoe{
+    position:absolute;
+
+    width:32px;
+    height:13px;
+
+    top:182px;
+
+    background:#111;
+    border-radius:10px;
+}
+
+.shoeLeft{
+    left:21px;
+}
+
+.shoeRight{
+    left:61px;
+}
+
+.player.shoot{
+    transform:
+    translateY(-10px)
+    scale(1.03);
+}
+
+.player.shoot .armLeft{
+    transform:rotate(-55deg);
+}
+
+.player.shoot .armRight{
+    transform:rotate(-65deg);
+}
+
+
+/* DRAG LINE */
+
+.dragLine{
+    position:absolute;
+
+    width:4px;
+
+    background:
+    repeating-linear-gradient(
+        to bottom,
+        #fff 0 8px,
+        transparent 8px 15px
+    );
+
+    transform-origin:bottom center;
+
+    z-index:25;
+
+    display:none;
+
+    pointer-events:none;
+}
+
+
+/* MESSAGE */
+
+.message{
+    width:94%;
+    max-width:720px;
+
+    min-height:28px;
+
+    margin:4px auto;
+
+    font-size:
+    clamp(15px,4vw,20px);
+
+    font-weight:bold;
+
+    text-shadow:0 2px 7px #000;
+}
+
+
+/* RESTART */
+
+.restart{
+    display:none;
+
+    width:94%;
+    max-width:720px;
+
+    margin:7px auto;
+
+    min-height:50px;
+
+    border:0;
+    border-radius:14px;
+
+    color:white;
+
+    font-weight:bold;
+    font-size:16px;
+
+    background:
+    linear-gradient(
+        145deg,
+        #00d9ff,
+        #0075ff
+    );
+
+    box-shadow:
+    0 5px 0 #004b87;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .court{
+        height:55vh;
+        min-height:315px;
+    }
+
+    .player{
+        transform:scale(.82);
+        transform-origin:bottom center;
+    }
+
+    .hoop{
+        transform:
+        translateX(-50%)
+        scale(.86);
+
+        transform-origin:top center;
+    }
+}
+
+@media(max-height:700px){
+
+    .court{
+        height:48vh;
+        min-height:280px;
+    }
+
+    .player{
+        transform:scale(.68);
+    }
+
+    .hoop{
+        transform:
+        translateX(-50%)
+        scale(.70);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1>🏀 10 SHOT CHALLENGE</h1>
+
+<div class="subtitle">
+Drag the ball and release
+</div>
+
+
+<div class="scoreboard">
+
+    <div class="box">
+        <small>SCORE</small>
+        <strong id="score">0</strong>
+    </div>
+
+    <div class="box">
+        <small>SHOTS LEFT</small>
+        <strong id="shotsLeft">10</strong>
+    </div>
+
+    <div class="box">
+        <small>BEST</small>
+        <strong id="best">0</strong>
+    </div>
+
+</div>
+
+
+<div class="court" id="court">
+
+    <div class="light light1"></div>
+    <div class="light light2"></div>
+
+    <div class="crowd"></div>
+
+    <div class="floor"></div>
+
+    <div class="threePoint"></div>
+
+    <div class="key"></div>
+
+
+    <!-- HOOP -->
+
+    <div class="hoop">
+
+        <div class="backboard"></div>
+
+        <div class="boardTarget"></div>
+
+        <div class="pole"></div>
+
+        <div class="rim"></div>
+
+        <div class="net"></div>
+
+    </div>
+
+
+    <!-- DRAG GUIDE -->
+
+    <div
+    class="dragLine"
+    id="dragLine">
+    </div>
+
+
+    <!-- BALL -->
+
+    <div
+    class="ball"
+    id="ball">
+    </div>
+
+
+    <!-- PLAYER -->
+
+    <div
+    class="player"
+    id="player">
+
+        <div class="head"></div>
+
+        <div class="hair"></div>
+
+        <div class="body"></div>
+
+        <div class="number">
+        23
+        </div>
+
+        <div class="arm armLeft"></div>
+
+        <div class="arm armRight"></div>
+
+        <div class="shorts"></div>
+
+        <div class="leg legLeft"></div>
+
+        <div class="leg legRight"></div>
+
+        <div class="shoe shoeLeft"></div>
+
+        <div class="shoe shoeRight"></div>
+
+    </div>
+
+</div>
+
+
+<div
+class="message"
+id="message">
+
+🏀 You have 10 shots — good luck!
+
+</div>
+
+
+<button
+class="restart"
+id="restart"
+onclick="restartGame()">
+
+🔄 PLAY AGAIN
+
+</button>
+
+
+<script>
+
+/* ===============================
+   GAME VARIABLES
+=============================== */
+
+let score = 0;
+
+let shotsLeft = 10;
+
+let best =
+Number(
+localStorage.getItem(
+"basketballBest"
+)
+) || 0;
+
+let dragging = false;
+
+let shooting = false;
+
+let startX = 0;
+
+let startY = 0;
+
+
+/* ===============================
+   ELEMENTS
+=============================== */
+
+const ball =
+document.getElementById("ball");
+
+const player =
+document.getElementById("player");
+
+const dragLine =
+document.getElementById("dragLine");
+
+const message =
+document.getElementById("message");
+
+const scoreText =
+document.getElementById("score");
+
+const shotsLeftText =
+document.getElementById("shotsLeft");
+
+const bestText =
+document.getElementById("best");
+
+const restart =
+document.getElementById("restart");
+
+bestText.textContent = best;
+
+
+/* ===============================
+   START DRAG
+=============================== */
+
+ball.addEventListener(
+"pointerdown",
+function(e){
+
+    if(
+        shooting ||
+        shotsLeft <= 0
+    ){
+        return;
+    }
+
+    e.preventDefault();
+
+    dragging = true;
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    ball.setPointerCapture(
+        e.pointerId
+    );
+
+    dragLine.style.display =
+    "block";
+
+    message.textContent =
+    "🎯 Pull and aim!";
+});
+
+
+/* ===============================
+   DRAG
+=============================== */
+
+ball.addEventListener(
+"pointermove",
+function(e){
+
+    if(!dragging){
+        return;
+    }
+
+    e.preventDefault();
+
+    const dx =
+    e.clientX - startX;
+
+    const dy =
+    e.clientY - startY;
+
+    const distance =
+    Math.min(
+        100,
+        Math.sqrt(
+            dx * dx +
+            dy * dy
+        )
+    );
+
+    const angle =
+    Math.atan2(
+        dy,
+        dx
+    ) * 180 / Math.PI + 90;
+
+    dragLine.style.height =
+    distance + "px";
+
+    dragLine.style.left =
+    "calc(50% - 2px)";
+
+    dragLine.style.bottom =
+    "20%";
+
+    dragLine.style.transform =
+    "rotate(" +
+    angle +
+    "deg)";
+});
+
+
+/* ===============================
+   RELEASE
+=============================== */
+
+ball.addEventListener(
+"pointerup",
+function(e){
+
+    if(!dragging){
+        return;
+    }
+
+    e.preventDefault();
+
+    dragging = false;
+
+    dragLine.style.display =
+    "none";
+
+    const dx =
+    e.clientX - startX;
+
+    const dy =
+    e.clientY - startY;
+
+    const distance =
+    Math.sqrt(
+        dx * dx +
+        dy * dy
+    );
+
+    if(distance < 15){
+
+        message.textContent =
+        "👆 Drag a little more!";
+
+        return;
+    }
+
+    shoot(
+        dx,
+        dy,
+        distance
+    );
+});
+
+
+/* ===============================
+   SHOOT
+=============================== */
+
+function shoot(
+    dx,
+    dy,
+    distance
+){
+
+    if(
+        shooting ||
+        shotsLeft <= 0
+    ){
+        return;
+    }
+
+    shooting = true;
+
+    shotsLeft--;
+
+    shotsLeftText.textContent =
+    shotsLeft;
+
+    player.classList.add(
+    "shoot"
+    );
+
+    message.textContent =
+    "🏀 SHOOT!";
+
+
+    /*
+      INCREASED BUT CONTROLLED POWER
+    */
+
+    let power =
+    Math.min(
+        distance * 1.15,
+        85
+    );
+
+
+    /*
+      MORE NATURAL SIDE MOVEMENT
+    */
+
+    let horizontal =
+    50 + dx * 0.14;
+
+
+    /*
+      STRONGER ARC
+    */
+
+    let verticalPower =
+    58 +
+    (-dy) * 0.22;
+
+
+    /*
+      HEIGHT LIMIT
+    */
+
+    verticalPower =
+    Math.max(
+        52,
+        Math.min(
+            78,
+            verticalPower
+        )
+    );
+
+
+    /*
+      KEEP BALL ON COURT
+    */
+
+    horizontal =
+    Math.max(
+        25,
+        Math.min(
+            75,
+            horizontal
+        )
+    );
+
+
+    /*
+      BALL FLIGHT
+    */
+
+    setTimeout(
+    function(){
+
+        ball.style.left =
+        horizontal + "%";
+
+        ball.style.bottom =
+        verticalPower + "%";
+
+        ball.style.transform =
+        "scale(.76) rotate(650deg)";
+
+    },
+    80
+    );
+
+
+    /*
+      CHECK SHOT
+    */
+
+    setTimeout(
+    function(){
+
+        checkBasket(
+            horizontal,
+            verticalPower,
+            dx,
+            dy,
+            power
+        );
+
+    },
+    750
+    );
+}
+
+
+/* ===============================
+   CHECK BASKET
+=============================== */
+
+function checkBasket(
+    horizontal,
+    vertical,
+    dx,
+    dy,
+    power
+){
+
+    const horizontalError =
+    Math.abs(
+        horizontal - 50
+    );
+
+    const heightError =
+    Math.abs(
+        vertical - 67
+    );
+
+
+    /*
+      GOOD SHOT CONDITIONS
+    */
+
+    let basket =
+
+    horizontalError < 7 &&
+
+    heightError < 10 &&
+
+    dy < -5 &&
+
+    power >= 35 &&
+
+    power <= 82;
+
+
+    /*
+      GOOD SHOT STILL HAS
+      SOME REALISTIC VARIATION
+    */
+
+    if(basket){
+
+        let accuracy =
+        Math.random();
+
+        if(
+            accuracy < 0.78
+        ){
+
+            score++;
+
+            scoreText.textContent =
+            score;
+
+            message.textContent =
+            "🔥 SWISH! +1";
+
+            animateNet();
+
+        }
+        else{
+
+            message.textContent =
+            "😮 Rimmed out!";
+
+        }
+
+    }
+    else{
+
+        if(horizontal < 43){
+
+            message.textContent =
+            "⬅️ Too far left!";
+
+        }
+        else if(horizontal > 57){
+
+            message.textContent =
+            "➡️ Too far right!";
+
+        }
+        else if(dy >= 0){
+
+            message.textContent =
+            "⬆️ Pull upward!";
+
+        }
+        else if(power < 35){
+
+            message.textContent =
+            "💪 More power!";
+
+        }
+        else if(power > 82){
+
+            message.textContent =
+            "⚠️ Too much power!";
+
+        }
+        else{
+
+            message.textContent =
+            "❌ Miss!";
+
+        }
+    }
+
+
+    /* BEST SCORE */
+
+    if(score > best){
+
+        best = score;
+
+        bestText.textContent =
+        best;
+
+        localStorage.setItem(
+            "basketballBest",
+            best
+        );
+    }
+
+
+    /* RESET */
+
+    setTimeout(
+    function(){
+
+        resetBall();
+
+        player.classList.remove(
+        "shoot"
+        );
+
+        shooting = false;
+
+
+        if(shotsLeft === 0){
+
+            message.textContent =
+            "🏁 GAME OVER — " +
+            score +
+            "/10 scored!";
+
+            restart.style.display =
+            "block";
+
+        }
+        else{
+
+            message.textContent =
+            "🏀 " +
+            shotsLeft +
+            " shots left!";
+
+        }
+
+    },
+    650
+    );
+}
+
+
+/* ===============================
+   NET ANIMATION
+=============================== */
+
+function animateNet(){
+
+    const net =
+    document.querySelector(
+    ".net"
+    );
+
+    net.style.transform =
+    "scaleY(1.25)";
+
+    setTimeout(
+    function(){
+
+        net.style.transform =
+        "scaleY(1)";
+
+    },
+    250
+    );
+}
+
+
+/* ===============================
+   RESET BALL
+=============================== */
+
+function resetBall(){
+
+    ball.style.left =
+    "calc(50% - 14px)";
+
+    ball.style.bottom =
+    "20%";
+
+    ball.style.transform =
+    "scale(1) rotate(0deg)";
+}
+
+
+/* ===============================
+   RESTART GAME
+=============================== */
+
+function restartGame(){
+
+    score = 0;
+
+    shotsLeft = 10;
+
+    shooting = false;
+
+    dragging = false;
+
+    scoreText.textContent =
+    "0";
+
+    shotsLeftText.textContent =
+    "10";
+
+    resetBall();
+
+    player.classList.remove(
+    "shoot"
+    );
+
+    restart.style.display =
+    "none";
+
+    message.textContent =
+    "🏀 You have 10 shots — good luck!";
+}
+
+</script>
+
+</body>
+</html>
