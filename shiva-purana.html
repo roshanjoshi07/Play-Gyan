@@ -1,10 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>शिव पुराण — महादेवका कथा</title>
+<title>शिव पुराण — भगवान शिवका पवित्र कथाहरू</title>
 
 <style>
 *{
@@ -13,1538 +14,904 @@
     box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
 body{
     font-family:"Noto Sans Devanagari",Arial,sans-serif;
-    background:#050b14;
-    color:#eef5ff;
-    line-height:1.9;
+    background:#071018;
+    color:#e9f1f7;
+    line-height:2;
 }
 
-/* ================= BACKGROUND ================= */
-
-body:before{
+/* हल्का background graphics */
+body::before{
     content:"";
     position:fixed;
     inset:0;
-    z-index:-5;
+    z-index:-2;
     background:
-        radial-gradient(circle at 20% 20%,#253d68 0,transparent 30%),
-        radial-gradient(circle at 80% 30%,#3d215e 0,transparent 28%),
-        radial-gradient(circle at 50% 90%,#123d43 0,transparent 35%),
-        linear-gradient(135deg,#030712,#081522,#02060d);
+        radial-gradient(circle at 20% 20%,#31566b55,transparent 30%),
+        radial-gradient(circle at 80% 70%,#1b496555,transparent 35%),
+        linear-gradient(135deg,#050b11,#0b1821,#061018);
 }
 
-.stars{
+body::after{
+    content:"";
     position:fixed;
-    inset:0;
-    z-index:-4;
-    pointer-events:none;
-    overflow:hidden;
-}
-
-.star{
-    position:absolute;
-    width:3px;
-    height:3px;
-    background:#fff;
+    width:350px;
+    height:350px;
     border-radius:50%;
-    animation:twinkle 2s infinite alternate;
+    background:#6ee7ff0c;
+    filter:blur(70px);
+    top:10%;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:-1;
 }
 
-@keyframes twinkle{
-    from{opacity:.15;transform:scale(.6)}
-    to{opacity:1;transform:scale(1.4)}
-}
-
-/* ================= HEADER ================= */
+/* HEADER */
 
 header{
     position:sticky;
     top:0;
-    z-index:100;
-    background:#030712dd;
-    backdrop-filter:blur(16px);
+    z-index:20;
+    background:#071018e8;
+    backdrop-filter:blur(12px);
     border-bottom:1px solid #ffffff18;
 }
 
 .nav{
-    max-width:1150px;
+    max-width:1000px;
     margin:auto;
-    padding:13px 18px;
+    padding:16px 20px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    gap:15px;
+    align-items:center;
 }
 
 .logo{
     font-size:21px;
     font-weight:800;
-    color:#f4c86b;
+    color:#b8edff;
 }
 
-.nav button{
-    border:0;
-    background:#ffffff12;
-    color:white;
-    padding:8px 12px;
+.back{
+    text-decoration:none;
+    color:#d9f5ff;
+    border:1px solid #ffffff22;
+    padding:7px 14px;
     border-radius:10px;
-    cursor:pointer;
+    background:#ffffff08;
 }
 
-/* ================= HERO ================= */
+/* HERO */
 
 .hero{
-    min-height:650px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    max-width:1000px;
+    margin:auto;
+    padding:80px 20px 55px;
     text-align:center;
-    position:relative;
-    overflow:hidden;
-    padding:60px 20px;
-}
-
-.hero-content{
-    position:relative;
-    z-index:5;
-    max-width:850px;
 }
 
 .om{
-    font-size:90px;
-    color:#8bdcff;
+    font-size:65px;
+    color:#d8f8ff;
     text-shadow:
-        0 0 20px #4ed7ff,
-        0 0 60px #3976ff;
-    animation:omFloat 3s ease-in-out infinite;
-}
-
-@keyframes omFloat{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-12px)}
+        0 0 15px #73dfff,
+        0 0 45px #2689aa;
+    margin-bottom:20px;
 }
 
 .hero h1{
-    margin-top:12px;
-    font-size:clamp(38px,7vw,75px);
-    color:#f6d27a;
-    text-shadow:0 5px 30px #000;
+    font-size:clamp(38px,7vw,70px);
+    color:#c9f3ff;
+    margin-bottom:15px;
 }
 
 .hero p{
-    max-width:700px;
-    margin:18px auto;
-    color:#c8d7e9;
+    max-width:750px;
+    margin:auto;
+    color:#b8c9d4;
     font-size:18px;
 }
 
-.hero-buttons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:12px;
-    margin-top:25px;
-}
-
-.btn{
-    border:0;
-    border-radius:14px;
-    padding:13px 21px;
-    cursor:pointer;
-    font-weight:700;
-    font-size:15px;
-    background:linear-gradient(135deg,#f5d47c,#b87828);
-    color:#160d04;
-    box-shadow:0 8px 25px #0007;
-}
-
-.btn.secondary{
-    background:#ffffff12;
-    color:white;
-    border:1px solid #ffffff22;
-}
-
-/* ================= SHIVA ART ================= */
-
-.shiva-art{
-    width:270px;
-    height:330px;
-    margin:35px auto 0;
-    position:relative;
-}
-
-.aura{
-    position:absolute;
-    width:270px;
-    height:270px;
-    top:20px;
-    border-radius:50%;
-    background:
-        radial-gradient(circle,#a5ecff22 0 30%,#64cfff20 31% 48%,transparent 49%);
-    box-shadow:0 0 70px #5bcfff44;
-    animation:aura 4s linear infinite;
-}
-
-@keyframes aura{
-    to{transform:rotate(360deg)}
-}
-
-.shiva-head{
-    position:absolute;
-    top:60px;
-    left:95px;
-    width:80px;
-    height:90px;
-    border-radius:45% 45% 40% 40%;
-    background:linear-gradient(135deg,#c98d65,#75452f);
-    border:3px solid #4b2a20;
-    z-index:3;
-}
-
-.hair{
-    position:absolute;
-    left:70px;
-    top:30px;
-    width:130px;
-    height:85px;
-    border-radius:55% 55% 25% 25%;
-    background:#14131a;
-    box-shadow:0 0 25px #000;
-    z-index:2;
-}
-
-.hair:after{
-    content:"";
-    position:absolute;
-    width:30px;
-    height:80px;
-    right:-15px;
-    top:35px;
-    border-radius:50%;
-    background:#17151b;
-    transform:rotate(-25deg);
-}
-
-.eye{
-    position:absolute;
-    width:11px;
-    height:5px;
-    top:98px;
-    border-radius:50%;
-    background:#101018;
-    z-index:5;
-}
-
-.eye.left{left:115px}
-.eye.right{left:151px}
-
-.third-eye{
-    position:absolute;
-    top:84px;
-    left:130px;
-    width:20px;
-    height:9px;
-    border-radius:50%;
-    background:#e85e4d;
-    box-shadow:0 0 13px #ff634d;
-    z-index:6;
-}
-
-.neck{
-    position:absolute;
-    left:112px;
-    top:140px;
-    width:46px;
-    height:35px;
-    background:#a96848;
-    z-index:1;
-}
-
-.body-art{
-    position:absolute;
-    left:65px;
-    top:165px;
-    width:140px;
-    height:120px;
-    border-radius:60px 60px 20px 20px;
-    background:linear-gradient(#ece7db,#b8b1a0);
-    border:3px solid #5e584e;
-}
-
-.rudra{
-    position:absolute;
-    left:85px;
-    top:175px;
-    width:100px;
-    height:20px;
-    border-top:8px dotted #b47b2c;
-}
-
-/* ================= CONTENT ================= */
+/* CONTENT */
 
 .container{
-    max-width:1050px;
+    max-width:950px;
     margin:auto;
-    padding:30px 18px 80px;
+    padding:20px;
 }
-
-.info-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-    gap:15px;
-    margin-bottom:45px;
-}
-
-.info-card{
-    background:linear-gradient(
-        145deg,
-        #ffffff0d,
-        #ffffff04
-    );
-    border:1px solid #ffffff15;
-    border-radius:18px;
-    padding:22px;
-    text-align:center;
-    box-shadow:0 15px 40px #0004;
-}
-
-.info-card .icon{
-    font-size:38px;
-}
-
-.info-card h3{
-    color:#f3cd78;
-    margin:7px 0;
-}
-
-/* ================= CHAPTER ================= */
 
 .chapter{
     margin:25px 0;
-    padding:28px;
-    border-radius:22px;
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff0d,
-            #ffffff03
-        );
-    border:1px solid #ffffff14;
-    box-shadow:0 15px 45px #0005;
+    padding:30px;
+    background:#ffffff07;
+    border:1px solid #ffffff12;
+    border-radius:20px;
+    box-shadow:0 15px 40px #0005;
 }
 
 .chapter-number{
-    color:#7bdfff;
-    font-weight:800;
+    display:inline-block;
     font-size:13px;
-    letter-spacing:1px;
+    font-weight:bold;
+    color:#79def9;
+    margin-bottom:5px;
 }
 
 .chapter h2{
-    color:#f3cf7d;
-    margin:5px 0 14px;
+    color:#c5f1ff;
     font-size:27px;
+    margin-bottom:18px;
 }
 
 .chapter p{
-    color:#d4deeb;
-    margin:12px 0;
+    color:#d1dde4;
+    margin:13px 0;
 }
 
-.quote{
-    margin:18px 0;
-    padding:16px 20px;
-    border-left:4px solid #e6b95e;
-    background:#e9b95d0c;
-    border-radius:8px;
-    color:#f5d993;
+.highlight{
+    margin:20px 0;
+    padding:17px 20px;
+    border-left:3px solid #65d9f5;
+    background:#65d9f50a;
+    color:#c8edf8;
+    border-radius:5px;
 }
 
-.story-image{
-    min-height:170px;
-    border-radius:18px;
-    margin:18px 0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:95px;
-    background:
-        radial-gradient(circle,#5fd7ff22,#050b14 70%);
-    border:1px solid #ffffff12;
-    overflow:hidden;
+/* SIMPLE DIVIDER */
+
+.divider{
+    height:1px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #69dcf966,
+        transparent
+    );
+    margin:35px 0;
 }
 
-/* ================= TIMELINE ================= */
-
-.timeline{
-    margin-top:25px;
-    display:grid;
-    gap:12px;
-}
-
-.timeline div{
-    padding:15px;
-    border-left:3px solid #d8aa55;
-    background:#ffffff07;
-    border-radius:0 12px 12px 0;
-}
-
-.timeline b{
-    color:#f0ca73;
-}
-
-/* ================= AUDIO ================= */
-
-.audio-panel{
-    position:fixed;
-    right:15px;
-    bottom:15px;
-    z-index:200;
-    display:flex;
-    gap:8px;
-}
-
-.audio-panel button{
-    border:1px solid #ffffff22;
-    background:#07101cee;
-    color:white;
-    border-radius:50%;
-    width:48px;
-    height:48px;
-    cursor:pointer;
-    font-size:19px;
-}
-
-/* ================= FOOTER ================= */
+/* FOOTER */
 
 footer{
-    padding:45px 20px;
+    margin-top:50px;
+    padding:40px 20px;
     text-align:center;
-    background:#02050a;
     border-top:1px solid #ffffff12;
-    color:#91a2b7;
+    color:#8497a5;
 }
 
-footer strong{
-    color:#e9c46b;
-}
-
-/* ================= REVEAL ================= */
-
-.reveal{
-    opacity:0;
-    transform:translateY(25px);
-    transition:.7s ease;
-}
-
-.reveal.show{
-    opacity:1;
-    transform:translateY(0);
-}
+/* MOBILE */
 
 @media(max-width:600px){
 
     .hero{
-        min-height:620px;
+        padding-top:55px;
     }
 
     .om{
-        font-size:65px;
-    }
-
-    .shiva-art{
-        transform:scale(.8);
-        margin-top:10px;
+        font-size:52px;
     }
 
     .chapter{
-        padding:20px;
+        padding:21px;
     }
 
     .chapter h2{
         font-size:23px;
     }
 
+    .chapter p{
+        font-size:15px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="stars" id="stars"></div>
-
 <header>
     <div class="nav">
-        <div class="logo">🔱 शिव पुराण</div>
 
-        <button onclick="toggleMusic()">
-            🔊 ध्वनि
-        </button>
+        <div class="logo">
+            🔱 शिव पुराण
+        </div>
+
+        <a href="index.html" class="back">
+            ← Back
+        </a>
+
     </div>
 </header>
 
 
 <section class="hero">
 
-    <div class="hero-content">
+    <div class="om">ॐ</div>
 
-        <div class="om">ॐ</div>
+    <h1>शिव पुराण</h1>
 
-        <h1>शिव पुराण</h1>
-
-        <p>
-            भगवान शिव, माता पार्वती, गणेश, कार्तिकेय,
-            नन्दी तथा शिवभक्तहरूसँग सम्बन्धित प्रमुख
-            पौराणिक कथाहरूको ज्ञानमूलक यात्रा।
-        </p>
-
-        <div class="hero-buttons">
-
-            <button class="btn"
-                    onclick="startReading()">
-                📖 कथा पढ्न सुरु गर्नुहोस्
-            </button>
-
-            <button class="btn secondary"
-                    onclick="toggleMusic()">
-                🎵 ध्यान/पृष्ठभूमि ध्वनि
-            </button>
-
-        </div>
-
-        <div class="shiva-art">
-
-            <div class="aura"></div>
-
-            <div class="hair"></div>
-
-            <div class="shiva-head"></div>
-
-            <div class="eye left"></div>
-            <div class="eye right"></div>
-
-            <div class="third-eye"></div>
-
-            <div class="neck"></div>
-
-            <div class="body-art"></div>
-
-            <div class="rudra"></div>
-
-        </div>
-
-    </div>
+    <p>
+        भगवान शिवको उत्पत्ति, महिमा, पार्वतीसँगको विवाह,
+        गणेश र कार्तिकेयका कथा, ज्योतिर्लिङ्ग,
+        भक्तहरूको कथा र भगवान शिवसँग सम्बन्धित
+        प्रमुख पुराणिक प्रसंगहरूको कथा।
+    </p>
 
 </section>
 
 
-<main class="container" id="story">
+<main class="container">
 
 
-<!-- ================= INTRO ================= -->
+<!-- 1 -->
 
-<div class="info-grid reveal">
+<section class="chapter">
 
-    <div class="info-card">
-        <div class="icon">🔱</div>
-        <h3>भगवान शिव</h3>
-        <p>सृष्टि, स्थिति र संहारसँग जोडिएको प्रमुख देवता।</p>
-    </div>
+<span class="chapter-number">
+प्रथम कथा
+</span>
 
-    <div class="info-card">
-        <div class="icon">🌙</div>
-        <h3>चन्द्रशेखर</h3>
-        <p>शिरमा चन्द्रमा धारण गर्ने शिवको स्वरूप।</p>
-    </div>
-
-    <div class="info-card">
-        <div class="icon">🐍</div>
-        <h3>नागभूषण</h3>
-        <p>सर्पलाई आभूषणका रूपमा धारण गर्ने महादेव।</p>
-    </div>
-
-    <div class="info-card">
-        <div class="icon">🐂</div>
-        <h3>नन्दी</h3>
-        <p>भगवान शिवका परम भक्त तथा वाहन।</p>
-    </div>
-
-</div>
-
-
-<!-- ================= CHAPTER 1 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय १</span>
-
-<h2>📜 शिव पुराणको परिचय</h2>
-
-<div class="story-image">🔱 📖 🌌</div>
+<h2>शिवको अनन्त स्वरूप</h2>
 
 <p>
-शिव पुराण हिन्दू धार्मिक साहित्यको महत्वपूर्ण पुराणमध्ये
-एक मानिन्छ। यसमा भगवान शिवको महिमा, शिवतत्त्व,
-भक्ति, सृष्टिको रहस्य, विभिन्न देवदेवीका कथाहरू,
-तीर्थ, व्रत तथा आध्यात्मिक शिक्षाहरूको वर्णन पाइन्छ।
+सृष्टिको प्रारम्भको वर्णन गर्दा शिवलाई अनादि,
+अनन्त र परम तत्त्वका रूपमा वर्णन गरिन्छ।
+उहाँको कुनै आरम्भ र अन्त छैन। उहाँ समयभन्दा
+पनि पर हुनुहुन्छ र सम्पूर्ण चराचर जगतमा
+व्याप्त हुनुहुन्छ।
 </p>
 
 <p>
-शिव पुराणको मुख्य केन्द्र भगवान शिव भए पनि यसका
-कथाहरूमा ब्रह्मा, विष्णु, देवी पार्वती, गणेश, कार्तिकेय,
-नन्दी, ऋषिहरू तथा विभिन्न राजा र भक्तहरूको प्रसंग आउँछन्।
+जब संसारको कुनै स्पष्ट स्वरूप थिएन, त्यतिबेला
+परम तत्त्वको रूपमा शिवको महिमा रहेको वर्णन
+पुराणिक कथाहरूमा पाइन्छ। उहाँबाट शक्ति
+प्रकट हुन्छिन् र शक्ति तथा शिवको संयोगबाट
+सृष्टिको विस्तार हुने विचार प्रस्तुत गरिन्छ।
 </p>
 
-<div class="quote">
-"शिव" भन्ने नामलाई कल्याण र मंगलसँग जोडेर
-सम्झने धार्मिक परम्परा पाइन्छ।
+<div class="highlight">
+शिवलाई केवल एउटा देवताको रूपमा मात्र होइन,
+परम तत्त्व र संहार तथा परिवर्तनका शक्तिसँग
+सम्बन्धित रूपमा पनि वर्णन गरिन्छ।
 </div>
 
 </section>
 
 
-<!-- ================= CHAPTER 2 ================= -->
+<!-- 2 -->
 
-<section class="chapter reveal">
+<section class="chapter">
 
-<span class="chapter-number">अध्याय २</span>
+<span class="chapter-number">
+द्वितीय कथा
+</span>
 
-<h2>🌌 सृष्टि र शिवतत्त्व</h2>
-
-<div class="story-image">🌌 🔥 🔱</div>
+<h2>ब्रह्मा र विष्णुको विवाद</h2>
 
 <p>
-पौराणिक कथाहरूमा सृष्टिको आरम्भसम्बन्धी विभिन्न
-दृष्टान्तहरू वर्णन गरिन्छ। शिवलाई अनन्त,
-असीम र समयभन्दा परको तत्त्वका रूपमा चित्रण गरिन्छ।
+एक समय ब्रह्मा र विष्णुबीच आफूहरू मध्ये
+को महान् भन्ने विषयमा विवाद भयो। त्यही समयमा
+उनीहरूको बीचमा एउटा अद्भुत अग्निस्तम्भ
+प्रकट भयो।
 </p>
 
 <p>
-एक प्रसिद्ध कथामा ब्रह्मा र विष्णुबीच सर्वोच्चताको
-प्रश्न उठ्छ। त्यही समयमा उनीहरूका अगाडि
-अन्त्य नभएको अग्निको स्तम्भ प्रकट हुन्छ।
-त्यो ज्योतिर्मय स्तम्भको आदि र अन्त पत्ता लगाउन
-दुवै देवता प्रयास गर्छन्।
+त्यो स्तम्भको न आदि देखिन्थ्यो, न अन्त।
+विष्णु त्यसको अन्त खोज्न तलतिर गए र
+ब्रह्मा माथितिर गए।
 </p>
 
 <p>
-विष्णु तलतिर र ब्रह्मा माथितिर खोज्न जान्छन्।
-तर उनीहरूले त्यसको अन्त भेट्टाउन सक्दैनन्।
-यस कथालाई शिवको अनन्त स्वरूपको प्रतीकका रूपमा
-व्याख्या गरिन्छ।
-</p>
-
-<div class="quote">
-अनन्त सत्यलाई सीमित अहंकारले पूर्ण रूपमा
-मापन गर्न सक्दैन भन्ने आध्यात्मिक सन्देश यस कथासँग
-जोडिन्छ।
-</div>
-
-</section>
-
-
-<!-- ================= CHAPTER 3 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय ३</span>
-
-<h2>🏔️ सती र भगवान शिव</h2>
-
-<div class="story-image">🏔️ ❤️ 🔱</div>
-
-<p>
-दक्ष प्रजापतिकी छोरी सती भगवान शिवप्रति अत्यन्त
-समर्पित थिइन्। सती र शिवको विवाह भयो।
-तर दक्षको मनमा शिवप्रति सम्मान थिएन।
+धेरै खोजे पनि विष्णुले त्यसको अन्त भेट्न सकेनन्।
+ब्रह्माले भने आफूले त्यसको शिखर भेटेको
+भनी दाबी गरे।
 </p>
 
 <p>
-दक्षले एउटा ठूलो यज्ञ आयोजना गरे। शिव र सतीलाई
-उचित सम्मानका साथ नबोलाइए पनि सती आफ्नो
-पिताको घर जान चाहिन्।
-</p>
-
-<p>
-यज्ञमा शिवको अपमान भएको देखेर सती अत्यन्त
-दुःखी भइन्। पौराणिक कथाअनुसार उनले आफ्नो
-शरीर त्याग गरिन्।
-</p>
-
-<p>
-यो घटनापछि भगवान शिव अत्यन्त दुःखी भए।
-कथामा शिवको क्रोध र वीरभद्रको प्रकट हुने प्रसंग
-आउँछ र दक्षको यज्ञ नष्ट हुन्छ।
+त्यसपछि त्यो अनन्त ज्योति नै भगवान शिवको
+स्वरूप भएको प्रकट भयो। विष्णुले सत्य स्वीकार
+गरे र शिवको अनन्त स्वरूपको महिमा बुझे।
 </p>
 
 </section>
 
 
-<!-- ================= CHAPTER 4 ================= -->
+<!-- 3 -->
 
-<section class="chapter reveal">
+<section class="chapter">
 
-<span class="chapter-number">अध्याय ४</span>
+<span class="chapter-number">
+तृतीय कथा
+</span>
 
-<h2>🌺 पार्वतीको जन्म र तपस्या</h2>
-
-<div class="story-image">🌺 🏔️ 🧘</div>
+<h2>सतीको जन्म र शिवसँग विवाह</h2>
 
 <p>
-सतीले शरीर त्याग गरेपछि उनी हिमालय र मेनाका
-छोरीका रूपमा पार्वतीको रूपमा जन्मिएको कथा
-पौराणिक परम्परामा वर्णन हुन्छ।
+प्रजापति दक्षकी पुत्री सती भगवान शिवप्रति
+अत्यन्त भक्त थिइन्। सतीले शिवलाई आफ्नो
+पति बनाउने दृढ इच्छा राखिन्।
 </p>
 
 <p>
-बाल्यकालदेखि नै पार्वतीको मन भगवान शिवप्रति
-समर्पित थियो। शिवलाई पति बनाउन उनले कठोर
-तपस्या गरिन्।
+उनको तपस्या र भक्तिबाट प्रसन्न भएर भगवान
+शिवले सतीसँग विवाह गर्न स्वीकार गर्नुभयो।
+यसरी सती र शिवको विवाह भयो।
 </p>
 
 <p>
-उनको तपस्या, धैर्य र भक्ति अत्यन्त शक्तिशाली
-भएको बताइन्छ। अन्ततः भगवान शिवले उनको
-भक्तिलाई स्वीकार गरे।
-</p>
-
-<p>
-यसरी शिव र पार्वतीको दिव्य विवाह भएको कथा
-धार्मिक साहित्यमा अत्यन्त प्रसिद्ध छ।
+तर दक्षलाई शिवको सरल, वैरागी र सांसारिक
+आडम्बरबाट टाढा रहने स्वरूप मन परेको थिएन।
+उनको मनमा शिवप्रति सम्मानको कमी रह्यो।
 </p>
 
 </section>
 
 
-<!-- ================= CHAPTER 5 ================= -->
+<!-- 4 -->
 
-<section class="chapter reveal">
+<section class="chapter">
 
-<span class="chapter-number">अध्याय ५</span>
+<span class="chapter-number">
+चतुर्थ कथा
+</span>
 
-<h2>💍 शिव–पार्वती विवाह</h2>
-
-<div class="story-image">💍 🔱 🌺</div>
+<h2>दक्ष यज्ञ र सतीको त्याग</h2>
 
 <p>
-हिमालयको घरमा शिव र पार्वतीको विवाहको
-भव्य प्रसंग आउँछ। देवता, ऋषि र विभिन्न
-दिव्य पात्रहरू विवाहमा सहभागी भएको वर्णन
-पाइन्छ।
+दक्षले एउटा विशाल यज्ञ आयोजना गरे। उनले
+शिवलाई यज्ञमा आमन्त्रण गरेनन्।
+सतीलाई पनि यस घटनाले दुःखी बनायो।
 </p>
 
 <p>
-शिवको विवाहले वैराग्य र गृहस्थ जीवनबीचको
-समन्वयलाई पनि प्रतीकात्मक रूपमा प्रस्तुत गर्छ।
+आफ्ना पिता दक्षको यज्ञमा सती आफैं पुगिन्।
+त्यहाँ शिवप्रति गरिएको अपमान सहन नसकेर
+सतीले आफ्नो शरीर त्याग गरिन्।
 </p>
 
-<div class="quote">
-शिव र शक्तिको सम्बन्धलाई धेरै परम्परामा
-चेतना र शक्तिको एकताको प्रतीक मानिन्छ।
-</div>
+<p>
+यो समाचार शिवसम्म पुगेपछि भगवान शिव
+अत्यन्त दुःखी र क्रोधित हुनुभयो।
+उनको जटाबाट वीरभद्र प्रकट भएको र
+दक्षको यज्ञ नष्ट भएको कथा प्रसिद्ध छ।
+</p>
 
 </section>
 
 
-<!-- ================= CHAPTER 6 ================= -->
+<!-- 5 -->
 
-<section class="chapter reveal">
+<section class="chapter">
 
-<span class="chapter-number">अध्याय ६</span>
+<span class="chapter-number">
+पञ्चम कथा
+</span>
 
-<h2>🐘 गणेशको जन्म</h2>
-
-<div class="story-image">🐘 🌺 🔱</div>
+<h2>पार्वतीको जन्म</h2>
 
 <p>
-माता पार्वतीले आफ्नो शरीरबाट बनेको पदार्थबाट
-एक बालकको निर्माण गरी उनलाई आफ्नो द्वारपाल
-बनाएको प्रसिद्ध कथा छ।
+सतीले शरीर त्याग गरेपछि हिमालयकी पुत्रीका
+रूपमा पार्वतीको जन्म भएको कथा आउँछ।
+पार्वती बाल्यकालदेखि नै भगवान शिवप्रति
+आकर्षित र समर्पित थिइन्।
 </p>
 
 <p>
-पार्वतीले बालकलाई आफू बाहेक अरू कसैलाई
-भित्र पस्न नदिन आदेश दिइन्। त्यही समयमा
-भगवान शिव त्यहाँ आइपुगे।
+उनले शिवलाई पति प्राप्त गर्न कठोर तपस्या
+गरिन्। उनको तपस्या लामो समयसम्म चल्यो।
 </p>
 
 <p>
-बालकले आफ्नो आमाको आदेश पालना गर्दै शिवलाई
-रोक्दा विवाद भयो। कथाअनुसार शिवको गण र
-बालकबीच संघर्ष भयो।
+अन्ततः भगवान शिव पार्वतीको तपस्याबाट
+प्रसन्न हुनुभयो र पार्वतीलाई आफ्नो
+अर्धाङ्गिनीका रूपमा स्वीकार गर्नुभयो।
+</p>
+
+</section>
+
+
+<!-- 6 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+षष्ठ कथा
+</span>
+
+<h2>शिव र पार्वतीको विवाह</h2>
+
+<p>
+पार्वती र शिवको विवाहलाई पुराणिक कथामा
+अत्यन्त महत्वपूर्ण घटनाका रूपमा वर्णन गरिन्छ।
+हिमालयको घरमा विवाहको तयारी भयो।
 </p>
 
 <p>
-अन्ततः शिवले बालकको शिर अलग गरे।
-पार्वती अत्यन्त दुःखी र क्रोधित भइन्।
-उनलाई शान्त पार्न शिवले हात्तीको शिर लगाएर
-बालकलाई पुनर्जीवन दिए।
+भगवान शिव आफ्ना गणहरूसहित विवाहमा
+आउनुभयो। शिवको विचित्र र वैरागी स्वरूप
+देखेर पार्वतीका परिवारजन आश्चर्यचकित भए।
 </p>
 
 <p>
-त्यसपछि गणेशलाई अग्रपूजाको अधिकार प्राप्त
+तर अन्ततः शिव र पार्वतीको दिव्य विवाह
+सम्पन्न भयो। यस विवाहलाई शिव र शक्तिको
+मिलनका रूपमा पनि व्याख्या गरिन्छ।
+</p>
+
+</section>
+
+
+<!-- 7 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+सप्तम कथा
+</span>
+
+<h2>गणेशको जन्म</h2>
+
+<p>
+एक दिन पार्वतीले आफ्नो शरीरको उबटनबाट
+एउटा बालकको निर्माण गरिन् र उसलाई आफ्नो
+द्वारको रक्षा गर्न आदेश दिइन्।
+</p>
+
+<p>
+त्यही समयमा भगवान शिव त्यहाँ आउनुभयो।
+बालकले पार्वतीको आदेशअनुसार शिवलाई
+भित्र जान रोक्यो।
+</p>
+
+<p>
+त्यसबाट विवाद उत्पन्न भयो। अन्ततः शिवको
+गणसँग भएको संघर्षमा बालकको शिर काटिएको
+कथा आउँछ।
+</p>
+
+<p>
+पार्वती अत्यन्त क्रोधित भइन्। उनलाई
+शान्त पार्न शिवले एउटा हात्तीको शिर
+ल्याएर बालकमा स्थापित गर्नुभयो।
+यसरी गणेश पुनर्जीवित भए।
+</p>
+
+<p>
+भगवान शिवले उनलाई गणहरूको अधिपति
+बनाउनुभयो र गणेशलाई अग्रपूजाको वरदान
+दिएको कथा प्रसिद्ध छ।
+</p>
+
+</section>
+
+
+<!-- 8 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+अष्टम कथा
+</span>
+
+<h2>कार्तिकेयको जन्म</h2>
+
+<p>
+देवता र असुरबीचको युद्धमा तारकासुर
+अत्यन्त शक्तिशाली भएको कथा आउँछ।
+उसलाई पराजित गर्न शिवका पुत्रबाट
+शक्ति प्राप्त हुने वरदानसँग सम्बन्धित
+कथा वर्णन गरिन्छ।
+</p>
+
+<p>
+शिव र पार्वतीबाट कार्तिकेयको जन्म भयो।
+कार्तिकेयले देवताहरूको सेनाको नेतृत्व
+गरे र तारकासुरसँग युद्ध गरे।
+</p>
+
+<p>
+अन्ततः कार्तिकेयले तारकासुरलाई पराजित
+गरेको कथा प्रसिद्ध छ।
+</p>
+
+</section>
+
+
+<!-- 9 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+नवम कथा
+</span>
+
+<h2>समुद्र मन्थन र नीलकण्ठ</h2>
+
+<p>
+देवता र असुरहरूले अमृत प्राप्त गर्न
+समुद्र मन्थन गरे। मन्थनबाट अनेक वस्तुहरू
+निस्किए।
+</p>
+
+<p>
+सबैभन्दा पहिले अत्यन्त भयानक विष
+निस्कियो। त्यस विषले सम्पूर्ण संसारलाई
+नष्ट गर्न सक्ने अवस्था आयो।
+</p>
+
+<p>
+देवता र ऋषिहरूले भगवान शिवसँग रक्षा
+मागे। संसारको रक्षा गर्न शिवले त्यो विष
+आफ्नो कण्ठमा धारण गर्नुभयो।
+</p>
+
+<p>
+विष कण्ठमै रोकिएपछि उहाँको कण्ठ नीलो
+भयो। त्यसैले भगवान शिवलाई नीलकण्ठ
+भनिएको कथा प्रसिद्ध छ।
+</p>
+
+</section>
+
+
+<!-- 10 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+दशम कथा
+</span>
+
+<h2>त्रिपुरासुरको कथा</h2>
+
+<p>
+त्रिपुरासुरसँग सम्बन्धित कथामा तीनवटा
+अद्भुत नगरको निर्माण भएको वर्णन पाइन्छ।
+ती नगरहरूका कारण देवताहरू समेत
+चिन्तित भए।
+</p>
+
+<p>
+असुरहरूको शक्ति अत्यधिक बढेपछि देवताहरूले
+भगवान शिवसँग सहायता मागे।
+</p>
+
+<p>
+भगवान शिवले दिव्य रथमा आरूढ भएर
+तीनवटै नगरलाई एउटै बाणबाट नष्ट
+गर्नुभएको कथा आउँछ।
+</p>
+
+<p>
+यस कारण शिवलाई त्रिपुरान्तक पनि भनिन्छ।
+</p>
+
+</section>
+
+
+<!-- 11 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+एकादश कथा
+</span>
+
+<h2>अन्धकासुरको कथा</h2>
+
+<p>
+अन्धक नामक असुरसँग सम्बन्धित कथा पनि
+शिव पुराणिक परम्परामा महत्वपूर्ण छ।
+अन्धक अत्यन्त शक्तिशाली बनेपछि उसमा
+अहंकार बढ्दै गयो।
+</p>
+
+<p>
+उसले देवी पार्वतीलाई प्राप्त गर्ने इच्छा
+राख्यो। त्यसबाट भगवान शिवसँग उसको
+संघर्ष भयो।
+</p>
+
+<p>
+दीर्घ संघर्षपछि भगवान शिवले अन्धकको
+अहंकार र अधर्मको अन्त गर्नुभयो।
+</p>
+
+</section>
+
+
+<!-- 12 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+द्वादश कथा
+</span>
+
+<h2>ज्योतिर्लिङ्गहरूको महिमा</h2>
+
+<p>
+भगवान शिवसँग सम्बन्धित ज्योतिर्लिङ्गहरूको
+महिमा हिन्दू धार्मिक परम्परामा अत्यन्त
+महत्वपूर्ण मानिन्छ।
+</p>
+
+<p>
+ज्योतिर्लिङ्गलाई भगवान शिवको अनन्त
+ज्योतिस्वरूपको प्रतीकका रूपमा पूजा गरिन्छ।
+</p>
+
+<p>
+परम्परामा द्वादश ज्योतिर्लिङ्गको विशेष
+महिमा वर्णन गरिएको छ। प्रत्येक
+ज्योतिर्लिङ्गसँग अलग-अलग कथा र
+धार्मिक परम्परा जोडिएका छन्।
+</p>
+
+</section>
+
+
+<!-- 13 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+त्रयोदश कथा
+</span>
+
+<h2>रावण र भगवान शिव</h2>
+
+<p>
+रावण भगवान शिवको महान् भक्तका रूपमा
+धार्मिक कथाहरूमा वर्णित छन्।
+</p>
+
+<p>
+एक कथामा रावणले आफ्नो अत्यन्त ठूलो
+बल प्रयोग गरेर कैलास पर्वत उठाउन खोजेको
+वर्णन पाइन्छ।
+</p>
+
+<p>
+भगवान शिवले आफ्नो खुट्टाको औंलाले
+कैलासलाई थिच्दा रावणको हात पर्वतको
+तल दबियो।
+</p>
+
+<p>
+रावणले शिवको स्तुति गरेपछि शिव प्रसन्न
 भएको कथा प्रसिद्ध छ।
 </p>
 
 </section>
 
 
-<!-- ================= CHAPTER 7 ================= -->
+<!-- 14 -->
 
-<section class="chapter reveal">
+<section class="chapter">
 
-<span class="chapter-number">अध्याय ७</span>
+<span class="chapter-number">
+चतुर्दश कथा
+</span>
 
-<h2>🦚 कार्तिकेयको कथा</h2>
-
-<div class="story-image">🦚 ⚔️ 🔱</div>
+<h2>मार्कण्डेयको कथा</h2>
 
 <p>
-भगवान शिव र पार्वतीका पुत्रका रूपमा
-कार्तिकेयको कथा आउँछ। उनलाई देवसेनाका
-सेनापति तथा वीर योद्धाका रूपमा चित्रण गरिन्छ।
+मार्कण्डेय एक महान् शिवभक्त थिए। उनको
+जीवनसँग सम्बन्धित कथामा अल्प आयु
+लेखिएको वर्णन पाइन्छ।
 </p>
 
 <p>
-देवताहरूलाई सताउने असुर शक्तिविरुद्ध कार्तिकेयले
-युद्ध गरेको कथा विभिन्न पुराणिक परम्परामा
-वर्णन गरिएको छ।
+जब उनको मृत्युको समय आयो, मार्कण्डेयले
+भगवान शिवको शरण लिए।
 </p>
 
 <p>
-कार्तिकेयको कथा साहस, अनुशासन र धर्मको
-रक्षासँग जोडिन्छ।
-</p>
-
-</section>
-
-
-<!-- ================= CHAPTER 8 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय ८</span>
-
-<h2>🐂 नन्दी र शिवभक्ति</h2>
-
-<div class="story-image">🐂 🔱 🛕</div>
-
-<p>
-नन्दीलाई भगवान शिवका परम भक्त र वाहनका रूपमा
-सम्झिन्छ। शिव मन्दिरमा शिवलिङ्गको अगाडि
-नन्दीको मूर्ति राखिने परम्परा धेरै स्थानमा पाइन्छ।
+उनको अटल भक्तिबाट प्रसन्न भएर भगवान
+शिवले उनको रक्षा गर्नुभएको कथा आउँछ।
 </p>
 
 <p>
-नन्दीको कथा भक्ति, सेवा र समर्पणको प्रतीकका
-रूपमा प्रस्तुत गरिन्छ।
+मार्कण्डेयको कथा भक्तिको शक्ति र
+भगवानप्रतिको अटल विश्वासको उदाहरणका
+रूपमा लिइन्छ।
 </p>
 
 </section>
 
 
-<!-- ================= CHAPTER 9 ================= -->
+<!-- 15 -->
 
-<section class="chapter reveal">
+<section class="chapter">
 
-<span class="chapter-number">अध्याय ९</span>
+<span class="chapter-number">
+पञ्चदश कथा
+</span>
 
-<h2>🌊 गंगा र शिव</h2>
-
-<div class="story-image">🌊 🏔️ 🔱</div>
+<h2>नन्दी र शिवका गणहरू</h2>
 
 <p>
-गंगालाई पृथ्वीमा ल्याउने कथामा राजा भगीरथको
-तपस्या र भगवान शिवको महत्वपूर्ण भूमिका आउँछ।
+नन्दीलाई भगवान शिवको परम भक्त र
+वाहनका रूपमा मानिन्छ। शिवका गणहरूमा
+नन्दीको विशेष स्थान रहेको कथा पुराणिक
+परम्परामा पाइन्छ।
 </p>
 
 <p>
-गंगाको तीव्र वेगले पृथ्वीलाई क्षति पुर्‍याउन
-सक्ने भएकाले भगवान शिवले आफ्नो जटामा
-गंगाको प्रवाहलाई धारण गरेको कथा प्रसिद्ध छ।
-</p>
-
-<p>
-त्यसपछि शिवको जटाबाट गंगा पृथ्वीमा प्रवाहित
-भएको पौराणिक कथा सुनाइन्छ।
+नन्दी सधैं भगवान शिवको सेवामा रहने
+र शिवको धामको रक्षा गर्ने भक्तका
+रूपमा वर्णित छन्।
 </p>
 
 </section>
 
 
-<!-- ================= CHAPTER 10 ================= -->
+<!-- 16 -->
 
-<section class="chapter reveal">
+<section class="chapter">
 
-<span class="chapter-number">अध्याय १०</span>
+<span class="chapter-number">
+षोडश कथा
+</span>
 
-<h2>🌙 नीलकण्ठ र समुद्र मन्थन</h2>
-
-<div class="story-image">🌊 ☠️ 🔱</div>
+<h2>भस्म र वैराग्यको अर्थ</h2>
 
 <p>
-देवता र असुरहरूले अमृत प्राप्त गर्न समुद्र
-मन्थन गरेको कथा अत्यन्त प्रसिद्ध छ।
+भगवान शिवको स्वरूपमा भस्म, जटा,
+चन्द्रमा, गंगा, नाग र त्रिशूलजस्ता
+प्रतीकहरू देखाइन्छन्।
 </p>
 
 <p>
-समुद्र मन्थनबाट विभिन्न वस्तुहरूसँगै
-अत्यन्त विषालु हलाहल विष निस्कियो।
-त्यो विषले सम्पूर्ण संसारलाई संकटमा पार्न
-सक्ने अवस्था आयो।
-</p>
-
-<p>
-संसारलाई बचाउन भगवान शिवले विष ग्रहण
-गरेको कथा आउँछ। विषलाई आफ्नो कण्ठमा
-रोक्दा उनको कण्ठ नीलो भएको र त्यसैले
-उनी नीलकण्ठ नामले प्रसिद्ध भएको कथा छ।
-</p>
-
-</section>
-
-
-<!-- ================= CHAPTER 11 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय ११</span>
-
-<h2>🔥 त्रिपुरासुरको कथा</h2>
-
-<div class="story-image">🔥 🏹 🔱</div>
-
-<p>
-त्रिपुरासुरसँग सम्बन्धित कथामा शक्तिशाली
-असुरहरूले तीन नगर निर्माण गरेको वर्णन पाइन्छ।
-ती नगरका कारण देवता र संसारमा ठूलो समस्या
-उत्पन्न भयो।
-</p>
-
-<p>
-अन्ततः भगवान शिवले दिव्य धनुष र बाणको
-सहायताले त्रिपुरको विनाश गरेको कथा
-पौराणिक साहित्यमा प्रसिद्ध छ।
-</p>
-
-<p>
-यस घटनासँग शिवको त्रिपुरान्तक स्वरूप
-जोडिन्छ।
-</p>
-
-</section>
-
-
-<!-- ================= CHAPTER 12 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय १२</span>
-
-<h2>🕉️ शिवलिङ्गको महत्त्व</h2>
-
-<div class="story-image">🕉️ 🔱 💧</div>
-
-<p>
-शिवलिङ्ग भगवान शिवको आराधनाको प्रमुख
-प्रतीक हो। विभिन्न पौराणिक कथाहरूमा
-ज्योतिर्लिङ्ग र शिवलिङ्गको महत्त्व वर्णन
-गरिन्छ।
-</p>
-
-<p>
-शिवलिङ्गमा जल, दूध तथा विभिन्न पूजा
-सामग्री अर्पण गर्ने परम्परा धेरै शिव मन्दिरमा
-पाइन्छ।
-</p>
-
-<p>
-ज्योतिर्लिङ्गसम्बन्धी परम्परामा भारतका
-विभिन्न पवित्र स्थानहरूलाई विशेष धार्मिक
-महत्त्व दिइन्छ।
-</p>
-
-</section>
-
-
-<!-- ================= CHAPTER 13 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय १३</span>
-
-<h2>🌺 भक्तिको शक्ति</h2>
-
-<div class="story-image">🙏 🔱 🌺</div>
-
-<p>
-शिव पुराणसँग सम्बन्धित कथाहरूमा भक्तिको
-महत्त्व बारम्बार देखिन्छ। भक्तले सरल मन,
-श्रद्धा र समर्पणका साथ शिवको स्मरण गर्ने
-कथाहरू पाइन्छन्।
-</p>
-
-<p>
-धार्मिक कथाहरूको मुख्य सन्देशमध्ये एउटा
-मानिसको अहंकारभन्दा भक्ति, सत्य, करुणा,
-सेवा र सदाचारलाई ठूलो मान्नु हो।
-</p>
-
-</section>
-
-
-<!-- ================= CHAPTER 14 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय १४</span>
-
-<h2>🧘 शिवको योगी स्वरूप</h2>
-
-<div class="story-image">🧘 🌙 🐍</div>
-
-<p>
-भगवान शिवलाई कैलाशमा ध्यानमग्न योगीका
-रूपमा पनि चित्रण गरिन्छ। उनको शरीरमा
-भस्म, शिरमा चन्द्रमा, जटामा गंगा र
-कण्ठमा सर्पको चित्रण पाइन्छ।
-</p>
-
-<p>
-यी प्रतीकहरूले वैराग्य, समय, प्रकृति,
-शक्ति र मृत्युजस्ता गहिरा दार्शनिक विषयसँग
-सम्बन्धित अर्थहरू बोकेको धार्मिक व्याख्या
+यी प्रतीकहरूले सांसारिक मोहभन्दा
+माथि उठ्ने, मृत्युको सत्यलाई बुझ्ने,
+वैराग्य र आत्मज्ञानतर्फ जाने विचारसँग
+सम्बन्धित अर्थ बोकेको धार्मिक व्याख्या
 पाइन्छ।
 </p>
 
 </section>
 
 
-<!-- ================= CHAPTER 15 ================= -->
+<!-- 17 -->
 
-<section class="chapter reveal">
+<section class="chapter">
 
-<span class="chapter-number">अध्याय १५</span>
+<span class="chapter-number">
+सप्तदश कथा
+</span>
 
-<h2>🔱 शिवका प्रसिद्ध स्वरूप</h2>
-
-<div class="story-image">🔱 🌙 🔥 🕉️</div>
+<h2>गंगाको पृथ्वीमा आगमन</h2>
 
 <p>
-शिवलाई विभिन्न नाम र स्वरूपले पूजा गरिन्छ।
-महादेव, शंकर, भोलेनाथ, नीलकण्ठ,
-त्रिलोचन, पशुपतिनाथ, चन्द्रशेखर,
-गंगाधर तथा नटराज आदि नामहरू प्रसिद्ध छन्।
+गंगाको पृथ्वीमा आगमनसँग सम्बन्धित
+कथामा राजा भगीरथको तपस्या प्रसिद्ध छ।
+उनले आफ्ना पूर्वजहरूको उद्धारका लागि
+गंगालाई पृथ्वीमा ल्याउन कठोर तपस्या गरे।
 </p>
 
-<div class="timeline">
+<p>
+गंगा स्वर्गबाट पृथ्वीमा आउँदा उनको
+वेग अत्यन्त शक्तिशाली हुने भएकाले
+पृथ्वीलाई ठूलो क्षति पुग्न सक्ने अवस्था थियो।
+</p>
 
-    <div>
-        <b>महादेव</b> — महान देवताको रूपमा।
-    </div>
+<p>
+त्यसैले भगवान शिवले गंगाको धारलाई
+आफ्नो जटामा धारण गर्नुभयो र पछि
+गंगालाई पृथ्वीमा प्रवाहित हुन दिनुभयो।
+</p>
 
-    <div>
-        <b>नीलकण्ठ</b> — विष कण्ठमा धारण गरेको कथासँग सम्बन्धित।
-    </div>
+</section>
 
-    <div>
-        <b>गंगाधर</b> — जटामा गंगा धारण गर्ने।
-    </div>
 
-    <div>
-        <b>चन्द्रशेखर</b> — शिरमा चन्द्रमा धारण गर्ने।
-    </div>
+<!-- 18 -->
 
-    <div>
-        <b>नटराज</b> — दिव्य नृत्यको स्वरूप।
-    </div>
+<section class="chapter">
 
-    <div>
-        <b>पशुपतिनाथ</b> — पशुपतिका स्वामी।
-    </div>
+<span class="chapter-number">
+अष्टादश कथा
+</span>
 
+<h2>शिवको ताण्डव</h2>
+
+<p>
+भगवान शिवको ताण्डवलाई दिव्य नृत्यका
+रूपमा वर्णन गरिन्छ। ताण्डवमा सृष्टि,
+स्थिति र संहारको गहिरो प्रतीकात्मक
+अर्थ जोडिन्छ।
+</p>
+
+<p>
+शिवको नृत्यलाई समय र परिवर्तनको
+अनन्त गतिसँग पनि जोडेर हेर्ने गरिन्छ।
+</p>
+
+</section>
+
+
+<!-- 19 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+एकोनविंशति कथा
+</span>
+
+<h2>शिवको करुणा</h2>
+
+<p>
+शिवलाई आशुतोष भनिन्छ, अर्थात् छिट्टै
+प्रसन्न हुने देवता। पुराणिक कथाहरूमा
+उहाँले भक्तहरूको भक्ति र समर्पणलाई
+महत्त्व दिनुभएको वर्णन बारम्बार आउँछ।
+</p>
+
+<p>
+भक्तले सच्चा मनले शिवको आराधना गर्दा
+भगवान शिवले उसको मनोकामना पूरा गर्ने
+वा संकटबाट रक्षा गर्ने कथाहरू
+धार्मिक परम्परामा पाइन्छन्।
+</p>
+
+</section>
+
+
+<!-- 20 -->
+
+<section class="chapter">
+
+<span class="chapter-number">
+समापन
+</span>
+
+<h2>ॐ नमः शिवाय</h2>
+
+<p>
+शिव पुराणमा भगवान शिवको महिमा,
+शिव र शक्तिको सम्बन्ध, सती र पार्वतीका
+कथा, गणेश र कार्तिकेयका जन्मकथा,
+देवता र असुरका संघर्ष, भक्तहरूको
+भक्ति, ज्योतिर्लिङ्गको महिमा तथा
+शिवसँग सम्बन्धित अनेक पुराणिक प्रसंग
+वर्णन गरिएका छन्।
+</p>
+
+<p>
+भगवान शिवको स्वरूपले वैराग्य, करुणा,
+शक्ति, ज्ञान र परिवर्तनका विभिन्न
+पक्षहरूलाई प्रतिनिधित्व गर्ने धार्मिक
+व्याख्या पाइन्छ।
+</p>
+
+<div class="highlight">
+ॐ नमः शिवाय।
 </div>
 
 </section>
 
-
-<!-- ================= CHAPTER 16 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय १६</span>
-
-<h2>🇳🇵 नेपालमा पशुपतिनाथ</h2>
-
-<div class="story-image">🛕 🇳🇵 🔱</div>
-
-<p>
-नेपालमा भगवान शिवको आराधनासँग पशुपतिनाथको
-विशेष सम्बन्ध छ। काठमाडौंको पशुपतिनाथ
-मन्दिर भगवान पशुपतिनाथलाई समर्पित विश्वप्रसिद्ध
-धार्मिक स्थल हो।
-</p>
-
-<p>
-शिवरात्रि लगायत विभिन्न अवसरमा पशुपतिनाथ
-मन्दिरमा ठूलो धार्मिक उत्सव हुने गर्छ।
-</p>
-
-</section>
-
-
-<!-- ================= CHAPTER 17 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय १७</span>
-
-<h2>🌺 शिवरात्रिको आध्यात्मिक सन्देश</h2>
-
-<div class="story-image">🌙 🕯️ 🔱</div>
-
-<p>
-महाशिवरात्रि भगवान शिवको आराधनासँग
-सम्बन्धित प्रमुख पर्व हो। भक्तहरूले उपवास,
-जागरण, पूजा, ध्यान तथा शिव मन्त्रको
-स्मरण गर्ने परम्परा पाइन्छ।
-</p>
-
-<p>
-यस पर्वलाई आत्मसंयम, ध्यान, भक्ति र
-आध्यात्मिक जागरणसँग जोडेर पनि बुझिन्छ।
-</p>
-
-</section>
-
-
-<!-- ================= CHAPTER 18 ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">अध्याय १८</span>
-
-<h2>🙏 कथाहरूबाट प्राप्त शिक्षा</h2>
-
-<div class="story-image">🙏 ❤️ 🕉️</div>
-
-<p>
-शिवसम्बन्धी पौराणिक कथाहरूलाई केवल
-रोचक कथा मात्र नभई धार्मिक तथा सांस्कृतिक
-परम्पराका रूपमा पनि पढिन्छ।
-</p>
-
-<p>
-यी कथाहरूबाट सत्य, धैर्य, भक्ति, करुणा,
-आत्मसंयम, अहंकार त्याग र प्रकृतिप्रति
-सम्मानजस्ता मूल्यहरूबारे विचार गर्न सकिन्छ।
-</p>
-
-<div class="quote">
-ज्ञानले अहंकार होइन, विनम्रता बढाउनुपर्छ;
-शक्तिले संरक्षण गर्नुपर्छ; र भक्तिले
-मानवतालाई राम्रो बनाउनुपर्छ।
-</div>
-
-</section>
-
-
-<!-- ================= END ================= -->
-
-<section class="chapter reveal">
-
-<span class="chapter-number">समापन</span>
-
-<h2>🔱 हर हर महादेव</h2>
-
-<div class="story-image">ॐ 🔱 🌙 🕉️</div>
-
-<p>
-शिव पुराणसँग सम्बन्धित कथाहरूमा भगवान शिवलाई
-विभिन्न स्वरूपमा प्रस्तुत गरिएको पाइन्छ—
-योगी, गृहस्थ, गुरु, नटराज, नीलकण्ठ,
-पशुपतिनाथ र महादेवका रूपमा।
-</p>
-
-<p>
-शिव, पार्वती, गणेश, कार्तिकेय, नन्दी तथा
-अन्य पात्रका कथाहरूले भारतीय धार्मिक
-साहित्य र संस्कृतिमा गहिरो प्रभाव पारेका छन्।
-</p>
-
-<p style="text-align:center;color:#f4d27b;font-size:22px">
-    🕉️ ॐ नमः शिवाय 🕉️
-</p>
-
-</section>
 
 </main>
 
 
 <footer>
 
-    <p>
-        🔱 <strong>शिव पुराण</strong>
-    </p>
+<p>
+🔱 शिव पुराण
+</p>
 
-    <p>
-        धार्मिक तथा सांस्कृतिक ज्ञानका लागि तयार गरिएको
-        मौलिक डिजिटल प्रस्तुति।
-    </p>
+<p>
+ॐ नमः शिवाय
+</p>
 
-    <p>
-        © 2026 GameBook GK Hub
-    </p>
+<p>
+© 2026 GameBook GK Hub
+</p>
 
 </footer>
 
-
-<!-- AUDIO BUTTONS -->
-
-<div class="audio-panel">
-
-    <button onclick="toggleMusic()"
-            id="musicBtn">
-        🎵
-    </button>
-
-    <button onclick="stopMusic()">
-        🔇
-    </button>
-
-</div>
-
-
-<script>
-
-/* =====================================================
-   STAR BACKGROUND
-===================================================== */
-
-const stars=
-document.getElementById("stars");
-
-for(let i=0;i<90;i++){
-
-    const star=
-    document.createElement("span");
-
-    star.className="star";
-
-    star.style.left=
-    Math.random()*100+"%";
-
-    star.style.top=
-    Math.random()*100+"%";
-
-    star.style.animationDelay=
-    Math.random()*2+"s";
-
-    star.style.opacity=
-    Math.random();
-
-    stars.appendChild(star);
-
-}
-
-
-/* =====================================================
-   SCROLL REVEAL
-===================================================== */
-
-const reveal=
-document.querySelectorAll(".reveal");
-
-const observer=
-new IntersectionObserver(
-    entries=>{
-
-        entries.forEach(entry=>{
-
-            if(entry.isIntersecting){
-
-                entry.target
-                .classList
-                .add("show");
-
-            }
-
-        });
-
-    },
-    {
-        threshold:.12
-    }
-);
-
-reveal.forEach(
-    item=>observer.observe(item)
-);
-
-
-/* =====================================================
-   START READING
-===================================================== */
-
-function startReading(){
-
-    document
-    .getElementById("story")
-    .scrollIntoView({
-        behavior:"smooth"
-    });
-
-    playBell();
-
-}
-
-
-/* =====================================================
-   WEB AUDIO
-   No external audio file required.
-===================================================== */
-
-let audioContext=null;
-
-let musicTimer=null;
-
-let musicOn=false;
-
-
-/* Create audio context */
-
-function getAudio(){
-
-    if(!audioContext){
-
-        audioContext=
-        new(
-            window.AudioContext ||
-            window.webkitAudioContext
-        )();
-
-    }
-
-    if(audioContext.state==="suspended"){
-
-        audioContext.resume();
-
-    }
-
-    return audioContext;
-}
-
-
-/* =====================================================
-   BELL SOUND
-===================================================== */
-
-function playBell(){
-
-    try{
-
-        const ctx=getAudio();
-
-        const osc=
-        ctx.createOscillator();
-
-        const gain=
-        ctx.createGain();
-
-        osc.type="sine";
-
-        osc.frequency.setValueAtTime(
-            528,
-            ctx.currentTime
-        );
-
-        osc.frequency.exponentialRampToValueAtTime(
-            880,
-            ctx.currentTime+.7
-        );
-
-        gain.gain.setValueAtTime(
-            .0001,
-            ctx.currentTime
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .18,
-            ctx.currentTime+.03
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .0001,
-            ctx.currentTime+1.5
-        );
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start();
-
-        osc.stop(
-            ctx.currentTime+1.5
-        );
-
-    }catch(e){}
-
-}
-
-
-/* =====================================================
-   SOFT BACKGROUND CHANT-LIKE TONE
-===================================================== */
-
-function playMusicNote(){
-
-    if(!musicOn)
-        return;
-
-    try{
-
-        const ctx=getAudio();
-
-        const notes=[
-            261.63,
-            329.63,
-            392,
-            329.63,
-            293.66
-        ];
-
-        const frequency=
-        notes[
-            Math.floor(
-                Math.random()*notes.length
-            )
-        ];
-
-        const osc=
-        ctx.createOscillator();
-
-        const gain=
-        ctx.createGain();
-
-        osc.type="sine";
-
-        osc.frequency.value=
-        frequency;
-
-        gain.gain.setValueAtTime(
-            .0001,
-            ctx.currentTime
-        );
-
-        gain.gain.linearRampToValueAtTime(
-            .025,
-            ctx.currentTime+.4
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .0001,
-            ctx.currentTime+3
-        );
-
-        osc.connect(gain);
-
-        gain.connect(ctx.destination);
-
-        osc.start();
-
-        osc.stop(
-            ctx.currentTime+3
-        );
-
-    }catch(e){}
-
-}
-
-
-/* =====================================================
-   MUSIC ON/OFF
-===================================================== */
-
-function toggleMusic(){
-
-    musicOn=!musicOn;
-
-    const button=
-    document.getElementById("musicBtn");
-
-    button.textContent=
-    musicOn ? "🔊" : "🎵";
-
-    if(musicOn){
-
-        getAudio();
-
-        playBell();
-
-        musicTimer=
-        setInterval(
-            playMusicNote,
-            2400
-        );
-
-    }
-    else{
-
-        clearInterval(
-            musicTimer
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   STOP MUSIC
-===================================================== */
-
-function stopMusic(){
-
-    musicOn=false;
-
-    clearInterval(
-        musicTimer
-    );
-
-    document.getElementById(
-        "musicBtn"
-    ).textContent="🎵";
-
-}
-
-
-/* =====================================================
-   SMALL BELL WHEN CLICKING CHAPTERS
-===================================================== */
-
-document
-.querySelectorAll(".chapter")
-.forEach(chapter=>{
-
-    chapter.addEventListener(
-        "click",
-        ()=>{
-
-            if(musicOn)
-                playBell();
-
-        }
-    );
-
-});
-
-
-</script>
 
 </body>
 </html>
