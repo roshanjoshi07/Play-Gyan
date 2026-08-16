@@ -1,0 +1,1667 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ocean Surf Rider</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    overflow:hidden;
+    background:#061b2b;
+    font-family:Arial, sans-serif;
+    touch-action:none;
+}
+
+#game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            #55cfff 0%,
+            #179fd1 35%,
+            #006e9e 60%,
+            #003d63 100%
+        );
+}
+
+canvas{
+    display:block;
+    width:100%;
+    height:100%;
+}
+
+/* HUD */
+
+.hud{
+    position:absolute;
+    top:15px;
+    left:15px;
+    right:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:5;
+    pointer-events:none;
+}
+
+.hud-box{
+    padding:10px 16px;
+    border-radius:18px;
+    color:white;
+    font-weight:bold;
+    background:rgba(0,30,55,.55);
+    backdrop-filter:blur(8px);
+    box-shadow:0 5px 20px #0005;
+}
+
+#score{
+    font-size:20px;
+}
+
+#lives{
+    font-size:18px;
+}
+
+/* Start screen */
+
+.screen{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    color:white;
+    background:linear-gradient(
+        rgba(0,30,55,.35),
+        rgba(0,20,40,.75)
+    );
+    z-index:10;
+}
+
+.screen h1{
+    font-size:clamp(42px,9vw,80px);
+    text-shadow:0 8px 25px #000;
+    margin-bottom:8px;
+}
+
+.screen p{
+    font-size:18px;
+    margin-bottom:25px;
+    opacity:.9;
+}
+
+.start-btn{
+    border:0;
+    padding:16px 35px;
+    border-radius:40px;
+    background:#ffd43b;
+    color:#173047;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 8px 25px #0006;
+}
+
+.start-btn:active{
+    transform:scale(.95);
+}
+
+/* Controls */
+
+.controls{
+    position:absolute;
+    bottom:25px;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    z-index:6;
+}
+
+.control{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.7);
+    background:rgba(0,35,60,.5);
+    color:white;
+    font-size:30px;
+    backdrop-filter:blur(8px);
+    box-shadow:0 7px 20px #0005;
+}
+
+.control:active{
+    transform:scale(.9);
+    background:rgba(255,255,255,.25);
+}
+
+/* Pause */
+
+.pause{
+    position:absolute;
+    top:75px;
+    right:15px;
+    z-index:7;
+    width:45px;
+    height:45px;
+    border:0;
+    border-radius:50%;
+    background:#002c49aa;
+    color:white;
+    font-size:20px;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* Game over */
+
+.game-over h2{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.final-score{
+    font-size:25px;
+    margin-bottom:25px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<canvas id="canvas"></canvas>
+
+<div class="hud">
+    <div class="hud-box" id="score">Score: 0</div>
+    <div class="hud-box" id="lives">❤️❤️❤️</div>
+</div>
+
+<button class="pause" id="pauseBtn">Ⅱ</button>
+
+<div class="controls">
+    <button class="control" id="leftBtn">←</button>
+    <button class="control" id="rightBtn">→</button>
+</div>
+
+<div class="screen" id="startScreen">
+
+    <div style="font-size:70px">🏄</div>
+
+    <h1>Ocean Surf Rider</h1>
+
+    <p>
+        Ride the waves • Collect coins • Avoid rocks
+    </p>
+
+    <button class="start-btn" id="startBtn">
+        START GAME
+    </button>
+
+</div>
+
+<div class="screen hidden" id="gameOver">
+
+    <div style="font-size:70px">🌊</div>
+
+    <h2>Game Over</h2>
+
+    <div class="final-score">
+        Score: <span id="finalScore">0</span>
+    </div>
+
+    <button class="start-btn" id="restartBtn">
+        PLAY AGAIN
+    </button>
+
+</div>
+
+</div>
+
+<script>
+/* =====================================================
+   OCEAN SURF RIDER
+   Single HTML File
+===================================================== */
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let W = 0;
+let H = 0;
+
+function resize(){
+    W = canvas.width = window.innerWidth * devicePixelRatio;
+    H = canvas.height = window.innerHeight * devicePixelRatio;
+
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+
+    ctx.setTransform(
+        devicePixelRatio,
+        0,
+        0,
+        devicePixelRatio,
+        0,
+        0
+    );
+
+    W = window.innerWidth;
+    H = window.innerHeight;
+}
+
+resize();
+window.addEventListener("resize", resize);
+
+
+/* =====================================================
+   GAME VARIABLES
+===================================================== */
+
+let running = false;
+let paused = false;
+
+let score = 0;
+let lives = 3;
+
+let speed = 4;
+let worldTime = 0;
+
+let left = false;
+let right = false;
+
+let objects = [];
+let particles = [];
+let clouds = [];
+
+const surfer = {
+    x: W / 2,
+    y: H * .67,
+    vx: 0,
+    width: 75,
+    height: 115,
+    rotation: 0
+};
+
+
+/* =====================================================
+   SOUND SYSTEM
+===================================================== */
+
+let audioCtx = null;
+
+function initSound(){
+
+    if(!audioCtx){
+        audioCtx = new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+    }
+
+    if(audioCtx.state === "suspended"){
+        audioCtx.resume();
+    }
+}
+
+function sound(
+    frequency,
+    duration = .1,
+    type = "sine",
+    volume = .04
+){
+
+    if(!audioCtx) return;
+
+    const oscillator =
+        audioCtx.createOscillator();
+
+    const gain =
+        audioCtx.createGain();
+
+    oscillator.type = type;
+
+    oscillator.frequency.value =
+        frequency;
+
+    gain.gain.value = volume;
+
+    oscillator.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    oscillator.start();
+
+    gain.gain.exponentialRampToValueAtTime(
+        .001,
+        audioCtx.currentTime + duration
+    );
+
+    oscillator.stop(
+        audioCtx.currentTime + duration
+    );
+}
+
+
+/* =====================================================
+   CLOUDS
+===================================================== */
+
+for(let i=0;i<8;i++){
+
+    clouds.push({
+        x:Math.random()*W,
+        y:40+Math.random()*170,
+        size:30+Math.random()*50,
+        speed:.15+Math.random()*.3
+    });
+
+}
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+function particle(
+    x,
+    y,
+    color="white",
+    amount=10
+){
+
+    for(let i=0;i<amount;i++){
+
+        particles.push({
+
+            x:x,
+            y:y,
+
+            vx:(Math.random()-.5)*5,
+            vy:(Math.random()-.5)*5,
+
+            life:1,
+
+            size:2+Math.random()*5,
+
+            color:color
+        });
+
+    }
+
+}
+
+
+/* =====================================================
+   CREATE OBJECTS
+===================================================== */
+
+function spawnObject(){
+
+    const type =
+        Math.random() < .55
+        ? "coin"
+        : "rock";
+
+    objects.push({
+
+        type:type,
+
+        x:70 + Math.random()*(W-140),
+
+        y:-80,
+
+        size:type==="coin" ? 20 : 35,
+
+        rotation:Math.random()*Math.PI*2
+
+    });
+
+}
+
+
+/* =====================================================
+   DRAW SKY
+===================================================== */
+
+function drawSky(){
+
+    const gradient =
+        ctx.createLinearGradient(
+            0,0,0,H
+        );
+
+    gradient.addColorStop(
+        0,
+        "#61d8ff"
+    );
+
+    gradient.addColorStop(
+        .45,
+        "#18a9d8"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#004b72"
+    );
+
+    ctx.fillStyle=gradient;
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* Sun */
+
+    const sunX=W*.8;
+    const sunY=H*.16;
+
+    const sun=
+        ctx.createRadialGradient(
+            sunX,
+            sunY,
+            5,
+            sunX,
+            sunY,
+            100
+        );
+
+    sun.addColorStop(
+        0,
+        "rgba(255,255,220,.9)"
+    );
+
+    sun.addColorStop(
+        1,
+        "rgba(255,255,220,0)"
+    );
+
+    ctx.fillStyle=sun;
+
+    ctx.fillRect(
+        sunX-100,
+        sunY-100,
+        200,
+        200
+    );
+
+}
+
+
+/* =====================================================
+   DRAW CLOUDS
+===================================================== */
+
+function drawClouds(){
+
+    clouds.forEach(c=>{
+
+        c.x -= c.speed;
+
+        if(c.x < -100){
+            c.x = W+100;
+        }
+
+        ctx.fillStyle=
+            "rgba(255,255,255,.7)";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            c.x,
+            c.y,
+            c.size*.45,
+            0,
+            Math.PI*2
+        );
+
+        ctx.arc(
+            c.x+c.size*.4,
+            c.y+5,
+            c.size*.35,
+            0,
+            Math.PI*2
+        );
+
+        ctx.arc(
+            c.x-c.size*.35,
+            c.y+8,
+            c.size*.32,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    });
+
+}
+
+
+/* =====================================================
+   DRAW OCEAN WAVES
+===================================================== */
+
+function drawOcean(){
+
+    const base = H*.48;
+
+    ctx.fillStyle="#006e9d";
+
+    ctx.fillRect(
+        0,
+        base,
+        W,
+        H-base
+    );
+
+    /* Big waves */
+
+    for(let layer=0;layer<5;layer++){
+
+        ctx.beginPath();
+
+        const y =
+            base+
+            layer*70;
+
+        ctx.moveTo(
+            0,
+            y
+        );
+
+        for(
+            let x=0;
+            x<=W;
+            x+=20
+        ){
+
+            const wave =
+                Math.sin(
+                    x*.018+
+                    worldTime*.035+
+                    layer
+                )*15;
+
+            ctx.lineTo(
+                x,
+                y+wave
+            );
+
+        }
+
+        ctx.lineTo(
+            W,
+            H
+        );
+
+        ctx.lineTo(
+            0,
+            H
+        );
+
+        ctx.closePath();
+
+        ctx.fillStyle =
+            layer%2===0
+            ? "rgba(0,119,165,.55)"
+            : "rgba(0,87,135,.45)";
+
+        ctx.fill();
+
+    }
+
+
+    /* White wave foam */
+
+    ctx.strokeStyle=
+        "rgba(255,255,255,.75)";
+
+    ctx.lineWidth=3;
+
+    for(
+        let y=base+15;
+        y<H;
+        y+=75
+    ){
+
+        ctx.beginPath();
+
+        for(
+            let x=0;
+            x<W;
+            x+=20
+        ){
+
+            const wave =
+                Math.sin(
+                    x*.025+
+                    worldTime*.04+
+                    y
+                )*8;
+
+            if(x===0)
+                ctx.moveTo(x,y+wave);
+            else
+                ctx.lineTo(x,y+wave);
+
+        }
+
+        ctx.stroke();
+
+    }
+
+}
+
+
+/* =====================================================
+   DRAW SURFER
+===================================================== */
+
+function drawSurfer(){
+
+    ctx.save();
+
+    ctx.translate(
+        surfer.x,
+        surfer.y
+    );
+
+    ctx.rotate(
+        surfer.rotation
+    );
+
+
+    /* Water splash */
+
+    ctx.fillStyle=
+        "rgba(255,255,255,.8)";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        42,
+        58,
+        10,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Surfboard */
+
+    ctx.fillStyle="#f3b62d";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        37,
+        60,
+        9,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle="#fff";
+
+    ctx.lineWidth=3;
+
+    ctx.stroke();
+
+
+    /* Legs */
+
+    ctx.strokeStyle="#263238";
+
+    ctx.lineWidth=8;
+
+    ctx.lineCap="round";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -8,
+        15
+    );
+
+    ctx.lineTo(
+        -25,
+        36
+    );
+
+    ctx.moveTo(
+        10,
+        15
+    );
+
+    ctx.lineTo(
+        27,
+        35
+    );
+
+    ctx.stroke();
+
+
+    /* Body */
+
+    const body=
+        ctx.createLinearGradient(
+            -20,
+            -30,
+            20,
+            25
+        );
+
+    body.addColorStop(
+        0,
+        "#ff7043"
+    );
+
+    body.addColorStop(
+        1,
+        "#d84315"
+    );
+
+    ctx.fillStyle=body;
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        -20,
+        -35,
+        40,
+        58,
+        12
+    );
+
+    ctx.fill();
+
+
+    /* Left arm */
+
+    ctx.strokeStyle="#d98b64";
+
+    ctx.lineWidth=10;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -15,
+        -25
+    );
+
+    ctx.lineTo(
+        -45,
+        -5
+    );
+
+    ctx.stroke();
+
+
+    /* Right arm */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        15,
+        -25
+    );
+
+    ctx.lineTo(
+        45,
+        -7
+    );
+
+    ctx.stroke();
+
+
+    /* Head */
+
+    ctx.fillStyle="#c9825e";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -52,
+        18,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Hair */
+
+    ctx.fillStyle="#252525";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -58,
+        19,
+        Math.PI,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Sunglasses */
+
+    ctx.strokeStyle="#111";
+
+    ctx.lineWidth=4;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -14,
+        -54
+    );
+
+    ctx.lineTo(
+        -2,
+        -54
+    );
+
+    ctx.moveTo(
+        2,
+        -54
+    );
+
+    ctx.lineTo(
+        14,
+        -54
+    );
+
+    ctx.stroke();
+
+
+    /* Face highlight */
+
+    ctx.fillStyle="#fff";
+
+    ctx.globalAlpha=.3;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -6,
+        -57,
+        3,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.globalAlpha=1;
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW COIN
+===================================================== */
+
+function drawCoin(o){
+
+    ctx.save();
+
+    ctx.translate(
+        o.x,
+        o.y
+    );
+
+    o.rotation += .06;
+
+    ctx.rotate(
+        o.rotation
+    );
+
+    ctx.fillStyle="#ffd42a";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        0,
+        o.size,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle="#fff0";
+
+    ctx.stroke();
+
+    ctx.fillStyle="#9b6800";
+
+    ctx.font=
+        "bold 20px Arial";
+
+    ctx.textAlign="center";
+
+    ctx.textBaseline="middle";
+
+    ctx.fillText(
+        "$",
+        0,
+        1
+    );
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW ROCK
+===================================================== */
+
+function drawRock(o){
+
+    ctx.save();
+
+    ctx.translate(
+        o.x,
+        o.y
+    );
+
+    ctx.fillStyle="#263238";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -35,
+        25
+    );
+
+    ctx.lineTo(
+        -25,
+        -15
+    );
+
+    ctx.lineTo(
+        -5,
+        -35
+    );
+
+    ctx.lineTo(
+        25,
+        -18
+    );
+
+    ctx.lineTo(
+        35,
+        25
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.fillStyle=
+        "rgba(255,255,255,.2)";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        -8,
+        -12,
+        8,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   COLLISION
+===================================================== */
+
+function collision(a,b){
+
+    return Math.abs(a.x-b.x)
+        < (a.width/2+b.size)
+        &&
+        Math.abs(a.y-b.y)
+        < (a.height/2+b.size);
+
+}
+
+
+/* =====================================================
+   UPDATE OBJECTS
+===================================================== */
+
+function updateObjects(){
+
+    if(
+        Math.random()
+        <
+        .018 + score/150000
+    ){
+        spawnObject();
+    }
+
+    objects.forEach(o=>{
+
+        o.y +=
+            speed;
+
+    });
+
+
+    for(
+        let i=objects.length-1;
+        i>=0;
+        i--
+    ){
+
+        const o=objects[i];
+
+        if(collision(surfer,o)){
+
+            if(o.type==="coin"){
+
+                score += 10;
+
+                particle(
+                    o.x,
+                    o.y,
+                    "#ffd42a",
+                    18
+                );
+
+                sound(
+                    900,
+                    .12,
+                    "sine",
+                    .08
+                );
+
+            }else{
+
+                lives--;
+
+                particle(
+                    surfer.x,
+                    surfer.y,
+                    "white",
+                    30
+                );
+
+                sound(
+                    100,
+                    .3,
+                    "sawtooth",
+                    .08
+                );
+
+                surfer.x =
+                    W/2;
+
+                if(lives<=0){
+
+                    endGame();
+
+                }
+
+            }
+
+            objects.splice(
+                i,
+                1
+            );
+
+            continue;
+
+        }
+
+
+        if(
+            o.y > H+100
+        ){
+
+            objects.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE PLAYER
+===================================================== */
+
+function updatePlayer(){
+
+    if(left){
+        surfer.vx -= .7;
+        surfer.rotation -= .015;
+    }
+
+    if(right){
+        surfer.vx += .7;
+        surfer.rotation += .015;
+    }
+
+    surfer.vx *= .88;
+
+    surfer.x += surfer.vx;
+
+    if(
+        surfer.x <
+        55
+    ){
+
+        surfer.x=55;
+        surfer.vx=0;
+
+    }
+
+    if(
+        surfer.x >
+        W-55
+    ){
+
+        surfer.x=W-55;
+        surfer.vx=0;
+
+    }
+
+    surfer.y =
+        H*.67+
+        Math.sin(
+            worldTime*.08
+        )*5;
+
+}
+
+
+/* =====================================================
+   UPDATE PARTICLES
+===================================================== */
+
+function updateParticles(){
+
+    for(
+        let i=particles.length-1;
+        i>=0;
+        i--
+    ){
+
+        const p=
+            particles[i];
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        p.life -= .025;
+
+        if(p.life<=0){
+
+            particles.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   DRAW PARTICLES
+===================================================== */
+
+function drawParticles(){
+
+    particles.forEach(p=>{
+
+        ctx.globalAlpha=
+            p.life;
+
+        ctx.fillStyle=
+            p.color;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    });
+
+    ctx.globalAlpha=1;
+
+}
+
+
+/* =====================================================
+   UPDATE HUD
+===================================================== */
+
+function updateHUD(){
+
+    document.getElementById(
+        "score"
+    ).textContent =
+        "Score: " + score;
+
+    document.getElementById(
+        "lives"
+    ).textContent =
+        "❤️".repeat(
+            Math.max(
+                0,
+                lives
+            )
+        );
+
+}
+
+
+/* =====================================================
+   MAIN DRAW
+===================================================== */
+
+function draw(){
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+    drawSky();
+
+    drawClouds();
+
+    drawOcean();
+
+    objects.forEach(o=>{
+
+        if(o.type==="coin")
+            drawCoin(o);
+        else
+            drawRock(o);
+
+    });
+
+    drawSurfer();
+
+    drawParticles();
+
+}
+
+
+/* =====================================================
+   GAME LOOP
+===================================================== */
+
+function loop(){
+
+    if(running && !paused){
+
+        worldTime++;
+
+        speed =
+            Math.min(
+                9,
+                4 + score/600
+            );
+
+        updatePlayer();
+
+        updateObjects();
+
+        updateParticles();
+
+        updateHUD();
+
+        draw();
+
+    }else{
+
+        draw();
+
+    }
+
+    requestAnimationFrame(
+        loop
+    );
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+function startGame(){
+
+    initSound();
+
+    score=0;
+    lives=3;
+
+    speed=4;
+
+    objects=[];
+    particles=[];
+
+    surfer.x=W/2;
+    surfer.vx=0;
+    surfer.rotation=0;
+
+    running=true;
+    paused=false;
+
+    document
+        .getElementById(
+            "startScreen"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+    document
+        .getElementById(
+            "gameOver"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+    sound(
+        600,
+        .12,
+        "sine",
+        .06
+    );
+
+}
+
+
+/* =====================================================
+   END GAME
+===================================================== */
+
+function endGame(){
+
+    running=false;
+
+    document.getElementById(
+        "finalScore"
+    ).textContent =
+        score;
+
+    document
+        .getElementById(
+            "gameOver"
+        )
+        .classList.remove(
+            "hidden"
+        );
+
+}
+
+
+/* =====================================================
+   PAUSE
+===================================================== */
+
+document
+    .getElementById(
+        "pauseBtn"
+    )
+    .addEventListener(
+        "click",
+        ()=>{
+
+            if(!running)
+                return;
+
+            paused=!paused;
+
+            document.getElementById(
+                "pauseBtn"
+            ).textContent =
+                paused
+                ? "▶"
+                : "Ⅱ";
+
+        }
+    );
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+document
+    .getElementById(
+        "startBtn"
+    )
+    .addEventListener(
+        "click",
+        startGame
+    );
+
+document
+    .getElementById(
+        "restartBtn"
+    )
+    .addEventListener(
+        "click",
+        startGame
+    );
+
+
+/* =====================================================
+   MOBILE CONTROLS
+===================================================== */
+
+function pressLeft(e){
+
+    e.preventDefault();
+
+    left=true;
+
+    initSound();
+
+}
+
+function releaseLeft(e){
+
+    e.preventDefault();
+
+    left=false;
+
+}
+
+function pressRight(e){
+
+    e.preventDefault();
+
+    right=true;
+
+    initSound();
+
+}
+
+function releaseRight(e){
+
+    e.preventDefault();
+
+    right=false;
+
+}
+
+
+const leftBtn =
+    document.getElementById(
+        "leftBtn"
+    );
+
+const rightBtn =
+    document.getElementById(
+        "rightBtn"
+    );
+
+
+leftBtn.addEventListener(
+    "touchstart",
+    pressLeft,
+    {passive:false}
+);
+
+leftBtn.addEventListener(
+    "touchend",
+    releaseLeft,
+    {passive:false}
+);
+
+rightBtn.addEventListener(
+    "touchstart",
+    pressRight,
+    {passive:false}
+);
+
+rightBtn.addEventListener(
+    "touchend",
+    releaseRight,
+    {passive:false}
+);
+
+
+/* Mouse */
+
+leftBtn.addEventListener(
+    "mousedown",
+    pressLeft
+);
+
+leftBtn.addEventListener(
+    "mouseup",
+    releaseLeft
+);
+
+rightBtn.addEventListener(
+    "mousedown",
+    pressRight
+);
+
+rightBtn.addEventListener(
+    "mouseup",
+    releaseRight
+);
+
+
+/* =====================================================
+   KEYBOARD
+===================================================== */
+
+window.addEventListener(
+    "keydown",
+    e=>{
+
+        if(e.key==="ArrowLeft")
+            left=true;
+
+        if(e.key==="ArrowRight")
+            right=true;
+
+        if(e.key==="p" || e.key==="P"){
+
+            if(running)
+                paused=!paused;
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "keyup",
+    e=>{
+
+        if(e.key==="ArrowLeft")
+            left=false;
+
+        if(e.key==="ArrowRight")
+            right=false;
+
+    }
+);
+
+
+/* =====================================================
+   START LOOP
+===================================================== */
+
+loop();
+
+</script>
+
+</body>
+</html>
+```
