@@ -1,140 +1,231 @@
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ne">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>World GK – International Affairs</title>
+
+<title>World GK - विश्व सामान्य ज्ञान</title>
 
 <style>
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 body{
-    font-family:Arial, sans-serif;
-    background:linear-gradient(135deg,#07111f,#102a43,#07111f);
-    color:#fff;
+    font-family:"Noto Sans Devanagari",Arial,sans-serif;
+    background:
+        radial-gradient(circle at top left,#174a72 0%,transparent 35%),
+        radial-gradient(circle at bottom right,#32165c 0%,transparent 35%),
+        linear-gradient(135deg,#06121f,#0a1d30,#07111d);
+    color:#f4f8ff;
     min-height:100vh;
 }
 
+/* HEADER */
+
 .header{
+    position:relative;
+    overflow:hidden;
     text-align:center;
-    padding:30px 15px;
-    background:rgba(0,0,0,.35);
-    border-bottom:1px solid rgba(255,255,255,.15);
+    padding:55px 20px 45px;
+    background:rgba(3,12,23,.65);
+    border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+.header::before{
+    content:"🌍";
+    position:absolute;
+    font-size:180px;
+    opacity:.06;
+    right:5%;
+    top:-35px;
+}
+
+.header::after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border:1px solid rgba(83,190,255,.15);
+    border-radius:50%;
+    left:-70px;
+    bottom:-100px;
+}
+
+.globe{
+    font-size:55px;
+    margin-bottom:12px;
+    filter:drop-shadow(0 0 18px rgba(65,190,255,.5));
 }
 
 .header h1{
-    font-size:32px;
-    margin-bottom:8px;
+    font-size:34px;
+    margin-bottom:10px;
+    letter-spacing:.5px;
 }
 
 .header p{
-    color:#b9c9d9;
+    color:#a9c1d5;
+    font-size:16px;
 }
+
+/* MAIN */
 
 .container{
     width:94%;
-    max-width:1000px;
-    margin:25px auto;
+    max-width:1050px;
+    margin:35px auto;
 }
 
-.controls{
-    display:grid;
-    grid-template-columns:1fr 220px;
-    gap:12px;
-    margin-bottom:20px;
-}
+/* CATEGORY TITLE */
 
-input,select{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#172b40;
-    color:white;
-    outline:none;
-}
-
-.stats{
+.section-title{
     display:flex;
-    justify-content:space-between;
-    background:#12263a;
-    padding:15px;
-    border-radius:12px;
-    margin-bottom:20px;
+    align-items:center;
+    gap:12px;
+    margin:30px 0 18px;
 }
 
-.question-card{
-    background:rgba(18,38,58,.95);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:15px;
-    padding:20px;
-    margin-bottom:15px;
-    box-shadow:0 8px 25px rgba(0,0,0,.25);
+.section-title span{
+    width:5px;
+    height:30px;
+    border-radius:5px;
+    background:#39bdf8;
+    box-shadow:0 0 12px #39bdf8;
 }
 
-.category{
-    display:inline-block;
-    font-size:12px;
-    padding:5px 9px;
-    border-radius:20px;
-    background:#214f75;
-    color:#d9efff;
-    margin-bottom:12px;
+.section-title h2{
+    font-size:22px;
+}
+
+/* QUESTION CARD */
+
+.qa-card{
+    position:relative;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(24,53,78,.92),
+            rgba(8,24,40,.96)
+        );
+    border:1px solid rgba(120,200,255,.13);
+    border-radius:18px;
+    padding:24px 25px;
+    margin-bottom:18px;
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.04);
+    transition:.25s ease;
+}
+
+.qa-card:hover{
+    transform:translateY(-3px);
+    border-color:rgba(80,190,255,.35);
+    box-shadow:
+        0 16px 40px rgba(0,0,0,.35),
+        0 0 25px rgba(30,150,220,.08);
 }
 
 .question{
-    font-size:18px;
+    color:#ffffff;
+    font-size:19px;
+    font-weight:700;
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+.question-number{
+    color:#42c5ff;
+    margin-right:5px;
+}
+
+.answer-box{
+    border-top:1px solid rgba(255,255,255,.09);
+    padding-top:14px;
+}
+
+.answer-label{
+    color:#62d4ff;
+    font-size:14px;
     font-weight:bold;
-    line-height:1.5;
-    margin-bottom:14px;
+    margin-bottom:5px;
 }
 
 .answer{
-    background:#0b1827;
-    border-left:4px solid #38bdf8;
-    padding:13px;
-    border-radius:8px;
-    color:#d9edf7;
-    line-height:1.5;
-    display:none;
+    color:#d6e5ef;
+    font-size:17px;
+    line-height:1.75;
 }
 
-.show-btn{
-    margin-top:12px;
-    padding:10px 15px;
-    border:none;
-    border-radius:8px;
-    background:#1597d4;
+/* SEARCH */
+
+.search-box{
+    margin-bottom:30px;
+}
+
+.search-box input{
+    width:100%;
+    padding:16px 20px;
+    border-radius:13px;
+    border:1px solid rgba(120,200,255,.15);
+    outline:none;
+    background:rgba(8,25,42,.85);
     color:white;
-    cursor:pointer;
-    font-weight:bold;
+    font-size:16px;
 }
 
-.show-btn:hover{
-    background:#0877ab;
+.search-box input::placeholder{
+    color:#7892a7;
 }
+
+.search-box input:focus{
+    border-color:#39bdf8;
+    box-shadow:0 0 18px rgba(57,189,248,.12);
+}
+
+/* FOOTER */
 
 .footer{
     text-align:center;
-    padding:30px;
-    color:#8fa7bb;
+    padding:35px 20px;
+    margin-top:50px;
+    color:#728ba0;
+    border-top:1px solid rgba(255,255,255,.08);
 }
 
-@media(max-width:650px){
-    .controls{
-        grid-template-columns:1fr;
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .header{
+        padding:40px 15px;
     }
 
     .header h1{
-        font-size:25px;
+        font-size:26px;
+    }
+
+    .globe{
+        font-size:45px;
+    }
+
+    .container{
+        width:92%;
+    }
+
+    .qa-card{
+        padding:19px;
+        border-radius:15px;
     }
 
     .question{
+        font-size:17px;
+    }
+
+    .answer{
         font-size:16px;
     }
 }
@@ -144,717 +235,582 @@ input,select{
 <body>
 
 <header class="header">
-    <h1>🌍 World GK – International Affairs</h1>
-    <p>Important questions for competitive exams, Lok Sewa preparation & GK study</p>
+
+    <div class="globe">🌍</div>
+
+    <h1>विश्व सामान्य ज्ञान</h1>
+
+    <p>
+        महत्वपूर्ण विश्वस्तरीय प्रश्न तथा तिनका उत्तर
+    </p>
+
 </header>
+
 
 <main class="container">
 
-<div class="controls">
-    <input
-        type="text"
-        id="search"
-        placeholder="Search questions..."
-        oninput="displayQuestions()"
-    >
+    <!-- SEARCH -->
 
-    <select id="category" onchange="displayQuestions()">
-        <option value="All">All Categories</option>
-        <option value="International Organizations">International Organizations</option>
-        <option value="Financial Institutions">Financial Institutions</option>
-        <option value="International Relations">International Relations</option>
-        <option value="World Geography">World Geography</option>
-        <option value="Climate & Environment">Climate & Environment</option>
-        <option value="Technology">Technology</option>
-        <option value="World Economics">World Economics</option>
-        <option value="International Law">International Law</option>
-        <option value="Nobel & Awards">Nobel & Awards</option>
-        <option value="World History">World History</option>
-        <option value="Important Seas">Important Seas</option>
-        <option value="Natural Resources">Natural Resources</option>
-        <option value="Current International Data">Current International Data</option>
-    </select>
-</div>
+    <div class="search-box">
+        <input
+            type="text"
+            id="search"
+            placeholder="प्रश्न वा उत्तर खोज्नुहोस्..."
+            oninput="searchQuestions()"
+        >
+    </div>
 
-<div class="stats">
-    <span>Questions: <b id="total">0</b></span>
-    <span>Shown: <b id="shown">0</b></span>
-</div>
 
-<div id="quiz"></div>
+    <!-- INTERNATIONAL ORGANIZATIONS -->
+
+    <div class="section-title">
+        <span></span>
+        <h2>अन्तर्राष्ट्रिय संगठनहरू</h2>
+    </div>
+
+
+    <div id="questions">
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १:</span>
+                संयुक्त राष्ट्रसंघमा हाल कति सदस्य राष्ट्र छन्?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    संयुक्त राष्ट्रसंघमा हाल १९३ सदस्य राष्ट्र छन्।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न २:</span>
+                संयुक्त राष्ट्रसंघको मुख्यालय कहाँ रहेको छ?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    संयुक्त राष्ट्रसंघको मुख्यालय अमेरिकाको न्यूयोर्क शहरमा रहेको छ।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न ३:</span>
+                संयुक्त राष्ट्र सुरक्षा परिषद्मा जम्मा कति सदस्य हुन्छन्?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    संयुक्त राष्ट्र सुरक्षा परिषद्मा जम्मा १५ सदस्य हुन्छन्।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न ४:</span>
+                संयुक्त राष्ट्र सुरक्षा परिषद्का स्थायी सदस्य राष्ट्रहरू कुन-कुन हुन्?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    चीन, फ्रान्स, रुस, बेलायत र संयुक्त राज्य अमेरिका सुरक्षा परिषद्का पाँच स्थायी सदस्य हुन्।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न ५:</span>
+                विश्व स्वास्थ्य संगठनको अंग्रेजी संक्षिप्त नाम के हो?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    WHO अर्थात् World Health Organization हो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FINANCIAL INSTITUTIONS -->
+
+        <div class="section-title">
+            <span></span>
+            <h2>विश्वका वित्तीय संस्था</h2>
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न ६:</span>
+                अन्तर्राष्ट्रिय मुद्रा कोषको अंग्रेजी संक्षिप्त नाम के हो?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    IMF अर्थात् International Monetary Fund हो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न ७:</span>
+                विश्व बैंकको मुख्यालय कहाँ रहेको छ?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    विश्व बैंकको मुख्यालय अमेरिकाको वासिङ्टन डी.सी.मा रहेको छ।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WORLD GEOGRAPHY -->
+
+        <div class="section-title">
+            <span></span>
+            <h2>विश्व भूगोल</h2>
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न ८:</span>
+                क्षेत्रफलका आधारमा विश्वको सबैभन्दा ठूलो महादेश कुन हो?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    एसिया विश्वको सबैभन्दा ठूलो महादेश हो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न ९:</span>
+                विश्वको सबैभन्दा ठूलो महासागर कुन हो?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    प्रशान्त महासागर विश्वको सबैभन्दा ठूलो महासागर हो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १०:</span>
+                समुद्री सतहबाट विश्वको सबैभन्दा अग्लो पर्वत कुन हो?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    सगरमाथा समुद्री सतहबाट विश्वको सबैभन्दा अग्लो पर्वत हो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CLIMATE -->
+
+        <div class="section-title">
+            <span></span>
+            <h2>जलवायु तथा वातावरण</h2>
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न ११:</span>
+                विश्वव्यापी तापक्रम वृद्धि भन्नाले के बुझिन्छ?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    पृथ्वीको औसत सतह तापक्रम लामो समयसम्म बढ्दै जाने प्रक्रियालाई विश्वव्यापी तापक्रम वृद्धि भनिन्छ।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १२:</span>
+                पेरिस सम्झौता मुख्य रूपमा कुन विषयसँग सम्बन्धित छ?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    पेरिस सम्झौता मुख्य रूपमा जलवायु परिवर्तन तथा विश्वव्यापी तापक्रम वृद्धिसँग सम्बन्धित अन्तर्राष्ट्रिय सम्झौता हो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TECHNOLOGY -->
+
+        <div class="section-title">
+            <span></span>
+            <h2>विश्व प्रविधि</h2>
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १३:</span>
+                कृत्रिम बुद्धिमत्ता भन्नाले के बुझिन्छ?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    कम्प्युटर वा मेसिनलाई मानवजस्तै सिक्न, तर्क गर्न, समस्या समाधान गर्न तथा निर्णय लिन सक्षम बनाउने प्रविधिलाई कृत्रिम बुद्धिमत्ता भनिन्छ।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १४:</span>
+                IoT को पूरा रूप के हो?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    IoT को पूरा रूप Internet of Things हो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ECONOMICS -->
+
+        <div class="section-title">
+            <span></span>
+            <h2>विश्व अर्थतन्त्र</h2>
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १५:</span>
+                GDP को पूरा रूप के हो?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    GDP को पूरा रूप Gross Domestic Product अर्थात् कुल गार्हस्थ्य उत्पादन हो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १६:</span>
+                मुद्रास्फीति भन्नाले के बुझिन्छ?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    अर्थतन्त्रमा वस्तु तथा सेवाको सामान्य मूल्यस्तर निरन्तर बढ्दै जाने अवस्थालाई मुद्रास्फीति भनिन्छ।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INTERNATIONAL LAW -->
+
+        <div class="section-title">
+            <span></span>
+            <h2>अन्तर्राष्ट्रिय कानुन</h2>
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १७:</span>
+                अन्तर्राष्ट्रिय न्यायालय कहाँ अवस्थित छ?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    अन्तर्राष्ट्रिय न्यायालय नेदरल्यान्ड्सको हेग शहरमा अवस्थित छ।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NOBEL -->
+
+        <div class="section-title">
+            <span></span>
+            <h2>नोबेल पुरस्कार तथा अन्तर्राष्ट्रिय पुरस्कार</h2>
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १८:</span>
+                नोबेल पुरस्कारको स्थापना कसले गरेका हुन्?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    नोबेल पुरस्कारको स्थापना स्विडेनी वैज्ञानिक तथा आविष्कारक अल्फ्रेड नोबेलले गरेका हुन्।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HISTORY -->
+
+        <div class="section-title">
+            <span></span>
+            <h2>विश्व इतिहास</h2>
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न १९:</span>
+                संयुक्त राष्ट्रसंघको स्थापना कहिले भएको हो?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    संयुक्त राष्ट्रसंघको स्थापना २४ अक्टोबर १९४५ मा भएको हो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="qa-card">
+
+            <div class="question">
+                <span class="question-number">प्रश्न २०:</span>
+                दोस्रो विश्वयुद्ध कहिले समाप्त भएको थियो?
+            </div>
+
+            <div class="answer-box">
+
+                <div class="answer-label">
+                    उत्तर
+                </div>
+
+                <div class="answer">
+                    दोस्रो विश्वयुद्ध सन् १९४५ मा समाप्त भएको थियो।
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
 
 </main>
 
+
 <footer class="footer">
-    World GK Study Section
+    🌍 World GK • प्रश्न तथा उत्तर अध्ययन सामग्री
 </footer>
+
 
 <script>
 
-const questions = [
+function searchQuestions(){
 
-/* =========================
-   INTERNATIONAL ORGANIZATIONS
-========================= */
+    const input =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
 
-{
-category:"International Organizations",
-q:"How many Member States does the United Nations currently have?",
-a:"193 Member States."
-},
+    const cards =
+        document.querySelectorAll(".qa-card");
 
-{
-category:"International Organizations",
-q:"Where is the headquarters of the United Nations located?",
-a:"New York City, United States."
-},
+    cards.forEach(card=>{
 
-{
-category:"International Organizations",
-q:"How many permanent members are there in the UN Security Council?",
-a:"Five: China, France, Russia, the United Kingdom and the United States."
-},
+        const text =
+            card.innerText.toLowerCase();
 
-{
-category:"International Organizations",
-q:"How many total members are there in the UN Security Council?",
-a:"15 members."
-},
+        if(text.includes(input)){
+            card.style.display="";
+        }else{
+            card.style.display="none";
+        }
 
-{
-category:"International Organizations",
-q:"What is the principal judicial organ of the United Nations?",
-a:"The International Court of Justice (ICJ)."
-},
-
-{
-category:"International Organizations",
-q:"Where is the International Court of Justice located?",
-a:"The Hague, Netherlands."
-},
-
-{
-category:"International Organizations",
-q:"What does WHO stand for?",
-a:"World Health Organization."
-},
-
-{
-category:"International Organizations",
-q:"What is the main international organization dealing with global trade rules?",
-a:"World Trade Organization (WTO)."
-},
-
-{
-category:"International Organizations",
-q:"What does ILO stand for?",
-a:"International Labour Organization."
-},
-
-{
-category:"International Organizations",
-q:"What does UNESCO stand for?",
-a:"United Nations Educational, Scientific and Cultural Organization."
-},
-
-{
-category:"International Organizations",
-q:"What does FAO stand for?",
-a:"Food and Agriculture Organization of the United Nations."
-},
-
-{
-category:"International Organizations",
-q:"What does IAEA stand for?",
-a:"International Atomic Energy Agency."
-},
-
-{
-category:"International Organizations",
-q:"What does IMF stand for?",
-a:"International Monetary Fund."
-},
-
-{
-category:"International Organizations",
-q:"What does NATO stand for?",
-a:"North Atlantic Treaty Organization."
-},
-
-{
-category:"International Organizations",
-q:"What does ASEAN stand for?",
-a:"Association of Southeast Asian Nations."
-},
-
-{
-category:"International Organizations",
-q:"What does OPEC stand for?",
-a:"Organization of the Petroleum Exporting Countries."
-},
-
-{
-category:"International Organizations",
-q:"What does OECD stand for?",
-a:"Organisation for Economic Co-operation and Development."
-},
-
-{
-category:"International Organizations",
-q:"What does INTERPOL stand for?",
-a:"International Criminal Police Organization."
-},
-
-/* =========================
-   FINANCIAL INSTITUTIONS
-========================= */
-
-{
-category:"Financial Institutions",
-q:"What is the main purpose of the International Monetary Fund?",
-a:"To promote international monetary cooperation and financial stability and provide financial assistance to member countries."
-},
-
-{
-category:"Financial Institutions",
-q:"What is the World Bank primarily concerned with?",
-a:"Long-term development and poverty reduction through financing, knowledge and technical assistance."
-},
-
-{
-category:"Financial Institutions",
-q:"Where are the headquarters of the IMF and World Bank located?",
-a:"Washington, D.C., United States."
-},
-
-{
-category:"Financial Institutions",
-q:"What does BIS stand for?",
-a:"Bank for International Settlements."
-},
-
-{
-category:"Financial Institutions",
-q:"What is the Asian Development Bank commonly abbreviated as?",
-a:"ADB."
-},
-
-{
-category:"Financial Institutions",
-q:"Where is the headquarters of the Asian Development Bank?",
-a:"Manila, Philippines."
-},
-
-{
-category:"Financial Institutions",
-q:"What does AIIB stand for?",
-a:"Asian Infrastructure Investment Bank."
-},
-
-{
-category:"Financial Institutions",
-q:"What is the New Development Bank commonly associated with?",
-a:"The BRICS countries."
-},
-
-/* =========================
-   INTERNATIONAL RELATIONS
-========================= */
-
-{
-category:"International Relations",
-q:"What is diplomacy?",
-a:"The practice of managing relations and negotiations between states and other international actors."
-},
-
-{
-category:"International Relations",
-q:"What is bilateral diplomacy?",
-a:"Diplomatic relations involving two countries."
-},
-
-{
-category:"International Relations",
-q:"What is multilateral diplomacy?",
-a:"Diplomacy involving three or more countries or international actors."
-},
-
-{
-category:"International Relations",
-q:"What is soft power?",
-a:"The ability to influence others through attraction, culture, values and persuasion rather than coercion."
-},
-
-{
-category:"International Relations",
-q:"What is hard power?",
-a:"The ability to influence others through military or economic coercion."
-},
-
-{
-category:"International Relations",
-q:"What is a treaty?",
-a:"A formal international agreement between states or other entities governed by international law."
-},
-
-/* =========================
-   WORLD GEOGRAPHY
-========================= */
-
-{
-category:"World Geography",
-q:"Which is the largest continent by area?",
-a:"Asia."
-},
-
-{
-category:"World Geography",
-q:"Which is the smallest continent by land area?",
-a:"Australia."
-},
-
-{
-category:"World Geography",
-q:"Which is the largest ocean?",
-a:"Pacific Ocean."
-},
-
-{
-category:"World Geography",
-q:"Which is the deepest ocean?",
-a:"Pacific Ocean."
-},
-
-{
-category:"World Geography",
-q:"Which is the highest mountain above sea level?",
-a:"Mount Everest."
-},
-
-{
-category:"World Geography",
-q:"Which is the largest hot desert?",
-a:"Sahara Desert."
-},
-
-{
-category:"World Geography",
-q:"Which river is traditionally recognized as the longest river in the world?",
-a:"The Nile is traditionally listed as the longest, although measurements comparing the Nile and Amazon remain debated."
-},
-
-{
-category:"World Geography",
-q:"Which country has the largest land area?",
-a:"Russia."
-},
-
-{
-category:"World Geography",
-q:"Which is the world's largest island?",
-a:"Greenland."
-},
-
-/* =========================
-   CLIMATE & ENVIRONMENT
-========================= */
-
-{
-category:"Climate & Environment",
-q:"What is the main greenhouse gas released by human activities?",
-a:"Carbon dioxide (CO₂) is the largest contributor among human-caused greenhouse gas emissions."
-},
-
-{
-category:"Climate & Environment",
-q:"What is global warming?",
-a:"The long-term rise in Earth's average surface temperature, mainly driven by increased greenhouse-gas concentrations."
-},
-
-{
-category:"Climate & Environment",
-q:"What is the Paris Agreement?",
-a:"An international climate agreement adopted in 2015 under the UN Framework Convention on Climate Change."
-},
-
-{
-category:"Climate & Environment",
-q:"What is biodiversity?",
-a:"The variety of life at genetic, species and ecosystem levels."
-},
-
-{
-category:"Climate & Environment",
-q:"What is the ozone layer?",
-a:"A region of the stratosphere containing relatively high concentrations of ozone that absorbs much of the Sun's harmful ultraviolet radiation."
-},
-
-/* =========================
-   TECHNOLOGY
-========================= */
-
-{
-category:"Technology",
-q:"What does AI stand for?",
-a:"Artificial Intelligence."
-},
-
-{
-category:"Technology",
-q:"What is machine learning?",
-a:"A branch of AI in which computer systems learn patterns from data to perform tasks or make predictions."
-},
-
-{
-category:"Technology",
-q:"What does IoT stand for?",
-a:"Internet of Things."
-},
-
-{
-category:"Technology",
-q:"What is quantum computing?",
-a:"Computing that uses quantum-mechanical phenomena to process information using quantum systems."
-},
-
-{
-category:"Technology",
-q:"What does 5G refer to?",
-a:"The fifth generation of mobile telecommunications technology."
-},
-
-{
-category:"Technology",
-q:"What is blockchain?",
-a:"A distributed digital ledger technology that records transactions or data across a network."
-},
-
-/* =========================
-   WORLD ECONOMICS
-========================= */
-
-{
-category:"World Economics",
-q:"What does GDP stand for?",
-a:"Gross Domestic Product."
-},
-
-{
-category:"World Economics",
-q:"What does inflation mean?",
-a:"A sustained increase in the general price level of goods and services over time."
-},
-
-{
-category:"World Economics",
-q:"What is a recession?",
-a:"A significant decline in economic activity across an economy, typically lasting for a sustained period."
-},
-
-{
-category:"World Economics",
-q:"What is international trade?",
-a:"The exchange of goods and services across national borders."
-},
-
-{
-category:"World Economics",
-q:"What is a trade deficit?",
-a:"A situation where the value of a country's imports exceeds the value of its exports over a given period."
-},
-
-{
-category:"World Economics",
-q:"What is purchasing power parity?",
-a:"An economic concept comparing currencies based on the relative prices of similar goods and services."
-},
-
-/* =========================
-   INTERNATIONAL LAW
-========================= */
-
-{
-category:"International Law",
-q:"What is international law?",
-a:"A body of rules and principles governing relations among states and other recognized international actors."
-},
-
-{
-category:"International Law",
-q:"What is the International Court of Justice?",
-a:"The principal judicial organ of the United Nations that settles legal disputes between states and gives advisory opinions."
-},
-
-{
-category:"International Law",
-q:"What is the International Criminal Court?",
-a:"A court that prosecutes individuals for crimes within its jurisdiction, including genocide, crimes against humanity and war crimes."
-},
-
-{
-category:"International Law",
-q:"Where is the International Criminal Court located?",
-a:"The Hague, Netherlands."
-},
-
-{
-category:"International Law",
-q:"What is the UN Charter?",
-a:"The founding treaty of the United Nations."
-},
-
-/* =========================
-   NOBEL & AWARDS
-========================= */
-
-{
-category:"Nobel & Awards",
-q:"Who established the Nobel Prizes?",
-a:"Alfred Nobel."
-},
-
-{
-category:"Nobel & Awards",
-q:"In which city are the Nobel Peace Prize ceremonies held?",
-a:"Oslo, Norway."
-},
-
-{
-category:"Nobel & Awards",
-q:"Where are most other Nobel Prize ceremonies held?",
-a:"Stockholm, Sweden."
-},
-
-{
-category:"Nobel & Awards",
-q:"Which organization awards the Nobel Peace Prize?",
-a:"The Norwegian Nobel Committee."
-},
-
-/* =========================
-   WORLD HISTORY
-========================= */
-
-{
-category:"World History",
-q:"When was the United Nations established?",
-a:"24 October 1945."
-},
-
-{
-category:"World History",
-q:"When did the First World War begin?",
-a:"1914."
-},
-
-{
-category:"World History",
-q:"When did the Second World War end?",
-a:"1945."
-},
-
-{
-category:"World History",
-q:"What was the Cold War?",
-a:"A prolonged geopolitical rivalry, mainly between the United States and the Soviet Union and their respective blocs."
-},
-
-{
-category:"World History",
-q:"When did the Berlin Wall fall?",
-a:"1989."
-},
-
-{
-category:"World History",
-q:"What was the Industrial Revolution?",
-a:"A period of major technological, economic and social transformation driven by mechanization and industrial production."
-},
-
-/* =========================
-   IMPORTANT SEAS
-========================= */
-
-{
-category:"Important Seas",
-q:"Which sea lies between Europe and Africa?",
-a:"Mediterranean Sea."
-},
-
-{
-category:"Important Seas",
-q:"Which sea is connected to the Mediterranean through the Bosporus and Dardanelles system?",
-a:"Black Sea."
-},
-
-{
-category:"Important Seas",
-q:"Which sea lies between Saudi Arabia and Africa?",
-a:"Red Sea."
-},
-
-{
-category:"Important Seas",
-q:"Which sea lies between the Arabian Peninsula and India?",
-a:"Arabian Sea."
-},
-
-{
-category:"Important Seas",
-q:"Which sea lies between the Korean Peninsula and Japan?",
-a:"Sea of Japan (also called East Sea in South Korea)."
-},
-
-{
-category:"Important Seas",
-q:"Which sea is north of the Mediterranean Sea and west of the Black Sea?",
-a:"The Black Sea is northeast of the Mediterranean; the Aegean Sea lies between Greece and Turkey."
-},
-
-/* =========================
-   NATURAL RESOURCES
-========================= */
-
-{
-category:"Natural Resources",
-q:"What are natural resources?",
-a:"Materials and features obtained from nature that humans use for survival, production and economic activity."
-},
-
-{
-category:"Natural Resources",
-q:"What is a renewable resource?",
-a:"A natural resource that can replenish naturally over time, such as sunlight, wind and sustainably managed biomass."
-},
-
-{
-category:"Natural Resources",
-q:"What is a non-renewable resource?",
-a:"A resource that exists in finite quantities or forms much more slowly than humans consume it, such as coal and petroleum."
-},
-
-{
-category:"Natural Resources",
-q:"What is the world's most widely used fossil fuel for electricity and industry?",
-a:"Coal remains one of the major fossil fuels used globally, although its share varies by sector and country."
-},
-
-/* =========================
-   CURRENT INTERNATIONAL DATA
-========================= */
-
-{
-category:"Current International Data",
-q:"How many UN Member States are there?",
-a:"193."
-},
-
-{
-category:"Current International Data",
-q:"How many members are currently on the UN Security Council?",
-a:"15."
-},
-
-{
-category:"Current International Data",
-q:"How many permanent members are on the UN Security Council?",
-a:"5."
-},
-
-{
-category:"Current International Data",
-q:"How many non-permanent members are on the UN Security Council?",
-a:"10."
-},
-
-{
-category:"Current International Data",
-q:"How many judges sit on the International Court of Justice?",
-a:"15 judges."
-},
-
-{
-category:"Current International Data",
-q:"How many members does the UN Economic and Social Council have?",
-a:"54 members."
-}
-
-];
-
-
-/* =========================
-   DISPLAY SYSTEM
-========================= */
-
-function displayQuestions(){
-
-    const quiz = document.getElementById("quiz");
-    const search = document.getElementById("search").value.toLowerCase();
-    const category = document.getElementById("category").value;
-
-    quiz.innerHTML="";
-
-    const filtered = questions.filter(item => {
-
-        const matchSearch =
-            item.q.toLowerCase().includes(search) ||
-            item.a.toLowerCase().includes(search);
-
-        const matchCategory =
-            category === "All" ||
-            item.category === category;
-
-        return matchSearch && matchCategory;
-    });
-
-    document.getElementById("total").textContent = questions.length;
-    document.getElementById("shown").textContent = filtered.length;
-
-    filtered.forEach((item,index)=>{
-
-        const card=document.createElement("div");
-        card.className="question-card";
-
-        card.innerHTML=`
-
-            <span class="category">
-                ${item.category}
-            </span>
-
-            <div class="question">
-                ${index+1}. ${item.q}
-            </div>
-
-            <button class="show-btn">
-                Show Answer
-            </button>
-
-            <div class="answer">
-                <strong>Answer:</strong><br>
-                ${item.a}
-            </div>
-        `;
-
-        const button=card.querySelector(".show-btn");
-        const answer=card.querySelector(".answer");
-
-        button.onclick=()=>{
-
-            if(answer.style.display==="block"){
-                answer.style.display="none";
-                button.textContent="Show Answer";
-            }else{
-                answer.style.display="block";
-                button.textContent="Hide Answer";
-            }
-
-        };
-
-        quiz.appendChild(card);
     });
 }
-
-displayQuestions();
 
 </script>
 
