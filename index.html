@@ -1,395 +1,52 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>GameBook GK Hub</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- Cloudinary Upload Widget -->
-<script src="https://upload-widget.cloudinary.com/latest/global/all.js"></script>
-
-<style>
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    font-family:Poppins,Arial,sans-serif;
-}
-
-#movies{
-    padding:70px 20px;
-    background:linear-gradient(135deg,#080a10,#15101a);
-    color:white;
-    min-height:600px;
-}
-
-.movies-container{
-    width:min(1200px,94%);
-    margin:auto;
-}
-
-.movies-title{
-    text-align:center;
-    margin-bottom:35px;
-}
-
-.movies-title h2{
-    font-size:clamp(32px,6vw,50px);
-    margin-bottom:8px;
-}
-
-.movies-title p{
-    color:#aaa;
-}
-
-/* ADMIN */
-
-.admin-box{
-    max-width:500px;
-    margin:0 auto 30px;
-    padding:25px;
-    border-radius:20px;
-    background:#171b25;
-    box-shadow:0 15px 40px #0008;
-}
-
-.admin-box h3{
-    text-align:center;
-    margin-bottom:18px;
-}
-
-.admin-box input{
-    width:100%;
-    padding:14px;
-    margin-bottom:12px;
-    border:1px solid #ffffff18;
-    border-radius:10px;
-    outline:none;
-    background:#0d1119;
-    color:white;
-}
-
-.admin-buttons{
-    display:flex;
-    gap:10px;
-}
-
-.admin-buttons button{
-    flex:1;
-    padding:13px;
-    border:0;
-    border-radius:25px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.login-btn{
-    background:#e50914;
-    color:white;
-}
-
-.logout-btn{
-    background:#555;
-    color:white;
-}
-
-/* UPLOAD */
-
-.upload-area{
-    display:none;
-    text-align:center;
-    padding:25px;
-    margin-bottom:30px;
-    border-radius:20px;
-    background:#171b25;
-}
-
-.upload-area.show{
-    display:block;
-}
-
-.upload-area button{
-    padding:15px 30px;
-    border:0;
-    border-radius:30px;
-    background:#e50914;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.upload-area button:hover{
-    opacity:.85;
-}
-
-.upload-info{
-    color:#aaa;
-    font-size:13px;
-    margin-top:12px;
-}
-
-/* SEARCH */
-
-.movie-search{
-    max-width:700px;
-    margin:30px auto;
-}
-
-.movie-search input{
-    width:100%;
-    padding:16px 22px;
-    border-radius:30px;
-    border:1px solid #ffffff18;
-    outline:none;
-    background:#171b25;
-    color:white;
-    font-size:16px;
-}
-
-/* GRID */
-
-.movie-grid{
-    display:grid;
-    grid-template-columns:repeat(
-        auto-fit,
-        minmax(210px,1fr)
-    );
-    gap:25px;
-}
-
-/* CARD */
-
-.movie-card{
-    overflow:hidden;
-    border-radius:18px;
-    background:#171b25;
-    box-shadow:0 15px 40px #0008;
-    transition:.3s;
-}
-
-.movie-card:hover{
-    transform:translateY(-7px);
-}
-
-.movie-poster{
-    width:100%;
-    height:290px;
-    background:#222;
-}
-
-.movie-poster img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-
-.movie-info{
-    padding:18px;
-}
-
-.movie-info h3{
-    margin:0 0 8px;
-    word-break:break-word;
-}
-
-.movie-info p{
-    color:#888;
-    font-size:13px;
-    margin-bottom:15px;
-}
-
-.movie-buttons{
-    display:flex;
-    gap:8px;
-}
-
-.movie-buttons button,
-.movie-buttons a{
-    flex:1;
-    padding:11px;
-    border:0;
-    border-radius:25px;
-    text-align:center;
-    text-decoration:none;
-    cursor:pointer;
-    font-size:13px;
-    font-weight:bold;
-}
-
-.watch-btn{
-    background:#e50914;
-    color:white;
-}
-
-.download-btn{
-    background:#087f86;
-    color:white;
-}
-
-.delete-btn{
-    width:100%;
-    margin-top:8px;
-    padding:9px;
-    border:0;
-    border-radius:20px;
-    background:#492027;
-    color:#ff9ca3;
-    cursor:pointer;
-}
-
-.delete-btn:hover{
-    background:#6d2730;
-}
-
-/* VIDEO MODAL */
-
-.video-modal{
-    position:fixed;
-    inset:0;
-    z-index:99999;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:15px;
-    background:#000e;
-}
-
-.video-modal.show{
-    display:flex;
-}
-
-.video-box{
-    width:min(1000px,100%);
-    background:#000;
-    border-radius:16px;
-    overflow:hidden;
-    position:relative;
-}
-
-.video-box video{
-    width:100%;
-    max-height:85vh;
-    display:block;
-}
-
-.close-video{
-    position:absolute;
-    right:10px;
-    top:10px;
-    z-index:5;
-    width:40px;
-    height:40px;
-    border:0;
-    border-radius:50%;
-    background:#e50914;
-    color:white;
-    font-size:20px;
-    cursor:pointer;
-}
-
-/* STATUS */
-
-.status-box{
-    text-align:center;
-    padding:30px;
-    color:#aaa;
-}
-
-.empty-box{
-    grid-column:1/-1;
-    text-align:center;
-    padding:50px;
-    color:#888;
-}
-
-.error-box{
-    grid-column:1/-1;
-    text-align:center;
-    padding:50px;
-    color:#ff7777;
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-    .movie-buttons{
-        flex-direction:column;
-    }
-
-    .movie-poster{
-        height:260px;
-    }
-
-    .admin-buttons{
-        flex-direction:column;
-    }
-}
-
-</style>
+<!-- TUS resumable upload client -->
+<script src="https://cdn.jsdelivr.net/npm/tus-js-client@4/dist/tus.min.js"></script>
 </head>
 
 <body>
 
-<!-- =================================================
-     HEADER
-================================================= -->
-
 <header>
+    <div class="logo">🎮 GameBook GK Hub</div>
 
-<div class="logo">
-🎮 GameBook GK Hub
-</div>
-
-<nav>
-
-<a href="#games">Games</a>
-<a href="#books">Books</a>
-<a href="#computer">Computer</a>
-<a href="#gk">GK Questions</a>
-<a href="#movies">Movies</a>
-
-</nav>
-
+    <nav>
+        <a href="#games">Games</a>
+        <a href="#books">Books</a>
+        <a href="#computer">Computer</a>
+        <a href="#gk">GK</a>
+        <a href="#movies">Movies</a>
+    </nav>
 </header>
 
 
-<!-- =================================================
-     HERO
-================================================= -->
-
 <section class="hero">
+    <h1>Welcome To GameBook GK Hub</h1>
 
-<h1>
-Welcome To GameBook GK Hub
-</h1>
+    <p>
+        Play Games, Read Books and Improve Your Knowledge.
+    </p>
 
-<p>
-Play Games, Read Books and Improve Your Knowledge.
-</p>
-
-<button onclick="document.getElementById('games').scrollIntoView()">
-Explore Now
-</button>
-
+    <button onclick="document.getElementById('games').scrollIntoView()">
+        Explore Now
+    </button>
 </section>
 
 
-<!-- =================================================
+<!-- =====================================================
      GAMES
-     DO NOT CONNECT THIS TO MOVIE DELETE SYSTEM
-================================================= -->
+===================================================== -->
 
 <section id="games">
 
@@ -412,8 +69,7 @@ Explore Now
 <a href="aim-trainer.html" class="card">🎯 Aim Trainer</a>
 <a href="zombie-survival.html" class="card">🧟 Zombie Survival</a>
 <a href="highway-racer.html" class="card">🏎 Highway Racer</a>
-<a href="bike-race.html" class="card">🚴‍♂️ Bike Race</a>
-<a href="game/ninja-runner.html" class="card">🏃 Ninja Runner</a>
+<a href="bike-race.html" class="card">🚴 Bike Race</a>
 <a href="penalty-shootout.html" class="card">⚽ Penalty Shootout</a>
 <a href="golf-challeng.html" class="card">🏌️ Golf Challenge</a>
 <a href="basketball.html" class="card">🏀 Basketball</a>
@@ -422,14 +78,12 @@ Explore Now
 <a href="carem.html" class="card">🎯 Carrom</a>
 
 </div>
-
 </section>
 
 
-<!-- =================================================
+<!-- =====================================================
      BOOKS
-     DO NOT CONNECT THIS TO MOVIE DELETE SYSTEM
-================================================= -->
+===================================================== -->
 
 <section id="books">
 
@@ -437,44 +91,24 @@ Explore Now
 
 <div class="grid">
 
-<a href="god-stories.html" class="card">
-📚 God Story
-</a>
-
-<a href="mahabharat-book.html" class="card">
-📚 Mahabharata Book
-</a>
-
-<a href="ramayan.html" class="card">
-📚 Ramayan Book
-</a>
-
-<a href="horror-book.html" class="card">
-👻 Horror Books
-</a>
-
-<a href="children-book.html" class="card">
-🧒 Children Books
-</a>
-
-<a href="love-story.html" class="card">
-❤️ Love Story
-</a>
+<a href="god-stories.html" class="card">📚 God Story</a>
+<a href="mahabharat-book.html" class="card">📚 Mahabharata Book</a>
+<a href="ramayan.html" class="card">📚 Ramayan Book</a>
+<a href="horror-book.html" class="card">👻 Horror Books</a>
+<a href="children-book.html" class="card">🧒 Children Books</a>
+<a href="love-story.html" class="card">❤️ Love Story</a>
 
 </div>
-
 </section>
 
 
-<!-- =================================================
+<!-- =====================================================
      COMPUTER
-================================================= -->
+===================================================== -->
 
 <section id="computer">
 
-<h2>
-💻 Computer Course
-</h2>
+<h2>💻 Computer Course</h2>
 
 <div class="grid">
 
@@ -487,19 +121,16 @@ Explore Now
 </a>
 
 </div>
-
 </section>
 
 
-<!-- =================================================
+<!-- =====================================================
      GK
-================================================= -->
+===================================================== -->
 
 <section id="gk">
 
-<h2>
-🧠 GK Categories
-</h2>
+<h2>🧠 GK Categories</h2>
 
 <div class="grid">
 
@@ -510,13 +141,12 @@ Explore Now
 <div class="card">⚽ Sports GK</div>
 
 </div>
-
 </section>
 
 
-<!-- =================================================
+<!-- =====================================================
      MOVIES
-================================================= -->
+===================================================== -->
 
 <section id="movies">
 
@@ -524,1198 +154,166 @@ Explore Now
 
 <div class="movies-title">
 
-<h2>
-🎬 Movie Hub
-</h2>
+<h2>🎬 Movie Hub</h2>
 
 <p>
-Watch your authorized movies and videos
+Your authorized videos
 </p>
 
 </div>
 
 
-<!-- =================================================
-     ADMIN LOGIN
-================================================= -->
+<!-- ADMIN -->
 
 <div class="admin-box">
 
-<h3>
-🔐 Admin Login
-</h3>
+<h3>🔐 Admin</h3>
 
 <input
-type="email"
-id="adminEmail"
-placeholder="Admin Email"
-autocomplete="username"
+    id="adminEmail"
+    type="email"
+    placeholder="Admin email"
 >
 
 <input
-type="password"
-id="adminPassword"
-placeholder="Password"
-autocomplete="current-password"
+    id="adminPassword"
+    type="password"
+    placeholder="Password"
 >
 
 <div class="admin-buttons">
 
-<button
-class="login-btn"
-id="loginBtn">
+<button id="loginBtn">
 Login
 </button>
 
-<button
-class="logout-btn"
-id="logoutBtn">
+<button id="logoutBtn">
 Logout
 </button>
 
 </div>
 
-<p
-id="loginStatus"
-style="text-align:center;margin-top:15px;color:#999;">
+<p id="loginStatus">
 Not logged in
 </p>
 
 </div>
 
 
-<!-- =================================================
-     UPLOAD AREA
-================================================= -->
+<!-- UPLOAD -->
 
 <div
-class="upload-area"
-id="uploadArea">
+    id="uploadArea"
+    class="upload-area"
+>
 
-<h3>
-🎥 Upload Authorized Video
-</h3>
+<h3>🎥 Upload Video</h3>
 
 <p>
-Supports MP4, WebM, MOV and MKV
+MP4 / WebM / MOV / MKV
 </p>
 
-<p class="upload-info">
-Large videos use Cloudinary chunked upload.
-Your Cloudinary account must allow the file size.
+<p class="small">
+Large videos use resumable upload.
 </p>
+
+<input
+    id="videoFile"
+    type="file"
+    accept="video/*"
+>
+
+<input
+    id="videoTitle"
+    type="text"
+    placeholder="Video title"
+>
+
+<input
+    id="posterUrl"
+    type="url"
+    placeholder="Poster image URL (optional)"
+>
 
 <button id="uploadBtn">
-⬆ Upload Video
+⬆ Start Upload
 </button>
+
+<div class="progress-wrap">
+
+<div
+    id="progressBar"
+    class="progress-bar">
+</div>
+
+</div>
+
+<p id="uploadStatus">
+Ready
+</p>
 
 </div>
 
 
-<!-- =================================================
-     SEARCH
-================================================= -->
+<!-- SEARCH -->
 
 <div class="movie-search">
 
 <input
-id="searchInput"
-type="text"
-placeholder="🔎 Search movies...">
+    id="searchInput"
+    type="search"
+    placeholder="🔎 Search videos..."
+>
 
 </div>
 
 
-<!-- =================================================
-     MOVIE GRID
-================================================= -->
+<!-- MOVIES -->
 
 <div
-class="movie-grid"
-id="movieGrid">
+    id="movieGrid"
+    class="movie-grid"
+>
 
-<div class="status-box">
-Loading movies... 🎬
+<div class="loading">
+Loading...
 </div>
 
 </div>
 
 </div>
-
 </section>
 
 
-<!-- =================================================
-     VIDEO MODAL
-================================================= -->
+<!-- =====================================================
+     VIDEO PLAYER
+===================================================== -->
 
 <div
-class="video-modal"
-id="videoModal">
+    id="videoModal"
+    class="video-modal"
+>
 
 <div class="video-box">
 
 <button
-class="close-video"
-id="closeVideo">
+    id="closeVideo"
+    class="close-video"
+>
 ✕
 </button>
 
 <video
-id="videoPlayer"
-controls
-playsinline
-preload="metadata">
+    id="videoPlayer"
+    controls
+    playsinline
+    preload="metadata"
+>
 </video>
 
 </div>
-
 </div>
 
-
-<!-- =================================================
-     FIREBASE + CLOUDINARY
-================================================= -->
-
-<script type="module">
-
-/* =================================================
-   FIREBASE IMPORTS
-================================================= */
-
-import {
-    initializeApp
-}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    query,
-    orderBy,
-    deleteDoc,
-    doc
-}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
-}
-from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-
-/* =================================================
-   FIREBASE CONFIG
-================================================= */
-
-const firebaseConfig = {
-
-    apiKey:
-    "AIzaSyB9urPvhLdG7o4K4q6Srp6OK9PpRkmnJb8",
-
-    authDomain:
-    "my-movie-websit.firebaseapp.com",
-
-    projectId:
-    "my-movie-websit",
-
-    storageBucket:
-    "my-movie-websit.firebasestorage.app",
-
-    messagingSenderId:
-    "789490555831",
-
-    appId:
-    "1:789490555831:web:1b1cfbde4af2a555f1e632",
-
-    measurementId:
-    "G-JG1G2WQH5G"
-};
-
-
-/* =================================================
-   FIREBASE START
-================================================= */
-
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-const auth = getAuth(app);
-
-
-/* =================================================
-   CLOUDINARY
-================================================= */
-
-const CLOUD_NAME = "rckdxy0p";
-
-const UPLOAD_PRESET = "my_movie_upload";
-
-
-/* =================================================
-   ADMIN UID
-   IMPORTANT:
-   Replace this with your Firebase Admin user's UID.
-================================================= */
-
-const ADMIN_UID = "REPLACE_WITH_YOUR_ADMIN_UID";
-
-
-/* =================================================
-   ELEMENTS
-================================================= */
-
-const uploadArea =
-document.getElementById("uploadArea");
-
-const loginStatus =
-document.getElementById("loginStatus");
-
-const uploadBtn =
-document.getElementById("uploadBtn");
-
-const movieGrid =
-document.getElementById("movieGrid");
-
-const searchInput =
-document.getElementById("searchInput");
-
-
-/* =================================================
-   AUTH STATE
-================================================= */
-
-onAuthStateChanged(
-    auth,
-    function(user){
-
-        if(user){
-
-            uploadArea.classList.add("show");
-
-            loginStatus.textContent =
-            "Logged in as: " + user.email;
-
-            loginStatus.style.color =
-            "#48d597";
-
-        }else{
-
-            uploadArea.classList.remove("show");
-
-            loginStatus.textContent =
-            "Not logged in";
-
-            loginStatus.style.color =
-            "#999";
-        }
-
-        loadMovies();
-    }
-);
-
-
-/* =================================================
-   LOGIN
-================================================= */
-
-document
-.getElementById("loginBtn")
-.addEventListener(
-"click",
-async function(){
-
-    const email =
-    document
-    .getElementById("adminEmail")
-    .value
-    .trim();
-
-    const password =
-    document
-    .getElementById("adminPassword")
-    .value;
-
-    if(!email || !password){
-
-        alert(
-        "Enter email and password."
-        );
-
-        return;
-    }
-
-    try{
-
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-
-        alert(
-        "Login successful! ✅"
-        );
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        alert(
-        "Login failed. Check your email and password."
-        );
-    }
-
-});
-
-
-/* =================================================
-   LOGOUT
-================================================= */
-
-document
-.getElementById("logoutBtn")
-.addEventListener(
-"click",
-async function(){
-
-    try{
-
-        await signOut(auth);
-
-        alert(
-        "Logged out successfully."
-        );
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        alert(
-        "Logout failed."
-        );
-    }
-
-});
-
-
-/* =================================================
-   CLOUDINARY UPLOAD WIDGET
-================================================= */
-
-const uploadWidget =
-cloudinary.createUploadWidget(
-
-{
-
-    cloudName:
-    CLOUD_NAME,
-
-    uploadPreset:
-    UPLOAD_PRESET,
-
-    sources:
-    ["local"],
-
-    resourceType:
-    "video",
-
-    multiple:
-    false,
-
-    clientAllowedFormats:
-    [
-        "mp4",
-        "webm",
-        "mov",
-        "mkv"
-    ],
-
-    /*
-       IMPORTANT:
-       Your previous value was 500 MB.
-
-       This value is approximately 2 GB.
-       Cloudinary account limits still apply.
-    */
-
-    maxFileSize:
-    2147483648,
-
-    /*
-       Chunk size = 20 MB.
-       Cloudinary Upload Widget supports
-       maxChunkSize for large uploads.
-    */
-
-    maxChunkSize:
-    20000000,
-
-    folder:
-    "my_movies"
-
-},
-
-async function(error,result){
-
-    if(error){
-
-        console.error(
-        "Cloudinary error:",
-        error
-        );
-
-        alert(
-        "Cloudinary upload failed. Check your Cloudinary account limit and upload preset."
-        );
-
-        return;
-    }
-
-
-    if(
-        result &&
-        result.event === "success"
-    ){
-
-        const user =
-        auth.currentUser;
-
-
-        if(!user){
-
-            alert(
-            "Please login first."
-            );
-
-            return;
-        }
-
-
-        const info =
-        result.info;
-
-
-        const title =
-        prompt(
-        "Enter video/movie name:"
-        );
-
-
-        if(!title){
-
-            alert(
-            "Video name is required."
-            );
-
-            return;
-        }
-
-
-        try{
-
-            await addDoc(
-
-                collection(
-                    db,
-                    "movies"
-                ),
-
-                {
-
-                    title:
-                    title.trim(),
-
-                    url:
-                    info.secure_url,
-
-                    poster:
-                    info.thumbnail_url || "",
-
-                    publicId:
-                    info.public_id || "",
-
-                    format:
-                    info.format || "",
-
-                    bytes:
-                    info.bytes || 0,
-
-                    date:
-                    new Date()
-                    .toLocaleDateString(),
-
-                    createdAt:
-                    Date.now(),
-
-                    uploadedBy:
-                    user.uid,
-
-                    uploadedByEmail:
-                    user.email || ""
-
-                }
-
-            );
-
-
-            alert(
-            "Video uploaded and saved successfully! 🎉"
-            );
-
-
-            searchInput.value = "";
-
-
-            loadMovies();
-
-        }
-        catch(error){
-
-            console.error(
-            "Firestore error:",
-            error
-            );
-
-            alert(
-            "Video uploaded to Cloudinary, but Firestore save failed."
-            );
-        }
-    }
-
-});
-
-
-/* =================================================
-   UPLOAD BUTTON
-================================================= */
-
-uploadBtn.addEventListener(
-"click",
-function(){
-
-    const user =
-    auth.currentUser;
-
-
-    if(!user){
-
-        alert(
-        "Please login first."
-        );
-
-        return;
-    }
-
-
-    uploadWidget.open();
-
-});
-
-
-/* =================================================
-   LOAD MOVIES
-================================================= */
-
-async function loadMovies(){
-
-    movieGrid.innerHTML = `
-
-        <div class="status-box">
-            Loading movies... 🎬
-        </div>
-
-    `;
-
-
-    try{
-
-        const movieQuery =
-
-        query(
-
-            collection(
-                db,
-                "movies"
-            ),
-
-            orderBy(
-                "createdAt",
-                "desc"
-            )
-
-        );
-
-
-        const snapshot =
-        await getDocs(
-            movieQuery
-        );
-
-
-        movieGrid.innerHTML = "";
-
-
-        if(snapshot.empty){
-
-            movieGrid.innerHTML = `
-
-                <div class="empty-box">
-
-                    <h3>
-                        🎬 No Videos Yet
-                    </h3>
-
-                    <p>
-                        Login as admin to upload an authorized video.
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
-        }
-
-
-        snapshot.forEach(
-        function(movieDoc){
-
-            const movie =
-            movieDoc.data();
-
-            const id =
-            movieDoc.id;
-
-
-            const card =
-            document.createElement(
-                "div"
-            );
-
-
-            card.className =
-            "movie-card";
-
-
-            /* =================================================
-               POSTER
-            ================================================= */
-
-            let posterHTML;
-
-
-            if(movie.poster){
-
-                posterHTML = `
-
-                    <img
-                    src="${escapeAttribute(movie.poster)}"
-                    alt="${escapeHTML(movie.title || "Video")}">
-
-                `;
-
-            }else{
-
-                posterHTML = `
-
-                    <div
-                    style="
-                    height:100%;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    font-size:60px;
-                    ">
-
-                    🎬
-
-                    </div>
-
-                `;
-            }
-
-
-            /* =================================================
-               CARD
-            ================================================= */
-
-            card.innerHTML = `
-
-                <div class="movie-poster">
-
-                    ${posterHTML}
-
-                </div>
-
-
-                <div class="movie-info">
-
-                    <h3>
-                        ${escapeHTML(
-                            movie.title || "Untitled Video"
-                        )}
-                    </h3>
-
-
-                    <p>
-                        Uploaded:
-                        ${escapeHTML(
-                            movie.date || ""
-                        )}
-                    </p>
-
-
-                    <div class="movie-buttons">
-
-                        <button
-                        class="watch-btn">
-
-                            ▶ Watch
-
-                        </button>
-
-
-                        <a
-                        class="download-btn"
-                        href="${escapeAttribute(
-                            movie.url || "#"
-                        )}"
-                        target="_blank"
-                        rel="noopener noreferrer">
-
-                            ⬇ Open
-
-                        </a>
-
-                    </div>
-
-
-                    <button
-                    class="delete-btn"
-                    style="display:none;">
-
-                        🗑 Delete
-
-                    </button>
-
-                </div>
-
-            `;
-
-
-            /* =================================================
-               WATCH
-            ================================================= */
-
-            const watchButton =
-            card.querySelector(
-                ".watch-btn"
-            );
-
-
-            watchButton.addEventListener(
-            "click",
-            function(){
-
-                if(movie.url){
-
-                    playVideo(
-                        movie.url
-                    );
-
-                }else{
-
-                    alert(
-                    "Video URL is missing."
-                    );
-                }
-
-            });
-
-
-            /* =================================================
-               ADMIN DELETE BUTTON
-               ONLY YOUR ADMIN UID
-            ================================================= */
-
-            const deleteButton =
-            card.querySelector(
-                ".delete-btn"
-            );
-
-
-            const currentUser =
-            auth.currentUser;
-
-
-            if(
-                currentUser &&
-                ADMIN_UID !== "REPLACE_WITH_YOUR_ADMIN_UID" &&
-                currentUser.uid === ADMIN_UID
-            ){
-
-                deleteButton.style.display =
-                "block";
-            }
-
-
-            deleteButton.addEventListener(
-            "click",
-            async function(){
-
-                const user =
-                auth.currentUser;
-
-
-                if(!user){
-
-                    alert(
-                    "Please login."
-                    );
-
-                    return;
-                }
-
-
-                if(
-                    ADMIN_UID ===
-                    "REPLACE_WITH_YOUR_ADMIN_UID"
-                ){
-
-                    alert(
-                    "Set your ADMIN_UID in the code first."
-                    );
-
-                    return;
-                }
-
-
-                if(
-                    user.uid !==
-                    ADMIN_UID
-                ){
-
-                    alert(
-                    "Only the administrator can delete videos."
-                    );
-
-                    return;
-                }
-
-
-                const confirmDelete =
-                confirm(
-                "Delete this video record from Firestore?"
-                );
-
-
-                if(!confirmDelete){
-
-                    return;
-                }
-
-
-                try{
-
-                    /*
-                       This deletes ONLY the movie document
-                       inside Firestore.
-
-                       It does NOT touch games or books.
-                    */
-
-                    await deleteDoc(
-
-                        doc(
-                            db,
-                            "movies",
-                            id
-                        )
-
-                    );
-
-
-                    alert(
-                    "Video removed from Movie Hub."
-                    );
-
-
-                    loadMovies();
-
-                }
-                catch(error){
-
-                    console.error(
-                    error
-                    );
-
-                    alert(
-                    "Delete failed."
-                    );
-                }
-
-            });
-
-
-            movieGrid.appendChild(
-                card
-            );
-
-        });
-
-    }
-    catch(error){
-
-        console.error(
-        "Load movies error:",
-        error
-        );
-
-
-        movieGrid.innerHTML = `
-
-            <div class="error-box">
-
-                <h3>
-                    Unable to load videos
-                </h3>
-
-                <p>
-                    Check Firestore database, index and security rules.
-                </p>
-
-            </div>
-
-        `;
-    }
-
-}
-
-
-/* =================================================
-   SEARCH
-================================================= */
-
-searchInput.addEventListener(
-"input",
-function(){
-
-    const search =
-    this.value
-    .toLowerCase()
-    .trim();
-
-
-    document
-    .querySelectorAll(
-        ".movie-card"
-    )
-    .forEach(
-    function(card){
-
-        const title =
-        card
-        .querySelector("h3")
-        .textContent
-        .toLowerCase();
-
-
-        card.style.display =
-        title.includes(search)
-        ? ""
-        : "none";
-
-    });
-
-});
-
-
-/* =================================================
-   VIDEO PLAYER
-================================================= */
-
-function playVideo(url){
-
-    const modal =
-    document.getElementById(
-        "videoModal"
-    );
-
-
-    const player =
-    document.getElementById(
-        "videoPlayer"
-    );
-
-
-    player.src =
-    url;
-
-
-    modal.classList.add(
-        "show"
-    );
-
-
-    player
-    .play()
-    .catch(
-        function(){}
-    );
-}
-
-
-/* =================================================
-   CLOSE VIDEO
-================================================= */
-
-document
-.getElementById(
-    "closeVideo"
-)
-.addEventListener(
-    "click",
-    closeVideo
-);
-
-
-function closeVideo(){
-
-    const modal =
-    document.getElementById(
-        "videoModal"
-    );
-
-
-    const player =
-    document.getElementById(
-        "videoPlayer"
-    );
-
-
-    player.pause();
-
-    player.removeAttribute(
-        "src"
-    );
-
-    player.load();
-
-
-    modal.classList.remove(
-        "show"
-    );
-}
-
-
-/* =================================================
-   CLOSE WHEN CLICKING OUTSIDE VIDEO
-================================================= */
-
-document
-.getElementById(
-    "videoModal"
-)
-.addEventListener(
-"click",
-function(event){
-
-    if(
-        event.target === this
-    ){
-
-        closeVideo();
-    }
-
-});
-
-
-/* =================================================
-   ESC KEY
-================================================= */
-
-document.addEventListener(
-"keydown",
-function(event){
-
-    if(
-        event.key ===
-        "Escape"
-    ){
-
-        closeVideo();
-    }
-
-});
-
-
-/* =================================================
-   SECURITY HELPERS
-================================================= */
-
-function escapeHTML(text){
-
-    const div =
-    document.createElement(
-        "div"
-    );
-
-    div.textContent =
-    String(text ?? "");
-
-    return div.innerHTML;
-}
-
-
-function escapeAttribute(text){
-
-    return String(
-        text ?? ""
-    )
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-    .replace(
-        /'/g,
-        "&#39;"
-    )
-    .replace(
-        /</g,
-        "&lt;"
-    )
-    .replace(
-        />/g,
-        "&gt;"
-    );
-}
-
-
-/* =================================================
-   INITIAL LOAD
-================================================= */
-
-loadMovies();
-
-</script>
-
-
-<!-- =================================================
-     FOOTER
-================================================= -->
 
 <footer>
 
@@ -1723,12 +321,13 @@ loadMovies();
 
 <br>
 
-© 2026 Roshan Joshi - All Rights Reserved
+© 2026 Roshan Joshi
 
 </footer>
 
 
-</body>
+<script src="script.js"></script>
 
+</body>
 </html>
 ```
