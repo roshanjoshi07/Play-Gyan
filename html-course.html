@@ -1,0 +1,225 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameBook GK Hub</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#07111f;
+    color:white;
+}
+
+header{
+    padding:20px 7%;
+    background:#0d1b2a;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+}
+
+.hero{
+    min-height:70vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px 20px;
+    background:
+    radial-gradient(circle at top,#164e63,#07111f 65%);
+}
+
+.hero h1{
+    font-size:clamp(40px,7vw,80px);
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+    color:#38bdf8;
+}
+
+.hero p{
+    max-width:700px;
+    margin:auto;
+    color:#cbd5e1;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:30px;
+    padding:15px 28px;
+    border-radius:30px;
+    background:#0ea5e9;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+section{
+    padding:70px 7%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.section-title h2{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.section-title p{
+    color:#94a3b8;
+}
+
+.card{
+    max-width:420px;
+    margin:auto;
+    padding:35px;
+    border-radius:25px;
+    background:linear-gradient(145deg,#10243a,#0b1728);
+    border:1px solid #1e3a52;
+    box-shadow:0 15px 50px rgba(0,0,0,.3);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#38bdf8;
+}
+
+.icon{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+.card h3{
+    font-size:25px;
+    margin-bottom:12px;
+}
+
+.card p{
+    color:#aebdca;
+    line-height:1.7;
+}
+
+.card a{
+    display:inline-block;
+    margin-top:20px;
+    color:#38bdf8;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+footer{
+    text-align:center;
+    padding:40px;
+    background:#050b14;
+    color:#94a3b8;
+}
+
+@media(max-width:700px){
+    header{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav a{
+        margin:5px;
+        font-size:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎮 GameBook GK Hub</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#computer">Computer</a>
+        <a href="html-course.html">HTML Course</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <div>
+        <h1>Learn <span>HTML</span></h1>
+
+        <p>
+            सिक्नुहोस् HTML लाई Basic देखि Advanced सम्म।
+            नेपालीमा सरल theory र English मा practical code examples
+            सहित Complete HTML Course।
+        </p>
+
+        <a href="html-course.html" class="btn">
+            🚀 Start HTML Course
+        </a>
+    </div>
+</section>
+
+<section id="computer">
+
+    <div class="section-title">
+        <h2>💻 Computer Courses</h2>
+        <p>Learn coding and computer skills.</p>
+    </div>
+
+    <div class="card">
+
+        <div class="icon">🌐</div>
+
+        <h3>HTML Complete Course</h3>
+
+        <p>
+            HTML के होदेखि complete website बनाउनसम्म सिक्नुहोस्।
+            Structure, headings, links, images, tables, forms,
+            semantic HTML, SEO, accessibility र practical project
+            सबै एउटै course मा।
+        </p>
+
+        <a href="html-course.html">
+            Start Learning →
+        </a>
+
+    </div>
+
+</section>
+
+<footer>
+    <h3>🎮 GameBook GK Hub</h3>
+    <p>Play • Read • Learn • Explore</p>
+    <p>© 2026 Roshan Joshi</p>
+</footer>
+
+</body>
+</html>
+```
