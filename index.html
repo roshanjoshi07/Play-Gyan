@@ -164,515 +164,151 @@ Explore Now
 </section>
 
 ```html
-<!-- =========================================
-     MOVIES / CARTOONS / ANIME SECTION
-========================================= -->
+<!DOCTYPE html>
+<html lang="en">
 
-<section id="movies" class="media-section">
+<head>
+<meta charset="UTF-8">
 
-    <div class="media-header">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-        <div class="media-logo">🎬</div>
+<title>My Movie Hub</title>
 
-        <h2>Movies & Entertainment</h2>
-
-        <p>
-            Movies • Cartoons • Anime • More
-        </p>
-
-    </div>
-
-
-    <!-- SEARCH -->
-
-    <div class="media-search">
-
-        <input
-            id="mediaSearch"
-            type="text"
-            placeholder="🔎 Search movies, cartoons, anime..."
-            oninput="filterMedia()"
-        >
-
-    </div>
-
-
-    <!-- CATEGORY BUTTONS -->
-
-    <div class="media-categories">
-
-        <button
-            class="category active"
-            onclick="filterCategory('all',this)">
-            All
-        </button>
-
-        <button
-            class="category"
-            onclick="filterCategory('hindi',this)">
-            🇮🇳 Hindi
-        </button>
-
-        <button
-            class="category"
-            onclick="filterCategory('nepali',this)">
-            🇳🇵 Nepali
-        </button>
-
-        <button
-            class="category"
-            onclick="filterCategory('english',this)">
-            🇺🇸 English
-        </button>
-
-        <button
-            class="category"
-            onclick="filterCategory('cartoon',this)">
-            🧸 Cartoon
-        </button>
-
-        <button
-            class="category"
-            onclick="filterCategory('anime',this)">
-            🎌 Anime
-        </button>
-
-    </div>
-
-
-    <!-- MEDIA GRID -->
-
-    <div
-        class="media-grid"
-        id="mediaGrid">
-
-
-        <!-- =========================
-             HINDI
-        ========================== -->
-
-        <div
-            class="media-card"
-            data-category="hindi"
-            data-title="My Hindi Movie">
-
-            <div class="poster">
-
-                <img
-                    src="images/movie1.jpg"
-                    alt="My Hindi Movie"
-                >
-
-                <span class="quality">
-                    HD
-                </span>
-
-            </div>
-
-            <div class="media-info">
-
-                <h3>
-                    My Hindi Movie
-                </h3>
-
-                <p>
-                    🇮🇳 Hindi • Movie
-                </p>
-
-                <div class="media-buttons">
-
-                    <button
-                        onclick="playMedia('videos/movie1.mp4')">
-                        ▶ Watch
-                    </button>
-
-                    <a
-                        href="videos/movie1.mp4"
-                        download>
-                        ⬇ Download
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================
-             NEPALI
-        ========================== -->
-
-        <div
-            class="media-card"
-            data-category="nepali"
-            data-title="My Nepali Movie">
-
-            <div class="poster">
-
-                <img
-                    src="images/movie2.jpg"
-                    alt="My Nepali Movie"
-                >
-
-                <span class="quality">
-                    HD
-                </span>
-
-            </div>
-
-            <div class="media-info">
-
-                <h3>
-                    My Nepali Movie
-                </h3>
-
-                <p>
-                    🇳🇵 Nepali • Movie
-                </p>
-
-                <div class="media-buttons">
-
-                    <button
-                        onclick="playMedia('videos/movie2.mp4')">
-                        ▶ Watch
-                    </button>
-
-                    <a
-                        href="videos/movie2.mp4"
-                        download>
-                        ⬇ Download
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================
-             ENGLISH
-        ========================== -->
-
-        <div
-            class="media-card"
-            data-category="english"
-            data-title="My English Movie">
-
-            <div class="poster">
-
-                <img
-                    src="images/movie3.jpg"
-                    alt="My English Movie"
-                >
-
-                <span class="quality">
-                    HD
-                </span>
-
-            </div>
-
-            <div class="media-info">
-
-                <h3>
-                    My English Movie
-                </h3>
-
-                <p>
-                    🇺🇸 English • Movie
-                </p>
-
-                <div class="media-buttons">
-
-                    <button
-                        onclick="playMedia('videos/movie3.mp4')">
-                        ▶ Watch
-                    </button>
-
-                    <a
-                        href="videos/movie3.mp4"
-                        download>
-                        ⬇ Download
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================
-             CARTOON
-        ========================== -->
-
-        <div
-            class="media-card"
-            data-category="cartoon"
-            data-title="My Cartoon">
-
-            <div class="poster">
-
-                <img
-                    src="images/cartoon1.jpg"
-                    alt="My Cartoon"
-                >
-
-                <span class="quality">
-                    HD
-                </span>
-
-            </div>
-
-            <div class="media-info">
-
-                <h3>
-                    My Cartoon
-                </h3>
-
-                <p>
-                    🧸 Cartoon • Kids
-                </p>
-
-                <div class="media-buttons">
-
-                    <button
-                        onclick="playMedia('videos/cartoon1.mp4')">
-                        ▶ Watch
-                    </button>
-
-                    <a
-                        href="videos/cartoon1.mp4"
-                        download>
-                        ⬇ Download
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================
-             ANIME
-        ========================== -->
-
-        <div
-            class="media-card"
-            data-category="anime"
-            data-title="My Anime">
-
-            <div class="poster">
-
-                <img
-                    src="images/anime1.jpg"
-                    alt="My Anime"
-                >
-
-                <span class="quality">
-                    HD
-                </span>
-
-            </div>
-
-            <div class="media-info">
-
-                <h3>
-                    My Anime
-                </h3>
-
-                <p>
-                    🎌 Anime • Series
-                </p>
-
-                <div class="media-buttons">
-
-                    <button
-                        onclick="playMedia('videos/anime1.mp4')">
-                        ▶ Watch
-                    </button>
-
-                    <a
-                        href="videos/anime1.mp4"
-                        download>
-                        ⬇ Download
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================
-     VIDEO PLAYER
-========================================= -->
-
-<div
-    id="mediaPlayer"
-    class="media-player">
-
-    <div class="player-box">
-
-        <button
-            class="close-player"
-            onclick="closeMedia()">
-            ✕
-        </button>
-
-        <video
-            id="videoElement"
-            controls
-            playsinline
-            preload="metadata">
-
-            Your browser does not support video.
-
-        </video>
-
-    </div>
-
-</div>
-
+<!-- Cloudinary Upload Widget -->
+<script
+src="https://upload-widget.cloudinary.com/latest/global/all.js">
+</script>
 
 <style>
 
-/* SECTION */
+/* =========================
+   RESET
+========================= */
 
-.media-section{
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    padding:70px 20px;
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#080a10;
+    color:white;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    padding:55px 20px;
+    text-align:center;
 
     background:
     radial-gradient(
-        circle at top,
-        #25204a,
-        #0a0a12 65%
+        circle at center,
+        #a8202b,
+        #351019 50%,
+        #080a10
     );
+}
 
-    color:white;
+.logo{
+    font-size:60px;
+}
 
+header h1{
+    font-size:clamp(35px,7vw,60px);
+    margin:10px 0;
+}
+
+header p{
+    color:#ddd;
 }
 
 
-/* HEADER */
+/* =========================
+   UPLOAD AREA
+========================= */
 
-.media-header{
-
+.upload-area{
+    width:min(900px,92%);
+    margin:30px auto;
+    padding:28px;
     text-align:center;
 
-    margin-bottom:30px;
+    background:#151821;
+    border-radius:20px;
 
+    box-shadow:
+    0 15px 40px #0007;
 }
 
-.media-logo{
-
-    font-size:65px;
-
+.upload-area h2{
+    margin-bottom:10px;
 }
 
-.media-header h2{
-
-    font-size:
-    clamp(30px,6vw,48px);
-
-    margin:8px 0;
-
-}
-
-.media-header p{
-
+.upload-area p{
     color:#aaa;
+    margin-bottom:20px;
+}
 
+#uploadBtn{
+    border:0;
+    padding:15px 30px;
+    border-radius:30px;
+
+    background:#e50914;
+    color:white;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+    transition:.3s;
+}
+
+#uploadBtn:hover{
+    background:#ff2935;
+    transform:scale(1.04);
 }
 
 
-/* SEARCH */
+/* =========================
+   SEARCH
+========================= */
 
-.media-search{
-
-    max-width:650px;
-
-    margin:0 auto 25px;
-
+.search{
+    width:min(700px,92%);
+    margin:30px auto;
 }
 
-.media-search input{
-
+#searchInput{
     width:100%;
 
     padding:16px 22px;
 
-    border:1px solid #ffffff20;
-
-    border-radius:35px;
-
+    border:1px solid #ffffff15;
     outline:none;
-
-    background:#171725;
-
-    color:white;
-
-    font-size:16px;
-
-}
-
-
-/* CATEGORIES */
-
-.media-categories{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-    gap:10px;
-
-    margin-bottom:35px;
-
-}
-
-.category{
-
-    border:1px solid #ffffff20;
-
-    background:#191927;
-
-    color:white;
-
-    padding:11px 18px;
 
     border-radius:30px;
 
-    cursor:pointer;
+    background:#171a24;
+    color:white;
 
-}
-
-.category:hover,
-.category.active{
-
-    background:#e50914;
-
-    border-color:#e50914;
-
+    font-size:16px;
 }
 
 
-/* GRID */
+/* =========================
+   MOVIE GRID
+========================= */
 
-.media-grid{
-
-    width:min(1200px,95%);
-
+.movie-grid{
+    width:min(1200px,94%);
     margin:auto;
 
     display:grid;
@@ -683,195 +319,133 @@ Explore Now
         minmax(210px,1fr)
     );
 
-    gap:24px;
+    gap:25px;
 
+    padding-bottom:80px;
 }
 
 
-/* CARD */
+/* =========================
+   MOVIE CARD
+========================= */
 
-.media-card{
-
-    background:#171722;
+.movie-card{
+    background:#151821;
 
     border-radius:18px;
-
     overflow:hidden;
 
     box-shadow:
-    0 15px 40px #0009;
+    0 15px 40px #0008;
 
-    transition:
-    transform .3s,
-    box-shadow .3s;
-
+    transition:.3s;
 }
 
-.media-card:hover{
-
-    transform:
-    translateY(-8px);
-
-    box-shadow:
-    0 20px 50px #000;
-
+.movie-card:hover{
+    transform:translateY(-7px);
 }
 
 
-/* POSTER */
+/* =========================
+   POSTER
+========================= */
 
 .poster{
-
+    width:100%;
     height:290px;
-
-    position:relative;
-
-    overflow:hidden;
-
+    background:#222;
 }
 
 .poster img{
-
     width:100%;
-
     height:100%;
-
     object-fit:cover;
-
     display:block;
-
-    background:#252535;
-
-}
-
-.quality{
-
-    position:absolute;
-
-    top:12px;
-
-    right:12px;
-
-    background:#e50914;
-
-    padding:6px 9px;
-
-    border-radius:7px;
-
-    font-size:12px;
-
-    font-weight:bold;
-
 }
 
 
-/* INFO */
+/* =========================
+   MOVIE INFO
+========================= */
 
-.media-info{
-
+.info{
     padding:18px;
-
 }
 
-.media-info h3{
-
-    margin-bottom:7px;
-
+.info h3{
+    margin-bottom:8px;
 }
 
-.media-info p{
-
-    color:#aaa;
-
+.info p{
+    color:#999;
     font-size:14px;
-
     margin-bottom:15px;
-
 }
 
 
-/* BUTTONS */
+/* =========================
+   BUTTONS
+========================= */
 
-.media-buttons{
-
+.buttons{
     display:flex;
-
     gap:8px;
-
 }
 
-.media-buttons button,
-.media-buttons a{
-
+.buttons button,
+.buttons a{
     flex:1;
 
+    padding:11px;
+
     border:0;
-
-    padding:11px 5px;
-
     border-radius:25px;
 
     text-align:center;
-
     text-decoration:none;
-
-    font-weight:bold;
 
     cursor:pointer;
 
+    font-weight:bold;
     font-size:13px;
-
 }
 
-.media-buttons button{
-
+.watch{
     background:#e50914;
-
     color:white;
-
 }
 
-.media-buttons a{
-
-    background:#176b70;
-
+.download{
+    background:#087f86;
     color:white;
-
 }
 
 
-/* PLAYER */
+/* =========================
+   VIDEO PLAYER
+========================= */
 
-.media-player{
+.video-modal{
+    position:fixed;
+    inset:0;
+
+    z-index:9999;
 
     display:none;
 
-    position:fixed;
-
-    inset:0;
-
-    z-index:99999;
-
-    background:#000e;
-
     align-items:center;
-
     justify-content:center;
 
     padding:15px;
 
+    background:#000e;
 }
 
-.media-player.show{
-
+.video-modal.show{
     display:flex;
-
 }
 
-.player-box{
-
-    position:relative;
-
+.video-box{
     width:min(1000px,100%);
 
     background:#000;
@@ -880,34 +454,27 @@ Explore Now
 
     overflow:hidden;
 
+    position:relative;
 }
 
-.player-box video{
-
+.video-box video{
     width:100%;
-
     max-height:85vh;
-
     display:block;
-
 }
 
-.close-player{
-
+.close{
     position:absolute;
+
+    right:10px;
+    top:10px;
 
     z-index:5;
 
-    top:10px;
-
-    right:10px;
-
     width:40px;
-
     height:40px;
 
     border:0;
-
     border-radius:50%;
 
     background:#e50914;
@@ -917,200 +484,671 @@ Explore Now
     cursor:pointer;
 
     font-size:18px;
-
 }
 
 
-/* MOBILE */
+/* =========================
+   EMPTY MESSAGE
+========================= */
+
+.empty{
+    grid-column:1/-1;
+
+    text-align:center;
+
+    padding:60px 20px;
+
+    color:#888;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:600px){
 
-    .media-section{
-
-        padding:50px 10px;
-
+    .buttons{
+        flex-direction:column;
     }
 
     .poster{
-
-        height:250px;
-
-    }
-
-    .media-buttons{
-
-        flex-direction:column;
-
+        height:260px;
     }
 
 }
 
 </style>
 
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+        🎬
+    </div>
+
+    <h1>
+        My Movie Hub
+    </h1>
+
+    <p>
+        Watch your favorite videos
+    </p>
+
+</header>
+
+
+<!-- =========================
+     UPLOAD
+========================= -->
+
+<section class="upload-area">
+
+    <h2>
+        🎥 Upload Movie
+    </h2>
+
+    <p>
+        Upload your own or authorized videos
+    </p>
+
+    <button id="uploadBtn">
+        ⬆ Upload Video
+    </button>
+
+</section>
+
+
+<!-- =========================
+     SEARCH
+========================= -->
+
+<div class="search">
+
+    <input
+        id="searchInput"
+        type="text"
+        placeholder="🔎 Search movies..."
+        oninput="searchMovies()">
+
+</div>
+
+
+<!-- =========================
+     MOVIE LIST
+========================= -->
+
+<div
+    class="movie-grid"
+    id="movieGrid">
+
+</div>
+
+
+<!-- =========================
+     VIDEO PLAYER
+========================= -->
+
+<div
+    class="video-modal"
+    id="videoModal">
+
+    <div class="video-box">
+
+        <button
+            class="close"
+            onclick="closeVideo()">
+
+            ✕
+
+        </button>
+
+        <video
+            id="videoPlayer"
+            controls
+            playsinline>
+
+        </video>
+
+    </div>
+
+</div>
+
 
 <script>
 
-/* =========================================
-   CURRENT CATEGORY
-========================================= */
 
-let currentCategory = "all";
+/* =================================================
+   CLOUDINARY SETTINGS
+================================================= */
 
+const CLOUD_NAME =
+"rckdxy0p";
 
-/* =========================================
-   PLAY VIDEO
-========================================= */
-
-function playMedia(video){
-
-    const modal =
-        document.getElementById(
-            "mediaPlayer"
-        );
-
-    const player =
-        document.getElementById(
-            "videoElement"
-        );
-
-    player.src = video;
-
-    modal.classList.add("show");
-
-    player.play().catch(() => {});
-
-}
+const UPLOAD_PRESET =
+"my_movie_upload";
 
 
-/* =========================================
-   CLOSE VIDEO
-========================================= */
+/* =================================================
+   MOVIE STORAGE
+================================================= */
 
-function closeMedia(){
+let movies = [];
 
-    const modal =
-        document.getElementById(
-            "mediaPlayer"
-        );
+try{
 
-    const player =
-        document.getElementById(
-            "videoElement"
-        );
+    movies =
+    JSON.parse(
+        localStorage.getItem("myMovies")
+    ) || [];
 
-    player.pause();
+}catch(error){
 
-    player.currentTime = 0;
-
-    player.src = "";
-
-    modal.classList.remove("show");
+    movies = [];
 
 }
 
 
-/* =========================================
-   CATEGORY FILTER
-========================================= */
+/* =================================================
+   CLOUDINARY UPLOAD WIDGET
+================================================= */
 
-function filterCategory(
-    category,
-    button
-){
+const uploadWidget =
 
-    currentCategory = category;
+cloudinary.createUploadWidget(
 
-    document
-    .querySelectorAll(".category")
-    .forEach(btn => {
+{
 
-        btn.classList.remove(
-            "active"
+    cloudName:
+        CLOUD_NAME,
+
+    uploadPreset:
+        UPLOAD_PRESET,
+
+    sources:
+        ["local"],
+
+    resourceType:
+        "video",
+
+    multiple:
+        false,
+
+    clientAllowedFormats:
+        ["mp4","webm","mov"],
+
+    maxFileSize:
+        500000000,
+
+    folder:
+        "my_movies"
+
+},
+
+function(error,result){
+
+    if(error){
+
+        console.error(
+            "Cloudinary error:",
+            error
         );
 
-    });
+        alert(
+            "Upload failed. Please check your Cloudinary settings."
+        );
 
-    button.classList.add(
-        "active"
+        return;
+    }
+
+
+    if(
+        !error &&
+        result &&
+        result.event === "success"
+    ){
+
+        const info =
+            result.info;
+
+
+        /* =========================
+           MOVIE NAME
+        ========================= */
+
+        let title =
+            prompt(
+                "Enter movie name:"
+            );
+
+
+        if(!title){
+
+            title =
+            "Untitled Movie";
+
+        }
+
+
+        /* =========================
+           MOVIE DATA
+        ========================= */
+
+        const movie = {
+
+            id:
+                Date.now(),
+
+            title:
+                title,
+
+            url:
+                info.secure_url,
+
+            poster:
+                info.thumbnail_url || "",
+
+            date:
+                new Date()
+                .toLocaleDateString()
+
+        };
+
+
+        /* =========================
+           SAVE
+        ========================= */
+
+        movies.push(movie);
+
+
+        localStorage.setItem(
+
+            "myMovies",
+
+            JSON.stringify(
+                movies
+            )
+
+        );
+
+
+        renderMovies();
+
+
+        alert(
+            "Movie uploaded successfully! 🎉"
+        );
+
+    }
+
+});
+
+
+/* =================================================
+   OPEN UPLOAD WIDGET
+================================================= */
+
+document
+.getElementById("uploadBtn")
+.addEventListener(
+    "click",
+    function(){
+
+        uploadWidget.open();
+
+    }
+);
+
+
+/* =================================================
+   DISPLAY MOVIES
+================================================= */
+
+function renderMovies(){
+
+    const grid =
+        document
+        .getElementById(
+            "movieGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    if(
+        movies.length === 0
+    ){
+
+        grid.innerHTML = `
+
+        <div class="empty">
+
+            <h2>
+                🎬 No Movies Yet
+            </h2>
+
+            <p>
+                Click "Upload Video"
+                to add your first video.
+            </p>
+
+        </div>
+
+        `;
+
+        return;
+    }
+
+
+    movies
+    .slice()
+    .reverse()
+    .forEach(
+        function(movie){
+
+            const card =
+                document
+                .createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "movie-card";
+
+
+            const safeTitle =
+                escapeHTML(
+                    movie.title
+                );
+
+
+            card.innerHTML = `
+
+            <div class="poster">
+
+                ${
+                    movie.poster
+
+                    ?
+
+                    `
+                    <img
+                    src="${movie.poster}"
+                    alt="${safeTitle}">
+                    `
+
+                    :
+
+                    `
+                    <div style="
+                    height:100%;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:60px;
+                    ">
+                    🎬
+                    </div>
+                    `
+                }
+
+            </div>
+
+
+            <div class="info">
+
+                <h3>
+                    ${safeTitle}
+                </h3>
+
+                <p>
+                    Uploaded:
+                    ${movie.date}
+                </p>
+
+
+                <div class="buttons">
+
+                    <button
+                    class="watch"
+                    onclick="playVideo(
+                        '${escapeAttribute(movie.url)}'
+                    )">
+
+                        ▶ Watch
+
+                    </button>
+
+
+                    <a
+                    class="download"
+                    href="${escapeAttribute(movie.url)}"
+                    target="_blank"
+                    rel="noopener">
+
+                        ⬇ Download
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            `;
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
     );
 
-    filterMedia();
-
 }
 
 
-/* =========================================
-   SEARCH + CATEGORY
-========================================= */
+/* =================================================
+   SEARCH
+================================================= */
 
-function filterMedia(){
+function searchMovies(){
 
     const search =
         document
         .getElementById(
-            "mediaSearch"
+            "searchInput"
         )
         .value
-        .toLowerCase();
+        .toLowerCase()
+        .trim();
+
 
     const cards =
-        document.querySelectorAll(
-            ".media-card"
+        document
+        .querySelectorAll(
+            ".movie-card"
         );
 
-    cards.forEach(card => {
 
-        const category =
-            card.dataset.category;
+    cards.forEach(
+        function(card){
 
-        const title =
-            card.dataset.title
-            .toLowerCase();
+            const title =
+                card
+                .querySelector("h3")
+                .textContent
+                .toLowerCase();
 
-        const categoryMatch =
-            currentCategory === "all" ||
-            category === currentCategory;
 
-        const searchMatch =
-            title.includes(search);
+            if(
+                title.includes(search)
+            ){
 
-        if(
-            categoryMatch &&
-            searchMatch
-        ){
+                card.style.display =
+                    "";
 
-            card.style.display = "";
+            }else{
 
-        }else{
+                card.style.display =
+                    "none";
 
-            card.style.display = "none";
+            }
 
         }
-
-    });
+    );
 
 }
 
 
-/* =========================================
-   ESC KEY
-========================================= */
+/* =================================================
+   PLAY VIDEO
+================================================= */
 
-document.addEventListener(
+function playVideo(url){
+
+    const modal =
+        document
+        .getElementById(
+            "videoModal"
+        );
+
+
+    const video =
+        document
+        .getElementById(
+            "videoPlayer"
+        );
+
+
+    video.src =
+        url;
+
+
+    modal.classList.add(
+        "show"
+    );
+
+
+    video
+    .play()
+    .catch(
+        function(){
+
+            /* Browser may require
+               user interaction */
+
+        }
+    );
+
+}
+
+
+/* =================================================
+   CLOSE VIDEO
+================================================= */
+
+function closeVideo(){
+
+    const modal =
+        document
+        .getElementById(
+            "videoModal"
+        );
+
+
+    const video =
+        document
+        .getElementById(
+            "videoPlayer"
+        );
+
+
+    video.pause();
+
+    video.src = "";
+
+    modal.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =================================================
+   ESC KEY
+================================================= */
+
+document
+.addEventListener(
     "keydown",
     function(event){
 
-        if(event.key === "Escape"){
+        if(
+            event.key === "Escape"
+        ){
 
-            closeMedia();
+            closeVideo();
 
         }
 
     }
 );
 
+
+/* =================================================
+   HTML SECURITY
+================================================= */
+
+function escapeHTML(text){
+
+    const div =
+        document
+        .createElement(
+            "div"
+        );
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+function escapeAttribute(text){
+
+    return String(text)
+    .replace(/'/g,"&#39;")
+    .replace(/"/g,"&quot;");
+
+}
+
+
+/* =================================================
+   START WEBSITE
+================================================= */
+
+renderMovies();
+
 </script>
+
+</body>
+
+</html>
 ```
+
 
     
 <footer>
