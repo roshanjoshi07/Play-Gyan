@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Temple Runner</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    overflow:hidden;
+    background:#07130c;
+    font-family:Arial,sans-serif;
+    touch-action:none;
+}
+
+#game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            #68c9ee 0%,
+            #9edc9c 38%,
+            #285a35 70%,
+            #102817 100%
+        );
+}
+
+canvas{
+    display:block;
+    width:100%;
+    height:100%;
+}
+
+/* HUD */
+
+.hud{
+    position:absolute;
+    top:14px;
+    left:14px;
+    right:14px;
+    z-index:10;
+    display:flex;
+    justify-content:space-between;
+    pointer-events:none;
+}
+
+.box{
+    padding:10px 16px;
+    border-radius:18px;
+    color:white;
+    font-weight:bold;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(8px);
+    box-shadow:0 5px 18px #0006;
+}
+
+#score{
+    font-size:19px;
+}
+
+#coins{
+    font-size:18px;
+}
+
+#speed{
+    margin-top:5px;
+    font-size:12px;
+    opacity:.8;
+}
+
+/* Screens */
+
+.screen{
+    position:absolute;
+    inset:0;
+    z-index:20;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    color:white;
+    background:rgba(0,0,0,.42);
+}
+
+.screen h1{
+    font-size:clamp(42px,10vw,78px);
+    text-shadow:0 8px 20px #000;
+    margin-bottom:8px;
+}
+
+.screen p{
+    font-size:17px;
+    margin-bottom:25px;
+}
+
+.play{
+    border:0;
+    padding:16px 38px;
+    border-radius:40px;
+    background:#ffc928;
+    color:#241a00;
+    font-size:18px;
+    font-weight:bold;
+    box-shadow:0 8px 25px #0007;
+}
+
+.play:active{
+    transform:scale(.94);
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* Mobile controls */
+
+.controls{
+    position:absolute;
+    bottom:22px;
+    left:0;
+    right:0;
+    z-index:12;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+.control{
+    width:64px;
+    height:58px;
+    border:1px solid #ffffff55;
+    border-radius:18px;
+    color:white;
+    background:#0006;
+    backdrop-filter:blur(8px);
+    font-size:24px;
+}
+
+.control:active{
+    transform:scale(.9);
+    background:#ffffff33;
+}
+
+.jump{
+    background:#e5a900aa;
+}
+
+.pause{
+    position:absolute;
+    right:15px;
+    top:75px;
+    z-index:12;
+    width:44px;
+    height:44px;
+    border:0;
+    border-radius:50%;
+    color:white;
+    background:#0007;
+    font-size:18px;
+}
+
+/* Instructions */
+
+.help{
+    position:absolute;
+    bottom:95px;
+    left:0;
+    right:0;
+    text-align:center;
+    color:white;
+    opacity:.75;
+    font-size:12px;
+    z-index:8;
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<canvas id="canvas"></canvas>
+
+<div class="hud">
+
+    <div>
+        <div class="box" id="score">
+            Score: 0
+        </div>
+
+        <div class="box" id="speed">
+            Speed: 1x
+        </div>
+    </div>
+
+    <div class="box" id="coins">
+        🪙 0
+    </div>
+
+</div>
+
+<button class="pause" id="pause">Ⅱ</button>
+
+<div class="help">
+    Swipe ← → to move • Swipe ↑ to jump • Swipe ↓ to slide
+</div>
+
+<div class="controls">
+
+    <button class="control" id="left">←</button>
+
+    <button class="control jump" id="jump">↑</button>
+
+    <button class="control" id="right">→</button>
+
+    <button class="control" id="slide">↓</button>
+
+</div>
+
+
+<!-- START -->
+
+<div class="screen" id="startScreen">
+
+    <div style="font-size:70px">
+        🏃‍♂️
+    </div>
+
+    <h1>Temple Runner</h1>
+
+    <p>
+        Run • Jump • Slide • Collect Coins
+    </p>
+
+    <button class="play" id="start">
+        START RUN
+    </button>
+
+</div>
+
+
+<!-- GAME OVER -->
+
+<div class="screen hidden" id="gameOver">
+
+    <div style="font-size:65px">
+        🏆
+    </div>
+
+    <h1>Game Over</h1>
+
+    <p>
+        Final Score:
+        <b id="finalScore">0</b>
+    </p>
+
+    <button class="play" id="restart">
+        RUN AGAIN
+    </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   TEMPLE RUNNER
+   HTML + CSS + JAVASCRIPT
+===================================================== */
+
+const canvas =
+document.getElementById("canvas");
+
+const ctx =
+canvas.getContext("2d");
+
+let W,H,dpr;
+
+function resize(){
+
+    dpr =
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
+
+    W =
+    window.innerWidth;
+
+    H =
+    window.innerHeight;
+
+    canvas.width =
+    W*dpr;
+
+    canvas.height =
+    H*dpr;
+
+    canvas.style.width =
+    W+"px";
+
+    canvas.style.height =
+    H+"px";
+
+    ctx.setTransform(
+        dpr,0,0,dpr,0,0
+    );
+}
+
+resize();
+
+window.addEventListener(
+    "resize",
+    resize
+);
+
+
+/* =====================================================
+   GAME STATE
+===================================================== */
+
+let running=false;
+let paused=false;
+
+let score=0;
+let coins=0;
+
+let distance=0;
+let gameSpeed=7;
+
+let lane=1;
+
+let jumping=false;
+let sliding=false;
+
+let jumpY=0;
+let jumpVelocity=0;
+
+let objects=[];
+let particles=[];
+
+let spawnTimer=0;
+
+const player={
+    x:W/2,
+    y:0,
+    width:50,
+    height:85
+};
+
+
+/* =====================================================
+   AUDIO
+===================================================== */
+
+let audio=null;
+
+function initAudio(){
+
+    if(!audio){
+
+        audio=
+        new (
+        window.AudioContext ||
+        window.webkitAudioContext
+        )();
+
+    }
+
+    if(
+        audio.state==="suspended"
+    ){
+        audio.resume();
+    }
+}
+
+function beep(
+    frequency,
+    duration=.1,
+    type="sine",
+    volume=.04
+){
+
+    if(!audio)return;
+
+    const o=
+    audio.createOscillator();
+
+    const g=
+    audio.createGain();
+
+    o.type=type;
+
+    o.frequency.value=
+    frequency;
+
+    g.gain.value=
+    volume;
+
+    o.connect(g);
+    g.connect(audio.destination);
+
+    o.start();
+
+    g.gain.exponentialRampToValueAtTime(
+        .001,
+        audio.currentTime+duration
+    );
+
+    o.stop(
+        audio.currentTime+duration
+    );
+}
+
+
+/* =====================================================
+   LANES
+===================================================== */
+
+function laneX(l){
+
+    const center=W/2;
+
+    const spread=
+    Math.min(
+        W*.23,
+        150
+    );
+
+    return center+
+    (l-1)*spread;
+}
+
+
+/* =====================================================
+   PLAYER
+===================================================== */
+
+function updatePlayer(){
+
+    const target=
+    laneX(lane);
+
+    player.x +=
+    (target-player.x)*.25;
+
+    if(jumping){
+
+        jumpY +=
+        jumpVelocity;
+
+        jumpVelocity +=
+        .75;
+
+        if(jumpY>=0){
+
+            jumpY=0;
+
+            jumping=false;
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   JUMP
+===================================================== */
+
+function jump(){
+
+    if(
+        !running ||
+        paused ||
+        jumping ||
+        sliding
+    )return;
+
+    jumping=true;
+
+    jumpY=-1;
+
+    jumpVelocity=-16;
+
+    beep(
+        500,
+        .12,
+        "square",
+        .04
+    );
+
+}
+
+
+/* =====================================================
+   SLIDE
+===================================================== */
+
+function slide(){
+
+    if(
+        !running ||
+        paused ||
+        jumping
+    )return;
+
+    sliding=true;
+
+    setTimeout(
+        ()=>{
+            sliding=false;
+        },
+        650
+    );
+
+    beep(
+        180,
+        .12,
+        "sawtooth",
+        .035
+    );
+
+}
+
+
+/* =====================================================
+   OBJECT CREATION
+===================================================== */
+
+function createObject(){
+
+    const random=
+    Math.random();
+
+    let type;
+
+    if(random<.50)
+        type="coin";
+
+    else if(random<.72)
+        type="rock";
+
+    else if(random<.88)
+        type="log";
+
+    else
+        type="wall";
+
+
+    objects.push({
+
+        type:type,
+
+        lane:
+        Math.floor(
+            Math.random()*3
+        ),
+
+        z:1,
+
+        collected:false
+
+    });
+
+}
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+function burst(
+    x,
+    y,
+    amount=10,
+    color="#fff"
+){
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        particles.push({
+
+            x:x,
+
+            y:y,
+
+            vx:
+            (Math.random()-.5)*7,
+
+            vy:
+            (Math.random()-.8)*7,
+
+            life:1,
+
+            size:
+            2+
+            Math.random()*5,
+
+            color:color
+
+        });
+
+    }
+
+}
+
+function updateParticles(){
+
+    for(
+        let i=particles.length-1;
+        i>=0;
+        i--
+    ){
+
+        const p=
+        particles[i];
+
+        p.x+=p.vx;
+
+        p.y+=p.vy;
+
+        p.vy+=.25;
+
+        p.life-=.035;
+
+        if(p.life<=0){
+
+            particles.splice(
+                i,1
+            );
+
+        }
+
+    }
+
+}
+
+function drawParticles(){
+
+    particles.forEach(
+    p=>{
+
+        ctx.globalAlpha=
+        p.life;
+
+        ctx.fillStyle=
+        p.color;
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+    });
+
+    ctx.globalAlpha=1;
+
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+let world=0;
+
+function drawSky(){
+
+    const gradient=
+    ctx.createLinearGradient(
+        0,0,0,H
+    );
+
+    gradient.addColorStop(
+        0,
+        "#72c9e8"
+    );
+
+    gradient.addColorStop(
+        .45,
+        "#91bd77"
+    );
+
+    gradient.addColorStop(
+        1,
+        "#14291a"
+    );
+
+    ctx.fillStyle=
+    gradient;
+
+    ctx.fillRect(
+        0,0,W,H
+    );
+
+
+    /* Sun */
+
+    ctx.fillStyle=
+    "rgba(255,230,140,.75)";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        W*.78,
+        H*.15,
+        55,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Mountains */
+
+    ctx.fillStyle=
+    "#365b3c";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,H*.48
+    );
+
+    for(
+        let x=0;
+        x<=W;
+        x+=80
+    ){
+
+        const y=
+        H*.36+
+        Math.sin(
+            x*.012+
+            world*.001
+        )*45;
+
+        ctx.lineTo(
+            x,y
+        );
+
+    }
+
+    ctx.lineTo(
+        W,H*.58
+    );
+
+    ctx.lineTo(
+        0,H*.58
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+}
+
+
+/* =====================================================
+   TEMPLE ROAD
+===================================================== */
+
+function drawRoad(){
+
+    const horizon=
+    H*.34;
+
+    const bottom=
+    H+100;
+
+    /* Left jungle */
+
+    ctx.fillStyle=
+    "#163d21";
+
+    ctx.fillRect(
+        0,
+        horizon,
+        W,
+        H-horizon
+    );
+
+
+    /* Road */
+
+    ctx.fillStyle=
+    "#754d2c";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        W*.43,
+        horizon
+    );
+
+    ctx.lineTo(
+        W*.57,
+        horizon
+    );
+
+    ctx.lineTo(
+        W*.93,
+        bottom
+    );
+
+    ctx.lineTo(
+        W*.07,
+        bottom
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* Road edges */
+
+    ctx.strokeStyle=
+    "#d0a35a";
+
+    ctx.lineWidth=5;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        W*.43,
+        horizon
+    );
+
+    ctx.lineTo(
+        W*.07,
+        bottom
+    );
+
+    ctx.moveTo(
+        W*.57,
+        horizon
+    );
+
+    ctx.lineTo(
+        W*.93,
+        bottom
+    );
+
+    ctx.stroke();
+
+
+    /* Lane lines */
+
+    ctx.strokeStyle=
+    "rgba(255,255,255,.3)";
+
+    ctx.lineWidth=3;
+
+    const offset=
+    (world*gameSpeed)%100;
+
+    for(
+        let i=-100;
+        i<1200;
+        i+=100
+    ){
+
+        const y=
+        horizon+
+        ((i+offset)%1000)/1000*
+        (H-horizon);
+
+        const t=
+        (y-horizon)/
+        (H-horizon);
+
+        const left=
+        W*.43-
+        t*W*.36;
+
+        const right=
+        W*.57+
+        t*W*.36;
+
+        const mid=
+        (left+right)/2;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            mid-1,
+            y
+        );
+
+        ctx.lineTo(
+            mid+1,
+            y+35*t
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    /* Jungle trees */
+
+    for(
+        let i=0;
+        i<14;
+        i++
+    ){
+
+        const side=
+        i%2===0
+        ? -1
+        : 1;
+
+        const y=
+        horizon+
+        ((i*93+world*.8)%(
+            H-horizon
+        ));
+
+        const depth=
+        (y-horizon)/
+        (H-horizon);
+
+        const roadEdge=
+        side<0
+        ? W*.43-depth*W*.36
+        : W*.57+depth*W*.36;
+
+        const x=
+        roadEdge+
+        side*(25+depth*70);
+
+        drawTree(
+            x,
+            y,
+            .4+depth*1.2
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   TREE
+===================================================== */
+
+function drawTree(
+    x,
+    y,
+    scale
+){
+
+    ctx.save();
+
+    ctx.translate(
+        x,y
+    );
+
+    ctx.scale(
+        scale,
+        scale
+    );
+
+    ctx.fillStyle=
+    "#55361f";
+
+    ctx.fillRect(
+        -7,
+        -55,
+        14,
+        60
+    );
+
+    ctx.fillStyle=
+    "#145b2a";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -65,
+        30,
+        0,
+        Math.PI*2
+    );
+
+    ctx.arc(
+        -22,
+        -50,
+        22,
+        0,
+        Math.PI*2
+    );
+
+    ctx.arc(
+        22,
+        -50,
+        22,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   OBJECT POSITION
+===================================================== */
+
+function objectPosition(o){
+
+    const horizon=
+    H*.34;
+
+    const bottom=
+    H*.84;
+
+    const depth=
+    1-o.z;
+
+    const y=
+    horizon+
+    depth*(bottom-horizon);
+
+    const center=
+    W/2;
+
+    const spread=
+    W*.23*depth;
+
+    const x=
+    center+
+    (o.lane-1)*spread;
+
+    return {
+        x:x,
+        y:y,
+        scale:.18+
+        depth*1.5
+    };
+
+}
+
+
+/* =====================================================
+   DRAW COIN
+===================================================== */
+
+function drawCoin(o){
+
+    const p=
+    objectPosition(o);
+
+    ctx.save();
+
+    ctx.translate(
+        p.x,
+        p.y
+    );
+
+    ctx.scale(
+        p.scale,
+        p.scale
+    );
+
+    const rotation=
+    Math.sin(
+        world*.08
+    );
+
+    ctx.scale(
+        Math.abs(
+            Math.cos(rotation)
+        )*.7+.3,
+        1
+    );
+
+    ctx.fillStyle=
+    "#ffd42a";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -20,
+        18,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle=
+    "#fff1a8";
+
+    ctx.lineWidth=3;
+
+    ctx.stroke();
+
+    ctx.fillStyle=
+    "#9c6500";
+
+    ctx.font=
+    "bold 18px Arial";
+
+    ctx.textAlign=
+    "center";
+
+    ctx.fillText(
+        "$",
+        0,
+        -14
+    );
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW ROCK
+===================================================== */
+
+function drawRock(o){
+
+    const p=
+    objectPosition(o);
+
+    ctx.save();
+
+    ctx.translate(
+        p.x,
+        p.y
+    );
+
+    ctx.scale(
+        p.scale,
+        p.scale
+    );
+
+    ctx.fillStyle=
+    "#3d3d38";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -35,
+        0
+    );
+
+    ctx.lineTo(
+        -25,
+        -45
+    );
+
+    ctx.lineTo(
+        0,
+        -58
+    );
+
+    ctx.lineTo(
+        30,
+        -40
+    );
+
+    ctx.lineTo(
+        38,
+        0
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.fillStyle=
+    "#77766d";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -15,
+        -38
+    );
+
+    ctx.lineTo(
+        0,
+        -50
+    );
+
+    ctx.lineTo(
+        12,
+        -38
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW LOG
+===================================================== */
+
+function drawLog(o){
+
+    const p=
+    objectPosition(o);
+
+    ctx.save();
+
+    ctx.translate(
+        p.x,
+        p.y
+    );
+
+    ctx.scale(
+        p.scale,
+        p.scale
+    );
+
+    ctx.fillStyle=
+    "#63391d";
+
+    ctx.fillRect(
+        -55,
+        -35,
+        110,
+        30
+    );
+
+    ctx.fillStyle=
+    "#b8753c";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        55,
+        -20,
+        15,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW WALL
+===================================================== */
+
+function drawWall(o){
+
+    const p=
+    objectPosition(o);
+
+    ctx.save();
+
+    ctx.translate(
+        p.x,
+        p.y
+    );
+
+    ctx.scale(
+        p.scale,
+        p.scale
+    );
+
+    ctx.fillStyle=
+    "#9b6a3c";
+
+    ctx.fillRect(
+        -48,
+        -100,
+        96,
+        100
+    );
+
+    /* Stone lines */
+
+    ctx.strokeStyle=
+    "#5e3e25";
+
+    ctx.lineWidth=3;
+
+    for(
+        let y=-80;
+        y<0;
+        y+=25
+    ){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -48,
+            y
+        );
+
+        ctx.lineTo(
+            48,
+            y
+        );
+
+        ctx.stroke();
+
+    }
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   DRAW PLAYER
+===================================================== */
+
+function drawPlayer(){
+
+    const baseY=
+    H*.79+
+    jumpY;
+
+    ctx.save();
+
+    ctx.translate(
+        player.x,
+        baseY
+    );
+
+    const bob=
+    Math.sin(
+        world*.2
+    )*4;
+
+    ctx.translate(
+        0,
+        bob
+    );
+
+
+    /* Shadow */
+
+    ctx.globalAlpha=.35;
+
+    ctx.fillStyle="#000";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+        0,
+        5,
+        30,
+        8,
+        0,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.globalAlpha=1;
+
+
+    /* Legs */
+
+    ctx.strokeStyle=
+    "#24313a";
+
+    ctx.lineWidth=10;
+
+    ctx.lineCap=
+    "round";
+
+    if(!sliding){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            -8,
+            -30
+        );
+
+        ctx.lineTo(
+            -20,
+            0
+        );
+
+        ctx.moveTo(
+            8,
+            -30
+        );
+
+        ctx.lineTo(
+            20,
+            0
+        );
+
+        ctx.stroke();
+
+    }
+
+
+    /* Shoes */
+
+    ctx.fillStyle=
+    "#111";
+
+    ctx.fillRect(
+        -27,
+        -2,
+        18,
+        7
+    );
+
+    ctx.fillRect(
+        10,
+        -2,
+        18,
+        7
+    );
+
+
+    /* Body */
+
+    ctx.fillStyle=
+    "#d9432e";
+
+    if(sliding){
+
+        ctx.rotate(
+            -.2
+        );
+
+    }
+
+    ctx.beginPath();
+
+    ctx.roundRect(
+        -22,
+        -85,
+        44,
+        60,
+        12
+    );
+
+    ctx.fill();
+
+
+    /* Arms */
+
+    ctx.strokeStyle=
+    "#d68b68";
+
+    ctx.lineWidth=9;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -18,
+        -72
+    );
+
+    ctx.lineTo(
+        -40,
+        -45
+    );
+
+    ctx.moveTo(
+        18,
+        -72
+    );
+
+    ctx.lineTo(
+        40,
+        -50
+    );
+
+    ctx.stroke();
+
+
+    /* Head */
+
+    ctx.fillStyle=
+    "#c98663";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -105,
+        19,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Hair */
+
+    ctx.fillStyle=
+    "#191919";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -111,
+        20,
+        Math.PI,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* Headband */
+
+    ctx.strokeStyle=
+    "#ffd42a";
+
+    ctx.lineWidth=5;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        -19,
+        -112
+    );
+
+    ctx.lineTo(
+        19,
+        -112
+    );
+
+    ctx.stroke();
+
+
+    ctx.restore();
+
+}
+
+
+/* =====================================================
+   COLLISION
+===================================================== */
+
+function hitTest(o){
+
+    if(
+        o.lane!==lane
+    )return false;
+
+    if(
+        o.z>.86
+    )return false;
+
+    if(
+        o.z<.72
+    )return false;
+
+    /* Jump avoids rocks */
+
+    if(
+        jumping &&
+        o.type!=="wall"
+    ){
+        return false;
+    }
+
+    /* Slide avoids high wall */
+
+    if(
+        sliding &&
+        o.type==="wall"
+    ){
+        return false;
+    }
+
+    return true;
+
+}
+
+
+/* =====================================================
+   UPDATE OBJECTS
+===================================================== */
+
+function updateObjects(){
+
+    for(
+        let i=objects.length-1;
+        i>=0;
+        i--
+    ){
+
+        const o=
+        objects[i];
+
+        o.z +=
+        .006+
+        gameSpeed*.0008;
+
+
+        if(
+            hitTest(o)
+        ){
+
+            if(
+                o.type==="coin"
+            ){
+
+                coins++;
+
+                score+=25;
+
+                burst(
+                    objectPosition(o).x,
+                    objectPosition(o).y,
+                    18,
+                    "#ffd42a"
+                );
+
+                beep(
+                    950,
+                    .1,
+                    "sine",
+                    .06
+                );
+
+                objects.splice(
+                    i,
+                    1
+                );
+
+                continue;
+
+            }
+
+
+            /* Obstacle */
+
+            score=Math.max(
+                0,
+                score-100
+            );
+
+            burst(
+                player.x,
+                H*.7,
+                30,
+                "#ff7043"
+            );
+
+            beep(
+                90,
+                .35,
+                "sawtooth",
+                .08
+            );
+
+            objects.splice(
+                i,
+                1
+            );
+
+            /* Slow down */
+
+            gameSpeed=
+            Math.max(
+                6,
+                gameSpeed-1
+            );
+
+            continue;
+
+        }
+
+
+        if(
+            o.z>1.1
+        ){
+
+            objects.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   SPAWN
+===================================================== */
+
+function spawn(){
+
+    objects.push({
+
+        type:
+        Math.random()<.55
+        ? "coin"
+        : (
+            Math.random()<.5
+            ? "rock"
+            : "log"
+        ),
+
+        lane:
+        Math.floor(
+            Math.random()*3
+        ),
+
+        z:0
+
+    });
+
+}
+
+
+/* =====================================================
+   GAME UPDATE
+===================================================== */
+
+function update(){
+
+    if(
+        !running ||
+        paused
+    )return;
+
+    world++;
+
+    distance+=gameSpeed;
+
+    score+=
+    Math.floor(
+        gameSpeed/10
+    );
+
+    gameSpeed=
+    Math.min(
+        18,
+        7+
+        distance/5000
+    );
+
+    spawnTimer--;
+
+    if(
+        spawnTimer<=0
+    ){
+
+        spawn();
+
+        spawnTimer=
+        Math.max(
+            35,
+            80-
+            gameSpeed*2
+        );
+
+    }
+
+    updatePlayer();
+
+    updateObjects();
+
+    updateParticles();
+
+    updateHUD();
+
+}
+
+
+/* =====================================================
+   HUD
+===================================================== */
+
+function updateHUD(){
+
+    document.getElementById(
+        "score"
+    ).textContent=
+    "Score: "+score;
+
+    document.getElementById(
+        "coins"
+    ).textContent=
+    "🪙 "+coins;
+
+    document.getElementById(
+        "speed"
+    ).textContent=
+    "Speed: "+
+    (gameSpeed/7).toFixed(1)+
+    "x";
+
+}
+
+
+/* =====================================================
+   DRAW
+===================================================== */
+
+function draw(){
+
+    ctx.clearRect(
+        0,0,W,H
+    );
+
+    drawSky();
+
+    drawRoad();
+
+    objects.forEach(
+        o=>{
+
+            if(
+                o.type==="coin"
+            )
+                drawCoin(o);
+
+            else if(
+                o.type==="rock"
+            )
+                drawRock(o);
+
+            else if(
+                o.type==="log"
+            )
+                drawLog(o);
+
+            else
+                drawWall(o);
+
+        }
+    );
+
+    drawPlayer();
+
+    drawParticles();
+
+}
+
+
+/* =====================================================
+   LOOP
+===================================================== */
+
+function loop(){
+
+    update();
+
+    draw();
+
+    requestAnimationFrame(
+        loop
+    );
+
+}
+
+loop();
+
+
+/* =====================================================
+   START
+===================================================== */
+
+function startGame(){
+
+    initAudio();
+
+    running=true;
+    paused=false;
+
+    score=0;
+    coins=0;
+    distance=0;
+
+    gameSpeed=7;
+
+    lane=1;
+
+    jumping=false;
+    sliding=false;
+
+    jumpY=0;
+
+    objects=[];
+    particles=[];
+
+    document.getElementById(
+        "startScreen"
+    ).classList.add(
+        "hidden"
+    );
+
+    document.getElementById(
+        "gameOver"
+    ).classList.add(
+        "hidden"
+    );
+
+    beep(
+        500,
+        .1,
+        "square",
+        .05
+    );
+
+}
+
+
+/* =====================================================
+   BUTTON EVENTS
+===================================================== */
+
+document.getElementById(
+    "start"
+).onclick=
+startGame;
+
+document.getElementById(
+    "restart"
+).onclick=
+startGame;
+
+
+/* Pause */
+
+document.getElementById(
+    "pause"
+).onclick=()=>{
+
+    if(!running)return;
+
+    paused=!paused;
+
+    document.getElementById(
+        "pause"
+    ).textContent=
+    paused
+    ? "▶"
+    : "Ⅱ";
+
+};
+
+
+/* =====================================================
+   LANE CONTROL
+===================================================== */
+
+function moveLeft(){
+
+    if(
+        !running ||
+        paused
+    )return;
+
+    lane=
+    Math.max(
+        0,
+        lane-1
+    );
+
+    beep(
+        250,
+        .05,
+        "square",
+        .025
+    );
+
+}
+
+function moveRight(){
+
+    if(
+        !running ||
+        paused
+    )return;
+
+    lane=
+    Math.min(
+        2,
+        lane+1
+    );
+
+    beep(
+        300,
+        .05,
+        "square",
+        .025
+    );
+
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+document.getElementById(
+    "left"
+).addEventListener(
+    "pointerdown",
+    e=>{
+        e.preventDefault();
+        moveLeft();
+    }
+);
+
+document.getElementById(
+    "right"
+).addEventListener(
+    "pointerdown",
+    e=>{
+        e.preventDefault();
+        moveRight();
+    }
+);
+
+document.getElementById(
+    "jump"
+).addEventListener(
+    "pointerdown",
+    e=>{
+        e.preventDefault();
+        jump();
+    }
+);
+
+document.getElementById(
+    "slide"
+).addEventListener(
+    "pointerdown",
+    e=>{
+        e.preventDefault();
+        slide();
+    }
+);
+
+
+/* =====================================================
+   KEYBOARD
+===================================================== */
+
+window.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.key==="ArrowLeft" ||
+            e.key==="a"
+        )
+            moveLeft();
+
+        if(
+            e.key==="ArrowRight" ||
+            e.key==="d"
+        )
+            moveRight();
+
+        if(
+            e.key==="ArrowUp" ||
+            e.key==="w" ||
+            e.key===" "
+        )
+            jump();
+
+        if(
+            e.key==="ArrowDown" ||
+            e.key==="s"
+        )
+            slide();
+
+        if(
+            e.key==="p" ||
+            e.key==="P"
+        ){
+
+            if(running)
+                paused=!paused;
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SWIPE CONTROLS
+===================================================== */
+
+let touchStartX=0;
+let touchStartY=0;
+
+canvas.addEventListener(
+    "touchstart",
+    e=>{
+
+        const t=e.touches[0];
+
+        touchStartX=t.clientX;
+        touchStartY=t.clientY;
+
+    },
+    {passive:true}
+);
+
+canvas.addEventListener(
+    "touchend",
+    e=>{
+
+        const t=e.changedTouches[0];
+
+        const dx=
+        t.clientX-touchStartX;
+
+        const dy=
+        t.clientY-touchStartY;
+
+        if(
+            Math.abs(dx)<
+            30 &&
+            Math.abs(dy)<
+            30
+        ){
+
+            jump();
+
+            return;
+
+        }
+
+        if(
+            Math.abs(dx)>
+            Math.abs(dy)
+        ){
+
+            if(dx>0)
+                moveRight();
+            else
+                moveLeft();
+
+        }else{
+
+            if(dy<0)
+                jump();
+            else
+                slide();
+
+        }
+
+    },
+    {passive:true}
+);
+
+</script>
+
+</body>
+</html>
+```
