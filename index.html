@@ -1,333 +1,1311 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>GameBook GK Hub</title>
 
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
 <link rel="stylesheet" href="style.css">
 
-<!-- Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- TUS resumable upload client -->
-<script src="https://cdn.jsdelivr.net/npm/tus-js-client@4/dist/tus.min.js"></script>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">🎮 GameBook GK Hub</div>
+
+<!-- =====================================================
+     BACKGROUND ANIMATION
+===================================================== -->
+
+<div class="background">
+
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+
+</div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+        🎮 <span>GameBook</span> GK Hub
+    </div>
 
     <nav>
-        <a href="#games">Games</a>
-        <a href="#books">Books</a>
-        <a href="#computer">Computer</a>
-        <a href="#gk">GK</a>
-        <a href="#movies">Movies</a>
+
+        <a href="#home">Home</a>
+
+        <a href="#games">🎮 Games</a>
+
+        <a href="#books">📚 Books</a>
+
+        <a href="#computer">💻 Computer</a>
+
+        <a href="#gk">🧠 GK</a>
+
     </nav>
+
 </header>
 
 
-<section class="hero">
-    <h1>Welcome To GameBook GK Hub</h1>
 
-    <p>
-        Play Games, Read Books and Improve Your Knowledge.
-    </p>
+<!-- =====================================================
+     HERO
+===================================================== -->
 
-    <button onclick="document.getElementById('games').scrollIntoView()">
-        Explore Now
-    </button>
+<section id="home" class="hero">
+
+    <div class="hero-content reveal">
+
+        <div class="hero-badge">
+            🚀 Learn • Play • Explore
+        </div>
+
+        <h1>
+            Welcome To
+            <br>
+
+            <span>GameBook GK Hub</span>
+        </h1>
+
+        <p>
+            Play amazing games, read interesting books,
+            learn computer skills and test your knowledge.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+            onclick="scrollToSection('games')"
+            class="primary-btn">
+
+                🎮 Explore Games
+
+            </button>
+
+            <button
+            onclick="scrollToSection('gk')"
+            class="secondary-btn">
+
+                🧠 Test Your GK
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-orb orb-one"></div>
+
+    <div class="hero-orb orb-two"></div>
+
 </section>
+
+
+
+<!-- =====================================================
+     QUICK STATS
+===================================================== -->
+
+<section class="stats-section">
+
+    <div class="stats-container reveal">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🎮
+            </div>
+
+            <h3>20+</h3>
+
+            <p>Games</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📚
+            </div>
+
+            <h3>6+</h3>
+
+            <p>Books</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                💻
+            </div>
+
+            <h3>2+</h3>
+
+            <p>Courses</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🧠
+            </div>
+
+            <h3>100+</h3>
+
+            <p>GK Questions</p>
+
+        </div>
+
+    </div>
+
+</section>
+
 
 
 <!-- =====================================================
      GAMES
 ===================================================== -->
 
-<section id="games">
+<section id="games" class="content-section">
 
-<h2>🎮 Games</h2>
+    <div class="section-heading reveal">
 
-<div class="grid">
+        <div class="section-icon">
+            🎮
+        </div>
 
-<a href="flying-bird.html" class="card">🐦 Flying Bird</a>
-<a href="snake-game.html" class="card">🐍 Snake Game</a>
-<a href="fruit-cutter.html" class="card">🍎 Fruit Cutter</a>
-<a href="gaunkhane-katha.html" class="card">📖 Gaunkhane Kathe</a>
-<a href="memory-card.html" class="card">🧠 Memory Card</a>
-<a href="pong.html" class="card">🏓 Pong</a>
-<a href="ballon-pop.html" class="card">🎈 Balloon Pop</a>
-<a href="tic-tac-toe.html" class="card">⭕ Tic Tac Toe</a>
-<a href="math-quiz.html" class="card">➗ Math Quiz</a>
-<a href="quiz.html" class="card">❓ Quiz</a>
-<a href="chess.html" class="card">♟ Chess</a>
-<a href="sliding-puzzle.html" class="card">🧩 Sliding Puzzle</a>
-<a href="aim-trainer.html" class="card">🎯 Aim Trainer</a>
-<a href="zombie-survival.html" class="card">🧟 Zombie Survival</a>
-<a href="highway-racer.html" class="card">🏎 Highway Racer</a>
-<a href="bike-race.html" class="card">🚴 Bike Race</a>
-<a href="penalty-shootout.html" class="card">⚽ Penalty Shootout</a>
-<a href="golf-challeng.html" class="card">🏌️ Golf Challenge</a>
-<a href="basketball.html" class="card">🏀 Basketball</a>
-<a href="space-shooter.html" class="card">🚀 Space Shooter</a>
-<a href="brick-breaker.html" class="card">🧱 Brick Breaker</a>
-<a href="carem.html" class="card">🎯 Carrom</a>
+        <h2>
+            Games
+        </h2>
 
-</div>
+        <p>
+            Challenge yourself with fun and exciting games.
+        </p>
+
+    </div>
+
+
+    <div class="cards-grid">
+
+
+        <a href="flying-bird.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🐦
+            </div>
+
+            <h3>Flying Bird</h3>
+
+            <p>
+                Fly through obstacles and beat your score.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="snake-game.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🐍
+            </div>
+
+            <h3>Snake Game</h3>
+
+            <p>
+                Eat food and grow your snake.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="fruit-cutter.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🍎
+            </div>
+
+            <h3>Fruit Cutter</h3>
+
+            <p>
+                Cut fruits and make the highest score.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="gaunkhane-katha.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                📖
+            </div>
+
+            <h3>Gaunkhane Kathe</h3>
+
+            <p>
+                Test your Nepali riddle knowledge.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="memory-card.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🧠
+            </div>
+
+            <h3>Memory Card</h3>
+
+            <p>
+                Test and improve your memory.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="pong.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🏓
+            </div>
+
+            <h3>Pong</h3>
+
+            <p>
+                Classic table tennis style game.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="ballon-pop.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🎈
+            </div>
+
+            <h3>Balloon Pop</h3>
+
+            <p>
+                Pop balloons and score points.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="tic-tac-toe.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                ⭕
+            </div>
+
+            <h3>Tic Tac Toe</h3>
+
+            <p>
+                Play the classic X and O game.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="math-quiz.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                ➗
+            </div>
+
+            <h3>Math Quiz</h3>
+
+            <p>
+                Solve mathematical challenges.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="quiz.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                ❓
+            </div>
+
+            <h3>Quiz</h3>
+
+            <p>
+                Test your general knowledge.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="chess.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                ♟
+            </div>
+
+            <h3>Chess</h3>
+
+            <p>
+                Play the classic strategy game.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="sliding-puzzle.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🧩
+            </div>
+
+            <h3>Sliding Puzzle</h3>
+
+            <p>
+                Arrange the tiles and solve the puzzle.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="aim-trainer.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🎯
+            </div>
+
+            <h3>Aim Trainer</h3>
+
+            <p>
+                Improve your accuracy and reaction.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="zombie-survival.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🧟
+            </div>
+
+            <h3>Zombie Survival</h3>
+
+            <p>
+                Survive against the zombie attack.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="highway-racer.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🏎️
+            </div>
+
+            <h3>Highway Racer</h3>
+
+            <p>
+                Race through traffic and beat the record.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="bike-race.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🚴‍♂️
+            </div>
+
+            <h3>Bike Race</h3>
+
+            <p>
+                Race your bike and become the champion.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="game/ninja-runner.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🏃
+            </div>
+
+            <h3>Ninja Runner</h3>
+
+            <p>
+                Run, jump and avoid dangerous obstacles.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="penalty-shootout.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                ⚽
+            </div>
+
+            <h3>Penalty Shootout</h3>
+
+            <p>
+                Score goals and win the shootout.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="golf-challeng.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🏌️
+            </div>
+
+            <h3>Golf Challenge</h3>
+
+            <p>
+                Aim carefully and complete the course.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="basketball.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🏀
+            </div>
+
+            <h3>Basketball</h3>
+
+            <p>
+                Shoot baskets and improve your score.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="space-shooter.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🚀
+            </div>
+
+            <h3>Space Shooter</h3>
+
+            <p>
+                Fight enemies in outer space.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="brick-breaker.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🧱
+            </div>
+
+            <h3>Brick Breaker</h3>
+
+            <p>
+                Break all the bricks and win.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+        <a href="carem.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🎯
+            </div>
+
+            <h3>Carrom</h3>
+
+            <p>
+                Enjoy the classic carrom board game.
+            </p>
+
+            <span class="play-link">
+                Play Now →
+            </span>
+
+        </a>
+
+
+    </div>
+
 </section>
+
 
 
 <!-- =====================================================
      BOOKS
 ===================================================== -->
 
-<section id="books">
+<section id="books"
+         class="content-section">
 
-<h2>📚 Books</h2>
+    <div class="section-heading reveal">
 
-<div class="grid">
+        <div class="section-icon">
+            📚
+        </div>
 
-<a href="god-stories.html" class="card">📚 God Story</a>
-<a href="mahabharat-book.html" class="card">📚 Mahabharata Book</a>
-<a href="ramayan.html" class="card">📚 Ramayan Book</a>
-<a href="horror-book.html" class="card">👻 Horror Books</a>
-<a href="children-book.html" class="card">🧒 Children Books</a>
-<a href="love-story.html" class="card">❤️ Love Story</a>
+        <h2>
+            Books
+        </h2>
 
-</div>
+        <p>
+            Discover stories, knowledge and adventures.
+        </p>
+
+    </div>
+
+
+    <div class="cards-grid">
+
+
+        <a href="god-stories.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                📖
+            </div>
+
+            <h3>God Stories</h3>
+
+            <p>
+                Explore interesting religious stories.
+            </p>
+
+            <span class="play-link">
+                Read Now →
+            </span>
+
+        </a>
+
+
+        <a href="mahabharat-book.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                📚
+            </div>
+
+            <h3>Mahabharata Book</h3>
+
+            <p>
+                Read the great epic Mahabharata.
+            </p>
+
+            <span class="play-link">
+                Read Now →
+            </span>
+
+        </a>
+
+
+        <a href="ramayan.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🏹
+            </div>
+
+            <h3>Ramayan Book</h3>
+
+            <p>
+                Explore the story of Ramayan.
+            </p>
+
+            <span class="play-link">
+                Read Now →
+            </span>
+
+        </a>
+
+
+        <a href="horror-book.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                👻
+            </div>
+
+            <h3>Horror Books</h3>
+
+            <p>
+                Read mysterious and scary stories.
+            </p>
+
+            <span class="play-link">
+                Read Now →
+            </span>
+
+        </a>
+
+
+        <a href="children-book.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                🧒
+            </div>
+
+            <h3>Children Books</h3>
+
+            <p>
+                Fun and educational books for children.
+            </p>
+
+            <span class="play-link">
+                Read Now →
+            </span>
+
+        </a>
+
+
+        <a href="love-story.html"
+           class="content-card reveal">
+
+            <div class="card-icon">
+                ❤️
+            </div>
+
+            <h3>Love Story</h3>
+
+            <p>
+                Enjoy beautiful romantic stories.
+            </p>
+
+            <span class="play-link">
+                Read Now →
+            </span>
+
+        </a>
+
+
+    </div>
+
 </section>
+
 
 
 <!-- =====================================================
      COMPUTER
 ===================================================== -->
 
-<section id="computer">
+<section id="computer"
+         class="content-section computer-section">
 
-<h2>💻 Computer Course</h2>
+    <div class="section-heading reveal">
 
-<div class="grid">
+        <div class="section-icon">
+            💻
+        </div>
 
-<a href="complet-web-coding-book.html" class="card">
-📚 Complete Web Coding Course
-</a>
+        <h2>
+            Computer Course
+        </h2>
 
-<a href="ethical-heaking.html" class="card">
-📚 Ethical Hacking
-</a>
+        <p>
+            Learn coding, web development and computer skills.
+        </p>
 
-</div>
+    </div>
+
+
+    <div class="cards-grid">
+
+
+        <a
+        href="complet-web-coding-book.html"
+        class="content-card reveal">
+
+            <div class="card-icon">
+                🌐
+            </div>
+
+            <h3>
+                Complete Web Coding Course
+            </h3>
+
+            <p>
+                Learn HTML, CSS and JavaScript.
+            </p>
+
+            <span class="play-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+
+        <a
+        href="ethical-heaking.html"
+        class="content-card reveal">
+
+            <div class="card-icon">
+                🔐
+            </div>
+
+            <h3>
+                Ethical Hacking
+            </h3>
+
+            <p>
+                Learn cybersecurity and ethical hacking concepts.
+            </p>
+
+            <span class="play-link">
+                Start Learning →
+            </span>
+
+        </a>
+
+
+    </div>
+
 </section>
+
 
 
 <!-- =====================================================
      GK
 ===================================================== -->
 
-<section id="gk">
+<section id="gk"
+         class="content-section">
 
-<h2>🧠 GK Categories</h2>
+    <div class="section-heading reveal">
 
-<div class="grid">
+        <div class="section-icon">
+            🧠
+        </div>
 
-<div class="card">🌍 World GK</div>
-<div class="card">🇳🇵 Nepal GK</div>
-<div class="card">🔬 Science GK</div>
-<div class="card">💻 Computer GK</div>
-<div class="card">⚽ Sports GK</div>
+        <h2>
+            GK Questions
+        </h2>
 
-</div>
+        <p>
+            Test your knowledge across different categories.
+        </p>
+
+    </div>
+
+
+    <div class="cards-grid">
+
+
+        <a href="quiz.html"
+           class="content-card gk-card reveal">
+
+            <div class="card-icon">
+                🌍
+            </div>
+
+            <h3>
+                World GK
+            </h3>
+
+            <p>
+                Countries, capitals, currencies and world facts.
+            </p>
+
+            <span class="play-link">
+                Start Quiz →
+            </span>
+
+        </a>
+
+
+        <a href="quiz.html"
+           class="content-card gk-card reveal">
+
+            <div class="card-icon">
+                🇳🇵
+            </div>
+
+            <h3>
+                Nepal GK
+            </h3>
+
+            <p>
+                History, geography, culture and Nepal facts.
+            </p>
+
+            <span class="play-link">
+                Start Quiz →
+            </span>
+
+        </a>
+
+
+        <a href="quiz.html"
+           class="content-card gk-card reveal">
+
+            <div class="card-icon">
+                🔬
+            </div>
+
+            <h3>
+                Science GK
+            </h3>
+
+            <p>
+                Discover interesting science questions.
+            </p>
+
+            <span class="play-link">
+                Start Quiz →
+            </span>
+
+        </a>
+
+
+        <a href="quiz.html"
+           class="content-card gk-card reveal">
+
+            <div class="card-icon">
+                💻
+            </div>
+
+            <h3>
+                Computer GK
+            </h3>
+
+            <p>
+                Computers, technology and internet questions.
+            </p>
+
+            <span class="play-link">
+                Start Quiz →
+            </span>
+
+        </a>
+
+
+        <a href="quiz.html"
+           class="content-card gk-card reveal">
+
+            <div class="card-icon">
+                ⚽
+            </div>
+
+            <h3>
+                Sports GK
+            </h3>
+
+            <p>
+                Football, cricket and world sports questions.
+            </p>
+
+            <span class="play-link">
+                Start Quiz →
+            </span>
+
+        </a>
+
+
+    </div>
+
 </section>
 
 
+
 <!-- =====================================================
-     MOVIES
+     CTA
 ===================================================== -->
 
-<section id="movies">
+<section class="cta-section">
 
-<div class="movies-container">
+    <div class="cta-box reveal">
 
-<div class="movies-title">
+        <div class="cta-icon">
+            🚀
+        </div>
 
-<h2>🎬 Movie Hub</h2>
+        <h2>
+            Ready To Explore?
+        </h2>
 
-<p>
-Your authorized videos
-</p>
+        <p>
+            Choose a game, open a book or test your knowledge.
+        </p>
 
-</div>
+        <button
+        onclick="scrollToSection('games')"
+        class="primary-btn">
 
+            Start Exploring →
 
-<!-- ADMIN -->
+        </button>
 
-<div class="admin-box">
+    </div>
 
-<h3>🔐 Admin</h3>
-
-<input
-    id="adminEmail"
-    type="email"
-    placeholder="Admin email"
->
-
-<input
-    id="adminPassword"
-    type="password"
-    placeholder="Password"
->
-
-<div class="admin-buttons">
-
-<button id="loginBtn">
-Login
-</button>
-
-<button id="logoutBtn">
-Logout
-</button>
-
-</div>
-
-<p id="loginStatus">
-Not logged in
-</p>
-
-</div>
-
-
-<!-- UPLOAD -->
-
-<div
-    id="uploadArea"
-    class="upload-area"
->
-
-<h3>🎥 Upload Video</h3>
-
-<p>
-MP4 / WebM / MOV / MKV
-</p>
-
-<p class="small">
-Large videos use resumable upload.
-</p>
-
-<input
-    id="videoFile"
-    type="file"
-    accept="video/*"
->
-
-<input
-    id="videoTitle"
-    type="text"
-    placeholder="Video title"
->
-
-<input
-    id="posterUrl"
-    type="url"
-    placeholder="Poster image URL (optional)"
->
-
-<button id="uploadBtn">
-⬆ Start Upload
-</button>
-
-<div class="progress-wrap">
-
-<div
-    id="progressBar"
-    class="progress-bar">
-</div>
-
-</div>
-
-<p id="uploadStatus">
-Ready
-</p>
-
-</div>
-
-
-<!-- SEARCH -->
-
-<div class="movie-search">
-
-<input
-    id="searchInput"
-    type="search"
-    placeholder="🔎 Search videos..."
->
-
-</div>
-
-
-<!-- MOVIES -->
-
-<div
-    id="movieGrid"
-    class="movie-grid"
->
-
-<div class="loading">
-Loading...
-</div>
-
-</div>
-
-</div>
 </section>
 
 
+
 <!-- =====================================================
-     VIDEO PLAYER
+     FOOTER
 ===================================================== -->
-
-<div
-    id="videoModal"
-    class="video-modal"
->
-
-<div class="video-box">
-
-<button
-    id="closeVideo"
-    class="close-video"
->
-✕
-</button>
-
-<video
-    id="videoPlayer"
-    controls
-    playsinline
-    preload="metadata"
->
-</video>
-
-</div>
-</div>
-
 
 <footer>
 
-💻 Proud to share a website I designed and developed myself
+    <div class="footer-logo">
+        🎮 GameBook GK Hub
+    </div>
 
-<br>
+    <p>
+        Play • Read • Learn • Explore
+    </p>
 
-© 2026 Roshan Joshi
+    <p>
+        💻 Proud to share a website I designed and developed myself
+    </p>
+
+    <p>
+        © 2026 Roshan Joshi — All Rights Reserved
+    </p>
 
 </footer>
 
 
-<script src="script.js"></script>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+/* ============================================
+   SMOOTH SCROLL
+============================================ */
+
+function scrollToSection(id){
+
+    const section =
+        document.getElementById(id);
+
+    if(section){
+
+        section.scrollIntoView({
+            behavior:"smooth"
+        });
+
+    }
+
+}
+
+
+/* ============================================
+   SCROLL REVEAL ANIMATION
+============================================ */
+
+const revealElements =
+    document.querySelectorAll(
+        ".reveal"
+    );
+
+
+const observer =
+    new IntersectionObserver(
+        function(entries){
+
+            entries.forEach(
+                function(entry){
+
+                    if(
+                        entry.isIntersecting
+                    ){
+
+                        entry.target
+                            .classList
+                            .add("active");
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold:0.12
+        }
+    );
+
+
+revealElements.forEach(
+    function(element){
+
+        observer.observe(
+            element
+        );
+
+    }
+);
+
+
+/* ============================================
+   CARD STAGGER ANIMATION
+============================================ */
+
+document
+.querySelectorAll(
+    ".cards-grid"
+)
+.forEach(
+    function(grid){
+
+        const cards =
+            grid.querySelectorAll(
+                ".content-card"
+            );
+
+        cards.forEach(
+            function(card,index){
+
+                card.style.transitionDelay =
+                    (index * 0.04) + "s";
+
+            }
+        );
+
+    }
+);
+
+
+/* ============================================
+   ACTIVE NAVIGATION
+============================================ */
+
+const sections =
+    document.querySelectorAll(
+        "section[id]"
+    );
+
+const navLinks =
+    document.querySelectorAll(
+        "nav a"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    function(){
+
+        let current = "";
+
+        sections.forEach(
+            function(section){
+
+                const sectionTop =
+                    section.offsetTop - 150;
+
+                if(
+                    window.scrollY >=
+                    sectionTop
+                ){
+
+                    current =
+                        section.id;
+
+                }
+
+            }
+        );
+
+
+        navLinks.forEach(
+            function(link){
+
+                link.classList.remove(
+                    "active-nav"
+                );
+
+
+                if(
+                    link.getAttribute(
+                        "href"
+                    ) ===
+                    "#" + current
+                ){
+
+                    link.classList.add(
+                        "active-nav"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* ============================================
+   PAGE LOAD
+============================================ */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        document.body
+            .classList
+            .add("page-loaded");
+
+    }
+);
+
+</script>
+
 
 </body>
 </html>
-```
