@@ -1,397 +1,554 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Card Battle Arena</title>
 
 <style>
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
 }
 
 body{
-    min-height:100vh;
-    overflow:hidden;
     font-family:Arial,sans-serif;
-    color:white;
     background:
-        radial-gradient(circle at top,#39206b,#130d2c 55%,#070511);
+        radial-gradient(circle at top,#263c73,#090d20 65%);
+    color:white;
+    min-height:100vh;
+    overflow-x:hidden;
 }
 
 #game{
+    width:100%;
     min-height:100vh;
     position:relative;
+    padding:12px;
     overflow:hidden;
 }
 
-/* Background particles */
-
-.particle{
+.bg-orb{
     position:absolute;
-    width:4px;
-    height:4px;
-    background:#ffffff88;
+    width:250px;
+    height:250px;
     border-radius:50%;
-    animation:float 5s linear infinite;
+    filter:blur(70px);
+    opacity:.25;
+    pointer-events:none;
 }
 
-@keyframes float{
-    from{
-        transform:translateY(100vh);
-        opacity:0;
-    }
-    20%{opacity:1}
-    to{
-        transform:translateY(-20vh);
-        opacity:0;
-    }
+.orb1{
+    background:#ff315c;
+    left:-100px;
+    top:120px;
 }
 
-/* Header */
+.orb2{
+    background:#2f8cff;
+    right:-100px;
+    bottom:100px;
+}
 
-.header{
-    position:relative;
-    z-index:5;
+/* TOP */
+
+.topbar{
+    max-width:1050px;
+    margin:auto;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:15px;
-    background:#09061599;
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid #ffffff18;
+    gap:10px;
+    padding:12px 16px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:18px;
+    backdrop-filter:blur(10px);
 }
 
-.logo{
+.title{
+    font-size:22px;
+    font-weight:900;
+}
+
+.small-btn{
+    border:0;
+    padding:9px 15px;
+    border-radius:12px;
+    background:#ffffff18;
+    color:white;
+    cursor:pointer;
     font-weight:bold;
-    font-size:20px;
 }
 
-.stats{
-    display:flex;
-    gap:8px;
-}
-
-.stat{
-    padding:8px 12px;
-    border-radius:15px;
-    background:#ffffff12;
-    border:1px solid #ffffff18;
-    font-size:13px;
-}
-
-/* Arena */
+/* ARENA */
 
 .arena{
-    position:relative;
-    z-index:2;
-    width:min(900px,94%);
-    margin:auto;
-    padding-top:20px;
-}
-
-.players{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
-}
-
-.player{
-    text-align:center;
-}
-
-.avatar{
-    width:55px;
-    height:55px;
-    display:grid;
-    place-items:center;
-    margin:auto;
-    border-radius:50%;
-    background:linear-gradient(145deg,#ffcf4a,#9b4dff);
-    font-size:29px;
-    box-shadow:0 0 25px #9b4dff77;
-}
-
-.player b{
-    display:block;
-    margin-top:5px;
-}
-
-.vs{
-    font-size:25px;
-    font-weight:bold;
-    color:#ffd34e;
-}
-
-/* Cards */
-
-.battle{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:clamp(35px,10vw,110px);
-    min-height:290px;
-}
-
-.card-wrap{
-    perspective:1000px;
-    width:145px;
-    height:205px;
-}
-
-.card{
-    width:100%;
-    height:100%;
-    position:relative;
-    transform-style:preserve-3d;
-    transition:transform .65s cubic-bezier(.2,.8,.2,1);
-}
-
-.card.flipped{
-    transform:rotateY(180deg);
-}
-
-.face{
-    position:absolute;
-    inset:0;
-    backface-visibility:hidden;
-    border-radius:18px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 15px 35px #0009;
-}
-
-.back{
-    background:
-        linear-gradient(135deg,#43218b,#11183f);
-    border:4px solid #d4a93c;
-    font-size:50px;
-}
-
-.back span{
-    width:90px;
-    height:135px;
-    display:grid;
-    place-items:center;
-    border:2px solid #d4a93c;
-    border-radius:12px;
-}
-
-.front{
-    transform:rotateY(180deg);
-    background:#fff;
-    color:#151515;
-    border:5px solid #d4a93c;
-    flex-direction:column;
-}
-
-.rank{
-    font-size:55px;
-    font-weight:bold;
-}
-
-.suit{
-    font-size:42px;
-}
-
-.red{
-    color:#d92745;
-}
-
-/* Result */
-
-.result{
-    min-height:45px;
-    text-align:center;
-    font-size:18px;
-    font-weight:bold;
-}
-
-.result.win{
-    color:#62ffab;
-}
-
-.result.lose{
-    color:#ff647c;
-}
-
-.result.draw{
-    color:#ffd85a;
-}
-
-/* Controls */
-
-.controls{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:10px;
-    margin-top:10px;
-}
-
-button{
-    border:0;
-    cursor:pointer;
-    color:white;
-    font-weight:bold;
-    border-radius:16px;
-    padding:13px 20px;
-    background:linear-gradient(135deg,#8d4cff,#4d32d4);
-    box-shadow:0 7px 20px #0005;
-    transition:.2s;
-}
-
-button:hover{
-    transform:translateY(-2px);
-}
-
-button:active{
-    transform:scale(.94);
-}
-
-button:disabled{
-    opacity:.35;
-    cursor:not-allowed;
-}
-
-.draw-btn{
-    background:linear-gradient(135deg,#f0b429,#d46b19);
-}
-
-.rules-btn{
-    background:#ffffff14;
-    border:1px solid #ffffff25;
-}
-
-/* Combo */
-
-.combo{
-    text-align:center;
-    margin-top:12px;
-    color:#ffd65c;
-    min-height:22px;
-}
-
-.combo strong{
-    font-size:22px;
-}
-
-/* Overlay */
-
-.overlay{
-    position:absolute;
-    inset:0;
-    z-index:20;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:20px;
-    background:#05030dcc;
-    backdrop-filter:blur(8px);
-}
-
-.panel{
-    width:min(430px,95%);
-    padding:35px 25px;
+    max-width:1050px;
+    margin:14px auto;
+    padding:15px;
     border-radius:25px;
     background:
         linear-gradient(
             145deg,
-            #291858,
-            #0c0a20
+            rgba(255,255,255,.11),
+            rgba(255,255,255,.035)
         );
-    border:1px solid #ffffff22;
-    box-shadow:0 25px 70px #000b;
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:0 20px 60px #0008;
 }
 
-.panel h1{
-    font-size:42px;
-    margin-bottom:10px;
-}
+/* PLAYER AREA */
 
-.panel p{
-    color:#c9c2df;
-    line-height:1.7;
-    margin-bottom:20px;
-}
-
-.hidden{
-    display:none;
-}
-
-/* Rules */
-
-.rules{
-    position:absolute;
-    inset:0;
-    z-index:30;
+.fighter{
     display:flex;
     align-items:center;
+    gap:15px;
+}
+
+.avatar{
+    width:64px;
+    height:64px;
+    border-radius:18px;
+    display:flex;
     justify-content:center;
-    background:#000b;
+    align-items:center;
+    font-size:38px;
+    background:linear-gradient(145deg,#ff526e,#7b1d3d);
+    box-shadow:0 8px 25px #0008;
+}
+
+.enemy .avatar{
+    background:linear-gradient(145deg,#596cff,#172d83);
+}
+
+.info{
+    flex:1;
+}
+
+.name{
+    font-size:18px;
+    font-weight:900;
+    margin-bottom:7px;
+}
+
+.hpbar{
+    width:100%;
+    max-width:420px;
+    height:18px;
+    background:#090d19;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid #ffffff22;
+}
+
+.hp{
+    height:100%;
+    width:100%;
+    transition:.35s;
+    background:linear-gradient(
+        90deg,
+        #ff315b,
+        #ff9b43
+    );
+}
+
+.enemy .hp{
+    background:linear-gradient(
+        90deg,
+        #367bff,
+        #6f5cff
+    );
+}
+
+.stats{
+    margin-top:5px;
+    font-size:13px;
+    color:#d8def5;
+}
+
+/* BATTLE MESSAGE */
+
+#message{
+    text-align:center;
+    min-height:50px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:8px;
+    font-weight:bold;
+    color:#ffe875;
+    font-size:16px;
+}
+
+/* CENTER */
+
+.battle-zone{
+    min-height:210px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:40px;
+    position:relative;
+}
+
+.vs{
+    font-size:32px;
+    font-weight:1000;
+    color:#ffe04d;
+    text-shadow:0 4px 15px #000;
+}
+
+.battle-card{
+    width:150px;
+    height:205px;
+    border-radius:18px;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    text-align:center;
+    box-shadow:0 15px 35px #0008;
+    border:3px solid #fff;
+    transform:rotate(-4deg);
+    background:
+        linear-gradient(
+            145deg,
+            #ff5b6d,
+            #8e163e
+        );
+}
+
+.battle-card.enemy-card{
+    transform:rotate(4deg);
+    background:
+        linear-gradient(
+            145deg,
+            #4e7cff,
+            #15256e
+        );
+}
+
+.battle-card .emoji{
+    font-size:62px;
+}
+
+.battle-card h3{
+    font-size:17px;
+}
+
+.battle-card .power{
+    font-size:25px;
+    font-weight:1000;
+    color:#ffe24c;
+}
+
+/* HAND */
+
+.hand-title{
+    text-align:center;
+    margin:8px 0 10px;
+    color:#cfd8ff;
+}
+
+.hand{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+/* CARDS */
+
+.card{
+    width:125px;
+    height:175px;
+    border:2px solid #ffffff77;
+    border-radius:17px;
+    padding:9px;
+    cursor:pointer;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    text-align:center;
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #dfe7ff
+        );
+    color:#11172b;
+    box-shadow:0 12px 25px #0008;
+    transition:.18s;
+    user-select:none;
+}
+
+.card:hover{
+    transform:translateY(-12px) scale(1.03);
+    border-color:#ffe04d;
+}
+
+.card.selected{
+    transform:translateY(-15px) scale(1.04);
+    border-color:#ffe04d;
+    box-shadow:
+        0 0 25px #ffe04d99,
+        0 15px 30px #0009;
+}
+
+.card.disabled{
+    opacity:.45;
+    cursor:not-allowed;
+    filter:grayscale(.7);
+}
+
+.card .cost{
+    position:absolute;
+    top:7px;
+    left:7px;
+    width:27px;
+    height:27px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:#2477ff;
+    color:white;
+    font-weight:bold;
+}
+
+.card .cardemoji{
+    font-size:50px;
+    margin-top:10px;
+}
+
+.card h3{
+    font-size:15px;
+}
+
+.card .damage{
+    font-size:19px;
+    font-weight:1000;
+    color:#d52c47;
+}
+
+.card small{
+    color:#4c5572;
+    font-size:10px;
+}
+
+/* CONTROLS */
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:13px;
+}
+
+.action{
+    border:0;
+    border-radius:14px;
+    padding:13px 22px;
+    font-weight:900;
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(135deg,#ff3d68,#8c245b);
+    box-shadow:0 5px 0 #4c1636;
+}
+
+.action:active{
+    transform:translateY(3px);
+    box-shadow:0 2px 0 #4c1636;
+}
+
+.action:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+/* MANA */
+
+.mana-area{
+    max-width:500px;
+    margin:12px auto 0;
+    text-align:center;
+}
+
+.mana-title{
+    font-size:13px;
+    color:#b9c8ff;
+    margin-bottom:5px;
+}
+
+.mana-bar{
+    height:14px;
+    background:#080c19;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.mana{
+    height:100%;
+    width:100%;
+    background:linear-gradient(
+        90deg,
+        #20a8ff,
+        #8c5cff
+    );
+    transition:.3s;
+}
+
+/* LOG */
+
+#battleLog{
+    max-width:850px;
+    margin:12px auto 0;
+    height:75px;
+    overflow:auto;
+    padding:8px;
+    border-radius:12px;
+    background:#0005;
+    font-size:12px;
+    color:#bbc7e9;
+}
+
+#battleLog div{
+    margin-bottom:4px;
+}
+
+/* OVERLAY */
+
+#overlay{
+    position:fixed;
+    inset:0;
+    z-index:200;
+    background:#020617d9;
+    backdrop-filter:blur(10px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
     padding:20px;
 }
 
-.rules-box{
-    max-width:430px;
-    padding:28px;
-    border-radius:22px;
-    background:#17102e;
-    border:1px solid #ffffff22;
+.modal{
+    max-width:500px;
+    width:100%;
+    padding:30px;
+    border-radius:25px;
+    background:
+        linear-gradient(
+            145deg,
+            #202c5d,
+            #0b1029
+        );
+    border:1px solid #ffffff25;
+    box-shadow:0 30px 80px #000;
 }
 
-.rules-box h2{
-    margin-bottom:15px;
+.modal h1{
+    font-size:42px;
+    margin-bottom:12px;
 }
 
-.rules-box li{
-    margin:10px 0;
-    color:#d7d0e8;
+.modal p{
+    color:#c7d0ed;
+    margin-bottom:20px;
 }
 
-/* Mobile */
+.start-btn{
+    border:0;
+    padding:14px 28px;
+    border-radius:15px;
+    background:#ffe04d;
+    color:#15192a;
+    font-size:17px;
+    font-weight:1000;
+    cursor:pointer;
+}
 
-@media(max-width:600px){
+.hidden{
+    display:none!important;
+}
 
-    .header{
+/* DAMAGE ANIMATION */
+
+.hit{
+    animation:hit .3s;
+}
+
+@keyframes hit{
+    0%{transform:translateX(0)}
+    25%{transform:translateX(-12px)}
+    50%{transform:translateX(12px)}
+    75%{transform:translateX(-7px)}
+    100%{transform:translateX(0)}
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    .topbar{
         padding:10px;
     }
 
-    .logo{
+    .title{
+        font-size:17px;
+    }
+
+    .arena{
+        padding:10px;
+        margin:8px auto;
+    }
+
+    .battle-zone{
+        min-height:150px;
+        gap:12px;
+    }
+
+    .battle-card{
+        width:110px;
+        height:145px;
+    }
+
+    .battle-card .emoji{
+        font-size:42px;
+    }
+
+    .card{
+        width:100px;
+        height:145px;
+    }
+
+    .card .cardemoji{
+        font-size:38px;
+    }
+
+    .card h3{
+        font-size:12px;
+    }
+
+    .card .damage{
         font-size:16px;
     }
 
-    .stat{
-        padding:7px 8px;
-        font-size:11px;
+    .fighter .avatar{
+        width:50px;
+        height:50px;
+        font-size:28px;
     }
 
-    .card-wrap{
-        width:120px;
-        height:175px;
+    .controls{
+        margin-top:8px;
     }
 
-    .battle{
-        min-height:245px;
-        gap:25px;
-    }
-
-    .rank{
-        font-size:43px;
-    }
-
-    .suit{
-        font-size:34px;
-    }
-
-    button{
-        padding:12px 15px;
+    .action{
+        padding:11px 16px;
     }
 }
 </style>
@@ -401,909 +558,1109 @@ button:disabled{
 
 <div id="game">
 
-<!-- Background -->
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
 
-<script>
-for(let i=0;i<35;i++){
-    const p=document.createElement("div");
-    p.className="particle";
-    p.style.left=Math.random()*100+"%";
-    p.style.animationDelay=Math.random()*5+"s";
-    p.style.animationDuration=(3+Math.random()*5)+"s";
-    document.getElementById("game").appendChild(p);
-}
-</script>
+<!-- TOP -->
 
+<div class="topbar">
 
-<!-- HEADER -->
-
-<header class="header">
-
-    <div class="logo">
+    <div class="title">
         🃏 Card Battle Arena
     </div>
 
-    <div class="stats">
-
-        <div class="stat">
-            ⭐ <span id="score">0</span>
-        </div>
-
-        <div class="stat">
-            🪙 <span id="coins">100</span>
-        </div>
-
-    </div>
-
-</header>
-
-
-<!-- ARENA -->
-
-<main class="arena">
-
-    <div class="players">
-
-        <div class="player">
-            <div class="avatar">😎</div>
-            <b>YOU</b>
-        </div>
-
-        <div class="vs">
-            VS
-        </div>
-
-        <div class="player">
-            <div class="avatar">🤖</div>
-            <b>CPU</b>
-        </div>
-
-    </div>
-
-
-    <section class="battle">
-
-        <!-- CPU CARD -->
-
-        <div class="card-wrap">
-
-            <div class="card" id="cpuCard">
-
-                <div class="face back">
-                    <span>🃏</span>
-                </div>
-
-                <div class="face front"
-                     id="cpuFront">
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- PLAYER CARD -->
-
-        <div class="card-wrap">
-
-            <div class="card" id="playerCard">
-
-                <div class="face back">
-                    <span>🃏</span>
-                </div>
-
-                <div class="face front"
-                     id="playerFront">
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <div class="result"
-         id="result">
-        Press DRAW CARD to play
-    </div>
-
-
-    <div class="combo">
-        Combo:
-        <strong id="combo">0</strong>
-    </div>
-
-
-    <div class="controls">
-
-        <button
-            class="draw-btn"
-            id="drawBtn">
-            🃏 DRAW CARD
-        </button>
-
-        <button
-            class="rules-btn"
-            id="rulesBtn">
-            📜 RULES
-        </button>
-
-    </div>
-
-</main>
-
-
-<!-- START -->
-
-<div class="overlay"
-     id="startScreen">
-
-    <div class="panel">
-
-        <div style="font-size:70px">
-            🃏
-        </div>
-
-        <h1>
-            Card Battle
-        </h1>
-
-        <p>
-            Draw a card and battle the computer.
-            Higher card wins the round!
-        </p>
-
-        <button id="startBtn">
-            START GAME
-        </button>
-
-    </div>
+    <button class="small-btn"
+            onclick="newGame()">
+        🔄 New Game
+    </button>
 
 </div>
 
 
-<!-- GAME OVER -->
+<div class="arena">
 
-<div class="overlay hidden"
-     id="endScreen">
+<!-- ENEMY -->
 
-    <div class="panel">
+<div class="fighter enemy">
 
-        <div style="font-size:65px">
-            🏆
+    <div class="avatar">
+        🤖
+    </div>
+
+    <div class="info">
+
+        <div class="name">
+            Dark Bot
         </div>
 
-        <h1>
-            Battle Complete
-        </h1>
+        <div class="hpbar">
+            <div
+                id="enemyHP"
+                class="hp">
+            </div>
+        </div>
 
-        <p>
-            Final Score:
-            <strong id="finalScore">
-                0
-            </strong>
-            <br>
-            Virtual Coins:
-            <strong id="finalCoins">
+        <div class="stats">
+            ❤️ HP:
+            <span id="enemyHpText">
                 100
-            </strong>
-        </p>
-
-        <button id="againBtn">
-            🔄 PLAY AGAIN
-        </button>
+            </span>
+            / 100
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- RULES -->
+<div id="message">
+    Choose a card to attack!
+</div>
 
-<div class="rules hidden"
-     id="rules">
 
-    <div class="rules-box">
+<!-- BATTLE AREA -->
 
-        <h2>
-            📜 How To Play
-        </h2>
+<div class="battle-zone">
 
-        <ul>
-            <li>Draw one card for you and one for CPU.</li>
-            <li>The higher card wins the round.</li>
-            <li>A = 14, K = 13, Q = 12, J = 11.</li>
-            <li>Win a round to increase your combo.</li>
-            <li>Combo gives bonus score.</li>
-            <li>Coins are virtual game points only.</li>
-            <li>No real-money betting is included.</li>
-        </ul>
+    <div
+        id="enemyBattleCard"
+        class="battle-card enemy-card">
 
-        <br>
+        <div class="emoji">
+            👹
+        </div>
 
-        <button id="closeRules">
-            CLOSE
+        <h3>
+            Dark Warrior
+        </h3>
+
+        <div class="power">
+            ⚔️ 18
+        </div>
+
+    </div>
+
+
+    <div class="vs">
+        VS
+    </div>
+
+
+    <div
+        id="playerBattleCard"
+        class="battle-card">
+
+        <div class="emoji">
+            🛡️
+        </div>
+
+        <h3>
+            Your Hero
+        </h3>
+
+        <div class="power">
+            ⚔️ 10
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PLAYER -->
+
+<div class="fighter">
+
+    <div class="avatar">
+        🧙
+    </div>
+
+    <div class="info">
+
+        <div class="name">
+            You
+        </div>
+
+        <div class="hpbar">
+            <div
+                id="playerHP"
+                class="hp">
+            </div>
+        </div>
+
+        <div class="stats">
+            ❤️ HP:
+            <span id="playerHpText">
+                100
+            </span>
+            / 100
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MANA -->
+
+<div class="mana-area">
+
+    <div class="mana-title">
+        🔷 Mana:
+        <span id="manaText">
+            5
+        </span>
+        / 5
+    </div>
+
+    <div class="mana-bar">
+        <div
+            id="mana"
+            class="mana">
+        </div>
+    </div>
+
+</div>
+
+
+<h3 class="hand-title">
+    🃏 Choose Your Card
+</h3>
+
+
+<!-- CARDS -->
+
+<div
+    id="hand"
+    class="hand">
+</div>
+
+
+<div class="controls">
+
+    <button
+        id="endTurn"
+        class="action"
+        onclick="endTurn()">
+
+        ⚡ End Turn
+
+    </button>
+
+</div>
+
+
+<div id="battleLog">
+</div>
+
+</div>
+
+
+<!-- OVERLAY -->
+
+<div id="overlay">
+
+    <div class="modal">
+
+        <h1>
+            🃏 Card Battle
+        </h1>
+
+        <p>
+            Defeat the Dark Bot by using
+            powerful cards and smart strategy!
+        </p>
+
+        <button
+            class="start-btn"
+            onclick="startGame()">
+
+            ⚔️ START BATTLE
+
         </button>
 
     </div>
+
+</div>
 
 </div>
 
 
 <script>
-/* =====================================================
-   CARD BATTLE ARENA
-===================================================== */
 
-const suits=[
-    {
-        symbol:"♥",
-        name:"Hearts",
-        red:true
-    },
-    {
-        symbol:"♦",
-        name:"Diamonds",
-        red:true
-    },
-    {
-        symbol:"♣",
-        name:"Clubs",
-        red:false
-    },
-    {
-        symbol:"♠",
-        name:"Spades",
-        red:false
-    }
-];
+/* =========================================
+   CARD DATA
+========================================= */
 
-const ranks=[
-    {
-        name:"A",
-        value:14
-    },
-    {
-        name:"K",
-        value:13
-    },
-    {
-        name:"Q",
-        value:12
-    },
-    {
-        name:"J",
-        value:11
-    },
-    {
-        name:"10",
-        value:10
-    },
-    {
-        name:"9",
-        value:9
-    },
-    {
-        name:"8",
-        value:8
-    },
-    {
-        name:"7",
-        value:7
-    },
-    {
-        name:"6",
-        value:6
-    },
-    {
-        name:"5",
-        value:5
-    },
-    {
-        name:"4",
-        value:4
-    },
-    {
-        name:"3",
-        value:3
-    },
-    {
-        name:"2",
-        value:2
-    }
-];
+const cards=[
 
-let deck=[];
-let score=0;
-let coins=100;
-let combo=0;
-let playing=false;
-let round=0;
+{
+    name:"Fire Mage",
+    emoji:"🔥",
+    damage:20,
+    cost:2,
+    type:"attack",
+    text:"20 damage"
+},
 
-const playerCard=
-document.getElementById(
-    "playerCard"
-);
+{
+    name:"Ice Blast",
+    emoji:"❄️",
+    damage:15,
+    cost:1,
+    type:"attack",
+    text:"15 damage"
+},
 
-const cpuCard=
-document.getElementById(
-    "cpuCard"
-);
+{
+    name:"Thunder",
+    emoji:"⚡",
+    damage:28,
+    cost:3,
+    type:"attack",
+    text:"28 damage"
+},
 
-const playerFront=
-document.getElementById(
-    "playerFront"
-);
+{
+    name:"Knight",
+    emoji:"⚔️",
+    damage:12,
+    cost:1,
+    type:"attack",
+    text:"12 damage"
+},
 
-const cpuFront=
-document.getElementById(
-    "cpuFront"
-);
+{
+    name:"Dragon",
+    emoji:"🐉",
+    damage:35,
+    cost:4,
+    type:"attack",
+    text:"35 damage"
+},
 
-const result=
-document.getElementById(
-    "result"
-);
+{
+    name:"Heal",
+    emoji:"💚",
+    damage:18,
+    cost:2,
+    type:"heal",
+    text:"Restore 18 HP"
+},
 
-const drawBtn=
-document.getElementById(
-    "drawBtn"
-);
+{
+    name:"Meteor",
+    emoji:"☄️",
+    damage:45,
+    cost:5,
+    type:"attack",
+    text:"45 damage"
+},
 
-
-/* =====================================================
-   SOUND
-===================================================== */
-
-let audio=null;
-
-function initAudio(){
-
-    if(!audio){
-
-        audio=
-        new (
-            window.AudioContext ||
-            window.webkitAudioContext
-        )();
-
-    }
-
-    if(
-        audio.state==="suspended"
-    ){
-        audio.resume();
-    }
-
+{
+    name:"Shield",
+    emoji:"🛡️",
+    damage:10,
+    cost:2,
+    type:"shield",
+    text:"10 damage + shield"
 }
+
+];
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let playerHP=100;
+let enemyHP=100;
+
+let mana=5;
+let maxMana=5;
+
+let shield=0;
+
+let playerTurn=true;
+
+let gameStarted=false;
+
+let selectedCard=null;
+
+
+/* =========================================
+   DOM
+========================================= */
+
+const hand=
+document.getElementById("hand");
+
+const playerHpText=
+document.getElementById("playerHpText");
+
+const enemyHpText=
+document.getElementById("enemyHpText");
+
+const playerHPBar=
+document.getElementById("playerHP");
+
+const enemyHPBar=
+document.getElementById("enemyHP");
+
+const manaBar=
+document.getElementById("mana");
+
+const manaText=
+document.getElementById("manaText");
+
+const message=
+document.getElementById("message");
+
+const log=
+document.getElementById("battleLog");
+
+
+/* =========================================
+   SOUND
+========================================= */
+
+let audioCtx=null;
 
 function sound(
     frequency,
     duration=.1,
-    type="sine",
-    volume=.05
+    type="sine"
 ){
 
-    if(!audio)return;
+    try{
 
-    const osc=
-    audio.createOscillator();
+        if(!audioCtx){
 
-    const gain=
-    audio.createGain();
+            audioCtx=
+            new(
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
 
-    osc.type=type;
+        }
 
-    osc.frequency.value=
-    frequency;
+        if(
+            audioCtx.state==="suspended"
+        ){
 
-    gain.gain.value=
-    volume;
+            audioCtx.resume();
 
-    osc.connect(gain);
+        }
 
-    gain.connect(
-        audio.destination
-    );
+        const osc=
+        audioCtx.createOscillator();
 
-    osc.start();
+        const gain=
+        audioCtx.createGain();
 
-    gain.gain.exponentialRampToValueAtTime(
-        .001,
-        audio.currentTime+duration
-    );
+        osc.type=type;
 
-    osc.stop(
-        audio.currentTime+duration
+        osc.frequency.value=
+        frequency;
+
+        gain.gain.setValueAtTime(
+            .08,
+            audioCtx.currentTime
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .001,
+            audioCtx.currentTime+
+            duration
+        );
+
+        osc.connect(gain);
+
+        gain.connect(
+            audioCtx.destination
+        );
+
+        osc.start();
+
+        osc.stop(
+            audioCtx.currentTime+
+            duration
+        );
+
+    }catch(e){}
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+function startGame(){
+
+    document
+    .getElementById("overlay")
+    .classList
+    .add("hidden");
+
+    newGame();
+
+}
+
+
+/* =========================================
+   NEW GAME
+========================================= */
+
+function newGame(){
+
+    playerHP=100;
+
+    enemyHP=100;
+
+    mana=5;
+
+    shield=0;
+
+    playerTurn=true;
+
+    gameStarted=true;
+
+    selectedCard=null;
+
+    message.innerText=
+        "Choose a card to attack!";
+
+    log.innerHTML="";
+
+    updateUI();
+
+    renderHand();
+
+    addLog(
+        "⚔️ Battle started!"
     );
 
 }
 
 
-/* =====================================================
-   DECK
-===================================================== */
+/* =========================================
+   UPDATE UI
+========================================= */
 
-function createDeck(){
+function updateUI(){
 
-    deck=[];
+    playerHpText.innerText=
+        Math.max(0,playerHP);
 
-    suits.forEach(
-        suit=>{
+    enemyHpText.innerText=
+        Math.max(0,enemyHP);
 
-            ranks.forEach(
-                rank=>{
+    playerHPBar.style.width=
+        Math.max(0,playerHP)+"%";
 
-                    deck.push({
+    enemyHPBar.style.width=
+        Math.max(0,enemyHP)+"%";
 
-                        suit:suit,
+    manaText.innerText=
+        mana;
 
-                        rank:rank.name,
+    manaBar.style.width=
+        (mana/maxMana*100)+"%";
 
-                        value:rank.value
+}
 
-                    });
 
-                }
-            );
+/* =========================================
+   RENDER HAND
+========================================= */
+
+function renderHand(){
+
+    hand.innerHTML="";
+
+
+    cards.forEach(
+        (card,index)=>{
+
+            const div=
+            document.createElement("div");
+
+            div.className="card";
+
+
+            if(
+                card.cost>mana ||
+                !playerTurn
+            ){
+
+                div.classList.add(
+                    "disabled"
+                );
+
+            }
+
+
+            div.innerHTML=`
+
+                <div class="cost">
+                    ${card.cost}
+                </div>
+
+                <div class="cardemoji">
+                    ${card.emoji}
+                </div>
+
+                <h3>
+                    ${card.name}
+                </h3>
+
+                <div class="damage">
+                    ${
+                        card.type==="heal"
+                        ? "❤️ +"+card.damage
+                        : "⚔️ "+card.damage
+                    }
+                </div>
+
+                <small>
+                    ${card.text}
+                </small>
+
+            `;
+
+
+            div.onclick=()=>{
+
+                playCard(
+                    index,
+                    div
+                );
+
+            };
+
+
+            hand.appendChild(div);
 
         }
     );
 
-    shuffle();
-
 }
 
-function shuffle(){
 
-    for(
-        let i=deck.length-1;
-        i>0;
-        i--
-    ){
+/* =========================================
+   PLAY CARD
+========================================= */
 
-        const j=
-        Math.floor(
-            Math.random()*(i+1)
-        );
+function playCard(
+    index,
+    element
+){
 
-        [
-            deck[i],
-            deck[j]
-        ]=[
-            deck[j],
-            deck[i]
-        ];
+    if(!gameStarted)
+        return;
+
+    if(!playerTurn)
+        return;
+
+
+    const card=
+    cards[index];
+
+
+    if(card.cost>mana){
+
+        message.innerText=
+            "❌ Not enough mana!";
+
+        sound(180,.1);
+
+        return;
 
     }
 
+
+    mana-=card.cost;
+
+
+    /* HEAL */
+
+    if(card.type==="heal"){
+
+        playerHP=
+        Math.min(
+            100,
+            playerHP+card.damage
+        );
+
+        message.innerText=
+            "💚 You healed "+card.damage+" HP!";
+
+        addLog(
+            "💚 You used Heal."
+        );
+
+        sound(700,.15);
+
+    }
+
+
+    /* SHIELD */
+
+    else if(card.type==="shield"){
+
+        let damage=
+        calculateDamage(
+            card.damage
+        );
+
+        enemyHP-=damage;
+
+        shield+=15;
+
+        message.innerText=
+            "🛡️ Shield activated!";
+
+        addLog(
+            "🛡️ Shield attack dealt "+
+            damage+
+            " damage."
+        );
+
+        sound(600,.12);
+
+    }
+
+
+    /* ATTACK */
+
+    else{
+
+        let damage=
+        calculateDamage(
+            card.damage
+        );
+
+        enemyHP-=damage;
+
+        message.innerText=
+            "💥 "+card.name+
+            " dealt "+damage+
+            " damage!";
+
+        addLog(
+            "🔥 You used "+
+            card.name+
+            " for "+
+            damage+
+            " damage."
+        );
+
+        sound(
+            300+
+            damage*8,
+            .12,
+            "square"
+        );
+
+    }
+
+
+    element.classList.add("selected");
+
+    document
+    .getElementById(
+        "enemyBattleCard"
+    )
+    .classList.add("hit");
+
+
+    setTimeout(
+        ()=>{
+
+            document
+            .getElementById(
+                "enemyBattleCard"
+            )
+            .classList.remove("hit");
+
+        },
+        350
+    );
+
+
+    updateUI();
+
+
+    if(
+        enemyHP<=0
+    ){
+
+        winGame();
+
+        return;
+
+    }
+
+
+    playerTurn=false;
+
+    renderHand();
+
+
+    setTimeout(
+        enemyTurn,
+        800
+    );
+
 }
 
 
-/* =====================================================
-   CARD HTML
-===================================================== */
+/* =========================================
+   DAMAGE
+========================================= */
 
-function showCard(
-    element,
-    card
+function calculateDamage(
+    base
 ){
 
-    element.innerHTML=`
+    let bonus=
+    Math.floor(
+        Math.random()*6
+    );
 
-        <div class="rank ${
-            card.suit.red
-            ? "red"
-            : ""
-        }">
-            ${card.rank}
-        </div>
+    return base+bonus;
 
-        <div class="suit ${
-            card.suit.red
-            ? "red"
-            : ""
-        }">
-            ${card.suit.symbol}
+}
+
+
+/* =========================================
+   ENEMY TURN
+========================================= */
+
+function enemyTurn(){
+
+    if(
+        enemyHP<=0 ||
+        playerHP<=0
+    )
+        return;
+
+
+    message.innerText=
+        "🤖 Dark Bot is attacking...";
+
+
+    setTimeout(
+        ()=>{
+
+            let attacks=[
+                10,
+                12,
+                15,
+                18,
+                22
+            ];
+
+
+            let damage=
+            attacks[
+                Math.floor(
+                    Math.random()*
+                    attacks.length
+                )
+            ];
+
+
+            /* SHIELD */
+
+            if(shield>0){
+
+                let blocked=
+                Math.min(
+                    shield,
+                    damage
+                );
+
+                shield-=blocked;
+
+                damage-=blocked;
+
+                addLog(
+                    "🛡️ Your shield blocked "+
+                    blocked+
+                    " damage."
+                );
+
+            }
+
+
+            playerHP-=damage;
+
+
+            message.innerText=
+                "💥 Dark Bot dealt "+
+                damage+
+                " damage!";
+
+
+            addLog(
+                "🤖 Enemy attacked for "+
+                damage+
+                " damage."
+            );
+
+
+            document
+            .getElementById(
+                "playerBattleCard"
+            )
+            .classList.add("hit");
+
+
+            setTimeout(
+                ()=>{
+
+                    document
+                    .getElementById(
+                        "playerBattleCard"
+                    )
+                    .classList.remove("hit");
+
+                },
+                350
+            );
+
+
+            sound(
+                130,
+                .18,
+                "sawtooth"
+            );
+
+
+            updateUI();
+
+
+            if(
+                playerHP<=0
+            ){
+
+                loseGame();
+
+                return;
+
+            }
+
+
+            /* NEW TURN */
+
+            mana=
+            Math.min(
+                maxMana,
+                mana+2
+            );
+
+
+            playerTurn=true;
+
+            message.innerText=
+                "⚔️ Your turn! Choose a card.";
+
+            renderHand();
+
+            updateUI();
+
+        },
+        700
+    );
+
+}
+
+
+/* =========================================
+   END TURN
+========================================= */
+
+function endTurn(){
+
+    if(
+        !gameStarted ||
+        !playerTurn
+    )
+        return;
+
+
+    playerTurn=false;
+
+    message.innerText=
+        "⚡ Turn ended.";
+
+    renderHand();
+
+    setTimeout(
+        enemyTurn,
+        500
+    );
+
+}
+
+
+/* =========================================
+   WIN
+========================================= */
+
+function winGame(){
+
+    gameStarted=false;
+
+    enemyHP=0;
+
+    updateUI();
+
+    message.innerText=
+        "🏆 YOU WIN!";
+
+
+    addLog(
+        "🏆 Congratulations! You defeated Dark Bot!"
+    );
+
+
+    sound(
+        900,
+        .15
+    );
+
+    setTimeout(
+        ()=>{
+
+            showResult(
+                "🏆 YOU WIN!",
+                "Amazing battle! You defeated the enemy."
+            );
+
+        },
+        700
+    );
+
+}
+
+
+/* =========================================
+   LOSE
+========================================= */
+
+function loseGame(){
+
+    gameStarted=false;
+
+    playerHP=0;
+
+    updateUI();
+
+    message.innerText=
+        "💀 YOU LOST!";
+
+
+    addLog(
+        "💀 Dark Bot defeated you."
+    );
+
+
+    sound(
+        120,
+        .3,
+        "sawtooth"
+    );
+
+
+    setTimeout(
+        ()=>{
+
+            showResult(
+                "💀 GAME OVER",
+                "The Dark Bot won this battle."
+            );
+
+        },
+        700
+    );
+
+}
+
+
+/* =========================================
+   RESULT
+========================================= */
+
+function showResult(
+    title,
+    text
+){
+
+    const overlay=
+    document.getElementById(
+        "overlay"
+    );
+
+    overlay.innerHTML=`
+
+        <div class="modal">
+
+            <h1>
+                ${title}
+            </h1>
+
+            <p>
+                ${text}
+            </p>
+
+            <button
+                class="start-btn"
+                onclick="newGame();closeResult()">
+
+                🔄 PLAY AGAIN
+
+            </button>
+
         </div>
 
     `;
 
-}
-
-
-/* =====================================================
-   DRAW
-===================================================== */
-
-function drawCard(){
-
-    if(
-        !playing ||
-        drawBtn.disabled
-    )return;
-
-    initAudio();
-
-    drawBtn.disabled=true;
-
-    result.textContent=
-        "Drawing cards...";
-
-    result.className=
-        "result";
-
-    playerCard.classList.remove(
-        "flipped"
-    );
-
-    cpuCard.classList.remove(
-        "flipped"
-    );
-
-    const player=
-        deck.pop();
-
-    const cpu=
-        deck.pop();
-
-    if(
-        deck.length<10
-    ){
-        createDeck();
-    }
-
-    setTimeout(
-        ()=>{
-
-            showCard(
-                playerFront,
-                player
-            );
-
-            playerCard.classList.add(
-                "flipped"
-            );
-
-            sound(
-                400,
-                .08,
-                "square",
-                .03
-            );
-
-        },
-        300
-    );
-
-    setTimeout(
-        ()=>{
-
-            showCard(
-                cpuFront,
-                cpu
-            );
-
-            cpuCard.classList.add(
-                "flipped"
-            );
-
-            sound(
-                550,
-                .08,
-                "square",
-                .03
-            );
-
-        },
-        650
-    );
-
-    setTimeout(
-        ()=>{
-
-            decideWinner(
-                player,
-                cpu
-            );
-
-        },
-        1250
-    );
-
-}
-
-
-/* =====================================================
-   RESULT
-===================================================== */
-
-function decideWinner(
-    player,
-    cpu
-){
-
-    round++;
-
-    if(
-        player.value>
-        cpu.value
-    ){
-
-        combo++;
-
-        const bonus=
-        combo*5;
-
-        score+=
-        50+
-        bonus;
-
-        coins+=
-        10+
-        combo;
-
-        result.textContent=
-        `🔥 YOU WIN! +${
-            50+bonus
-        } points`;
-
-        result.className=
-        "result win";
-
-        sound(
-            800,
-            .12,
-            "sine",
-            .06
-        );
-
-        setTimeout(
-            ()=>{
-                sound(
-                    1100,
-                    .18,
-                    "sine",
-                    .05
-                );
-            },
-            100
-        );
-
-    }
-
-    else if(
-        player.value<
-        cpu.value
-    ){
-
-        combo=0;
-
-        score=
-        Math.max(
-            0,
-            score-10
-        );
-
-        result.textContent=
-        "💥 CPU WINS!";
-
-        result.className=
-        "result lose";
-
-        sound(
-            140,
-            .25,
-            "sawtooth",
-            .06
-        );
-
-    }
-
-    else{
-
-        combo=0;
-
-        score+=20;
-
-        result.textContent=
-        "⚡ DRAW! +20 points";
-
-        result.className=
-        "result draw";
-
-        sound(
-            500,
-            .2,
-            "triangle",
-            .05
-        );
-
-    }
-
-    updateStats();
-
-    drawBtn.disabled=false;
-
-}
-
-
-/* =====================================================
-   STATS
-===================================================== */
-
-function updateStats(){
-
-    document.getElementById(
-        "score"
-    ).textContent=
-        score;
-
-    document.getElementById(
-        "coins"
-    ).textContent=
-        coins;
-
-    document.getElementById(
-        "combo"
-    ).textContent=
-        combo;
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-function startGame(){
-
-    initAudio();
-
-    score=0;
-    coins=100;
-    combo=0;
-    round=0;
-
-    playing=true;
-
-    createDeck();
-
-    updateStats();
-
-    playerCard.classList.remove(
-        "flipped"
-    );
-
-    cpuCard.classList.remove(
-        "flipped"
-    );
-
-    result.textContent=
-        "Press DRAW CARD to battle";
-
-    result.className=
-        "result";
-
-    drawBtn.disabled=false;
-
-    document.getElementById(
-        "startScreen"
-    ).classList.add(
-        "hidden"
-    );
-
-    document.getElementById(
-        "endScreen"
-    ).classList.add(
-        "hidden"
-    );
-
-    sound(
-        600,
-        .12,
-        "sine",
-        .05
-    );
-
-}
-
-
-/* =====================================================
-   END
-===================================================== */
-
-function endGame(){
-
-    playing=false;
-
-    document.getElementById(
-        "finalScore"
-    ).textContent=
-        score;
-
-    document.getElementById(
-        "finalCoins"
-    ).textContent=
-        coins;
-
-    document.getElementById(
-        "endScreen"
-    ).classList.remove(
+    overlay.classList.remove(
         "hidden"
     );
 
 }
 
 
-/* =====================================================
-   BUTTONS
-===================================================== */
+function closeResult(){
 
-document.getElementById(
-    "startBtn"
-).onclick=
-startGame;
+    document
+    .getElementById(
+        "overlay"
+    )
+    .classList
+    .add("hidden");
 
-document.getElementById(
-    "againBtn"
-).onclick=
-startGame;
+}
 
 
-/* =====================================================
-   RULES
-===================================================== */
+/* =========================================
+   LOG
+========================================= */
 
-document.getElementById(
-    "rulesBtn"
-).onclick=()=>{
+function addLog(text){
 
-    document.getElementById(
-        "rules"
-    ).classList.remove(
-        "hidden"
-    );
+    const item=
+    document.createElement("div");
 
-};
+    item.innerText=text;
 
-document.getElementById(
-    "closeRules"
-).onclick=()=>{
+    log.prepend(item);
 
-    document.getElementById(
-        "rules"
-    ).classList.add(
-        "hidden"
-    );
-
-};
-
-
-drawBtn.onclick=
-drawCard;
-
-
-/* =====================================================
-   KEYBOARD
-===================================================== */
-
-window.addEventListener(
-    "keydown",
-    e=>{
-
-        if(
-            e.code==="Space" ||
-            e.key==="Enter"
-        ){
-
-            drawCard();
-
-        }
-
-    }
-);
+}
 
 </script>
 
