@@ -1,1372 +1,641 @@
-```javascript
 /* =====================================================
-   SUPABASE CONFIGURATION
+   GAMEBOOK GK HUB
+   MAIN JAVASCRIPT
 ===================================================== */
-
-/*
-   Supabase Dashboard बाट यी दुई value copy गर्नुहोस्.
-
-   Project URL example:
-   https://xxxxxxxx.supabase.co
-
-   Publishable/anon key:
-   eyJ...
-*/
-
-const SUPABASE_URL =
-    "YOUR_SUPABASE_PROJECT_URL";
-
-const SUPABASE_KEY =
-    "YOUR_SUPABASE_PUBLISHABLE_KEY";
-
-
-/*
-   Supabase project ID.
-
-   Example:
-   https://abcdefghijk.supabase.co
-
-   यहाँ "abcdefghijk" राख्नुहोस्.
-*/
-
-const SUPABASE_PROJECT_ID =
-    "YOUR_PROJECT_ID";
-
-
-/*
-   Storage bucket name
-*/
-
-const BUCKET =
-    "movies";
-
-
-/*
-   Maximum file size used by this website.
-
-   5 GB example.
-   Actual Supabase plan/bucket limit must also
-   allow the file.
-*/
-
-const MAX_FILE_SIZE =
-    5 * 1024 * 1024 * 1024;
-
-
-/*
-   YOUR ADMIN UID
-
-   पछि Supabase Authentication बाट
-   आफ्नो User UID राख्नुहोस्.
-
-   अहिले temporary placeholder.
-*/
-
-const ADMIN_UID =
-    "YOUR_SUPABASE_ADMIN_UID";
 
 
 /* =====================================================
-   SUPABASE CLIENT
+   1. PAGE LOADING ANIMATION
 ===================================================== */
 
-const {
-    createClient
-} = supabase;
+window.addEventListener("load", () => {
 
+    document.body.classList.add("page-loaded");
 
-const db =
-    createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+});
 
 
 /* =====================================================
-   ELEMENTS
+   2. SMOOTH SCROLL
 ===================================================== */
 
-const uploadArea =
-    document.getElementById(
-        "uploadArea"
-    );
+function scrollToSection(id) {
 
-const uploadBtn =
-    document.getElementById(
-        "uploadBtn"
-    );
+    const section = document.getElementById(id);
 
-const videoFile =
-    document.getElementById(
-        "videoFile"
-    );
+    if (!section) return;
 
-const videoTitle =
-    document.getElementById(
-        "videoTitle"
-    );
+    section.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
-const posterUrl =
-    document.getElementById(
-        "posterUrl"
-    );
-
-const progressBar =
-    document.getElementById(
-        "progressBar"
-    );
-
-const uploadStatus =
-    document.getElementById(
-        "uploadStatus"
-    );
-
-const movieGrid =
-    document.getElementById(
-        "movieGrid"
-    );
-
-const searchInput =
-    document.getElementById(
-        "searchInput"
-    );
-
-const loginStatus =
-    document.getElementById(
-        "loginStatus"
-    );
-
-
-/* =====================================================
-   HELPERS
-===================================================== */
-
-function escapeHTML(value){
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.textContent =
-        String(value ?? "");
-
-    return div.innerHTML;
-}
-
-
-function formatBytes(bytes){
-
-    if(!bytes){
-        return "0 MB";
-    }
-
-    const units =
-        [
-            "Bytes",
-            "KB",
-            "MB",
-            "GB",
-            "TB"
-        ];
-
-    const i =
-        Math.floor(
-            Math.log(bytes) /
-            Math.log(1024)
-        );
-
-    return (
-        bytes /
-        Math.pow(1024,i)
-    ).toFixed(2)
-    + " "
-    + units[i];
-}
-
-
-function safeFileName(name){
-
-    return name
-        .replace(
-            /[^a-zA-Z0-9._-]/g,
-            "_"
-        )
-        .replace(
-            /_+/g,
-            "_"
-        );
 }
 
 
 /* =====================================================
-   AUTH
+   3. SCROLL REVEAL ANIMATION
 ===================================================== */
 
-async function updateAuthUI(){
+const revealElements =
+    document.querySelectorAll(".reveal");
 
-    const {
-        data,
-        error
-    } =
-    await db.auth.getUser();
 
+const revealObserver =
+    new IntersectionObserver(
+        (entries) => {
 
-    if(error){
+            entries.forEach((entry) => {
 
-        console.error(error);
+                if (entry.isIntersecting) {
 
-        return;
-    }
-
-
-    const user =
-        data.user;
-
-
-    if(
-        user &&
-        user.id === ADMIN_UID
-    ){
-
-        uploadArea.classList.add(
-            "show"
-        );
-
-        loginStatus.textContent =
-            "Admin logged in";
-
-        loginStatus.style.color =
-            "#48d597";
-
-    }else{
-
-        uploadArea.classList.remove(
-            "show"
-        );
-
-        if(user){
-
-            loginStatus.textContent =
-                "Logged in, but not admin";
-
-        }else{
-
-            loginStatus.textContent =
-                "Not logged in";
-        }
-
-        loginStatus.style.color =
-            "#aaa";
-    }
-}
-
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-document
-.getElementById(
-    "loginBtn"
-)
-.addEventListener(
-    "click",
-    async function(){
-
-        const email =
-            document
-            .getElementById(
-                "adminEmail"
-            )
-            .value
-            .trim();
-
-
-        const password =
-            document
-            .getElementById(
-                "adminPassword"
-            )
-            .value;
-
-
-        if(
-            !email ||
-            !password
-        ){
-
-            alert(
-                "Enter email and password."
-            );
-
-            return;
-        }
-
-
-        const {
-            error
-        } =
-        await db.auth.signInWithPassword(
-            {
-                email,
-                password
-            }
-        );
-
-
-        if(error){
-
-            console.error(error);
-
-            alert(
-                error.message
-            );
-
-            return;
-        }
-
-
-        alert(
-            "Login successful."
-        );
-
-
-        await updateAuthUI();
-        await loadMovies();
-    }
-);
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-document
-.getElementById(
-    "logoutBtn"
-)
-.addEventListener(
-    "click",
-    async function(){
-
-        const {
-            error
-        } =
-        await db.auth.signOut();
-
-
-        if(error){
-
-            console.error(error);
-
-            return;
-        }
-
-
-        await updateAuthUI();
-        await loadMovies();
-
-        alert(
-            "Logged out."
-        );
-    }
-);
-
-
-/* =====================================================
-   AUTH STATE
-===================================================== */
-
-db.auth.onAuthStateChange(
-    async function(){
-
-        await updateAuthUI();
-
-        await loadMovies();
-    }
-);
-
-
-/* =====================================================
-   TUS LARGE FILE UPLOAD
-===================================================== */
-
-async function uploadLargeVideo(
-    file,
-    path
-){
-
-    const {
-        data,
-        error
-    } =
-    await db.auth.getSession();
-
-
-    if(error){
-        throw error;
-    }
-
-
-    if(
-        !data.session
-    ){
-
-        throw new Error(
-            "Please login first."
-        );
-    }
-
-
-    const accessToken =
-        data.session.access_token;
-
-
-    const endpoint =
-        `https://${SUPABASE_PROJECT_ID}.storage.supabase.co/storage/v1/upload/resumable`;
-
-
-    return new Promise(
-    function(resolve,reject){
-
-        const upload =
-            new tus.Upload(
-                file,
-                {
-
-                    endpoint:
-                        endpoint,
-
-                    retryDelays:
-                        [
-                            0,
-                            3000,
-                            5000,
-                            10000,
-                            20000
-                        ],
-
-                    headers:
-                        {
-                            authorization:
-                                `Bearer ${accessToken}`,
-
-                            apikey:
-                                SUPABASE_KEY,
-
-                            "x-upsert":
-                                "false"
-                        },
-
-                    uploadDataDuringCreation:
-                        true,
-
-                    removeFingerprintOnSuccess:
-                        true,
+                    entry.target.classList.add("active");
 
                     /*
-                       Supabase currently recommends
-                       6 MB chunks for TUS uploads.
-                    */
+                     * Once animated, stop observing.
+                     * This prevents unnecessary work.
+                     */
 
-                    chunkSize:
-                        6 * 1024 * 1024,
+                    revealObserver.unobserve(
+                        entry.target
+                    );
 
-                    metadata:
-                        {
-                            bucketName:
-                                BUCKET,
-
-                            objectName:
-                                path,
-
-                            contentType:
-                                file.type ||
-                                "video/mp4",
-
-                            cacheControl:
-                                "3600"
-                        },
-
-                    onError:
-                        function(error){
-
-                            console.error(
-                                "TUS upload error:",
-                                error
-                            );
-
-                            reject(
-                                error
-                            );
-                        },
-
-                    onProgress:
-                        function(
-                            bytesUploaded,
-                            bytesTotal
-                        ){
-
-                            const percent =
-                                (
-                                    bytesUploaded /
-                                    bytesTotal
-                                ) * 100;
-
-
-                            progressBar.style.width =
-                                percent.toFixed(2)
-                                + "%";
-
-
-                            uploadStatus.textContent =
-                                "Uploading "
-                                + percent.toFixed(1)
-                                + "% — "
-                                + formatBytes(
-                                    bytesUploaded
-                                )
-                                + " / "
-                                + formatBytes(
-                                    bytesTotal
-                                );
-                        },
-
-                    onSuccess:
-                        function(){
-
-                            resolve(
-                                upload.url
-                            );
-                        }
                 }
-            );
+
+            });
+
+        },
+        {
+            threshold: 0.12,
+            rootMargin: "0px 0px -40px 0px"
+        }
+    );
 
 
-        upload.start();
+revealElements.forEach((element) => {
+
+    revealObserver.observe(element);
+
+});
+
+
+/* =====================================================
+   4. CARD STAGGER ANIMATION
+===================================================== */
+
+const cardGrids =
+    document.querySelectorAll(".cards-grid");
+
+
+cardGrids.forEach((grid) => {
+
+    const cards =
+        grid.querySelectorAll(".content-card");
+
+
+    cards.forEach((card, index) => {
+
+        card.style.transitionDelay =
+            `${index * 0.05}s`;
 
     });
-}
+
+});
 
 
 /* =====================================================
-   UPLOAD VIDEO
+   5. ACTIVE NAVIGATION
 ===================================================== */
 
-uploadBtn.addEventListener(
-    "click",
-    async function(){
+const sections =
+    document.querySelectorAll("section[id]");
 
-        try{
+const navLinks =
+    document.querySelectorAll("nav a");
 
-            const {
-                data
-            } =
-            await db.auth.getUser();
 
+function updateActiveNavigation() {
 
-            const user =
-                data.user;
+    let currentSection = "";
 
 
-            if(
-                !user ||
-                user.id !== ADMIN_UID
-            ){
+    sections.forEach((section) => {
 
-                alert(
-                    "Only admin can upload."
-                );
+        const sectionTop =
+            section.offsetTop - 180;
 
-                return;
-            }
+        const sectionBottom =
+            sectionTop + section.offsetHeight;
 
 
-            const file =
-                videoFile.files[0];
+        if (
+            window.scrollY >= sectionTop &&
+            window.scrollY < sectionBottom
+        ) {
 
-
-            if(!file){
-
-                alert(
-                    "Select a video first."
-                );
-
-                return;
-            }
-
-
-            if(
-                file.size >
-                MAX_FILE_SIZE
-            ){
-
-                alert(
-                    "File is larger than the website limit of 5 GB."
-                );
-
-                return;
-            }
-
-
-            if(
-                !file.type.startsWith(
-                    "video/"
-                )
-            ){
-
-                alert(
-                    "Please select a video file."
-                );
-
-                return;
-            }
-
-
-            const title =
-                videoTitle.value.trim();
-
-
-            if(!title){
-
-                alert(
-                    "Enter video title."
-                );
-
-                videoTitle.focus();
-
-                return;
-            }
-
-
-            uploadBtn.disabled =
-                true;
-
-            uploadBtn.textContent =
-                "Uploading...";
-
-
-            progressBar.style.width =
-                "0%";
-
-
-            uploadStatus.textContent =
-                "Preparing upload...";
-
-
-            /*
-               Unique file name.
-
-               This prevents accidental overwriting.
-            */
-
-            const uniqueId =
-                crypto.randomUUID();
-
-
-            const cleanName =
-                safeFileName(
-                    file.name
-                );
-
-
-            const path =
-                `videos/${uniqueId}-${cleanName}`;
-
-
-            /*
-               Start resumable upload.
-            */
-
-            await uploadLargeVideo(
-                file,
-                path
-            );
-
-
-            uploadStatus.textContent =
-                "Saving video information...";
-
-
-            /*
-               Public URL.
-
-               This works when the "movies"
-               bucket is PUBLIC.
-            */
-
-            const {
-                data:
-                    publicData
-            } =
-            db.storage
-            .from(BUCKET)
-            .getPublicUrl(
-                path
-            );
-
-
-            const publicUrl =
-                publicData.publicUrl;
-
-
-            /*
-               Save metadata in Postgres table.
-            */
-
-            const {
-                error
-            } =
-            await db
-            .from(
-                "movies"
-            )
-            .insert(
-                {
-
-                    title:
-                        title,
-
-                    video_url:
-                        publicUrl,
-
-                    storage_path:
-                        path,
-
-                    poster_url:
-                        posterUrl.value.trim()
-                        || null,
-
-                    file_name:
-                        file.name,
-
-                    file_size:
-                        file.size,
-
-                    mime_type:
-                        file.type,
-
-                    uploaded_by:
-                        user.id
-                }
-            );
-
-
-            if(error){
-
-                console.error(
-                    error
-                );
-
-                alert(
-                    "Video uploaded, but database save failed."
-                );
-
-                return;
-            }
-
-
-            alert(
-                "Video uploaded successfully! 🎉"
-            );
-
-
-            /*
-               Reset form.
-            */
-
-            videoFile.value =
-                "";
-
-            videoTitle.value =
-                "";
-
-            posterUrl.value =
-                "";
-
-            progressBar.style.width =
-                "0%";
-
-            uploadStatus.textContent =
-                "Ready";
-
-
-            await loadMovies();
+            currentSection =
+                section.getAttribute("id");
 
         }
-        catch(error){
 
-            console.error(
-                error
+    });
+
+
+    navLinks.forEach((link) => {
+
+        link.classList.remove(
+            "active-nav"
+        );
+
+
+        const href =
+            link.getAttribute("href");
+
+
+        if (
+            href === `#${currentSection}`
+        ) {
+
+            link.classList.add(
+                "active-nav"
             );
 
-            alert(
-                "Upload failed: "
-                + error.message
-            );
-
-            uploadStatus.textContent =
-                "Upload failed.";
-        }
-        finally{
-
-            uploadBtn.disabled =
-                false;
-
-            uploadBtn.textContent =
-                "⬆ Start Upload";
         }
 
-    }
+    });
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    updateActiveNavigation
 );
 
 
-/* =====================================================
-   LOAD MOVIES
-===================================================== */
-
-async function loadMovies(){
-
-    movieGrid.innerHTML =
-        `<div class="loading">
-            Loading videos...
-        </div>`;
-
-
-    const {
-        data,
-        error
-    } =
-    await db
-    .from(
-        "movies"
-    )
-    .select("*")
-    .order(
-        "created_at",
-        {
-            ascending:false
-        }
-    );
-
-
-    if(error){
-
-        console.error(
-            error
-        );
-
-        movieGrid.innerHTML =
-            `<div class="empty">
-                Unable to load videos.
-            </div>`;
-
-        return;
-    }
-
-
-    movieGrid.innerHTML =
-        "";
-
-
-    if(
-        !data ||
-        data.length === 0
-    ){
-
-        movieGrid.innerHTML =
-            `<div class="empty">
-                🎬 No videos uploaded yet.
-            </div>`;
-
-        return;
-    }
-
-
-    data.forEach(
-        function(movie){
-
-            createMovieCard(
-                movie
-            );
-        }
-    );
-}
+updateActiveNavigation();
 
 
 /* =====================================================
-   CREATE MOVIE CARD
+   6. NAVIGATION CLICK
 ===================================================== */
 
-function createMovieCard(
-    movie
-){
+navLinks.forEach((link) => {
 
-    const card =
-        document.createElement(
-            "article"
-        );
-
-
-    card.className =
-        "movie-card";
-
-
-    const poster =
-        movie.poster_url
-        ?
-
-        `<img
-            src="${escapeHTML(
-                movie.poster_url
-            )}"
-            alt="${escapeHTML(
-                movie.title
-            )}"
-        >`
-
-        :
-
-        `<span
-            style="
-            font-size:60px;
-            "
-        >
-            🎬
-        </span>`;
-
-
-    card.innerHTML = `
-
-        <div class="movie-poster">
-
-            ${poster}
-
-        </div>
-
-
-        <div class="movie-info">
-
-            <h3>
-                ${escapeHTML(
-                    movie.title
-                )}
-            </h3>
-
-            <p>
-                ${formatBytes(
-                    movie.file_size
-                )}
-            </p>
-
-
-            <div class="movie-buttons">
-
-                <button
-                    class="watch-btn"
-                >
-                    ▶ Watch
-                </button>
-
-
-                <button
-                    class="open-btn"
-                >
-                    ↗ Open
-                </button>
-
-            </div>
-
-
-            <button
-                class="delete-btn"
-                style="display:none"
-            >
-                🗑 Delete
-            </button>
-
-        </div>
-    `;
-
-
-    /*
-       Watch
-    */
-
-    card
-    .querySelector(
-        ".watch-btn"
-    )
-    .addEventListener(
+    link.addEventListener(
         "click",
-        function(){
+        function(event) {
 
-            openVideo(
-                movie.video_url
-            );
-        }
-    );
+            const targetId =
+                this.getAttribute("href");
 
 
-    /*
-       Open
-    */
+            if (
+                !targetId ||
+                !targetId.startsWith("#")
+            ) {
 
-    card
-    .querySelector(
-        ".open-btn"
-    )
-    .addEventListener(
-        "click",
-        function(){
+                return;
 
-            window.open(
-                movie.video_url,
-                "_blank",
-                "noopener"
-            );
-        }
-    );
+            }
 
 
-    /*
-       Delete
-    */
-
-    const deleteButton =
-        card.querySelector(
-            ".delete-btn"
-        );
-
-
-    if(
-        window.currentAdmin === true
-    ){
-
-        deleteButton.style.display =
-            "block";
-    }
-
-
-    deleteButton.addEventListener(
-        "click",
-        function(){
-
-            deleteMovie(
-                movie
-            );
-        }
-    );
-
-
-    movieGrid.appendChild(
-        card
-    );
-}
-
-
-/* =====================================================
-   DELETE MOVIE
-===================================================== */
-
-async function deleteMovie(
-    movie
-){
-
-    const {
-        data
-    } =
-    await db.auth.getUser();
-
-
-    const user =
-        data.user;
-
-
-    if(
-        !user ||
-        user.id !== ADMIN_UID
-    ){
-
-        alert(
-            "Only admin can delete."
-        );
-
-        return;
-    }
-
-
-    const ok =
-        confirm(
-            "Delete this video?"
-        );
-
-
-    if(!ok){
-        return;
-    }
-
-
-    try{
-
-        /*
-           First delete database record.
-        */
-
-        const {
-            error:
-                databaseError
-        } =
-        await db
-        .from(
-            "movies"
-        )
-        .delete()
-        .eq(
-            "id",
-            movie.id
-        );
-
-
-        if(databaseError){
-
-            throw databaseError;
-        }
-
-
-        /*
-           Then delete actual storage file.
-        */
-
-        if(
-            movie.storage_path
-        ){
-
-            const {
-                error:
-                    storageError
-            } =
-            await db
-            .storage
-            .from(
-                BUCKET
-            )
-            .remove(
-                [
-                    movie.storage_path
-                ]
-            );
-
-
-            if(storageError){
-
-                console.error(
-                    storageError
+            const target =
+                document.querySelector(
+                    targetId
                 );
-            }
+
+
+            if (!target) return;
+
+
+            event.preventDefault();
+
+
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+
+            /*
+             * Update URL without refreshing page.
+             */
+
+            history.pushState(
+                null,
+                "",
+                targetId
+            );
+
         }
+    );
 
-
-        alert(
-            "Movie deleted."
-        );
-
-
-        loadMovies();
-
-    }
-    catch(error){
-
-        console.error(
-            error
-        );
-
-        alert(
-            "Delete failed: "
-            + error.message
-        );
-    }
-}
+});
 
 
 /* =====================================================
-   SEARCH
+   7. RIPPLE EFFECT ON BUTTONS
 ===================================================== */
 
-searchInput.addEventListener(
-    "input",
-    function(){
-
-        const search =
-            this.value
-            .toLowerCase()
-            .trim();
+const buttons =
+    document.querySelectorAll(
+        ".primary-btn, .secondary-btn"
+    );
 
 
-        document
-        .querySelectorAll(
-            ".movie-card"
-        )
-        .forEach(
-            function(card){
+buttons.forEach((button) => {
 
-                const title =
-                    card
-                    .querySelector(
-                        "h3"
-                    )
-                    .textContent
-                    .toLowerCase();
+    button.addEventListener(
+        "click",
+        function(event) {
+
+            const ripple =
+                document.createElement("span");
 
 
-                card.style.display =
-                    title.includes(
-                        search
-                    )
-                    ? ""
-                    : "none";
+            ripple.className =
+                "button-ripple";
+
+
+            const rect =
+                this.getBoundingClientRect();
+
+
+            const x =
+                event.clientX -
+                rect.left;
+
+
+            const y =
+                event.clientY -
+                rect.top;
+
+
+            ripple.style.left =
+                `${x}px`;
+
+            ripple.style.top =
+                `${y}px`;
+
+
+            this.appendChild(ripple);
+
+
+            setTimeout(() => {
+
+                ripple.remove();
+
+            }, 600);
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   8. CARD TILT EFFECT
+===================================================== */
+
+const cards =
+    document.querySelectorAll(
+        ".content-card"
+    );
+
+
+cards.forEach((card) => {
+
+    card.addEventListener(
+        "mousemove",
+        (event) => {
+
+            /*
+             * Disable tilt on small screens.
+             */
+
+            if (window.innerWidth < 800) {
+                return;
             }
-        );
+
+
+            const rect =
+                card.getBoundingClientRect();
+
+
+            const x =
+                event.clientX -
+                rect.left;
+
+
+            const y =
+                event.clientY -
+                rect.top;
+
+
+            const centerX =
+                rect.width / 2;
+
+
+            const centerY =
+                rect.height / 2;
+
+
+            const rotateX =
+                ((y - centerY) /
+                    centerY) * -3;
+
+
+            const rotateY =
+                ((x - centerX) /
+                    centerX) * 3;
+
+
+            card.style.transform =
+                `perspective(800px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)
+                 translateY(-10px)
+                 scale(1.015)`;
+
+        }
+    );
+
+
+    card.addEventListener(
+        "mouseleave",
+        () => {
+
+            card.style.transform = "";
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   9. BACK TO TOP BUTTON
+===================================================== */
+
+const backToTop =
+    document.createElement("button");
+
+
+backToTop.innerHTML = "↑";
+
+
+backToTop.className =
+    "back-to-top";
+
+
+backToTop.setAttribute(
+    "aria-label",
+    "Back to top"
+);
+
+
+document.body.appendChild(
+    backToTop
+);
+
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (window.scrollY > 500) {
+
+            backToTop.classList.add(
+                "show"
+            );
+
+        } else {
+
+            backToTop.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+backToTop.addEventListener(
+    "click",
+    () => {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
     }
 );
 
 
 /* =====================================================
-   VIDEO PLAYER
+   10. KEYBOARD SHORTCUT
 ===================================================== */
-
-function openVideo(
-    url
-){
-
-    const modal =
-        document.getElementById(
-            "videoModal"
-        );
-
-    const player =
-        document.getElementById(
-            "videoPlayer"
-        );
-
-
-    player.src =
-        url;
-
-
-    modal.classList.add(
-        "show"
-    );
-
-
-    player
-    .play()
-    .catch(
-        function(){}
-    );
-}
-
-
-document
-.getElementById(
-    "closeVideo"
-)
-.addEventListener(
-    "click",
-    closeVideo
-);
-
-
-document
-.getElementById(
-    "videoModal"
-)
-.addEventListener(
-    "click",
-    function(event){
-
-        if(
-            event.target ===
-            this
-        ){
-
-            closeVideo();
-        }
-    }
-);
-
-
-function closeVideo(){
-
-    const modal =
-        document.getElementById(
-            "videoModal"
-        );
-
-    const player =
-        document.getElementById(
-            "videoPlayer"
-        );
-
-
-    player.pause();
-
-    player.removeAttribute(
-        "src"
-    );
-
-    player.load();
-
-    modal.classList.remove(
-        "show"
-    );
-}
-
 
 document.addEventListener(
     "keydown",
-    function(event){
+    (event) => {
 
-        if(
-            event.key ===
-            "Escape"
-        ){
+        /*
+         * Press H to go Home
+         */
 
-            closeVideo();
+        if (
+            event.key.toLowerCase() === "h" &&
+            !isTyping()
+        ) {
+
+            scrollToSection("home");
+
         }
+
+
+        /*
+         * Press G to go Games
+         */
+
+        if (
+            event.key.toLowerCase() === "g" &&
+            !isTyping()
+        ) {
+
+            scrollToSection("games");
+
+        }
+
+
+        /*
+         * Press B to go Books
+         */
+
+        if (
+            event.key.toLowerCase() === "b" &&
+            !isTyping()
+        ) {
+
+            scrollToSection("books");
+
+        }
+
+
+        /*
+         * Press K to go GK
+         */
+
+        if (
+            event.key.toLowerCase() === "k" &&
+            !isTyping()
+        ) {
+
+            scrollToSection("gk");
+
+        }
+
     }
 );
 
 
 /* =====================================================
-   INITIALIZE
+   11. CHECK IF USER IS TYPING
 ===================================================== */
 
-window.currentAdmin =
-    false;
+function isTyping() {
+
+    const element =
+        document.activeElement;
 
 
-async function initialize(){
-
-    const {
-        data
-    } =
-    await db.auth.getUser();
+    if (!element) {
+        return false;
+    }
 
 
-    window.currentAdmin =
-        Boolean(
-            data.user &&
-            data.user.id === ADMIN_UID
-        );
+    const tag =
+        element.tagName.toLowerCase();
 
 
-    await updateAuthUI();
+    return (
+        tag === "input" ||
+        tag === "textarea" ||
+        element.isContentEditable
+    );
 
-    await loadMovies();
 }
 
 
-initialize();
-```
+/* =====================================================
+   12. PREVENT BROKEN LINKS
+===================================================== */
+
+document
+.querySelectorAll(
+    'a[href="#"]'
+)
+.forEach((link) => {
+
+    link.addEventListener(
+        "click",
+        (event) => {
+
+            event.preventDefault();
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   13. PAGE VISIBILITY
+===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (document.hidden) {
+
+            document.title =
+                "Come Back! 🎮 GameBook GK Hub";
+
+        } else {
+
+            document.title =
+                "GameBook GK Hub";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   14. RANDOM BACKGROUND PARTICLES
+===================================================== */
+
+const background =
+    document.querySelector(
+        ".background"
+    );
+
+
+if (background) {
+
+    for (let i = 0; i < 25; i++) {
+
+        const particle =
+            document.createElement("span");
+
+
+        particle.style.left =
+            `${Math.random() * 100}%`;
+
+
+        particle.style.top =
+            `${70 + Math.random() * 30}%`;
+
+
+        particle.style.width =
+            `${2 + Math.random() * 4}px`;
+
+
+        particle.style.height =
+            particle.style.width;
+
+
+        particle.style.animationDuration =
+            `${10 + Math.random() * 15}s`;
+
+
+        particle.style.animationDelay =
+            `${Math.random() * 10}s`;
+
+
+        background.appendChild(
+            particle
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   15. CONSOLE MESSAGE
+===================================================== */
+
+console.log(
+    "%c🎮 GameBook GK Hub",
+    "font-size:22px;font-weight:bold;"
+);
+
+console.log(
+    "Play • Read • Learn • Explore 🚀"
+);
