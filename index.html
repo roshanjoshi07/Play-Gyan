@@ -1,315 +1,247 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GameBook GK Hub</title>
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
-</head>
-
-<body>
-
-<header>
-
-<div class="logo">
-🎮 GameBook GK Hub
-</div>
-
-<nav>
-
-<a href="#games">Games</a>
-
-<a href="#books">Books</a>
-
-<a href="#gk">GK Questions</a>
-
-</nav>
-
-</header>
-
-<section class="hero">
-
-<h1>
-Welcome To GameBook GK Hub
-</h1>
-
-<p>
-
-Play Games, Read Books and Improve Your Knowledge.
-
-</p>
-
-<button>
-Explore Now
-</button>
-
-</section>
-
-<section id="games">
-
-<h2>🎮 Games</h2>
-
-<div class="grid">
-
-<a href="flying-bird.html"class="card">🐦 Flying Bird</a>
-    
-<a href="snake-game.html"class="card">🐍 snake game</a>
-
-<a href="fruit-cutter.html"class="card">🍎 Fruit Cutter</a>
-
-<a href="gaunkhane-katha.html"class="card">📖Gaunkhane Kathe</a>
-
-<a href="memory-card.html"class="card">🧠 Memory Card</a>
-    
-<a href="pong.html"class="card">🏓 Pong</a>
-    
-<a href="ballon-pop.html"class="card">🎈 Ballon Pop</a>
-    
-
-<a href="tic-tac-toe.html"class="card">⭕ Tic Tac Toe</a>
-    
-<a href="math-quiz.html"class="card">➗ Math Quiz</a>
-      
-<a href="quiz.html"class="card">❓ Quiz</a>
-    
-<a href="chess.html"class="card">♟Chess</a>
-    
-<a href="sliding-puzzle.html"class="card">🧩Sliding Puzzle</a>
-    
-<a href="aim-trainer.html"class="card">🎯Aim Trainer</a>
-    
-<a href="zombie-survival.html"class="card">🧟Zombir Survival</a>
-    
-<a href="highway-racer.html"class="card">🏎 Highway Racer</a>
-
-<a href="bike-race.html"class="card">🚴‍♂️ Bike Race</a>
-    
-<a href="game/ninja-runner.html"class="card">🏃Ninja Runner</a>
-
-<a href="penalty-shootout.html"class="card">⚽ Penalty Shootout</a>
-    
-<a href="golf-challeng.html"class="card">🏌️ Golf Challeng</a>
-
-<a href="basketball.html"class="card">🏀 Basketball</a>
-    
- <a href="space-shooter.html"class="card">🚀 Space Shooter</a>   
-
-<a href="brick-breaker.html"class="card">🧱 Brick Breaker</a>
-
-<a href="carem.html"class="card">🎯 Carem</a>
-
-</div>
-
-</section>
-
-<section id="books">
-
-<h2>📚 Books</h2>
-
-<div class="grid">
-    
- <a href="god-stories.html"class="card">📚God Story </a>
-    
-<a href="mahabharat-book.html"class="card">📚mahabharata book</a>
-    
-<a href="ramayan.html"class="card">📚Ramayan Book</a>
-    
-<a href="horror-book.html"class="card">👻 Horror Books </a>
-    
-<a href="children-book.html"class="card">🧒Children Books </a>
-
-<a href="love-story.html"class="card">❤️ Love Story </a>
-    
-</div>
-    
-</section>
-    
-<section id="computer learning">
-    
-<h2>💻computer Course</h2>
-
-<div class="grid">
-
-<a href="complet-web-coding-book.html"class="card">📚Complet Web Coding Course</a> 
-    
-<a href="ethical-heaking.html"class="card">📚Ethical Heaking</a> 
-    
-</div>
-    
-</section>
-
-<section id="gk">
-
-<h2>🧠 GK Categories</h2>
-
-<div class="grid">
-
-<div class="card">🌍 World GK</div>
-
-<div class="card">🇳🇵 Nepal GK</div>
-
-<div class="card">🔬 Science GK</div>
-
-<div class="card">💻 Computer GK</div>
-
-<div class="card">⚽ Sports GK</div>
-
-</div>
-
-</section>
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>My Movie Hub</title>
+<title>GameBook GK Hub</title>
 
-<!-- Cloudinary Upload Widget -->
-<script
-src="https://upload-widget.cloudinary.com/latest/global/all.js">
-</script>
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+rel="stylesheet">
+
+<!-- Cloudinary -->
+<script src="https://upload-widget.cloudinary.com/latest/global/all.js"></script>
+
 
 <style>
 
-/* =========================
-   RESET
-========================= */
+/* =================================================
+   MOVIE SECTION
+================================================= */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+#movies{
 
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#080a10;
-    color:white;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-header{
-    padding:55px 20px;
-    text-align:center;
+    padding:70px 20px;
 
     background:
-    radial-gradient(
-        circle at center,
-        #a8202b,
-        #351019 50%,
-        #080a10
+    linear-gradient(
+        135deg,
+        #080a10,
+        #15101a
     );
+
+    color:white;
+
 }
 
-.logo{
-    font-size:60px;
+.movies-container{
+
+    width:min(1200px,94%);
+
+    margin:auto;
+
 }
 
-header h1{
-    font-size:clamp(35px,7vw,60px);
-    margin:10px 0;
-}
+.movies-title{
 
-header p{
-    color:#ddd;
-}
-
-
-/* =========================
-   UPLOAD AREA
-========================= */
-
-.upload-area{
-    width:min(900px,92%);
-    margin:30px auto;
-    padding:28px;
     text-align:center;
 
-    background:#151821;
+    margin-bottom:35px;
+
+}
+
+.movies-title h2{
+
+    font-size:
+    clamp(32px,6vw,50px);
+
+    margin-bottom:8px;
+
+}
+
+.movies-title p{
+
+    color:#aaa;
+
+}
+
+
+/* ADMIN */
+
+.admin-box{
+
+    max-width:450px;
+
+    margin:0 auto 30px;
+
+    padding:25px;
+
     border-radius:20px;
 
+    background:#171b25;
+
     box-shadow:
-    0 15px 40px #0007;
+    0 15px 40px #0008;
+
 }
 
-.upload-area h2{
-    margin-bottom:10px;
+.admin-box h3{
+
+    text-align:center;
+
+    margin-bottom:18px;
+
 }
 
-.upload-area p{
-    color:#aaa;
-    margin-bottom:20px;
+.admin-box input{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:12px;
+
+    border:1px solid #ffffff18;
+
+    border-radius:10px;
+
+    outline:none;
+
+    background:#0d1119;
+
+    color:white;
+
 }
 
-#uploadBtn{
+.admin-buttons{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.admin-buttons button{
+
+    flex:1;
+
+    padding:13px;
+
     border:0;
+
+    border-radius:25px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+.login-btn{
+
+    background:#e50914;
+
+    color:white;
+
+}
+
+.logout-btn{
+
+    background:#555;
+
+    color:white;
+
+}
+
+
+/* UPLOAD */
+
+.upload-area{
+
+    display:none;
+
+    text-align:center;
+
+    padding:25px;
+
+    margin-bottom:30px;
+
+    border-radius:20px;
+
+    background:#171b25;
+
+}
+
+.upload-area.show{
+
+    display:block;
+
+}
+
+.upload-area button{
+
     padding:15px 30px;
+
+    border:0;
+
     border-radius:30px;
 
     background:#e50914;
+
     color:white;
 
-    font-size:16px;
     font-weight:bold;
 
     cursor:pointer;
-    transition:.3s;
-}
 
-#uploadBtn:hover{
-    background:#ff2935;
-    transform:scale(1.04);
 }
 
 
-/* =========================
-   SEARCH
-========================= */
+/* SEARCH */
 
-.search{
-    width:min(700px,92%);
+.movie-search{
+
+    max-width:700px;
+
     margin:30px auto;
+
 }
 
-#searchInput{
+.movie-search input{
+
     width:100%;
 
     padding:16px 22px;
 
-    border:1px solid #ffffff15;
-    outline:none;
-
     border-radius:30px;
 
-    background:#171a24;
+    border:1px solid #ffffff18;
+
+    outline:none;
+
+    background:#171b25;
+
     color:white;
 
     font-size:16px;
+
 }
 
 
-/* =========================
-   MOVIE GRID
-========================= */
+/* MOVIE GRID */
 
 .movie-grid{
-    width:min(1200px,94%);
-    margin:auto;
 
     display:grid;
 
@@ -321,199 +253,248 @@ header p{
 
     gap:25px;
 
-    padding-bottom:80px;
 }
 
 
-/* =========================
-   MOVIE CARD
-========================= */
+/* MOVIE CARD */
 
 .movie-card{
-    background:#151821;
+
+    overflow:hidden;
 
     border-radius:18px;
-    overflow:hidden;
+
+    background:#171b25;
 
     box-shadow:
     0 15px 40px #0008;
 
     transition:.3s;
+
 }
 
 .movie-card:hover{
-    transform:translateY(-7px);
+
+    transform:
+    translateY(-7px);
+
 }
 
+.movie-poster{
 
-/* =========================
-   POSTER
-========================= */
-
-.poster{
     width:100%;
+
     height:290px;
+
     background:#222;
+
 }
 
-.poster img{
+.movie-poster img{
+
     width:100%;
+
     height:100%;
+
     object-fit:cover;
+
     display:block;
+
 }
 
+.movie-info{
 
-/* =========================
-   MOVIE INFO
-========================= */
-
-.info{
     padding:18px;
+
 }
 
-.info h3{
+.movie-info h3{
+
     margin-bottom:8px;
+
 }
 
-.info p{
-    color:#999;
-    font-size:14px;
+.movie-info p{
+
+    color:#888;
+
+    font-size:13px;
+
     margin-bottom:15px;
+
 }
 
+.movie-buttons{
 
-/* =========================
-   BUTTONS
-========================= */
-
-.buttons{
     display:flex;
+
     gap:8px;
+
 }
 
-.buttons button,
-.buttons a{
+.movie-buttons button,
+.movie-buttons a{
+
     flex:1;
 
     padding:11px;
 
     border:0;
+
     border-radius:25px;
 
     text-align:center;
+
     text-decoration:none;
 
     cursor:pointer;
 
-    font-weight:bold;
     font-size:13px;
+
+    font-weight:bold;
+
 }
 
-.watch{
+.watch-btn{
+
     background:#e50914;
+
     color:white;
+
 }
 
-.download{
+.download-btn{
+
     background:#087f86;
+
     color:white;
+
+}
+
+.delete-btn{
+
+    width:100%;
+
+    margin-top:8px;
+
+    padding:9px;
+
+    border:0;
+
+    border-radius:20px;
+
+    background:#492027;
+
+    color:#ff9ca3;
+
+    cursor:pointer;
+
+    display:none;
+
+}
+
+.delete-btn.show{
+
+    display:block;
+
 }
 
 
-/* =========================
-   VIDEO PLAYER
-========================= */
+/* VIDEO PLAYER */
 
 .video-modal{
+
     position:fixed;
+
     inset:0;
 
-    z-index:9999;
+    z-index:99999;
 
     display:none;
 
     align-items:center;
+
     justify-content:center;
 
     padding:15px;
 
     background:#000e;
+
 }
 
 .video-modal.show{
+
     display:flex;
+
 }
 
 .video-box{
+
     width:min(1000px,100%);
 
     background:#000;
 
-    border-radius:15px;
+    border-radius:16px;
 
     overflow:hidden;
 
     position:relative;
+
 }
 
 .video-box video{
+
     width:100%;
+
     max-height:85vh;
+
     display:block;
+
 }
 
-.close{
+.close-video{
+
     position:absolute;
 
     right:10px;
+
     top:10px;
 
     z-index:5;
 
     width:40px;
+
     height:40px;
 
     border:0;
+
     border-radius:50%;
 
     background:#e50914;
 
     color:white;
 
+    font-size:20px;
+
     cursor:pointer;
 
-    font-size:18px;
 }
 
 
-/* =========================
-   EMPTY MESSAGE
-========================= */
-
-.empty{
-    grid-column:1/-1;
-
-    text-align:center;
-
-    padding:60px 20px;
-
-    color:#888;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:600px){
 
-    .buttons{
+    .movie-buttons{
+
         flex-direction:column;
+
     }
 
-    .poster{
+    .movie-poster{
+
         height:260px;
+
     }
 
 }
@@ -526,140 +507,758 @@ header p{
 <body>
 
 
-<!-- =========================
-     HEADER
-========================= -->
+<!-- =================================================
+     ORIGINAL HEADER
+================================================= -->
 
 <header>
 
-    <div class="logo">
-        🎬
-    </div>
+<div class="logo">
 
-    <h1>
-        My Movie Hub
-    </h1>
+🎮 GameBook GK Hub
 
-    <p>
-        Watch your favorite videos
-    </p>
+</div>
+
+<nav>
+
+<a href="#games">
+Games
+</a>
+
+<a href="#books">
+Books
+</a>
+
+<a href="#computer">
+Computer
+</a>
+
+<a href="#gk">
+GK Questions
+</a>
+
+<a href="#movies">
+Movies
+</a>
+
+</nav>
 
 </header>
 
 
-<!-- =========================
-     UPLOAD
-========================= -->
+<!-- =================================================
+     HERO
+================================================= -->
 
-<section class="upload-area">
+<section class="hero">
 
-    <h2>
-        🎥 Upload Movie
-    </h2>
+<h1>
+Welcome To GameBook GK Hub
+</h1>
 
-    <p>
-        Upload your own or authorized videos
-    </p>
+<p>
+Play Games, Read Books and Improve Your Knowledge.
+</p>
 
-    <button id="uploadBtn">
-        ⬆ Upload Video
-    </button>
+<button
+onclick="document.getElementById('games').scrollIntoView()">
+
+Explore Now
+
+</button>
 
 </section>
 
 
-<!-- =========================
+<!-- =================================================
+     GAMES
+================================================= -->
+
+<section id="games">
+
+<h2>🎮 Games</h2>
+
+<div class="grid">
+
+<a href="flying-bird.html"
+class="card">
+🐦 Flying Bird
+</a>
+
+<a href="snake-game.html"
+class="card">
+🐍 Snake Game
+</a>
+
+<a href="fruit-cutter.html"
+class="card">
+🍎 Fruit Cutter
+</a>
+
+<a href="gaunkhane-katha.html"
+class="card">
+📖 Gaunkhane Kathe
+</a>
+
+<a href="memory-card.html"
+class="card">
+🧠 Memory Card
+</a>
+
+<a href="pong.html"
+class="card">
+🏓 Pong
+</a>
+
+<a href="ballon-pop.html"
+class="card">
+🎈 Balloon Pop
+</a>
+
+<a href="tic-tac-toe.html"
+class="card">
+⭕ Tic Tac Toe
+</a>
+
+<a href="math-quiz.html"
+class="card">
+➗ Math Quiz
+</a>
+
+<a href="quiz.html"
+class="card">
+❓ Quiz
+</a>
+
+<a href="chess.html"
+class="card">
+♟ Chess
+</a>
+
+<a href="sliding-puzzle.html"
+class="card">
+🧩 Sliding Puzzle
+</a>
+
+<a href="aim-trainer.html"
+class="card">
+🎯 Aim Trainer
+</a>
+
+<a href="zombie-survival.html"
+class="card">
+🧟 Zombie Survival
+</a>
+
+<a href="highway-racer.html"
+class="card">
+🏎 Highway Racer
+</a>
+
+<a href="bike-race.html"
+class="card">
+🚴‍♂️ Bike Race
+</a>
+
+<a href="game/ninja-runner.html"
+class="card">
+🏃 Ninja Runner
+</a>
+
+<a href="penalty-shootout.html"
+class="card">
+⚽ Penalty Shootout
+</a>
+
+<a href="golf-challeng.html"
+class="card">
+🏌️ Golf Challenge
+</a>
+
+<a href="basketball.html"
+class="card">
+🏀 Basketball
+</a>
+
+<a href="space-shooter.html"
+class="card">
+🚀 Space Shooter
+</a>
+
+<a href="brick-breaker.html"
+class="card">
+🧱 Brick Breaker
+</a>
+
+<a href="carem.html"
+class="card">
+🎯 Carrom
+</a>
+
+</div>
+
+</section>
+
+
+<!-- =================================================
+     BOOKS
+================================================= -->
+
+<section id="books">
+
+<h2>📚 Books</h2>
+
+<div class="grid">
+
+<a href="god-stories.html"
+class="card">
+📚 God Story
+</a>
+
+<a href="mahabharat-book.html"
+class="card">
+📚 Mahabharata Book
+</a>
+
+<a href="ramayan.html"
+class="card">
+📚 Ramayan Book
+</a>
+
+<a href="horror-book.html"
+class="card">
+👻 Horror Books
+</a>
+
+<a href="children-book.html"
+class="card">
+🧒 Children Books
+</a>
+
+<a href="love-story.html"
+class="card">
+❤️ Love Story
+</a>
+
+</div>
+
+</section>
+
+
+<!-- =================================================
+     COMPUTER
+================================================= -->
+
+<section id="computer">
+
+<h2>
+💻 Computer Course
+</h2>
+
+<div class="grid">
+
+<a
+href="complet-web-coding-book.html"
+class="card">
+
+📚 Complete Web Coding Course
+
+</a>
+
+
+<a
+href="ethical-heaking.html"
+class="card">
+
+📚 Ethical Hacking
+
+</a>
+
+</div>
+
+</section>
+
+
+<!-- =================================================
+     GK
+================================================= -->
+
+<section id="gk">
+
+<h2>
+🧠 GK Categories
+</h2>
+
+<div class="grid">
+
+<div class="card">
+🌍 World GK
+</div>
+
+<div class="card">
+🇳🇵 Nepal GK
+</div>
+
+<div class="card">
+🔬 Science GK
+</div>
+
+<div class="card">
+💻 Computer GK
+</div>
+
+<div class="card">
+⚽ Sports GK
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =================================================
+     MOVIES
+================================================= -->
+
+<section id="movies">
+
+<div class="movies-container">
+
+
+<div class="movies-title">
+
+<h2>
+🎬 Movie Hub
+</h2>
+
+<p>
+Watch your authorized movies and videos
+</p>
+
+</div>
+
+
+<!-- =================================================
+     ADMIN LOGIN
+================================================= -->
+
+<div class="admin-box">
+
+<h3>
+🔐 Admin Login
+</h3>
+
+<input
+type="email"
+id="adminEmail"
+placeholder="Admin Email">
+
+<input
+type="password"
+id="adminPassword"
+placeholder="Password">
+
+<div class="admin-buttons">
+
+<button
+class="login-btn"
+id="loginBtn">
+
+Login
+
+</button>
+
+<button
+class="logout-btn"
+id="logoutBtn">
+
+Logout
+
+</button>
+
+</div>
+
+<p
+id="loginStatus"
+style="
+text-align:center;
+margin-top:15px;
+color:#999;
+">
+
+Not logged in
+
+</p>
+
+</div>
+
+
+<!-- =================================================
+     UPLOAD
+================================================= -->
+
+<div
+class="upload-area"
+id="uploadArea">
+
+<h3>
+🎥 Upload Movie
+</h3>
+
+<p>
+Maximum video size: 500 MB
+</p>
+
+<button
+id="uploadBtn">
+
+⬆ Upload Video
+
+</button>
+
+</div>
+
+
+<!-- =================================================
      SEARCH
-========================= -->
+================================================= -->
 
-<div class="search">
+<div class="movie-search">
 
-    <input
-        id="searchInput"
-        type="text"
-        placeholder="🔎 Search movies..."
-        oninput="searchMovies()">
+<input
+id="searchInput"
+type="text"
+placeholder="🔎 Search movies...">
 
 </div>
 
 
-<!-- =========================
-     MOVIE LIST
-========================= -->
+<!-- =================================================
+     MOVIE GRID
+================================================= -->
 
 <div
-    class="movie-grid"
-    id="movieGrid">
+class="movie-grid"
+id="movieGrid">
 
 </div>
 
 
-<!-- =========================
-     VIDEO PLAYER
-========================= -->
+</div>
+
+</section>
+
+
+<!-- =================================================
+     VIDEO MODAL
+================================================= -->
 
 <div
-    class="video-modal"
-    id="videoModal">
+class="video-modal"
+id="videoModal">
 
-    <div class="video-box">
+<div class="video-box">
 
-        <button
-            class="close"
-            onclick="closeVideo()">
+<button
+class="close-video"
+id="closeVideo">
 
-            ✕
+✕
 
-        </button>
+</button>
 
-        <video
-            id="videoPlayer"
-            controls
-            playsinline>
+<video
+id="videoPlayer"
+controls
+playsinline>
 
-        </video>
+</video>
 
-    </div>
+</div>
 
 </div>
 
 
-<script>
+<!-- =================================================
+     FIREBASE + CLOUDINARY
+================================================= -->
+
+<script type="module">
 
 
 /* =================================================
-   CLOUDINARY SETTINGS
+   FIREBASE IMPORTS
+================================================= */
+
+import {
+
+initializeApp
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+
+getFirestore,
+collection,
+addDoc,
+getDocs,
+query,
+orderBy,
+deleteDoc,
+doc
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+import {
+
+getAuth,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+/* =================================================
+   FIREBASE CONFIG
+================================================= */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyB9urPvhLdG7o4K4q6Srp6OK9PpRkmnJb8",
+
+authDomain:
+"my-movie-websit.firebaseapp.com",
+
+projectId:
+"my-movie-websit",
+
+storageBucket:
+"my-movie-websit.firebasestorage.app",
+
+messagingSenderId:
+"789490555831",
+
+appId:
+"1:789490555831:web:1b1cfbde4af2a555f1e632",
+
+measurementId:
+"G-JG1G2WQH5G"
+
+};
+
+
+/* =================================================
+   FIREBASE START
+================================================= */
+
+const app =
+initializeApp(
+firebaseConfig
+);
+
+
+const db =
+getFirestore(app);
+
+
+const auth =
+getAuth(app);
+
+
+/* =================================================
+   CLOUDINARY
 ================================================= */
 
 const CLOUD_NAME =
 "rckdxy0p";
+
 
 const UPLOAD_PRESET =
 "my_movie_upload";
 
 
 /* =================================================
-   MOVIE STORAGE
+   ELEMENTS
 ================================================= */
 
-let movies = [];
+const uploadArea =
+document.getElementById(
+"uploadArea"
+);
 
-try{
 
-    movies =
-    JSON.parse(
-        localStorage.getItem("myMovies")
-    ) || [];
+const loginStatus =
+document.getElementById(
+"loginStatus"
+);
 
-}catch(error){
 
-    movies = [];
+const uploadBtn =
+document.getElementById(
+"uploadBtn"
+);
+
+
+const movieGrid =
+document.getElementById(
+"movieGrid"
+);
+
+
+/* =================================================
+   AUTH STATE
+================================================= */
+
+onAuthStateChanged(
+auth,
+function(user){
+
+if(user){
+
+uploadArea.classList.add(
+"show"
+);
+
+loginStatus.textContent =
+"Logged in as: "
++
+user.email;
+
+loginStatus.style.color =
+"#48d597";
+
+}else{
+
+uploadArea.classList.remove(
+"show"
+);
+
+loginStatus.textContent =
+"Not logged in";
+
+loginStatus.style.color =
+"#999";
+
+}
+
+loadMovies();
+
+});
+
+
+/* =================================================
+   LOGIN
+================================================= */
+
+document
+.getElementById(
+"loginBtn"
+)
+.addEventListener(
+"click",
+async function(){
+
+const email =
+document.getElementById(
+"adminEmail"
+).value.trim();
+
+
+const password =
+document.getElementById(
+"adminPassword"
+).value;
+
+
+if(!email || !password){
+
+alert(
+"Enter email and password."
+);
+
+return;
 
 }
 
 
+try{
+
+await signInWithEmailAndPassword(
+
+auth,
+
+email,
+
+password
+
+);
+
+
+alert(
+"Login successful! ✅"
+);
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(
+"Login failed. Check your email and password."
+);
+
+}
+
+});
+
+
 /* =================================================
-   CLOUDINARY UPLOAD WIDGET
+   LOGOUT
+================================================= */
+
+document
+.getElementById(
+"logoutBtn"
+)
+.addEventListener(
+"click",
+async function(){
+
+try{
+
+await signOut(auth);
+
+alert(
+"Logged out."
+);
+
+}
+
+catch(error){
+
+console.error(error);
+
+}
+
+});
+
+
+/* =================================================
+   CLOUDINARY WIDGET
 ================================================= */
 
 const uploadWidget =
@@ -668,293 +1267,494 @@ cloudinary.createUploadWidget(
 
 {
 
-    cloudName:
-        CLOUD_NAME,
+cloudName:
+CLOUD_NAME,
 
-    uploadPreset:
-        UPLOAD_PRESET,
+uploadPreset:
+UPLOAD_PRESET,
 
-    sources:
-        ["local"],
+sources:
+["local"],
 
-    resourceType:
-        "video",
+resourceType:
+"video",
 
-    multiple:
-        false,
+multiple:
+false,
 
-    clientAllowedFormats:
-        ["mp4","webm","mov"],
+clientAllowedFormats:
+[
+"mp4",
+"webm",
+"mov"
+],
 
-    maxFileSize:
-        500000000,
+maxFileSize:
+500000000,
 
-    folder:
-        "my_movies"
+folder:
+"my_movies"
 
 },
 
-function(error,result){
+async function(error,result){
 
-    if(error){
+if(error){
 
-        console.error(
-            "Cloudinary error:",
-            error
-        );
+console.error(error);
 
-        alert(
-            "Upload failed. Please check your Cloudinary settings."
-        );
+alert(
+"Cloudinary upload failed."
+);
 
-        return;
-    }
+return;
+
+}
 
 
-    if(
-        !error &&
-        result &&
-        result.event === "success"
-    ){
+if(
+result &&
+result.event === "success"
+){
 
-        const info =
-            result.info;
-
-
-        /* =========================
-           MOVIE NAME
-        ========================= */
-
-        let title =
-            prompt(
-                "Enter movie name:"
-            );
+const user =
+auth.currentUser;
 
 
-        if(!title){
+if(!user){
 
-            title =
-            "Untitled Movie";
+alert(
+"Please login first."
+);
 
-        }
+return;
 
-
-        /* =========================
-           MOVIE DATA
-        ========================= */
-
-        const movie = {
-
-            id:
-                Date.now(),
-
-            title:
-                title,
-
-            url:
-                info.secure_url,
-
-            poster:
-                info.thumbnail_url || "",
-
-            date:
-                new Date()
-                .toLocaleDateString()
-
-        };
+}
 
 
-        /* =========================
-           SAVE
-        ========================= */
-
-        movies.push(movie);
+const info =
+result.info;
 
 
-        localStorage.setItem(
-
-            "myMovies",
-
-            JSON.stringify(
-                movies
-            )
-
-        );
+const title =
+prompt(
+"Enter movie name:"
+);
 
 
-        renderMovies();
+if(!title){
+
+alert(
+"Movie name is required."
+);
+
+return;
+
+}
 
 
-        alert(
-            "Movie uploaded successfully! 🎉"
-        );
+try{
 
-    }
+await addDoc(
+
+collection(
+db,
+"movies"
+),
+
+{
+
+title:
+title,
+
+url:
+info.secure_url,
+
+poster:
+info.thumbnail_url || "",
+
+date:
+new Date().toLocaleDateString(),
+
+createdAt:
+Date.now(),
+
+uploadedBy:
+user.uid
+
+}
+
+);
+
+
+alert(
+"Movie uploaded successfully! 🎉"
+);
+
+
+loadMovies();
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(
+"Video uploaded but database save failed."
+);
+
+}
+
+}
+
+}
+
+);
+
+
+/* =================================================
+   UPLOAD BUTTON
+================================================= */
+
+uploadBtn.addEventListener(
+"click",
+function(){
+
+if(!auth.currentUser){
+
+alert(
+"Please login first."
+);
+
+return;
+
+}
+
+uploadWidget.open();
 
 });
 
 
 /* =================================================
-   OPEN UPLOAD WIDGET
+   LOAD MOVIES
 ================================================= */
 
-document
-.getElementById("uploadBtn")
-.addEventListener(
-    "click",
-    function(){
+async function loadMovies(){
 
-        uploadWidget.open();
+movieGrid.innerHTML = `
 
-    }
+<div
+style="
+grid-column:1/-1;
+text-align:center;
+padding:40px;
+color:#888;
+">
+
+Loading movies... 🎬
+
+</div>
+
+`;
+
+
+try{
+
+const movieQuery =
+
+query(
+
+collection(
+db,
+"movies"
+),
+
+orderBy(
+"createdAt",
+"desc"
+)
+
 );
 
 
-/* =================================================
-   DISPLAY MOVIES
-================================================= */
-
-function renderMovies(){
-
-    const grid =
-        document
-        .getElementById(
-            "movieGrid"
-        );
+const snapshot =
+await getDocs(
+movieQuery
+);
 
 
-    grid.innerHTML = "";
+movieGrid.innerHTML = "";
 
 
-    if(
-        movies.length === 0
-    ){
+if(snapshot.empty){
 
-        grid.innerHTML = `
+movieGrid.innerHTML = `
 
-        <div class="empty">
+<div
+style="
+grid-column:1/-1;
+text-align:center;
+padding:50px;
+color:#888;
+">
 
-            <h2>
-                🎬 No Movies Yet
-            </h2>
+<h3>
+🎬 No Movies Yet
+</h3>
 
-            <p>
-                Click "Upload Video"
-                to add your first video.
-            </p>
+<p>
+Upload your first movie.
+</p>
 
-        </div>
+</div>
 
-        `;
+`;
 
-        return;
-    }
+return;
 
-
-    movies
-    .slice()
-    .reverse()
-    .forEach(
-        function(movie){
-
-            const card =
-                document
-                .createElement(
-                    "div"
-                );
+}
 
 
-            card.className =
-                "movie-card";
+snapshot.forEach(
+function(movieDoc){
+
+const movie =
+movieDoc.data();
 
 
-            const safeTitle =
-                escapeHTML(
-                    movie.title
-                );
+const id =
+movieDoc.id;
 
 
-            card.innerHTML = `
-
-            <div class="poster">
-
-                ${
-                    movie.poster
-
-                    ?
-
-                    `
-                    <img
-                    src="${movie.poster}"
-                    alt="${safeTitle}">
-                    `
-
-                    :
-
-                    `
-                    <div style="
-                    height:100%;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    font-size:60px;
-                    ">
-                    🎬
-                    </div>
-                    `
-                }
-
-            </div>
+const card =
+document.createElement(
+"div"
+);
 
 
-            <div class="info">
-
-                <h3>
-                    ${safeTitle}
-                </h3>
-
-                <p>
-                    Uploaded:
-                    ${movie.date}
-                </p>
+card.className =
+"movie-card";
 
 
-                <div class="buttons">
+const poster =
+movie.poster
 
-                    <button
-                    class="watch"
-                    onclick="playVideo(
-                        '${escapeAttribute(movie.url)}'
-                    )">
+?
 
-                        ▶ Watch
+`
 
-                    </button>
+<img
+src="${escapeHTML(movie.poster)}"
+alt="${escapeHTML(movie.title)}">
+
+`
+
+:
+
+`
+
+<div
+style="
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:60px;
+">
+
+🎬
+
+</div>
+
+`;
 
 
-                    <a
-                    class="download"
-                    href="${escapeAttribute(movie.url)}"
-                    target="_blank"
-                    rel="noopener">
+card.innerHTML = `
 
-                        ⬇ Download
+<div class="movie-poster">
 
-                    </a>
+${poster}
 
-                </div>
-
-            </div>
-
-            `;
+</div>
 
 
-            grid.appendChild(
-                card
-            );
+<div class="movie-info">
 
-        }
-    );
+<h3>
+${escapeHTML(movie.title)}
+</h3>
+
+<p>
+Uploaded:
+${escapeHTML(movie.date || "")}
+</p>
+
+
+<div class="movie-buttons">
+
+<button
+class="watch-btn">
+
+▶ Watch
+
+</button>
+
+
+<a
+class="download-btn"
+href="${escapeAttribute(movie.url)}"
+target="_blank"
+rel="noopener">
+
+⬇ Download
+
+</a>
+
+</div>
+
+
+<button
+class="delete-btn">
+
+🗑 Delete
+
+</button>
+
+</div>
+
+`;
+
+
+/* WATCH */
+
+card
+.querySelector(
+".watch-btn"
+)
+.addEventListener(
+"click",
+function(){
+
+playVideo(
+movie.url
+);
+
+});
+
+
+/* DELETE */
+
+const deleteButton =
+card.querySelector(
+".delete-btn"
+);
+
+
+if(auth.currentUser){
+
+deleteButton.classList.add(
+"show"
+);
+
+}
+
+
+deleteButton.addEventListener(
+"click",
+async function(){
+
+if(!auth.currentUser){
+
+return;
+
+}
+
+
+const confirmDelete =
+confirm(
+"Delete this movie from the database?"
+);
+
+
+if(!confirmDelete){
+
+return;
+
+}
+
+
+try{
+
+await deleteDoc(
+
+doc(
+db,
+"movies",
+id
+)
+
+);
+
+
+alert(
+"Movie removed from database."
+);
+
+
+loadMovies();
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(
+"Delete failed."
+);
+
+}
+
+});
+
+
+movieGrid.appendChild(
+card
+);
+
+});
+
+}
+
+catch(error){
+
+console.error(error);
+
+
+movieGrid.innerHTML = `
+
+<div
+style="
+grid-column:1/-1;
+text-align:center;
+padding:50px;
+color:#ff7777;
+">
+
+<h3>
+Unable to load movies
+</h3>
+
+<p>
+Check Firestore Database and Rules.
+</p>
+
+</div>
+
+`;
+
+}
 
 }
 
@@ -963,94 +1763,80 @@ function renderMovies(){
    SEARCH
 ================================================= */
 
-function searchMovies(){
+document
+.getElementById(
+"searchInput"
+)
+.addEventListener(
+"input",
+function(){
 
-    const search =
-        document
-        .getElementById(
-            "searchInput"
-        )
-        .value
-        .toLowerCase()
-        .trim();
-
-
-    const cards =
-        document
-        .querySelectorAll(
-            ".movie-card"
-        );
+const search =
+this.value
+.toLowerCase()
+.trim();
 
 
-    cards.forEach(
-        function(card){
+document
+.querySelectorAll(
+".movie-card"
+)
+.forEach(
+function(card){
 
-            const title =
-                card
-                .querySelector("h3")
-                .textContent
-                .toLowerCase();
+const title =
+card
+.querySelector(
+"h3"
+)
+.textContent
+.toLowerCase();
 
 
-            if(
-                title.includes(search)
-            ){
+card.style.display =
+title.includes(search)
+?
+""
+:
+"none";
 
-                card.style.display =
-                    "";
+});
 
-            }else{
-
-                card.style.display =
-                    "none";
-
-            }
-
-        }
-    );
-
-}
+});
 
 
 /* =================================================
-   PLAY VIDEO
+   VIDEO PLAYER
 ================================================= */
 
 function playVideo(url){
 
-    const modal =
-        document
-        .getElementById(
-            "videoModal"
-        );
+const modal =
+document.getElementById(
+"videoModal"
+);
 
 
-    const video =
-        document
-        .getElementById(
-            "videoPlayer"
-        );
+const player =
+document.getElementById(
+"videoPlayer"
+);
 
 
-    video.src =
-        url;
+player.src =
+url;
 
 
-    modal.classList.add(
-        "show"
-    );
+modal.classList.add(
+"show"
+);
 
 
-    video
-    .play()
-    .catch(
-        function(){
-
-            /* Browser may require
-               user interaction */
-
-        }
-    );
+player
+.play()
+.catch(
+function(){}
+);
 
 }
 
@@ -1059,107 +1845,119 @@ function playVideo(url){
    CLOSE VIDEO
 ================================================= */
 
+document
+.getElementById(
+"closeVideo"
+)
+.addEventListener(
+"click",
+closeVideo
+);
+
+
 function closeVideo(){
 
-    const modal =
-        document
-        .getElementById(
-            "videoModal"
-        );
+const modal =
+document.getElementById(
+"videoModal"
+);
 
 
-    const video =
-        document
-        .getElementById(
-            "videoPlayer"
-        );
+const player =
+document.getElementById(
+"videoPlayer"
+);
 
 
-    video.pause();
+player.pause();
 
-    video.src = "";
+player.src = "";
 
-    modal.classList.remove(
-        "show"
-    );
+modal.classList.remove(
+"show"
+);
 
 }
 
 
 /* =================================================
-   ESC KEY
+   ESC
 ================================================= */
 
-document
-.addEventListener(
-    "keydown",
-    function(event){
+document.addEventListener(
+"keydown",
+function(event){
 
-        if(
-            event.key === "Escape"
-        ){
+if(
+event.key === "Escape"
+){
 
-            closeVideo();
+closeVideo();
 
-        }
+}
 
-    }
-);
+});
 
 
 /* =================================================
-   HTML SECURITY
+   SECURITY HELPERS
 ================================================= */
 
 function escapeHTML(text){
 
-    const div =
-        document
-        .createElement(
-            "div"
-        );
+const div =
+document.createElement(
+"div"
+);
 
-    div.textContent =
-        text;
+div.textContent =
+text;
 
-    return div.innerHTML;
+return div.innerHTML;
 
 }
 
 
 function escapeAttribute(text){
 
-    return String(text)
-    .replace(/'/g,"&#39;")
-    .replace(/"/g,"&quot;");
+return String(text)
+.replace(
+/"/g,
+"&quot;"
+)
+.replace(
+/'/g,
+"&#39;"
+);
 
 }
 
 
 /* =================================================
-   START WEBSITE
+   START
 ================================================= */
 
-renderMovies();
+loadMovies();
 
 </script>
+
+
+<!-- =================================================
+     FOOTER
+================================================= -->
+
+<footer>
+
+💻 Proud to share a website I designed and developed myself
+
+<br>
+
+© 2026 Roshan Joshi - All Rights Reserved
+
+</footer>
+
 
 </body>
 
 </html>
 ```
-
-
-    
-<footer>
-    
-💻 Proud to share a website I designed and developed myself
-    
-© 2026 Roshan Joshi- All Right Reserved
-
-</footer>
-
-<script src="script.js"></script>
-
-</body>
-</html>
