@@ -163,6 +163,956 @@ Explore Now
 
 </section>
 
+```html
+<!-- =========================================
+     MOVIES / CARTOONS / ANIME SECTION
+========================================= -->
+
+<section id="movies" class="media-section">
+
+    <div class="media-header">
+
+        <div class="media-logo">🎬</div>
+
+        <h2>Movies & Entertainment</h2>
+
+        <p>
+            Movies • Cartoons • Anime • More
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="media-search">
+
+        <input
+            id="mediaSearch"
+            type="text"
+            placeholder="🔎 Search movies, cartoons, anime..."
+            oninput="filterMedia()"
+        >
+
+    </div>
+
+
+    <!-- CATEGORY BUTTONS -->
+
+    <div class="media-categories">
+
+        <button
+            class="category active"
+            onclick="filterCategory('all',this)">
+            All
+        </button>
+
+        <button
+            class="category"
+            onclick="filterCategory('hindi',this)">
+            🇮🇳 Hindi
+        </button>
+
+        <button
+            class="category"
+            onclick="filterCategory('nepali',this)">
+            🇳🇵 Nepali
+        </button>
+
+        <button
+            class="category"
+            onclick="filterCategory('english',this)">
+            🇺🇸 English
+        </button>
+
+        <button
+            class="category"
+            onclick="filterCategory('cartoon',this)">
+            🧸 Cartoon
+        </button>
+
+        <button
+            class="category"
+            onclick="filterCategory('anime',this)">
+            🎌 Anime
+        </button>
+
+    </div>
+
+
+    <!-- MEDIA GRID -->
+
+    <div
+        class="media-grid"
+        id="mediaGrid">
+
+
+        <!-- =========================
+             HINDI
+        ========================== -->
+
+        <div
+            class="media-card"
+            data-category="hindi"
+            data-title="My Hindi Movie">
+
+            <div class="poster">
+
+                <img
+                    src="images/movie1.jpg"
+                    alt="My Hindi Movie"
+                >
+
+                <span class="quality">
+                    HD
+                </span>
+
+            </div>
+
+            <div class="media-info">
+
+                <h3>
+                    My Hindi Movie
+                </h3>
+
+                <p>
+                    🇮🇳 Hindi • Movie
+                </p>
+
+                <div class="media-buttons">
+
+                    <button
+                        onclick="playMedia('videos/movie1.mp4')">
+                        ▶ Watch
+                    </button>
+
+                    <a
+                        href="videos/movie1.mp4"
+                        download>
+                        ⬇ Download
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             NEPALI
+        ========================== -->
+
+        <div
+            class="media-card"
+            data-category="nepali"
+            data-title="My Nepali Movie">
+
+            <div class="poster">
+
+                <img
+                    src="images/movie2.jpg"
+                    alt="My Nepali Movie"
+                >
+
+                <span class="quality">
+                    HD
+                </span>
+
+            </div>
+
+            <div class="media-info">
+
+                <h3>
+                    My Nepali Movie
+                </h3>
+
+                <p>
+                    🇳🇵 Nepali • Movie
+                </p>
+
+                <div class="media-buttons">
+
+                    <button
+                        onclick="playMedia('videos/movie2.mp4')">
+                        ▶ Watch
+                    </button>
+
+                    <a
+                        href="videos/movie2.mp4"
+                        download>
+                        ⬇ Download
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             ENGLISH
+        ========================== -->
+
+        <div
+            class="media-card"
+            data-category="english"
+            data-title="My English Movie">
+
+            <div class="poster">
+
+                <img
+                    src="images/movie3.jpg"
+                    alt="My English Movie"
+                >
+
+                <span class="quality">
+                    HD
+                </span>
+
+            </div>
+
+            <div class="media-info">
+
+                <h3>
+                    My English Movie
+                </h3>
+
+                <p>
+                    🇺🇸 English • Movie
+                </p>
+
+                <div class="media-buttons">
+
+                    <button
+                        onclick="playMedia('videos/movie3.mp4')">
+                        ▶ Watch
+                    </button>
+
+                    <a
+                        href="videos/movie3.mp4"
+                        download>
+                        ⬇ Download
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             CARTOON
+        ========================== -->
+
+        <div
+            class="media-card"
+            data-category="cartoon"
+            data-title="My Cartoon">
+
+            <div class="poster">
+
+                <img
+                    src="images/cartoon1.jpg"
+                    alt="My Cartoon"
+                >
+
+                <span class="quality">
+                    HD
+                </span>
+
+            </div>
+
+            <div class="media-info">
+
+                <h3>
+                    My Cartoon
+                </h3>
+
+                <p>
+                    🧸 Cartoon • Kids
+                </p>
+
+                <div class="media-buttons">
+
+                    <button
+                        onclick="playMedia('videos/cartoon1.mp4')">
+                        ▶ Watch
+                    </button>
+
+                    <a
+                        href="videos/cartoon1.mp4"
+                        download>
+                        ⬇ Download
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             ANIME
+        ========================== -->
+
+        <div
+            class="media-card"
+            data-category="anime"
+            data-title="My Anime">
+
+            <div class="poster">
+
+                <img
+                    src="images/anime1.jpg"
+                    alt="My Anime"
+                >
+
+                <span class="quality">
+                    HD
+                </span>
+
+            </div>
+
+            <div class="media-info">
+
+                <h3>
+                    My Anime
+                </h3>
+
+                <p>
+                    🎌 Anime • Series
+                </p>
+
+                <div class="media-buttons">
+
+                    <button
+                        onclick="playMedia('videos/anime1.mp4')">
+                        ▶ Watch
+                    </button>
+
+                    <a
+                        href="videos/anime1.mp4"
+                        download>
+                        ⬇ Download
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     VIDEO PLAYER
+========================================= -->
+
+<div
+    id="mediaPlayer"
+    class="media-player">
+
+    <div class="player-box">
+
+        <button
+            class="close-player"
+            onclick="closeMedia()">
+            ✕
+        </button>
+
+        <video
+            id="videoElement"
+            controls
+            playsinline
+            preload="metadata">
+
+            Your browser does not support video.
+
+        </video>
+
+    </div>
+
+</div>
+
+
+<style>
+
+/* SECTION */
+
+.media-section{
+
+    padding:70px 20px;
+
+    background:
+    radial-gradient(
+        circle at top,
+        #25204a,
+        #0a0a12 65%
+    );
+
+    color:white;
+
+}
+
+
+/* HEADER */
+
+.media-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.media-logo{
+
+    font-size:65px;
+
+}
+
+.media-header h2{
+
+    font-size:
+    clamp(30px,6vw,48px);
+
+    margin:8px 0;
+
+}
+
+.media-header p{
+
+    color:#aaa;
+
+}
+
+
+/* SEARCH */
+
+.media-search{
+
+    max-width:650px;
+
+    margin:0 auto 25px;
+
+}
+
+.media-search input{
+
+    width:100%;
+
+    padding:16px 22px;
+
+    border:1px solid #ffffff20;
+
+    border-radius:35px;
+
+    outline:none;
+
+    background:#171725;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+
+/* CATEGORIES */
+
+.media-categories{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:10px;
+
+    margin-bottom:35px;
+
+}
+
+.category{
+
+    border:1px solid #ffffff20;
+
+    background:#191927;
+
+    color:white;
+
+    padding:11px 18px;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+}
+
+.category:hover,
+.category.active{
+
+    background:#e50914;
+
+    border-color:#e50914;
+
+}
+
+
+/* GRID */
+
+.media-grid{
+
+    width:min(1200px,95%);
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(
+        auto-fit,
+        minmax(210px,1fr)
+    );
+
+    gap:24px;
+
+}
+
+
+/* CARD */
+
+.media-card{
+
+    background:#171722;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 15px 40px #0009;
+
+    transition:
+    transform .3s,
+    box-shadow .3s;
+
+}
+
+.media-card:hover{
+
+    transform:
+    translateY(-8px);
+
+    box-shadow:
+    0 20px 50px #000;
+
+}
+
+
+/* POSTER */
+
+.poster{
+
+    height:290px;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.poster img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+    display:block;
+
+    background:#252535;
+
+}
+
+.quality{
+
+    position:absolute;
+
+    top:12px;
+
+    right:12px;
+
+    background:#e50914;
+
+    padding:6px 9px;
+
+    border-radius:7px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+}
+
+
+/* INFO */
+
+.media-info{
+
+    padding:18px;
+
+}
+
+.media-info h3{
+
+    margin-bottom:7px;
+
+}
+
+.media-info p{
+
+    color:#aaa;
+
+    font-size:14px;
+
+    margin-bottom:15px;
+
+}
+
+
+/* BUTTONS */
+
+.media-buttons{
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+.media-buttons button,
+.media-buttons a{
+
+    flex:1;
+
+    border:0;
+
+    padding:11px 5px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+}
+
+.media-buttons button{
+
+    background:#e50914;
+
+    color:white;
+
+}
+
+.media-buttons a{
+
+    background:#176b70;
+
+    color:white;
+
+}
+
+
+/* PLAYER */
+
+.media-player{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:99999;
+
+    background:#000e;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+}
+
+.media-player.show{
+
+    display:flex;
+
+}
+
+.player-box{
+
+    position:relative;
+
+    width:min(1000px,100%);
+
+    background:#000;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+}
+
+.player-box video{
+
+    width:100%;
+
+    max-height:85vh;
+
+    display:block;
+
+}
+
+.close-player{
+
+    position:absolute;
+
+    z-index:5;
+
+    top:10px;
+
+    right:10px;
+
+    width:40px;
+
+    height:40px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#e50914;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .media-section{
+
+        padding:50px 10px;
+
+    }
+
+    .poster{
+
+        height:250px;
+
+    }
+
+    .media-buttons{
+
+        flex-direction:column;
+
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================
+   CURRENT CATEGORY
+========================================= */
+
+let currentCategory = "all";
+
+
+/* =========================================
+   PLAY VIDEO
+========================================= */
+
+function playMedia(video){
+
+    const modal =
+        document.getElementById(
+            "mediaPlayer"
+        );
+
+    const player =
+        document.getElementById(
+            "videoElement"
+        );
+
+    player.src = video;
+
+    modal.classList.add("show");
+
+    player.play().catch(() => {});
+
+}
+
+
+/* =========================================
+   CLOSE VIDEO
+========================================= */
+
+function closeMedia(){
+
+    const modal =
+        document.getElementById(
+            "mediaPlayer"
+        );
+
+    const player =
+        document.getElementById(
+            "videoElement"
+        );
+
+    player.pause();
+
+    player.currentTime = 0;
+
+    player.src = "";
+
+    modal.classList.remove("show");
+
+}
+
+
+/* =========================================
+   CATEGORY FILTER
+========================================= */
+
+function filterCategory(
+    category,
+    button
+){
+
+    currentCategory = category;
+
+    document
+    .querySelectorAll(".category")
+    .forEach(btn => {
+
+        btn.classList.remove(
+            "active"
+        );
+
+    });
+
+    button.classList.add(
+        "active"
+    );
+
+    filterMedia();
+
+}
+
+
+/* =========================================
+   SEARCH + CATEGORY
+========================================= */
+
+function filterMedia(){
+
+    const search =
+        document
+        .getElementById(
+            "mediaSearch"
+        )
+        .value
+        .toLowerCase();
+
+    const cards =
+        document.querySelectorAll(
+            ".media-card"
+        );
+
+    cards.forEach(card => {
+
+        const category =
+            card.dataset.category;
+
+        const title =
+            card.dataset.title
+            .toLowerCase();
+
+        const categoryMatch =
+            currentCategory === "all" ||
+            category === currentCategory;
+
+        const searchMatch =
+            title.includes(search);
+
+        if(
+            categoryMatch &&
+            searchMatch
+        ){
+
+            card.style.display = "";
+
+        }else{
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+/* =========================================
+   ESC KEY
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeMedia();
+
+        }
+
+    }
+);
+
+</script>
+```
+
+    
 <footer>
     
 💻 Proud to share a website I designed and developed myself
