@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Card Battle Arena</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classic Card Games</title>
 
 <style>
 *{
@@ -14,541 +14,352 @@
 }
 
 body{
+    min-height:100vh;
     font-family:Arial,sans-serif;
-    background:
-        radial-gradient(circle at top,#263c73,#090d20 65%);
     color:white;
-    min-height:100vh;
-    overflow-x:hidden;
-}
-
-#game{
-    width:100%;
-    min-height:100vh;
-    position:relative;
-    padding:12px;
-    overflow:hidden;
-}
-
-.bg-orb{
-    position:absolute;
-    width:250px;
-    height:250px;
-    border-radius:50%;
-    filter:blur(70px);
-    opacity:.25;
-    pointer-events:none;
-}
-
-.orb1{
-    background:#ff315c;
-    left:-100px;
-    top:120px;
-}
-
-.orb2{
-    background:#2f8cff;
-    right:-100px;
-    bottom:100px;
-}
-
-/* TOP */
-
-.topbar{
-    max-width:1050px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    padding:12px 16px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:18px;
-    backdrop-filter:blur(10px);
-}
-
-.title{
-    font-size:22px;
-    font-weight:900;
-}
-
-.small-btn{
-    border:0;
-    padding:9px 15px;
-    border-radius:12px;
-    background:#ffffff18;
-    color:white;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-/* ARENA */
-
-.arena{
-    max-width:1050px;
-    margin:14px auto;
-    padding:15px;
-    border-radius:25px;
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.11),
-            rgba(255,255,255,.035)
-        );
-    border:1px solid rgba(255,255,255,.15);
-    box-shadow:0 20px 60px #0008;
+    radial-gradient(circle at 50% 20%,#176d46,#062b1d 50%,#020b07);
 }
 
-/* PLAYER AREA */
-
-.fighter{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.avatar{
-    width:64px;
-    height:64px;
-    border-radius:18px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:38px;
-    background:linear-gradient(145deg,#ff526e,#7b1d3d);
-    box-shadow:0 8px 25px #0008;
-}
-
-.enemy .avatar{
-    background:linear-gradient(145deg,#596cff,#172d83);
-}
-
-.info{
-    flex:1;
-}
-
-.name{
-    font-size:18px;
-    font-weight:900;
-    margin-bottom:7px;
-}
-
-.hpbar{
-    width:100%;
-    max-width:420px;
-    height:18px;
-    background:#090d19;
-    border-radius:20px;
-    overflow:hidden;
-    border:1px solid #ffffff22;
-}
-
-.hp{
-    height:100%;
-    width:100%;
-    transition:.35s;
-    background:linear-gradient(
-        90deg,
-        #ff315b,
-        #ff9b43
-    );
-}
-
-.enemy .hp{
-    background:linear-gradient(
-        90deg,
-        #367bff,
-        #6f5cff
-    );
-}
-
-.stats{
-    margin-top:5px;
-    font-size:13px;
-    color:#d8def5;
-}
-
-/* BATTLE MESSAGE */
-
-#message{
+.header{
     text-align:center;
-    min-height:50px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:8px;
-    font-weight:bold;
-    color:#ffe875;
-    font-size:16px;
+    padding:25px 10px 15px;
 }
 
-/* CENTER */
-
-.battle-zone{
-    min-height:210px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:40px;
-    position:relative;
-}
-
-.vs{
-    font-size:32px;
-    font-weight:1000;
-    color:#ffe04d;
+.header h1{
+    color:#ffe37a;
+    font-size:34px;
     text-shadow:0 4px 15px #000;
 }
 
-.battle-card{
-    width:150px;
-    height:205px;
-    border-radius:18px;
-    padding:10px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    text-align:center;
-    box-shadow:0 15px 35px #0008;
-    border:3px solid #fff;
-    transform:rotate(-4deg);
-    background:
-        linear-gradient(
-            145deg,
-            #ff5b6d,
-            #8e163e
-        );
+.header p{
+    color:#c8dfd2;
+    margin-top:7px;
 }
 
-.battle-card.enemy-card{
-    transform:rotate(4deg);
-    background:
-        linear-gradient(
-            145deg,
-            #4e7cff,
-            #15256e
-        );
-}
-
-.battle-card .emoji{
-    font-size:62px;
-}
-
-.battle-card h3{
-    font-size:17px;
-}
-
-.battle-card .power{
-    font-size:25px;
-    font-weight:1000;
-    color:#ffe24c;
-}
-
-/* HAND */
-
-.hand-title{
-    text-align:center;
-    margin:8px 0 10px;
-    color:#cfd8ff;
-}
-
-.hand{
-    display:flex;
-    justify-content:center;
+.menu{
+    width:min(950px,94%);
+    margin:15px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
     gap:10px;
-    flex-wrap:wrap;
 }
 
-/* CARDS */
-
-.card{
-    width:125px;
-    height:175px;
-    border:2px solid #ffffff77;
+.game-btn{
+    border:1px solid #ffffff25;
     border-radius:17px;
-    padding:9px;
-    cursor:pointer;
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    text-align:center;
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #dfe7ff
-        );
-    color:#11172b;
-    box-shadow:0 12px 25px #0008;
-    transition:.18s;
-    user-select:none;
-}
-
-.card:hover{
-    transform:translateY(-12px) scale(1.03);
-    border-color:#ffe04d;
-}
-
-.card.selected{
-    transform:translateY(-15px) scale(1.04);
-    border-color:#ffe04d;
-    box-shadow:
-        0 0 25px #ffe04d99,
-        0 15px 30px #0009;
-}
-
-.card.disabled{
-    opacity:.45;
-    cursor:not-allowed;
-    filter:grayscale(.7);
-}
-
-.card .cost{
-    position:absolute;
-    top:7px;
-    left:7px;
-    width:27px;
-    height:27px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-radius:50%;
-    background:#2477ff;
+    padding:15px 8px;
+    background:#ffffff12;
     color:white;
-    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.card .cardemoji{
-    font-size:50px;
-    margin-top:10px;
+.game-btn:hover{
+    transform:translateY(-4px);
 }
 
-.card h3{
+.game-btn.active{
+    background:linear-gradient(145deg,#bd912c,#674a0d);
+    border-color:#ffe477;
+}
+
+.game-btn .icon{
+    font-size:35px;
+    margin-bottom:6px;
+}
+
+.game-btn h3{
     font-size:15px;
 }
 
-.card .damage{
-    font-size:19px;
-    font-weight:1000;
-    color:#d52c47;
+.game-btn small{
+    color:#cce3d6;
 }
 
-.card small{
-    color:#4c5572;
-    font-size:10px;
-}
+.table{
+    width:min(1000px,96%);
+    height:580px;
+    margin:15px auto 30px;
+    position:relative;
 
-/* CONTROLS */
+    border:12px solid #573318;
+    border-radius:45px;
 
-.controls{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-top:13px;
-}
+    background:
+    radial-gradient(
+        ellipse,
+        #149052,
+        #075f37 65%,
+        #034127
+    );
 
-.action{
-    border:0;
-    border-radius:14px;
-    padding:13px 22px;
-    font-weight:900;
-    cursor:pointer;
-    color:white;
-    background:linear-gradient(135deg,#ff3d68,#8c245b);
-    box-shadow:0 5px 0 #4c1636;
-}
+    box-shadow:
+    inset 0 0 70px #00190e,
+    0 25px 60px #000b;
 
-.action:active{
-    transform:translateY(3px);
-    box-shadow:0 2px 0 #4c1636;
-}
-
-.action:disabled{
-    opacity:.4;
-    cursor:not-allowed;
-}
-
-/* MANA */
-
-.mana-area{
-    max-width:500px;
-    margin:12px auto 0;
-    text-align:center;
-}
-
-.mana-title{
-    font-size:13px;
-    color:#b9c8ff;
-    margin-bottom:5px;
-}
-
-.mana-bar{
-    height:14px;
-    background:#080c19;
-    border-radius:20px;
     overflow:hidden;
 }
 
-.mana{
-    height:100%;
-    width:100%;
-    background:linear-gradient(
-        90deg,
-        #20a8ff,
-        #8c5cff
-    );
-    transition:.3s;
+.table:after{
+    content:"";
+    position:absolute;
+    inset:25px;
+    border:2px solid #ffffff18;
+    border-radius:35px;
+    pointer-events:none;
 }
 
-/* LOG */
-
-#battleLog{
-    max-width:850px;
-    margin:12px auto 0;
-    height:75px;
-    overflow:auto;
-    padding:8px;
-    border-radius:12px;
-    background:#0005;
-    font-size:12px;
-    color:#bbc7e9;
+.player{
+    position:absolute;
+    z-index:5;
+    text-align:center;
+    min-width:100px;
 }
 
-#battleLog div{
-    margin-bottom:4px;
-}
+.avatar{
+    width:55px;
+    height:55px;
+    margin:auto;
 
-/* OVERLAY */
-
-#overlay{
-    position:fixed;
-    inset:0;
-    z-index:200;
-    background:#020617d9;
-    backdrop-filter:blur(10px);
     display:flex;
     justify-content:center;
     align-items:center;
-    text-align:center;
-    padding:20px;
-}
 
-.modal{
-    max-width:500px;
-    width:100%;
-    padding:30px;
-    border-radius:25px;
+    border-radius:50%;
+
     background:
-        linear-gradient(
-            145deg,
-            #202c5d,
-            #0b1029
-        );
-    border:1px solid #ffffff25;
-    box-shadow:0 30px 80px #000;
+    linear-gradient(
+        145deg,
+        #ffd866,
+        #9b6115
+    );
+
+    border:3px solid #fff0a0;
+
+    box-shadow:
+    0 7px 18px #0009;
+
+    font-size:30px;
 }
 
-.modal h1{
-    font-size:42px;
-    margin-bottom:12px;
+.player strong{
+    display:block;
+    margin-top:5px;
 }
 
-.modal p{
-    color:#c7d0ed;
-    margin-bottom:20px;
+.top{
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
 }
 
-.start-btn{
+.left{
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.right{
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.bottom{
+    bottom:15px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    gap:7px;
+    margin-top:7px;
+}
+
+.card{
+    width:60px;
+    height:86px;
+
+    background:white;
+    color:#111;
+
+    border-radius:9px;
+    border:2px solid #ddd;
+
+    box-shadow:
+    0 8px 15px #0009;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    font-size:22px;
+    font-weight:bold;
+
+    animation:deal .3s ease;
+}
+
+.red{
+    color:#d51635;
+}
+
+.black{
+    color:#111;
+}
+
+.back{
+    color:white;
+
+    background:
+    repeating-linear-gradient(
+        45deg,
+        #152d78,
+        #152d78 5px,
+        #2848a8 5px,
+        #2848a8 10px
+    );
+
+    border-color:white;
+}
+
+.center{
+    position:absolute;
+    left:50%;
+    top:47%;
+
+    transform:translate(-50%,-50%);
+
+    text-align:center;
+    z-index:3;
+}
+
+.center h2{
+    color:#ffe789;
+    text-shadow:0 3px 10px #000;
+}
+
+.status{
+    margin-top:8px;
+    color:#d6f0df;
+    min-height:25px;
+}
+
+.controls{
+    position:absolute;
+    bottom:20px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:10;
+
+    display:flex;
+    gap:8px;
+
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+button.action{
     border:0;
-    padding:14px 28px;
-    border-radius:15px;
-    background:#ffe04d;
-    color:#15192a;
-    font-size:17px;
-    font-weight:1000;
+    border-radius:13px;
+
+    padding:12px 19px;
+
     cursor:pointer;
+
+    font-weight:bold;
+
+    color:#15110a;
+
+    background:#ffe071;
+
+    box-shadow:
+    0 4px 0 #876014;
 }
 
-.hidden{
-    display:none!important;
+button.action:active{
+    transform:translateY(3px);
 }
 
-/* DAMAGE ANIMATION */
-
-.hit{
-    animation:hit .3s;
+button.dark{
+    background:white;
 }
 
-@keyframes hit{
-    0%{transform:translateX(0)}
-    25%{transform:translateX(-12px)}
-    50%{transform:translateX(12px)}
-    75%{transform:translateX(-7px)}
-    100%{transform:translateX(0)}
+.score{
+    position:absolute;
+
+    right:18px;
+    top:15px;
+
+    z-index:20;
+
+    padding:8px 12px;
+
+    background:#0007;
+
+    border-radius:12px;
+
+    color:#ffe57c;
+
+    font-weight:bold;
 }
 
-/* MOBILE */
+@keyframes deal{
 
-@media(max-width:650px){
-
-    .topbar{
-        padding:10px;
+    from{
+        opacity:0;
+        transform:
+        translateY(25px)
+        scale(.8);
     }
 
-    .title{
-        font-size:17px;
+    to{
+        opacity:1;
+        transform:
+        translateY(0)
+        scale(1);
+    }
+}
+
+@media(max-width:600px){
+
+    .table{
+        height:540px;
+        border-width:8px;
+        border-radius:30px;
     }
 
-    .arena{
-        padding:10px;
-        margin:8px auto;
-    }
-
-    .battle-zone{
-        min-height:150px;
-        gap:12px;
-    }
-
-    .battle-card{
-        width:110px;
-        height:145px;
-    }
-
-    .battle-card .emoji{
-        font-size:42px;
+    .table:after{
+        inset:15px;
     }
 
     .card{
-        width:100px;
-        height:145px;
+        width:48px;
+        height:70px;
+        font-size:17px;
     }
 
-    .card .cardemoji{
-        font-size:38px;
+    .avatar{
+        width:47px;
+        height:47px;
+        font-size:25px;
     }
 
-    .card h3{
-        font-size:12px;
+    .left{
+        left:2px;
     }
 
-    .card .damage{
-        font-size:16px;
+    .right{
+        right:2px;
     }
 
-    .fighter .avatar{
-        width:50px;
-        height:50px;
-        font-size:28px;
-    }
-
-    .controls{
-        margin-top:8px;
-    }
-
-    .action{
-        padding:11px 16px;
+    .header h1{
+        font-size:25px;
     }
 }
 </style>
@@ -556,226 +367,227 @@ body{
 
 <body>
 
-<div id="game">
+<div class="header">
 
-<div class="bg-orb orb1"></div>
-<div class="bg-orb orb2"></div>
+    <h1>🃏 Classic Card Games</h1>
 
-<!-- TOP -->
-
-<div class="topbar">
-
-    <div class="title">
-        🃏 Card Battle Arena
-    </div>
-
-    <button class="small-btn"
-            onclick="newGame()">
-        🔄 New Game
-    </button>
+    <p>
+        Choose a game and start playing
+    </p>
 
 </div>
 
 
-<div class="arena">
+<!-- GAME MENU -->
 
-<!-- ENEMY -->
-
-<div class="fighter enemy">
-
-    <div class="avatar">
-        🤖
-    </div>
-
-    <div class="info">
-
-        <div class="name">
-            Dark Bot
-        </div>
-
-        <div class="hpbar">
-            <div
-                id="enemyHP"
-                class="hp">
-            </div>
-        </div>
-
-        <div class="stats">
-            ❤️ HP:
-            <span id="enemyHpText">
-                100
-            </span>
-            / 100
-        </div>
-
-    </div>
-
-</div>
-
-
-<div id="message">
-    Choose a card to attack!
-</div>
-
-
-<!-- BATTLE AREA -->
-
-<div class="battle-zone">
-
-    <div
-        id="enemyBattleCard"
-        class="battle-card enemy-card">
-
-        <div class="emoji">
-            👹
-        </div>
-
-        <h3>
-            Dark Warrior
-        </h3>
-
-        <div class="power">
-            ⚔️ 18
-        </div>
-
-    </div>
-
-
-    <div class="vs">
-        VS
-    </div>
-
-
-    <div
-        id="playerBattleCard"
-        class="battle-card">
-
-        <div class="emoji">
-            🛡️
-        </div>
-
-        <h3>
-            Your Hero
-        </h3>
-
-        <div class="power">
-            ⚔️ 10
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- PLAYER -->
-
-<div class="fighter">
-
-    <div class="avatar">
-        🧙
-    </div>
-
-    <div class="info">
-
-        <div class="name">
-            You
-        </div>
-
-        <div class="hpbar">
-            <div
-                id="playerHP"
-                class="hp">
-            </div>
-        </div>
-
-        <div class="stats">
-            ❤️ HP:
-            <span id="playerHpText">
-                100
-            </span>
-            / 100
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- MANA -->
-
-<div class="mana-area">
-
-    <div class="mana-title">
-        🔷 Mana:
-        <span id="manaText">
-            5
-        </span>
-        / 5
-    </div>
-
-    <div class="mana-bar">
-        <div
-            id="mana"
-            class="mana">
-        </div>
-    </div>
-
-</div>
-
-
-<h3 class="hand-title">
-    🃏 Choose Your Card
-</h3>
-
-
-<!-- CARDS -->
-
-<div
-    id="hand"
-    class="hand">
-</div>
-
-
-<div class="controls">
+<div class="menu">
 
     <button
-        id="endTurn"
-        class="action"
-        onclick="endTurn()">
+    class="game-btn active"
+    onclick="chooseGame('teen',this)">
 
-        ⚡ End Turn
+        <div class="icon">👑</div>
+
+        <h3>Teen Patti</h3>
+
+        <small>3 Card</small>
+
+    </button>
+
+
+    <button
+    class="game-btn"
+    onclick="chooseGame('call',this)">
+
+        <div class="icon">♠️</div>
+
+        <h3>Call Break</h3>
+
+        <small>Trick Game</small>
+
+    </button>
+
+
+    <button
+    class="game-btn"
+    onclick="chooseGame('rummy',this)">
+
+        <div class="icon">🃏</div>
+
+        <h3>Rummy</h3>
+
+        <small>Classic</small>
+
+    </button>
+
+
+    <button
+    class="game-btn"
+    onclick="chooseGame('high',this)">
+
+        <div class="icon">🏆</div>
+
+        <h3>High Card</h3>
+
+        <small>Quick Game</small>
 
     </button>
 
 </div>
 
 
-<div id="battleLog">
-</div>
+<!-- GAME TABLE -->
 
-</div>
+<div class="table">
+
+    <div class="score">
+
+        ⭐ Points:
+        <span id="score">0</span>
+
+    </div>
 
 
-<!-- OVERLAY -->
+    <!-- COMPUTER -->
 
-<div id="overlay">
+    <div class="player top">
 
-    <div class="modal">
+        <div class="avatar">
+            🤖
+        </div>
 
-        <h1>
-            🃏 Card Battle
-        </h1>
+        <strong>
+            Computer
+        </strong>
 
-        <p>
-            Defeat the Dark Bot by using
-            powerful cards and smart strategy!
-        </p>
+        <div
+        id="enemyCards"
+        class="cards">
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER 2 -->
+
+    <div class="player left">
+
+        <div class="avatar">
+            👨
+        </div>
+
+        <strong>
+            Player 2
+        </strong>
+
+        <div class="cards">
+
+            <div class="card back">
+                ★
+            </div>
+
+            <div class="card back">
+                ★
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER 3 -->
+
+    <div class="player right">
+
+        <div class="avatar">
+            👩
+        </div>
+
+        <strong>
+            Player 3
+        </strong>
+
+        <div class="cards">
+
+            <div class="card back">
+                ★
+            </div>
+
+            <div class="card back">
+                ★
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CENTER -->
+
+    <div class="center">
+
+        <h2 id="gameTitle">
+            👑 Teen Patti
+        </h2>
+
+        <div
+        id="status"
+        class="status">
+
+            Press Deal to start
+
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER -->
+
+    <div class="player bottom">
+
+        <div
+        id="playerCards"
+        class="cards">
+        </div>
+
+        <div class="avatar">
+            😎
+        </div>
+
+        <strong>
+            You
+        </strong>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="controls">
 
         <button
-            class="start-btn"
-            onclick="startGame()">
+        class="action"
+        onclick="deal()">
 
-            ⚔️ START BATTLE
+            🃏 Deal
+
+        </button>
+
+
+        <button
+        class="action dark"
+        onclick="play()">
+
+            ⚔️ Play
+
+        </button>
+
+
+        <button
+        class="action dark"
+        onclick="resetGame()">
+
+            🔄 Reset
 
         </button>
 
@@ -783,882 +595,759 @@ body{
 
 </div>
 
-</div>
-
 
 <script>
 
-/* =========================================
-   CARD DATA
-========================================= */
+const suits = [
 
-const cards=[
+    {
+        s:"♥",
+        red:true
+    },
 
-{
-    name:"Fire Mage",
-    emoji:"🔥",
-    damage:20,
-    cost:2,
-    type:"attack",
-    text:"20 damage"
-},
+    {
+        s:"♦",
+        red:true
+    },
 
-{
-    name:"Ice Blast",
-    emoji:"❄️",
-    damage:15,
-    cost:1,
-    type:"attack",
-    text:"15 damage"
-},
+    {
+        s:"♣",
+        red:false
+    },
 
-{
-    name:"Thunder",
-    emoji:"⚡",
-    damage:28,
-    cost:3,
-    type:"attack",
-    text:"28 damage"
-},
-
-{
-    name:"Knight",
-    emoji:"⚔️",
-    damage:12,
-    cost:1,
-    type:"attack",
-    text:"12 damage"
-},
-
-{
-    name:"Dragon",
-    emoji:"🐉",
-    damage:35,
-    cost:4,
-    type:"attack",
-    text:"35 damage"
-},
-
-{
-    name:"Heal",
-    emoji:"💚",
-    damage:18,
-    cost:2,
-    type:"heal",
-    text:"Restore 18 HP"
-},
-
-{
-    name:"Meteor",
-    emoji:"☄️",
-    damage:45,
-    cost:5,
-    type:"attack",
-    text:"45 damage"
-},
-
-{
-    name:"Shield",
-    emoji:"🛡️",
-    damage:10,
-    cost:2,
-    type:"shield",
-    text:"10 damage + shield"
-}
+    {
+        s:"♠",
+        red:false
+    }
 
 ];
 
 
-/* =========================================
-   VARIABLES
-========================================= */
+const values = [
 
-let playerHP=100;
-let enemyHP=100;
+    "A",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "J",
+    "Q",
+    "K"
 
-let mana=5;
-let maxMana=5;
-
-let shield=0;
-
-let playerTurn=true;
-
-let gameStarted=false;
-
-let selectedCard=null;
-
-
-/* =========================================
-   DOM
-========================================= */
-
-const hand=
-document.getElementById("hand");
-
-const playerHpText=
-document.getElementById("playerHpText");
-
-const enemyHpText=
-document.getElementById("enemyHpText");
-
-const playerHPBar=
-document.getElementById("playerHP");
-
-const enemyHPBar=
-document.getElementById("enemyHP");
-
-const manaBar=
-document.getElementById("mana");
-
-const manaText=
-document.getElementById("manaText");
-
-const message=
-document.getElementById("message");
-
-const log=
-document.getElementById("battleLog");
+];
 
 
-/* =========================================
-   SOUND
-========================================= */
+let deck = [];
 
-let audioCtx=null;
+let player = [];
 
-function sound(
-    frequency,
-    duration=.1,
-    type="sine"
-){
+let enemy = [];
 
-    try{
+let game = "teen";
 
-        if(!audioCtx){
+let points = 0;
 
-            audioCtx=
-            new(
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
+
+/* CREATE DECK */
+
+function createDeck(){
+
+    deck = [];
+
+    suits.forEach(
+
+        suit => {
+
+            values.forEach(
+
+                value => {
+
+                    deck.push({
+
+                        value:value,
+
+                        suit:suit.s,
+
+                        red:suit.red
+
+                    });
+
+                }
+
+            );
 
         }
 
-        if(
-            audioCtx.state==="suspended"
-        ){
-
-            audioCtx.resume();
-
-        }
-
-        const osc=
-        audioCtx.createOscillator();
-
-        const gain=
-        audioCtx.createGain();
-
-        osc.type=type;
-
-        osc.frequency.value=
-        frequency;
-
-        gain.gain.setValueAtTime(
-            .08,
-            audioCtx.currentTime
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .001,
-            audioCtx.currentTime+
-            duration
-        );
-
-        osc.connect(gain);
-
-        gain.connect(
-            audioCtx.destination
-        );
-
-        osc.start();
-
-        osc.stop(
-            audioCtx.currentTime+
-            duration
-        );
-
-    }catch(e){}
-
-}
-
-
-/* =========================================
-   START
-========================================= */
-
-function startGame(){
-
-    document
-    .getElementById("overlay")
-    .classList
-    .add("hidden");
-
-    newGame();
-
-}
-
-
-/* =========================================
-   NEW GAME
-========================================= */
-
-function newGame(){
-
-    playerHP=100;
-
-    enemyHP=100;
-
-    mana=5;
-
-    shield=0;
-
-    playerTurn=true;
-
-    gameStarted=true;
-
-    selectedCard=null;
-
-    message.innerText=
-        "Choose a card to attack!";
-
-    log.innerHTML="";
-
-    updateUI();
-
-    renderHand();
-
-    addLog(
-        "⚔️ Battle started!"
     );
 
 }
 
 
-/* =========================================
-   UPDATE UI
-========================================= */
+/* SHUFFLE */
 
-function updateUI(){
+function shuffle(){
 
-    playerHpText.innerText=
-        Math.max(0,playerHP);
+    for(
+        let i = deck.length - 1;
+        i > 0;
+        i--
+    ){
 
-    enemyHpText.innerText=
-        Math.max(0,enemyHP);
+        const j =
+            Math.floor(
+                Math.random() *
+                (i + 1)
+            );
 
-    playerHPBar.style.width=
-        Math.max(0,playerHP)+"%";
+        [
+            deck[i],
+            deck[j]
+        ] =
+        [
+            deck[j],
+            deck[i]
+        ];
 
-    enemyHPBar.style.width=
-        Math.max(0,enemyHP)+"%";
-
-    manaText.innerText=
-        mana;
-
-    manaBar.style.width=
-        (mana/maxMana*100)+"%";
+    }
 
 }
 
 
-/* =========================================
-   RENDER HAND
-========================================= */
+/* CHOOSE GAME */
 
-function renderHand(){
+function chooseGame(
+    type,
+    button
+){
 
-    hand.innerHTML="";
+    game = type;
 
+    document
+    .querySelectorAll(
+        ".game-btn"
+    )
+    .forEach(
+        b =>
+        b.classList
+        .remove("active")
+    );
 
-    cards.forEach(
-        (card,index)=>{
-
-            const div=
-            document.createElement("div");
-
-            div.className="card";
-
-
-            if(
-                card.cost>mana ||
-                !playerTurn
-            ){
-
-                div.classList.add(
-                    "disabled"
-                );
-
-            }
+    button
+    .classList
+    .add("active");
 
 
-            div.innerHTML=`
+    const names = {
 
-                <div class="cost">
-                    ${card.cost}
-                </div>
+        teen:"👑 Teen Patti",
 
-                <div class="cardemoji">
-                    ${card.emoji}
-                </div>
+        call:"♠️ Call Break",
 
-                <h3>
-                    ${card.name}
-                </h3>
+        rummy:"🃏 Rummy",
 
-                <div class="damage">
-                    ${
-                        card.type==="heal"
-                        ? "❤️ +"+card.damage
-                        : "⚔️ "+card.damage
-                    }
-                </div>
+        high:"🏆 High Card"
 
-                <small>
-                    ${card.text}
-                </small>
-
-            `;
+    };
 
 
-            div.onclick=()=>{
+    document
+    .getElementById(
+        "gameTitle"
+    )
+    .innerText =
+        names[type];
 
-                playCard(
-                    index,
+
+    document
+    .getElementById(
+        "status"
+    )
+    .innerText =
+        "Press Deal to start";
+
+
+    player = [];
+
+    enemy = [];
+
+    document
+    .getElementById(
+        "playerCards"
+    )
+    .innerHTML = "";
+
+    document
+    .getElementById(
+        "enemyCards"
+    )
+    .innerHTML = "";
+
+}
+
+
+/* DEAL */
+
+function deal(){
+
+    createDeck();
+
+    shuffle();
+
+    player = [];
+
+    enemy = [];
+
+
+    let count =
+        game === "teen"
+        ? 3
+        : 2;
+
+
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
+
+        player.push(
+            deck.pop()
+        );
+
+        enemy.push(
+            deck.pop()
+        );
+
+    }
+
+
+    renderPlayer();
+
+    renderEnemy(true);
+
+
+    document
+    .getElementById(
+        "status"
+    )
+    .innerText =
+        "Cards dealt! Press Play.";
+
+}
+
+
+/* CREATE CARD */
+
+function makeCard(card){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.className =
+        "card " +
+        (
+            card.red
+            ? "red"
+            : "black"
+        );
+
+
+    div.innerHTML =
+
+        "<b>" +
+        card.value +
+        "</b>" +
+
+        "<span>" +
+        card.suit +
+        "</span>";
+
+
+    return div;
+
+}
+
+
+/* SHOW PLAYER */
+
+function renderPlayer(){
+
+    const area =
+        document.getElementById(
+            "playerCards"
+        );
+
+    area.innerHTML = "";
+
+
+    player.forEach(
+
+        card => {
+
+            area.appendChild(
+                makeCard(card)
+            );
+
+        }
+
+    );
+
+}
+
+
+/* SHOW ENEMY */
+
+function renderEnemy(
+    hidden
+){
+
+    const area =
+        document.getElementById(
+            "enemyCards"
+        );
+
+    area.innerHTML = "";
+
+
+    enemy.forEach(
+
+        card => {
+
+            if(hidden){
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+                div.className =
+                    "card back";
+
+                div.innerText =
+                    "★";
+
+                area.appendChild(
                     div
                 );
 
-            };
+            }else{
+
+                area.appendChild(
+                    makeCard(card)
+                );
+
+            }
+
+        }
+
+    );
+
+}
 
 
-            hand.appendChild(div);
+/* CARD VALUE */
+
+function value(card){
+
+    if(card.value === "A")
+        return 14;
+
+    if(card.value === "K")
+        return 13;
+
+    if(card.value === "Q")
+        return 12;
+
+    if(card.value === "J")
+        return 11;
+
+    return Number(
+        card.value
+    );
+
+}
+
+
+/* TEEN PATTI */
+
+function teenPatti(){
+
+    const playerValue =
+        evaluate(player);
+
+    const enemyValue =
+        evaluate(enemy);
+
+
+    if(
+        playerValue >
+        enemyValue
+    ){
+
+        points += 10;
+
+        result(
+            "🏆 You Win!",
+            "Your hand is stronger."
+        );
+
+    }
+
+    else if(
+        playerValue <
+        enemyValue
+    ){
+
+        result(
+            "🤖 Computer Wins!",
+            "Computer has the stronger hand."
+        );
+
+    }
+
+    else{
+
+        points += 2;
+
+        result(
+            "🤝 Draw!",
+            "Both hands are equal."
+        );
+
+    }
+
+    updatePoints();
+
+}
+
+
+/* EVALUATE HAND */
+
+function evaluate(cards){
+
+    const nums =
+        cards
+        .map(value)
+        .sort(
+            (a,b) => b-a
+        );
+
+
+    const counts = {};
+
+
+    nums.forEach(
+        n => {
+
+            counts[n] =
+                (
+                    counts[n] || 0
+                ) + 1;
 
         }
     );
 
+
+    const groups =
+        Object
+        .values(counts)
+        .sort(
+            (a,b) => b-a
+        );
+
+
+    /* THREE OF A KIND */
+
+    if(
+        groups[0] === 3
+    ){
+
+        return 1000 + nums[0];
+
+    }
+
+
+    /* PAIR */
+
+    if(
+        groups[0] === 2
+    ){
+
+        return 500 + nums[0];
+
+    }
+
+
+    /* HIGH CARD */
+
+    return (
+        nums[0] * 10 +
+        nums[1] +
+        nums[2] / 100
+    );
+
 }
 
 
-/* =========================================
-   PLAY CARD
-========================================= */
+/* HIGH CARD */
 
-function playCard(
-    index,
-    element
-){
+function highCard(){
 
-    if(!gameStarted)
-        return;
+    const p =
+        value(player[0]);
 
-    if(!playerTurn)
-        return;
+    const e =
+        value(enemy[0]);
 
 
-    const card=
-    cards[index];
+    if(p > e){
 
+        points += 5;
 
-    if(card.cost>mana){
-
-        message.innerText=
-            "❌ Not enough mana!";
-
-        sound(180,.1);
-
-        return;
+        result(
+            "🏆 You Win!",
+            "Your card is higher."
+        );
 
     }
 
+    else if(p < e){
 
-    mana-=card.cost;
-
-
-    /* HEAL */
-
-    if(card.type==="heal"){
-
-        playerHP=
-        Math.min(
-            100,
-            playerHP+card.damage
+        result(
+            "🤖 Computer Wins!",
+            "Computer's card is higher."
         );
-
-        message.innerText=
-            "💚 You healed "+card.damage+" HP!";
-
-        addLog(
-            "💚 You used Heal."
-        );
-
-        sound(700,.15);
 
     }
-
-
-    /* SHIELD */
-
-    else if(card.type==="shield"){
-
-        let damage=
-        calculateDamage(
-            card.damage
-        );
-
-        enemyHP-=damage;
-
-        shield+=15;
-
-        message.innerText=
-            "🛡️ Shield activated!";
-
-        addLog(
-            "🛡️ Shield attack dealt "+
-            damage+
-            " damage."
-        );
-
-        sound(600,.12);
-
-    }
-
-
-    /* ATTACK */
 
     else{
 
-        let damage=
-        calculateDamage(
-            card.damage
-        );
+        points++;
 
-        enemyHP-=damage;
-
-        message.innerText=
-            "💥 "+card.name+
-            " dealt "+damage+
-            " damage!";
-
-        addLog(
-            "🔥 You used "+
-            card.name+
-            " for "+
-            damage+
-            " damage."
-        );
-
-        sound(
-            300+
-            damage*8,
-            .12,
-            "square"
+        result(
+            "🤝 Draw!",
+            "Same value."
         );
 
     }
 
 
-    element.classList.add("selected");
+    updatePoints();
 
-    document
-    .getElementById(
-        "enemyBattleCard"
-    )
-    .classList.add("hit");
+}
 
 
-    setTimeout(
-        ()=>{
+/* CALL BREAK */
 
-            document
-            .getElementById(
-                "enemyBattleCard"
-            )
-            .classList.remove("hit");
+function callBreak(){
 
-        },
-        350
-    );
+    const p =
+        value(player[0]);
+
+    const e =
+        value(enemy[0]);
 
 
-    updateUI();
+    if(p > e){
+
+        points += 5;
+
+        result(
+            "♠️ Trick Won!",
+            "You won this trick."
+        );
+
+    }
+
+    else{
+
+        result(
+            "♠️ Trick Lost",
+            "Computer won this trick."
+        );
+
+    }
+
+
+    updatePoints();
+
+}
+
+
+/* RUMMY */
+
+function rummy(){
+
+    const nums =
+        player.map(value);
+
+
+    const unique =
+        new Set(nums).size;
 
 
     if(
-        enemyHP<=0
+        unique <
+        nums.length
     ){
 
-        winGame();
+        points += 8;
+
+        result(
+            "🃏 Pair Found!",
+            "You made a matching pair."
+        );
+
+    }
+
+    else{
+
+        result(
+            "🔄 Try Again",
+            "No matching pair yet."
+        );
+
+    }
+
+
+    updatePoints();
+
+}
+
+
+/* PLAY */
+
+function play(){
+
+    if(
+        !player.length
+    ){
+
+        document
+        .getElementById(
+            "status"
+        )
+        .innerText =
+            "❌ First press Deal!";
 
         return;
 
     }
 
 
-    playerTurn=false;
+    renderEnemy(false);
 
-    renderHand();
-
-
-    setTimeout(
-        enemyTurn,
-        800
-    );
-
-}
-
-
-/* =========================================
-   DAMAGE
-========================================= */
-
-function calculateDamage(
-    base
-){
-
-    let bonus=
-    Math.floor(
-        Math.random()*6
-    );
-
-    return base+bonus;
-
-}
-
-
-/* =========================================
-   ENEMY TURN
-========================================= */
-
-function enemyTurn(){
 
     if(
-        enemyHP<=0 ||
-        playerHP<=0
-    )
-        return;
+        game === "teen"
+    ){
 
+        teenPatti();
 
-    message.innerText=
-        "🤖 Dark Bot is attacking...";
+    }
 
+    else if(
+        game === "call"
+    ){
 
-    setTimeout(
-        ()=>{
+        callBreak();
 
-            let attacks=[
-                10,
-                12,
-                15,
-                18,
-                22
-            ];
+    }
 
+    else if(
+        game === "rummy"
+    ){
 
-            let damage=
-            attacks[
-                Math.floor(
-                    Math.random()*
-                    attacks.length
-                )
-            ];
+        rummy();
 
+    }
 
-            /* SHIELD */
+    else{
 
-            if(shield>0){
+        highCard();
 
-                let blocked=
-                Math.min(
-                    shield,
-                    damage
-                );
-
-                shield-=blocked;
-
-                damage-=blocked;
-
-                addLog(
-                    "🛡️ Your shield blocked "+
-                    blocked+
-                    " damage."
-                );
-
-            }
-
-
-            playerHP-=damage;
-
-
-            message.innerText=
-                "💥 Dark Bot dealt "+
-                damage+
-                " damage!";
-
-
-            addLog(
-                "🤖 Enemy attacked for "+
-                damage+
-                " damage."
-            );
-
-
-            document
-            .getElementById(
-                "playerBattleCard"
-            )
-            .classList.add("hit");
-
-
-            setTimeout(
-                ()=>{
-
-                    document
-                    .getElementById(
-                        "playerBattleCard"
-                    )
-                    .classList.remove("hit");
-
-                },
-                350
-            );
-
-
-            sound(
-                130,
-                .18,
-                "sawtooth"
-            );
-
-
-            updateUI();
-
-
-            if(
-                playerHP<=0
-            ){
-
-                loseGame();
-
-                return;
-
-            }
-
-
-            /* NEW TURN */
-
-            mana=
-            Math.min(
-                maxMana,
-                mana+2
-            );
-
-
-            playerTurn=true;
-
-            message.innerText=
-                "⚔️ Your turn! Choose a card.";
-
-            renderHand();
-
-            updateUI();
-
-        },
-        700
-    );
+    }
 
 }
 
 
-/* =========================================
-   END TURN
-========================================= */
+/* RESULT */
 
-function endTurn(){
-
-    if(
-        !gameStarted ||
-        !playerTurn
-    )
-        return;
-
-
-    playerTurn=false;
-
-    message.innerText=
-        "⚡ Turn ended.";
-
-    renderHand();
-
-    setTimeout(
-        enemyTurn,
-        500
-    );
-
-}
-
-
-/* =========================================
-   WIN
-========================================= */
-
-function winGame(){
-
-    gameStarted=false;
-
-    enemyHP=0;
-
-    updateUI();
-
-    message.innerText=
-        "🏆 YOU WIN!";
-
-
-    addLog(
-        "🏆 Congratulations! You defeated Dark Bot!"
-    );
-
-
-    sound(
-        900,
-        .15
-    );
-
-    setTimeout(
-        ()=>{
-
-            showResult(
-                "🏆 YOU WIN!",
-                "Amazing battle! You defeated the enemy."
-            );
-
-        },
-        700
-    );
-
-}
-
-
-/* =========================================
-   LOSE
-========================================= */
-
-function loseGame(){
-
-    gameStarted=false;
-
-    playerHP=0;
-
-    updateUI();
-
-    message.innerText=
-        "💀 YOU LOST!";
-
-
-    addLog(
-        "💀 Dark Bot defeated you."
-    );
-
-
-    sound(
-        120,
-        .3,
-        "sawtooth"
-    );
-
-
-    setTimeout(
-        ()=>{
-
-            showResult(
-                "💀 GAME OVER",
-                "The Dark Bot won this battle."
-            );
-
-        },
-        700
-    );
-
-}
-
-
-/* =========================================
-   RESULT
-========================================= */
-
-function showResult(
+function result(
     title,
-    text
+    message
 ){
-
-    const overlay=
-    document.getElementById(
-        "overlay"
-    );
-
-    overlay.innerHTML=`
-
-        <div class="modal">
-
-            <h1>
-                ${title}
-            </h1>
-
-            <p>
-                ${text}
-            </p>
-
-            <button
-                class="start-btn"
-                onclick="newGame();closeResult()">
-
-                🔄 PLAY AGAIN
-
-            </button>
-
-        </div>
-
-    `;
-
-    overlay.classList.remove(
-        "hidden"
-    );
-
-}
-
-
-function closeResult(){
 
     document
     .getElementById(
-        "overlay"
+        "status"
     )
-    .classList
-    .add("hidden");
+    .innerHTML =
+
+        "<b>" +
+        title +
+        "</b><br>" +
+        message;
 
 }
 
 
-/* =========================================
-   LOG
-========================================= */
+/* POINTS */
 
-function addLog(text){
+function updatePoints(){
 
-    const item=
-    document.createElement("div");
+    document
+    .getElementById(
+        "score"
+    )
+    .innerText =
+        points;
 
-    item.innerText=text;
+}
 
-    log.prepend(item);
+
+/* RESET */
+
+function resetGame(){
+
+    player = [];
+
+    enemy = [];
+
+    points = 0;
+
+
+    document
+    .getElementById(
+        "playerCards"
+    )
+    .innerHTML = "";
+
+
+    document
+    .getElementById(
+        "enemyCards"
+    )
+    .innerHTML = "";
+
+
+    document
+    .getElementById(
+        "status"
+    )
+    .innerText =
+        "Press Deal to start";
+
+
+    updatePoints();
 
 }
 
