@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Surfing Fever</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+    background:#001b35;
+}
+
+#game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            #38c8ff 0%,
+            #8deaff 27%,
+            #087fc0 45%,
+            #004b80 100%
+        );
+}
+
+/* ================= SKY ================= */
+
+.sun{
+    position:absolute;
+    width:95px;
+    height:95px;
+    right:9%;
+    top:7%;
+    border-radius:50%;
+    background:#fff5a8;
+    box-shadow:
+        0 0 25px #fff5a8,
+        0 0 70px rgba(255,245,168,.8);
+}
+
+.cloud{
+    position:absolute;
+    width:130px;
+    height:35px;
+    background:rgba(255,255,255,.65);
+    border-radius:50px;
+    animation:cloudMove linear infinite;
+}
+
+.cloud:before,
+.cloud:after{
+    content:"";
+    position:absolute;
+    background:inherit;
+    border-radius:50%;
+}
+
+.cloud:before{
+    width:55px;
+    height:55px;
+    left:20px;
+    top:-25px;
+}
+
+.cloud:after{
+    width:65px;
+    height:65px;
+    right:18px;
+    top:-32px;
+}
+
+.cloud.one{
+    top:13%;
+    left:-150px;
+    animation-duration:24s;
+}
+
+.cloud.two{
+    top:24%;
+    left:-200px;
+    transform:scale(.7);
+    animation-duration:32s;
+}
+
+@keyframes cloudMove{
+    from{left:-200px}
+    to{left:110%}
+}
+
+/* ================= OCEAN ================= */
+
+.ocean{
+    position:absolute;
+    left:0;
+    right:0;
+    top:32%;
+    bottom:0;
+    overflow:hidden;
+}
+
+.wave{
+    position:absolute;
+    left:-15%;
+    width:130%;
+    height:120px;
+    border-radius:50%;
+    border-top:12px solid rgba(255,255,255,.75);
+    animation:wave 4s ease-in-out infinite;
+}
+
+.wave.one{top:0}
+.wave.two{
+    top:100px;
+    opacity:.55;
+    animation-duration:5s;
+}
+.wave.three{
+    top:210px;
+    opacity:.3;
+    animation-duration:6s;
+}
+
+@keyframes wave{
+    0%,100%{transform:translateX(-2%)}
+    50%{transform:translateX(3%)}
+}
+
+/* ================= SCORE ================= */
+
+.hud{
+    position:absolute;
+    top:18px;
+    left:18px;
+    z-index:50;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.hudBox{
+    padding:9px 15px;
+    border-radius:14px;
+    background:rgba(0,30,70,.55);
+    border:1px solid rgba(255,255,255,.3);
+    backdrop-filter:blur(8px);
+    font-weight:bold;
+    color:white;
+    text-shadow:0 2px 4px #003;
+}
+
+#score{
+    font-size:24px;
+}
+
+#combo{
+    color:#ffe34d;
+}
+
+#speed{
+    color:#74eaff;
+}
+
+/* ================= PLAYER ================= */
+
+#player{
+    position:absolute;
+    width:115px;
+    height:110px;
+    left:50%;
+    bottom:17%;
+    transform:translateX(-50%);
+    z-index:20;
+}
+
+/* cute small human */
+
+.surfer-character{
+    position:absolute;
+    left:29px;
+    top:0;
+    width:58px;
+    height:90px;
+    animation:surferBounce .4s infinite alternate;
+}
+
+@keyframes surferBounce{
+    from{
+        transform:rotate(-4deg) translateY(0);
+    }
+    to{
+        transform:rotate(4deg) translateY(-5px);
+    }
+}
+
+.hair{
+    position:absolute;
+    width:32px;
+    height:20px;
+    left:14px;
+    top:0;
+    background:#1d2025;
+    border-radius:20px 20px 7px 7px;
+    z-index:5;
+}
+
+.head{
+    position:absolute;
+    left:14px;
+    top:8px;
+    width:35px;
+    height:36px;
+    background:#d99670;
+    border-radius:50%;
+}
+
+.eye{
+    position:absolute;
+    top:14px;
+    width:5px;
+    height:7px;
+    background:#17212a;
+    border-radius:50%;
+}
+
+.left-eye{left:8px}
+.right-eye{right:8px}
+
+.smile{
+    position:absolute;
+    width:12px;
+    height:6px;
+    left:12px;
+    bottom:6px;
+    border-bottom:2px solid #59332c;
+    border-radius:50%;
+}
+
+.body{
+    position:absolute;
+    left:8px;
+    top:40px;
+    width:45px;
+    height:48px;
+}
+
+.shirt{
+    position:absolute;
+    left:5px;
+    width:35px;
+    height:28px;
+    border-radius:10px 10px 7px 7px;
+    background:
+        linear-gradient(
+            135deg,
+            #ff4770,
+            #ff8b35
+        );
+}
+
+.arm{
+    position:absolute;
+    top:3px;
+    width:9px;
+    height:30px;
+    background:#d99670;
+    border-radius:10px;
+}
+
+.left-arm{
+    left:-1px;
+    transform:rotate(48deg);
+}
+
+.right-arm{
+    right:-1px;
+    transform:rotate(-48deg);
+}
+
+.shorts{
+    position:absolute;
+    left:9px;
+    top:24px;
+    width:30px;
+    height:15px;
+    background:#155092;
+    border-radius:3px 3px 8px 8px;
+}
+
+.leg{
+    position:absolute;
+    top:34px;
+    width:8px;
+    height:22px;
+    background:#d99670;
+    border-radius:8px;
+}
+
+.left-leg{
+    left:12px;
+    transform:rotate(28deg);
+}
+
+.right-leg{
+    right:12px;
+    transform:rotate(-28deg);
+}
+
+/* BOARD */
+
+.board{
+    position:absolute;
+    left:0;
+    bottom:8px;
+    width:115px;
+    height:19px;
+    border-radius:60% 45% 45% 60%;
+    transform:rotate(-4deg);
+    background:
+        linear-gradient(
+            90deg,
+            #ff416c,
+            #ffd23f,
+            #39d98a,
+            #2ca9ff
+        );
+    box-shadow:
+        0 5px 0 rgba(0,0,0,.25),
+        0 0 20px rgba(255,255,255,.4);
+}
+
+/* ================= COINS ================= */
+
+.coin{
+    position:absolute;
+    z-index:15;
+    font-size:36px;
+    filter:drop-shadow(0 0 8px #ffe34d);
+    animation:coinSpin .7s linear infinite;
+}
+
+@keyframes coinSpin{
+    from{
+        transform:rotateY(0);
+    }
+    to{
+        transform:rotateY(360deg);
+    }
+}
+
+/* ================= POWER UPS ================= */
+
+.power{
+    position:absolute;
+    z-index:15;
+    font-size:40px;
+    animation:
+        powerFloat .6s ease-in-out infinite alternate;
+}
+
+@keyframes powerFloat{
+    from{transform:translateY(0)}
+    to{transform:translateY(-9px)}
+}
+
+/* ================= OBSTACLES ================= */
+
+.obstacle{
+    position:absolute;
+    z-index:14;
+    font-size:52px;
+    filter:drop-shadow(0 5px 5px rgba(0,0,0,.35));
+}
+
+/* ================= SPLASH ================= */
+
+.splash{
+    position:absolute;
+    width:25px;
+    height:25px;
+    border:4px solid white;
+    border-radius:50%;
+    pointer-events:none;
+    animation:splash .5s forwards;
+}
+
+@keyframes splash{
+    from{
+        opacity:1;
+        transform:scale(.3);
+    }
+    to{
+        opacity:0;
+        transform:scale(3);
+    }
+}
+
+/* ================= START ================= */
+
+.screen{
+    position:absolute;
+    inset:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    background:
+        linear-gradient(
+            rgba(0,20,55,.72),
+            rgba(0,70,120,.55)
+        );
+    backdrop-filter:blur(7px);
+    color:white;
+}
+
+.screen h1{
+    font-size:clamp(42px,9vw,82px);
+    margin-bottom:10px;
+    text-shadow:
+        0 5px 0 #00628f,
+        0 10px 25px #001;
+}
+
+.screen p{
+    max-width:600px;
+    padding:0 20px;
+    margin-bottom:25px;
+    font-size:18px;
+}
+
+button{
+    border:0;
+    padding:15px 34px;
+    border-radius:35px;
+    background:#ffd633;
+    color:#17212b;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 6px 0 #b98e00;
+}
+
+button:active{
+    transform:translateY(4px);
+    box-shadow:0 2px 0 #b98e00;
+}
+
+/* ================= CONTROLS ================= */
+
+.controls{
+    position:absolute;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:60;
+    display:flex;
+    gap:18px;
+}
+
+.control{
+    width:72px;
+    height:58px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:20px;
+    background:rgba(255,255,255,.22);
+    border:1px solid rgba(255,255,255,.35);
+    backdrop-filter:blur(8px);
+    font-size:28px;
+    user-select:none;
+    touch-action:none;
+}
+
+@media(max-width:600px){
+    #player{
+        bottom:22%;
+    }
+
+    .control{
+        width:65px;
+        height:52px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+    <div class="sun"></div>
+
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
+
+    <div class="ocean">
+        <div class="wave one"></div>
+        <div class="wave two"></div>
+        <div class="wave three"></div>
+    </div>
+
+    <!-- HUD -->
+
+    <div class="hud">
+
+        <div class="hudBox" id="score">
+            🏆 Score: 0
+        </div>
+
+        <div class="hudBox" id="combo">
+            🔥 Combo: x1
+        </div>
+
+        <div class="hudBox" id="speed">
+            ⚡ Speed: 1
+        </div>
+
+    </div>
+
+
+    <!-- PLAYER -->
+
+    <div id="player">
+
+        <div class="surfer-character">
+
+            <div class="hair"></div>
+
+            <div class="head">
+
+                <div class="eye left-eye"></div>
+                <div class="eye right-eye"></div>
+                <div class="smile"></div>
+
+            </div>
+
+            <div class="body">
+
+                <div class="shirt"></div>
+
+                <div class="arm left-arm"></div>
+                <div class="arm right-arm"></div>
+
+                <div class="shorts"></div>
+
+                <div class="leg left-leg"></div>
+                <div class="leg right-leg"></div>
+
+            </div>
+
+        </div>
+
+        <div class="board"></div>
+
+    </div>
+
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+        <div class="control" id="left">
+            ⬅️
+        </div>
+
+        <div class="control" id="right">
+            ➡️
+        </div>
+
+    </div>
+
+
+    <!-- START -->
+
+    <div class="screen" id="startScreen">
+
+        <h1>🏄 Surfing Fever</h1>
+
+        <p>
+            Collect coins, avoid obstacles,
+            build combos and surf as far as possible!
+        </p>
+
+        <button onclick="startGame()">
+            🌊 START SURFING
+        </button>
+
+    </div>
+
+
+    <!-- GAME OVER -->
+
+    <div class="screen" id="gameOver"
+         style="display:none">
+
+        <h1>🌊 Game Over</h1>
+
+        <p id="finalScore">
+            Score: 0
+        </p>
+
+        <button onclick="restartGame()">
+            🔄 PLAY AGAIN
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================= VARIABLES ================= */
+
+let gameRunning=false;
+
+let score=0;
+let combo=1;
+let speed=5;
+
+let playerX=innerWidth/2;
+
+let left=false;
+let right=false;
+
+let objectTimer;
+
+const player=
+document.getElementById("player");
+
+const game=
+document.getElementById("game");
+
+const scoreText=
+document.getElementById("score");
+
+const comboText=
+document.getElementById("combo");
+
+const speedText=
+document.getElementById("speed");
+
+
+/* ================= SOUND ================= */
+
+let audio;
+
+function beep(
+    frequency,
+    duration=.08
+){
+
+    try{
+
+        if(!audio){
+
+            audio=
+            new(
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+        }
+
+        let oscillator=
+        audio.createOscillator();
+
+        let gain=
+        audio.createGain();
+
+        oscillator.frequency.value=
+        frequency;
+
+        oscillator.type="sine";
+
+        gain.gain.value=.08;
+
+        oscillator.connect(gain);
+
+        gain.connect(audio.destination);
+
+        oscillator.start();
+
+        oscillator.stop(
+            audio.currentTime+duration
+        );
+
+    }catch(e){}
+
+}
+
+
+/* ================= START ================= */
+
+function startGame(){
+
+    if(audio &&
+       audio.state==="suspended"){
+
+        audio.resume();
+
+    }
+
+    score=0;
+    combo=1;
+    speed=5;
+
+    playerX=
+    innerWidth/2;
+
+    scoreText.innerText=
+    "🏆 Score: 0";
+
+    comboText.innerText=
+    "🔥 Combo: x1";
+
+    speedText.innerText=
+    "⚡ Speed: 1";
+
+    gameRunning=true;
+
+    document
+    .getElementById("startScreen")
+    .style.display="none";
+
+    document
+    .getElementById("gameOver")
+    .style.display="none";
+
+    document
+    .querySelectorAll(
+        ".coin,.obstacle,.power"
+    )
+    .forEach(x=>x.remove());
+
+    beep(700,.12);
+
+    createObjects();
+
+    requestAnimationFrame(loop);
+}
+
+
+/* ================= OBJECT CREATOR ================= */
+
+function createObjects(){
+
+    if(!gameRunning)
+        return;
+
+    let type=
+    Math.random();
+
+    let object=
+    document.createElement("div");
+
+
+    /* COIN */
+
+    if(type<.48){
+
+        object.className="coin";
+        object.innerText="🪙";
+
+    }
+
+    /* POWER */
+
+    else if(type<.58){
+
+        object.className="power";
+        object.innerText="⚡";
+
+    }
+
+    /* OBSTACLE */
+
+    else{
+
+        object.className="obstacle";
+
+        const obstacles=[
+            "🪨",
+            "🌴",
+            "🪵",
+            "🦀",
+            "🌊"
+        ];
+
+        object.innerText=
+        obstacles[
+            Math.floor(
+                Math.random()*
+                obstacles.length
+            )
+        ];
+
+    }
+
+
+    object.style.left=
+    Math.random()*
+    (innerWidth-70)+"px";
+
+    object.style.top="-80px";
+
+    game.appendChild(object);
+
+
+    objectTimer=
+    setTimeout(
+        createObjects,
+        Math.max(
+            350,
+            850-(score*3)
+        )
+    );
+
+}
+
+
+/* ================= COLLISION ================= */
+
+function collision(a,b){
+
+    const A=
+    a.getBoundingClientRect();
+
+    const B=
+    b.getBoundingClientRect();
+
+    return !(
+        A.right<B.left ||
+        A.left>B.right ||
+        A.bottom<B.top ||
+        A.top>B.bottom
+    );
+
+}
+
+
+/* ================= SPLASH ================= */
+
+function splash(x,y){
+
+    let s=
+    document.createElement("div");
+
+    s.className="splash";
+
+    s.style.left=x+"px";
+    s.style.top=y+"px";
+
+    game.appendChild(s);
+
+    setTimeout(
+        ()=>s.remove(),
+        500
+    );
+
+}
+
+
+/* ================= GAME LOOP ================= */
+
+function loop(){
+
+    if(!gameRunning)
+        return;
+
+
+    /* MOVEMENT */
+
+    if(left)
+        playerX-=8;
+
+    if(right)
+        playerX+=8;
+
+
+    playerX=
+    Math.max(
+        50,
+        Math.min(
+            innerWidth-50,
+            playerX
+        )
+    );
+
+
+    player.style.left=
+    playerX+"px";
+
+
+    /* OBJECTS */
+
+    document
+    .querySelectorAll(
+        ".coin,.obstacle,.power"
+    )
+    .forEach(
+        object=>{
+
+            let y=
+            parseFloat(
+                object.style.top
+            )||0;
+
+            y+=speed;
+
+            object.style.top=
+            y+"px";
+
+
+            /* COLLISION */
+
+            if(
+                collision(
+                    player,
+                    object
+                )
+            ){
+
+                /* COIN */
+
+                if(
+                    object.classList
+                    .contains("coin")
+                ){
+
+                    score+=
+                    10*combo;
+
+                    combo++;
+
+                    if(combo>10)
+                        combo=10;
+
+                    scoreText.innerText=
+                    "🏆 Score: "+score;
+
+                    comboText.innerText=
+                    "🔥 Combo: x"+combo;
+
+                    splash(
+                        object.offsetLeft,
+                        object.offsetTop
+                    );
+
+                    beep(900,.1);
+
+                    object.remove();
+
+                }
+
+
+                /* POWER */
+
+                else if(
+                    object.classList
+                    .contains("power")
+                ){
+
+                    score+=50;
+
+                    speed+=.5;
+
+                    scoreText.innerText=
+                    "🏆 Score: "+score;
+
+                    speedText.innerText=
+                    "⚡ Speed: "+
+                    Math.round(speed/5);
+
+                    beep(1200,.15);
+
+                    object.remove();
+
+                }
+
+
+                /* OBSTACLE */
+
+                else{
+
+                    combo=1;
+
+                    comboText.innerText=
+                    "🔥 Combo: x1";
+
+                    endGame();
+
+                }
+
+            }
+
+
+            /* MISSED OBJECT */
+
+            if(
+                y>
+                innerHeight+100
+            ){
+
+                object.remove();
+
+                if(
+                    object.classList
+                    .contains("obstacle")
+                ){
+
+                    score+=5;
+
+                    scoreText.innerText=
+                    "🏆 Score: "+score;
+
+                    beep(450,.04);
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* SPEED */
+
+    if(
+        score>0 &&
+        score%100===0
+    ){
+
+        speed+=.01;
+
+    }
+
+
+    requestAnimationFrame(loop);
+
+}
+
+
+/* ================= GAME OVER ================= */
+
+function endGame(){
+
+    if(!gameRunning)
+        return;
+
+    gameRunning=false;
+
+    clearTimeout(objectTimer);
+
+    beep(160,.35);
+
+    document
+    .getElementById("finalScore")
+    .innerText=
+    "🏆 Your Score: "+score;
+
+    document
+    .getElementById("gameOver")
+    .style.display="flex";
+
+}
+
+
+/* ================= RESTART ================= */
+
+function restartGame(){
+
+    startGame();
+
+}
+
+
+/* ================= KEYBOARD ================= */
+
+document.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.key==="ArrowLeft" ||
+            e.key==="a"
+        )
+            left=true;
+
+        if(
+            e.key==="ArrowRight" ||
+            e.key==="d"
+        )
+            right=true;
+
+        if(
+            e.code==="Space" &&
+            !gameRunning
+        )
+            startGame();
+
+    }
+);
+
+
+document.addEventListener(
+    "keyup",
+    e=>{
+
+        if(
+            e.key==="ArrowLeft" ||
+            e.key==="a"
+        )
+            left=false;
+
+        if(
+            e.key==="ArrowRight" ||
+            e.key==="d"
+        )
+            right=false;
+
+    }
+);
+
+
+/* ================= MOBILE ================= */
+
+function mobileButton(
+    id,
+    direction
+){
+
+    const button=
+    document.getElementById(id);
+
+    button.addEventListener(
+        "pointerdown",
+        e=>{
+
+            e.preventDefault();
+
+            if(direction==="left")
+                left=true;
+
+            else
+                right=true;
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointerup",
+        ()=>{
+
+            if(direction==="left")
+                left=false;
+
+            else
+                right=false;
+
+        }
+    );
+
+
+    button.addEventListener(
+        "pointerleave",
+        ()=>{
+
+            if(direction==="left")
+                left=false;
+
+            else
+                right=false;
+
+        }
+    );
+
+}
+
+
+mobileButton(
+    "left",
+    "left"
+);
+
+mobileButton(
+    "right",
+    "right"
+);
+
+
+/* ================= RESIZE ================= */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        playerX=
+        Math.min(
+            playerX,
+            innerWidth-50
+        );
+
+        player.style.left=
+        playerX+"px";
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
