@@ -1,1141 +1,240 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>🧠 Math Puzzle</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:Arial,sans-serif;
-    color:white;
-
-    background:
-      radial-gradient(circle at top,#243b68,#050712 70%);
-}
-
-.game{
-    width:95%;
-    max-width:850px;
-    text-align:center;
-}
-
-h1{
-    font-size:clamp(32px,7vw,55px);
-    color:#00eaff;
-
-    text-shadow:
-      0 0 12px #00eaff,
-      0 0 30px #00eaff;
-
-    margin-bottom:8px;
-}
-
-.subtitle{
-    color:#aac6d5;
-    margin-bottom:15px;
-}
-
-.stats{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-bottom:15px;
-}
-
-.stat{
-    min-width:105px;
-    padding:9px 13px;
-
-    border-radius:15px;
-
-    background:#ffffff0d;
-    border:1px solid #00eaff33;
-}
-
-.stat span{
-    display:block;
-    color:#8fa8b7;
-    font-size:11px;
-}
-
-.stat strong{
-    color:#00eaff;
-    font-size:19px;
-}
-
-.card{
-    position:relative;
-
-    padding:30px 20px;
-
-    border-radius:25px;
-
-    background:
-      linear-gradient(
-        145deg,
-        #ffffff10,
-        #00eaff08
-      );
-
-    border:1px solid #00eaff44;
-
-    box-shadow:
-      0 0 30px #00eaff18,
-      inset 0 0 30px #00eaff08;
-}
-
-.difficulty{
-    display:inline-block;
-
-    padding:7px 15px;
-
-    border-radius:20px;
-
-    background:#00eaff18;
-    color:#00eaff;
-
-    font-weight:bold;
-
-    margin-bottom:20px;
-}
-
-.question{
-    font-size:clamp(30px,8vw,58px);
-
-    font-weight:bold;
-
-    margin:15px 0 25px;
-
-    color:white;
-
-    text-shadow:0 0 12px #ffffff44;
-}
-
-.answers{
-    display:grid;
-
-    grid-template-columns:
-      repeat(2,1fr);
-
-    gap:12px;
-
-    max-width:600px;
-
-    margin:auto;
-}
-
-.answer{
-    padding:16px;
-
-    border-radius:16px;
-
-    border:1px solid #00eaff44;
-
-    background:#ffffff0b;
-
-    color:white;
-
-    font-size:20px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.answer:hover{
-    transform:translateY(-3px);
-
-    background:#00eaff20;
-
-    box-shadow:
-      0 0 18px #00eaff33;
-}
-
-.answer.correct{
-    background:#0b9f62;
-    border-color:#43ffc0;
-}
-
-.answer.wrong{
-    background:#a51e3b;
-    border-color:#ff6680;
-}
-
-.answer:disabled{
-    cursor:not-allowed;
-}
-
-.progress{
-    height:8px;
-
-    background:#ffffff12;
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-    margin:25px auto 0;
-
-    max-width:600px;
-}
-
-.progressBar{
-    width:0%;
-    height:100%;
-
-    background:#00eaff;
-
-    box-shadow:0 0 12px #00eaff;
-
-    transition:.3s;
-}
-
-.controls{
-    margin-top:18px;
-}
-
-button{
-    border:0;
-
-    padding:11px 20px;
-
-    margin:4px;
-
-    border-radius:22px;
-
-    background:#00eaff;
-
-    color:#001018;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    box-shadow:0 0 15px #00eaff66;
-
-    transition:.2s;
-}
-
-button:hover{
-    transform:scale(1.06);
-}
-
-.message{
-    min-height:25px;
-
-    margin-top:15px;
-
-    color:#bceeff;
-}
-
-.overlay{
-    position:absolute;
-
-    inset:0;
-
-    z-index:10;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:#020713e8;
-
-    backdrop-filter:blur(8px);
-
-    border-radius:25px;
-}
-
-.overlay h2{
-    font-size:40px;
-
-    color:#00eaff;
-
-    text-shadow:0 0 20px #00eaff;
-
-    margin-bottom:10px;
-}
-
-.overlay p{
-    margin:5px;
-
-    color:#c6dce7;
-}
-
-@media(max-width:500px){
-
-    .answers{
-        grid-template-columns:1fr;
+function generateQuestion(){
+
+    if(gameOver || lives <= 0){
+        endGame();
+        return;
     }
-
-    .answer{
-        padding:13px;
-        font-size:18px;
-    }
-
-    .card{
-        padding:22px 12px;
-    }
-
-}
-</style>
-</head>
-
-<body>
-
-<div class="game">
-
-<h1>🧠 MATH PUZZLE</h1>
-
-<p class="subtitle">
-    Start easy → become harder!
-</p>
-
-<div class="stats">
-
-    <div class="stat">
-        <span>SCORE</span>
-        <strong id="score">0</strong>
-    </div>
-
-    <div class="stat">
-        <span>BEST</span>
-        <strong id="best">0</strong>
-    </div>
-
-    <div class="stat">
-        <span>TIME</span>
-        <strong id="time">15</strong>
-    </div>
-
-    <div class="stat">
-        <span>STREAK</span>
-        <strong id="streak">0</strong>
-    </div>
-
-    <div class="stat">
-        <span>LEVEL</span>
-        <strong id="level">Basic</strong>
-    </div>
-
-</div>
-
-<div class="card">
-
-<div class="overlay" id="overlay">
-
-    <h2>🧠 Math Puzzle</h2>
-
-    <p>🔵 Basic questions first</p>
-    <p>🟡 Then Medium</p>
-    <p>🔴 Finally Hard</p>
-
-    <button onclick="startGame()">
-        ▶ START GAME
-    </button>
-
-</div>
-
-<div class="difficulty" id="difficulty">
-    BASIC
-</div>
-
-<div class="question" id="question">
-    5 + 5 = ?
-</div>
-
-<div class="answers" id="answers"></div>
-
-<div class="progress">
-    <div class="progressBar" id="progressBar"></div>
-</div>
-
-</div>
-
-<div class="controls">
-
-<button onclick="startGame()">
-    🔄 Restart
-</button>
-
-</div>
-
-<div class="message" id="message">
-    Choose the correct answer.
-</div>
-
-</div>
-
-<script>
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const questionText=
-    document.getElementById("question");
-
-const answers=
-    document.getElementById("answers");
-
-const scoreText=
-    document.getElementById("score");
-
-const bestText=
-    document.getElementById("best");
-
-const timeText=
-    document.getElementById("time");
-
-const streakText=
-    document.getElementById("streak");
-
-const levelText=
-    document.getElementById("level");
-
-const difficultyText=
-    document.getElementById("difficulty");
-
-const progressBar=
-    document.getElementById("progressBar");
-
-const message=
-    document.getElementById("message");
-
-const overlay=
-    document.getElementById("overlay");
-
-
-/* =========================
-   VARIABLES
-========================= */
-
-let score=0;
-
-let best=
-    Number(
-        localStorage.getItem(
-            "mathPuzzleBest"
-        )
-    ) || 0;
-
-let streak=0;
-
-let questionNumber=0;
-
-let time=15;
-
-let timer;
-
-let playing=false;
-
-let correctAnswer=0;
-
-
-/* =========================
-   START GAME
-========================= */
-
-function startGame(){
 
     clearInterval(timer);
 
-    score=0;
-    streak=0;
-    questionNumber=0;
-
-    time=15;
-
-    playing=true;
-
-    overlay.style.display="none";
-
-    updateStats();
-
-    nextQuestion();
-
-    timer=setInterval(
-        countdown,
-        1000
-    );
-
-}
-
-
-/* =========================
-   COUNTDOWN
-========================= */
-
-function countdown(){
-
-    if(!playing)
-        return;
-
-    time--;
-
-    timeText.textContent=time;
-
-    if(time<=0){
-
-        wrongAnswer(
-            null,
-            "⏰ Time's up!"
-        );
-
-    }
-
-}
-
-
-/* =========================
-   NEXT QUESTION
-========================= */
-
-function nextQuestion(){
-
-    if(!playing)
-        return;
+    answered = false;
+    message.textContent = "";
+    next.classList.remove("show");
+    options.innerHTML = "";
 
     questionNumber++;
 
-    /*
-       Difficulty progression
-
-       1 - 5   = Basic
-       6 - 10  = Medium
-       11+     = Hard
-    */
-
-    let difficulty;
-
-    if(questionNumber<=5){
-
-        difficulty="basic";
-
-    }else if(questionNumber<=10){
-
-        difficulty="medium";
-
-    }else{
-
-        difficulty="hard";
-
-    }
-
-
-    const q=
-        generateQuestion(
-            difficulty
-        );
-
-
-    correctAnswer=q.answer;
-
-    difficultyText.textContent=
-        difficulty.toUpperCase();
-
-    levelText.textContent=
-        difficulty
-        .charAt(0)
-        .toUpperCase()+
-        difficulty.slice(1);
-
-    questionText.textContent=
-        q.question;
-
-    createAnswers(
-        q.answer
-    );
+    let a, b, c;
+    let answer;
+    let text;
 
     /*
-       Reset timer.
-
-       Hard questions get less time.
+    ==============================
+    MEDIUM MATH QUESTIONS
+    ==============================
     */
 
-    if(difficulty==="basic"){
-
-        time=15;
-
-    }else if(difficulty==="medium"){
-
-        time=12;
-
-    }else{
-
-        time=10;
-
-    }
-
-    timeText.textContent=time;
-
-    progressBar.style.width=
-        Math.min(
-            questionNumber*5,
-            100
-        )+"%";
-
-}
+    let type = random(1, 8);
 
 
-/* =========================
-   GENERATE QUESTION
-========================= */
+    // 1. Addition
+    if(type === 1){
 
-function generateQuestion(level){
+        level.textContent = "🟢 Medium • Addition";
 
-    let a,b,c,answer,question;
+        a = random(100, 600);
+        b = random(100, 600);
 
+        answer = a + b;
 
-    /* BASIC */
-
-    if(level==="basic"){
-
-        const type=
-            Math.floor(
-                Math.random()*4
-            );
-
-        a=random(1,20);
-
-        b=random(1,20);
-
-
-        if(type===0){
-
-            answer=a+b;
-
-            question=
-                `${a} + ${b} = ?`;
-
-        }
-
-        else if(type===1){
-
-            if(b>a){
-
-                [a,b]=[b,a];
-
-            }
-
-            answer=a-b;
-
-            question=
-                `${a} − ${b} = ?`;
-
-        }
-
-        else if(type===2){
-
-            a=random(2,10);
-            b=random(2,10);
-
-            answer=a*b;
-
-            question=
-                `${a} × ${b} = ?`;
-
-        }
-
-        else{
-
-            b=random(2,10);
-
-            answer=random(2,10);
-
-            a=b*answer;
-
-            question=
-                `${a} ÷ ${b} = ?`;
-
-        }
-
+        text = `${a} + ${b} = ?`;
     }
 
 
-    /* MEDIUM */
+    // 2. Subtraction
+    else if(type === 2){
 
-    else if(level==="medium"){
+        level.textContent = "🟢 Medium • Subtraction";
 
-        const type=
-            Math.floor(
-                Math.random()*4
-            );
+        a = random(300, 900);
+        b = random(100, a - 50);
 
-        a=random(10,50);
-        b=random(2,15);
+        answer = a - b;
 
-
-        if(type===0){
-
-            answer=a+b*cRandom();
-
-            question=
-                `${a} + ${b} × 2 = ?`;
-
-            answer=
-                a+b*2;
-
-        }
-
-        else if(type===1){
-
-            if(b>a)
-                [a,b]=[b,a];
-
-            c=random(1,10);
-
-            answer=
-                a-b+c;
-
-            question=
-                `${a} − ${b} + ${c} = ?`;
-
-        }
-
-        else if(type===2){
-
-            a=random(2,12);
-            b=random(2,12);
-            c=random(1,20);
-
-            answer=
-                a*b+c;
-
-            question=
-                `${a} × ${b} + ${c} = ?`;
-
-        }
-
-        else{
-
-            a=random(5,30);
-            b=random(2,10);
-
-            answer=
-                a*b-b;
-
-            question=
-                `${a} × ${b} − ${b} = ?`;
-
-        }
-
+        text = `${a} − ${b} = ?`;
     }
 
 
-    /* HARD */
+    // 3. Multiplication
+    else if(type === 3){
 
+        level.textContent = "🟡 Medium • Multiplication";
+
+        a = random(12, 30);
+        b = random(6, 20);
+
+        answer = a * b;
+
+        text = `${a} × ${b} = ?`;
+    }
+
+
+    // 4. Division
+    else if(type === 4){
+
+        level.textContent = "🟡 Medium • Division";
+
+        b = random(5, 20);
+        answer = random(10, 40);
+
+        a = b * answer;
+
+        text = `${a} ÷ ${b} = ?`;
+    }
+
+
+    // 5. Bigger Addition
+    else if(type === 5){
+
+        level.textContent = "🟠 Medium • Challenge";
+
+        a = random(200, 900);
+        b = random(100, 700);
+        c = random(50, 300);
+
+        answer = a + b + c;
+
+        text = `${a} + ${b} + ${c} = ?`;
+    }
+
+
+    // 6. Mixed × and +
+    else if(type === 6){
+
+        level.textContent = "🟠 Medium • Mixed";
+
+        a = random(10, 30);
+        b = random(5, 15);
+        c = random(10, 50);
+
+        answer = (a * b) + c;
+
+        text = `(${a} × ${b}) + ${c} = ?`;
+    }
+
+
+    // 7. Mixed − and ×
+    else if(type === 7){
+
+        level.textContent = "🟠 Medium • Mixed";
+
+        a = random(30, 80);
+        b = random(5, 15);
+        c = random(5, 30);
+
+        answer = (a - b) * c;
+
+        text = `(${a} − ${b}) × ${c} = ?`;
+    }
+
+
+    // 8. Division + Addition
     else{
 
-        const type=
-            Math.floor(
-                Math.random()*5
-            );
+        level.textContent = "🟠 Medium • Mixed";
 
-        if(type===0){
+        b = random(5, 15);
+        c = random(10, 50);
 
-            a=random(5,20);
-            b=random(5,20);
-            c=random(2,10);
+        answer = random(10, 30);
 
-            answer=
-                a+b*c;
+        a = b * answer;
 
-            question=
-                `${a} + ${b} × ${c} = ?`;
+        let finalAnswer = answer + c;
 
-        }
+        correctAnswer = finalAnswer;
 
-        else if(type===1){
+        text = `(${a} ÷ ${b}) + ${c} = ?`;
 
-            a=random(10,30);
-            b=random(2,10);
-            c=random(2,10);
+        showQuestion(text, finalAnswer);
 
-            answer=
-                (a-b)*c;
-
-            question=
-                `(${a} − ${b}) × ${c} = ?`;
-
-        }
-
-        else if(type===2){
-
-            a=random(10,50);
-            b=random(2,10);
-            c=random(1,20);
-
-            answer=
-                a*b+c;
-
-            question=
-                `${a} × ${b} + ${c} = ?`;
-
-        }
-
-        else if(type===3){
-
-            a=random(5,15);
-            b=random(5,15);
-
-            answer=
-                a*a+b;
-
-            question=
-                `${a}² + ${b} = ?`;
-
-        }
-
-        else{
-
-            a=random(2,10);
-            b=random(2,10);
-            c=random(2,10);
-
-            answer=
-                a*b*c;
-
-            question=
-                `${a} × ${b} × ${c} = ?`;
-
-        }
-
-    }
-
-
-    return{
-        question,
-        answer
-    };
-
-}
-
-
-/* =========================
-   CREATE ANSWERS
-========================= */
-
-function createAnswers(correct){
-
-    answers.innerHTML="";
-
-
-    const options=
-        new Set();
-
-    options.add(correct);
-
-
-    while(options.size<4){
-
-        let offset=
-            random(
-                Math.max(
-                    -10,
-                    correct-10
-                ),
-                10
-            );
-
-        let wrong=
-            correct+
-            random(-10,10);
-
-        if(wrong<0)
-            wrong=Math.abs(wrong);
-
-        if(wrong!==correct)
-            options.add(wrong);
-
-    }
-
-
-    const shuffled=
-        [...options]
-        .sort(
-            ()=>Math.random()-.5
-        );
-
-
-    shuffled.forEach(
-        value=>{
-
-            const button=
-                document.createElement(
-                    "button"
-                );
-
-            button.className=
-                "answer";
-
-            button.textContent=
-                value;
-
-            button.onclick=
-                ()=>checkAnswer(
-                    value,
-                    button
-                );
-
-            answers.appendChild(
-                button
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================
-   CHECK ANSWER
-========================= */
-
-function checkAnswer(
-    answer,
-    button
-){
-
-    if(!playing)
         return;
-
-
-    const buttons=
-        document.querySelectorAll(
-            ".answer"
-        );
-
-    buttons.forEach(
-        b=>b.disabled=true
-    );
-
-
-    if(answer===correctAnswer){
-
-        button.classList.add(
-            "correct"
-        );
-
-        streak++;
-
-        /*
-           More streak = more points
-        */
-
-        const points=
-            10+
-            Math.min(
-                streak*2,
-                20
-            );
-
-        score+=points;
-
-        message.textContent=
-            `✅ Correct! +${points}`;
-
-        updateStats();
-
-
-        setTimeout(
-            nextQuestion,
-            700
-        );
-
-    }else{
-
-        button.classList.add(
-            "wrong"
-        );
-
-        wrongAnswer(
-            button,
-            "❌ Wrong answer!"
-        );
-
     }
 
+
+    correctAnswer = answer;
+
+    showQuestion(text, answer);
 }
 
 
-/* =========================
-   WRONG ANSWER
-========================= */
+/* =================================
+   SHOW QUESTION
+================================= */
 
-function wrongAnswer(
-    button,
-    text
-){
+function showQuestion(text, answer){
 
-    if(!playing)
-        return;
+    question.textContent = text;
 
-    playing=false;
+    let answers = [answer];
 
-    clearInterval(timer);
-
-    streak=0;
-
-    if(button){
-
-        button.classList.add(
-            "wrong"
-        );
-
-    }
-
-    message.textContent=text;
 
     /*
-       Show correct answer
+    Wrong answers पनि नजिकका राख्ने,
+    त्यसैले प्रश्न धेरै सजिलो हुँदैन।
     */
 
-    document
-        .querySelectorAll(
-            ".answer"
-        )
-        .forEach(
-            b=>{
+    while(answers.length < 4){
 
-                b.disabled=true;
+        let difference = random(3, 30);
 
-                if(
-                    Number(b.textContent)===
-                    correctAnswer
-                ){
+        let wrong;
 
-                    b.classList.add(
-                        "correct"
-                    );
+        if(Math.random() < 0.5){
 
-                }
+            wrong = answer + difference;
 
-            }
-        );
+        }else{
 
+            wrong = answer - difference;
 
-    setTimeout(
-        gameOver,
-        900
-    );
+        }
 
-}
+        if(
+            wrong >= 0 &&
+            wrong !== answer &&
+            !answers.includes(wrong)
+        ){
 
-
-/* =========================
-   GAME OVER
-========================= */
-
-function gameOver(){
-
-    if(score>best){
-
-        best=score;
-
-        localStorage.setItem(
-            "mathPuzzleBest",
-            best
-        );
-
+            answers.push(wrong);
+        }
     }
 
-    updateStats();
+
+    shuffle(answers);
 
 
-    overlay.innerHTML=`
+    answers.forEach(value => {
 
-        <h2>🏆 GAME OVER</h2>
+        const button =
+        document.createElement("button");
 
-        <p>Score: <b>${score}</b></p>
+        button.className = "option";
 
-        <p>Best: <b>${best}</b></p>
+        button.textContent = value;
 
-        <p>Questions: <b>${questionNumber}</b></p>
+        button.onclick = () => {
 
-        <button onclick="startGame()">
-            🔄 PLAY AGAIN
-        </button>
+            selectAnswer(
+                button,
+                value
+            );
 
-    `;
+        };
 
-    overlay.style.display="flex";
+        options.appendChild(button);
 
+    });
+
+
+    document.getElementById(
+        "questionNo"
+    ).textContent = questionNumber;
+
+
+    /*
+    प्रत्येक प्रश्नमा 10 seconds
+    */
+
+    startTimer();
 }
-
-
-/* =========================
-   RANDOM NUMBER
-========================= */
-
-function random(min,max){
-
-    return Math.floor(
-        Math.random()*
-        (max-min+1)
-    )+min;
-
-}
-
-
-/* =========================
-   SMALL RANDOM HELPER
-========================= */
-
-function cRandom(){
-
-    return 2;
-
-}
-
-
-/* =========================
-   UPDATE STATS
-========================= */
-
-function updateStats(){
-
-    scoreText.textContent=
-        score;
-
-    bestText.textContent=
-        best;
-
-    streakText.textContent=
-        streak;
-
-    timeText.textContent=
-        time;
-
-}
-
-
-/* =========================
-   INITIAL
-========================= */
-
-updateStats();
-
-</script>
-
-</body>
-</html>
