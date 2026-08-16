@@ -1,60 +1,75 @@
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ne">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GameBook GK Hub</title>
+
+<title>HTML Complete Course - GameBook GK Hub</title>
 
 <style>
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
+    font-family:Arial, sans-serif;
     background:#07111f;
-    color:white;
+    color:#e5e7eb;
+    line-height:1.7;
 }
 
+/* HEADER */
+
 header{
-    padding:20px 7%;
-    background:#0d1b2a;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#0b1728;
+    border-bottom:1px solid #263b50;
+    padding:15px 5%;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    position:sticky;
-    top:0;
-    z-index:10;
 }
 
 .logo{
-    font-size:25px;
+    color:#38bdf8;
+    font-size:21px;
     font-weight:bold;
 }
 
-nav a{
-    color:white;
+.home-btn{
     text-decoration:none;
-    margin-left:20px;
+    color:white;
+    background:#0ea5e9;
+    padding:9px 18px;
+    border-radius:20px;
 }
 
+/* HERO */
+
 .hero{
-    min-height:70vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
     text-align:center;
-    padding:40px 20px;
+    padding:70px 20px;
     background:
-    radial-gradient(circle at top,#164e63,#07111f 65%);
+        radial-gradient(circle at top,#164e63,#07111f 70%);
+}
+
+.hero-icon{
+    font-size:70px;
 }
 
 .hero h1{
-    font-size:clamp(40px,7vw,80px);
-    margin-bottom:20px;
+    font-size:clamp(38px,7vw,70px);
+    margin:10px 0;
 }
 
 .hero h1 span{
@@ -62,164 +77,1143 @@ nav a{
 }
 
 .hero p{
-    max-width:700px;
+    max-width:750px;
     margin:auto;
     color:#cbd5e1;
-    font-size:18px;
-    line-height:1.7;
 }
 
-.btn{
-    display:inline-block;
-    margin-top:30px;
-    padding:15px 28px;
-    border-radius:30px;
-    background:#0ea5e9;
-    color:white;
+/* LAYOUT */
+
+.container{
+    display:flex;
+    max-width:1400px;
+    margin:auto;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:270px;
+    min-width:270px;
+    padding:25px 18px;
+    border-right:1px solid #263b50;
+    position:sticky;
+    top:68px;
+    height:calc(100vh - 68px);
+    overflow-y:auto;
+}
+
+.sidebar h3{
+    color:#38bdf8;
+    margin-bottom:15px;
+}
+
+.sidebar a{
+    display:block;
+    color:#cbd5e1;
     text-decoration:none;
+    padding:8px 10px;
+    margin:3px 0;
+    border-radius:7px;
+    font-size:14px;
+}
+
+.sidebar a:hover{
+    background:#10243a;
+    color:#38bdf8;
+}
+
+/* CONTENT */
+
+.content{
+    flex:1;
+    padding:45px;
+    max-width:1000px;
+}
+
+.lesson{
+    margin-bottom:65px;
+    scroll-margin-top:90px;
+}
+
+.lesson h2{
+    color:#38bdf8;
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.lesson h3{
+    color:#7dd3fc;
+    margin:25px 0 10px;
+}
+
+.lesson p{
+    color:#cbd5e1;
+    margin-bottom:15px;
+}
+
+/* NOTE */
+
+.note{
+    background:#0d1b2a;
+    border-left:4px solid #38bdf8;
+    padding:18px;
+    margin:20px 0;
+    border-radius:8px;
+}
+
+/* CODE */
+
+.code-title{
+    background:#172a3d;
+    color:#7dd3fc;
+    padding:10px 15px;
+    border-radius:8px 8px 0 0;
     font-weight:bold;
 }
 
-section{
-    padding:70px 7%;
-}
-
-.section-title{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.section-title h2{
-    font-size:38px;
-    margin-bottom:10px;
-}
-
-.section-title p{
-    color:#94a3b8;
-}
-
-.card{
-    max-width:420px;
-    margin:auto;
-    padding:35px;
-    border-radius:25px;
-    background:linear-gradient(145deg,#10243a,#0b1728);
-    border:1px solid #1e3a52;
-    box-shadow:0 15px 50px rgba(0,0,0,.3);
-    transition:.3s;
-}
-
-.card:hover{
-    transform:translateY(-8px);
-    border-color:#38bdf8;
-}
-
-.icon{
-    font-size:60px;
+pre{
+    background:#020617;
+    color:#d1fae5;
+    padding:20px;
+    overflow-x:auto;
+    border:1px solid #263b50;
+    border-radius:0 0 8px 8px;
     margin-bottom:20px;
 }
 
-.card h3{
-    font-size:25px;
-    margin-bottom:12px;
+code{
+    font-family:Consolas,monospace;
 }
 
-.card p{
-    color:#aebdca;
-    line-height:1.7;
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
 }
 
-.card a{
-    display:inline-block;
-    margin-top:20px;
-    color:#38bdf8;
-    text-decoration:none;
+th,
+td{
+    border:1px solid #334155;
+    padding:12px;
+    text-align:left;
+}
+
+th{
+    background:#10243a;
+    color:#7dd3fc;
+}
+
+/* QUIZ */
+
+.quiz{
+    background:#0d1b2a;
+    border:1px solid #263b50;
+    border-radius:15px;
+    padding:25px;
+}
+
+.quiz label{
+    display:block;
+    margin:10px 0;
+    cursor:pointer;
+}
+
+.quiz button{
+    border:0;
+    background:#0ea5e9;
+    color:white;
+    padding:11px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+#result{
+    margin-top:15px;
     font-weight:bold;
 }
 
+/* PROJECT */
+
+.project{
+    background:#0d1b2a;
+    padding:20px;
+    border:1px solid #263b50;
+    border-radius:15px;
+}
+
+/* FOOTER */
+
 footer{
     text-align:center;
-    padding:40px;
-    background:#050b14;
+    padding:40px 20px;
+    background:#020617;
     color:#94a3b8;
 }
 
-@media(max-width:700px){
+/* MOBILE */
+
+@media(max-width:850px){
+
     header{
-        flex-direction:column;
-        gap:15px;
+        padding:14px 20px;
     }
 
-    nav a{
-        margin:5px;
-        font-size:14px;
+    .container{
+        display:block;
     }
+
+    .sidebar{
+        width:100%;
+        min-width:0;
+        height:auto;
+        position:relative;
+        top:0;
+        border-right:0;
+        border-bottom:1px solid #263b50;
+    }
+
+    .content{
+        padding:30px 18px;
+    }
+
+    .sidebar a{
+        display:inline-block;
+        margin:3px;
+    }
+
 }
 </style>
+
 </head>
 
 <body>
 
-<header>
-    <div class="logo">🎮 GameBook GK Hub</div>
 
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#computer">Computer</a>
-        <a href="html-course.html">HTML Course</a>
-    </nav>
+<header>
+
+    <div class="logo">
+        🌐 HTML Complete Course
+    </div>
+
+    <a href="index.html" class="home-btn">
+        ← Home
+    </a>
+
 </header>
 
-<section class="hero" id="home">
-    <div>
-        <h1>Learn <span>HTML</span></h1>
 
-        <p>
-            सिक्नुहोस् HTML लाई Basic देखि Advanced सम्म।
-            नेपालीमा सरल theory र English मा practical code examples
-            सहित Complete HTML Course।
-        </p>
+<section class="hero">
 
-        <a href="html-course.html" class="btn">
-            🚀 Start HTML Course
-        </a>
+    <div class="hero-icon">
+        🌐
     </div>
+
+    <h1>
+        HTML <span>Complete Course</span>
+    </h1>
+
+    <p>
+        HTML लाई Basic देखि Advanced सम्म नेपालीमा सिक्नुहोस्।
+        Theory नेपालीमा र practical code English मा।
+    </p>
+
 </section>
 
-<section id="computer">
 
-    <div class="section-title">
-        <h2>💻 Computer Courses</h2>
-        <p>Learn coding and computer skills.</p>
-    </div>
+<div class="container">
 
-    <div class="card">
 
-        <div class="icon">🌐</div>
+<!-- SIDEBAR -->
 
-        <h3>HTML Complete Course</h3>
+<aside class="sidebar">
 
-        <p>
-            HTML के होदेखि complete website बनाउनसम्म सिक्नुहोस्।
-            Structure, headings, links, images, tables, forms,
-            semantic HTML, SEO, accessibility र practical project
-            सबै एउटै course मा।
-        </p>
+    <h3>📚 Course Menu</h3>
 
-        <a href="html-course.html">
-            Start Learning →
-        </a>
+    <a href="#intro">1. Introduction</a>
+    <a href="#structure">2. Structure</a>
+    <a href="#heading">3. Headings</a>
+    <a href="#paragraph">4. Paragraph</a>
+    <a href="#formatting">5. Formatting</a>
+    <a href="#links">6. Links</a>
+    <a href="#images">7. Images</a>
+    <a href="#lists">8. Lists</a>
+    <a href="#tables">9. Tables</a>
+    <a href="#forms">10. Forms</a>
+    <a href="#inputs">11. Inputs</a>
+    <a href="#media">12. Media</a>
+    <a href="#divspan">13. Div & Span</a>
+    <a href="#classid">14. Class & ID</a>
+    <a href="#semantic">15. Semantic HTML</a>
+    <a href="#attributes">16. Attributes</a>
+    <a href="#comments">17. Comments</a>
+    <a href="#meta">18. Meta Tags</a>
+    <a href="#entities">19. Entities</a>
+    <a href="#iframe">20. iframe</a>
+    <a href="#accessibility">21. Accessibility</a>
+    <a href="#seo">22. SEO</a>
+    <a href="#css">23. HTML + CSS</a>
+    <a href="#javascript">24. HTML + JavaScript</a>
+    <a href="#project">25. Project</a>
+    <a href="#quiz">26. Quiz</a>
 
-    </div>
+</aside>
+
+
+<!-- COURSE -->
+
+<main class="content">
+
+
+<section class="lesson" id="intro">
+
+<h2>1. HTML के हो?</h2>
+
+<p>
+HTML को पूरा नाम HyperText Markup Language हो।
+HTML को प्रयोग website को structure बनाउन गरिन्छ।
+</p>
+
+<div class="note">
+
+<b>सरल भाषामा:</b>
+
+HTML ले website मा heading, paragraph,
+image, button, link र अन्य content कहाँ राख्ने
+भनेर structure तयार गर्छ।
+
+</div>
 
 </section>
+
+
+<section class="lesson" id="structure">
+
+<h2>2. HTML Document Structure</h2>
+
+<p>
+हरेक HTML webpage को एउटा आधारभूत structure हुन्छ।
+</p>
+
+<div class="code-title">Example</div>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+
+    &lt;meta charset="UTF-8"&gt;
+
+    &lt;title&gt;My Website&lt;/title&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="heading">
+
+<h2>3. Headings</h2>
+
+<p>
+HTML मा h1 देखि h6 सम्म heading हुन्छन्।
+h1 सबैभन्दा मुख्य heading हो।
+</p>
+
+<pre><code>&lt;h1&gt;Main Heading&lt;/h1&gt;
+
+&lt;h2&gt;Sub Heading&lt;/h2&gt;
+
+&lt;h3&gt;Section Heading&lt;/h3&gt;
+
+&lt;h4&gt;Heading Four&lt;/h4&gt;
+
+&lt;h5&gt;Heading Five&lt;/h5&gt;
+
+&lt;h6&gt;Heading Six&lt;/h6&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="paragraph">
+
+<h2>4. Paragraph</h2>
+
+<p>
+Paragraph लेख्न p tag प्रयोग गरिन्छ।
+</p>
+
+<pre><code>&lt;p&gt;
+This is my first paragraph.
+&lt;/p&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="formatting">
+
+<h2>5. Text Formatting</h2>
+
+<p>
+Text लाई विभिन्न तरिकाले format गर्न सकिन्छ।
+</p>
+
+<pre><code>&lt;b&gt;Bold Text&lt;/b&gt;
+
+&lt;strong&gt;Important Text&lt;/strong&gt;
+
+&lt;i&gt;Italic Text&lt;/i&gt;
+
+&lt;em&gt;Emphasized Text&lt;/em&gt;
+
+&lt;u&gt;Underlined Text&lt;/u&gt;
+
+&lt;mark&gt;Highlighted Text&lt;/mark&gt;
+
+&lt;small&gt;Small Text&lt;/small&gt;
+
+&lt;del&gt;Deleted Text&lt;/del&gt;
+
+&lt;sup&gt;Superscript&lt;/sup&gt;
+
+&lt;sub&gt;Subscript&lt;/sub&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="links">
+
+<h2>6. Links</h2>
+
+<p>
+अर्को webpage वा website खोल्न anchor tag प्रयोग गरिन्छ।
+</p>
+
+<pre><code>&lt;a href="https://example.com"&gt;
+Visit Website
+&lt;/a&gt;</code></pre>
+
+<h3>New Tab</h3>
+
+<pre><code>&lt;a
+    href="https://example.com"
+    target="_blank"
+&gt;
+Open Website
+&lt;/a&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="images">
+
+<h2>7. Images</h2>
+
+<p>
+Website मा image राख्न img tag प्रयोग हुन्छ।
+</p>
+
+<pre><code>&lt;img
+    src="photo.jpg"
+    alt="My Photo"
+    width="500"
+&gt;</code></pre>
+
+<div class="note">
+alt attribute image को description दिन प्रयोग गरिन्छ।
+</div>
+
+</section>
+
+
+<section class="lesson" id="lists">
+
+<h2>8. Lists</h2>
+
+<h3>Unordered List</h3>
+
+<pre><code>&lt;ul&gt;
+
+    &lt;li&gt;HTML&lt;/li&gt;
+    &lt;li&gt;CSS&lt;/li&gt;
+    &lt;li&gt;JavaScript&lt;/li&gt;
+
+&lt;/ul&gt;</code></pre>
+
+<h3>Ordered List</h3>
+
+<pre><code>&lt;ol&gt;
+
+    &lt;li&gt;Learn HTML&lt;/li&gt;
+    &lt;li&gt;Learn CSS&lt;/li&gt;
+    &lt;li&gt;Learn JavaScript&lt;/li&gt;
+
+&lt;/ol&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="tables">
+
+<h2>9. Tables</h2>
+
+<p>
+Data लाई row र column मा देखाउन table प्रयोग गरिन्छ।
+</p>
+
+<pre><code>&lt;table&gt;
+
+    &lt;tr&gt;
+        &lt;th&gt;Name&lt;/th&gt;
+        &lt;th&gt;Age&lt;/th&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;Ram&lt;/td&gt;
+        &lt;td&gt;20&lt;/td&gt;
+    &lt;/tr&gt;
+
+&lt;/table&gt;</code></pre>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Age</th>
+</tr>
+
+<tr>
+<td>Ram</td>
+<td>20</td>
+</tr>
+
+<tr>
+<td>Sita</td>
+<td>19</td>
+</tr>
+
+</table>
+
+</section>
+
+
+<section class="lesson" id="forms">
+
+<h2>10. Forms</h2>
+
+<p>
+User बाट information लिन HTML forms प्रयोग गरिन्छ।
+</p>
+
+<pre><code>&lt;form&gt;
+
+    &lt;label&gt;Name&lt;/label&gt;
+
+    &lt;input
+        type="text"
+        name="name"
+    &gt;
+
+    &lt;label&gt;Email&lt;/label&gt;
+
+    &lt;input
+        type="email"
+        name="email"
+    &gt;
+
+    &lt;button type="submit"&gt;
+        Submit
+    &lt;/button&gt;
+
+&lt;/form&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="inputs">
+
+<h2>11. Input Types</h2>
+
+<p>
+HTML मा विभिन्न प्रकारका input field हुन्छन्।
+</p>
+
+<pre><code>&lt;input type="text"&gt;
+
+&lt;input type="email"&gt;
+
+&lt;input type="password"&gt;
+
+&lt;input type="number"&gt;
+
+&lt;input type="date"&gt;
+
+&lt;input type="time"&gt;
+
+&lt;input type="file"&gt;
+
+&lt;input type="checkbox"&gt;
+
+&lt;input type="radio"&gt;
+
+&lt;input type="color"&gt;
+
+&lt;input type="range"&gt;
+
+&lt;input type="search"&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="media">
+
+<h2>12. Audio & Video</h2>
+
+<h3>Audio</h3>
+
+<pre><code>&lt;audio controls&gt;
+
+    &lt;source
+        src="music.mp3"
+        type="audio/mpeg"
+    &gt;
+
+&lt;/audio&gt;</code></pre>
+
+<h3>Video</h3>
+
+<pre><code>&lt;video controls width="600"&gt;
+
+    &lt;source
+        src="video.mp4"
+        type="video/mp4"
+    &gt;
+
+&lt;/video&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="divspan">
+
+<h2>13. Div & Span</h2>
+
+<p>
+div ले content लाई block container मा राख्न मद्दत गर्छ।
+span ले inline content लाई group गर्न प्रयोग हुन्छ।
+</p>
+
+<pre><code>&lt;div class="card"&gt;
+
+    &lt;h2&gt;My Card&lt;/h2&gt;
+
+    &lt;p&gt;Card Content&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;
+This is
+&lt;span&gt;important&lt;/span&gt;
+text.
+&lt;/p&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="classid">
+
+<h2>14. Class & ID</h2>
+
+<p>
+CSS र JavaScript बाट HTML elements लाई target गर्न
+class र id प्रयोग गरिन्छ।
+</p>
+
+<pre><code>&lt;div class="card"&gt;
+    My Card
+&lt;/div&gt;
+
+&lt;section id="about"&gt;
+    About Us
+&lt;/section&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="semantic">
+
+<h2>15. Semantic HTML</h2>
+
+<p>
+Semantic HTML ले webpage को structure र content को अर्थ स्पष्ट बनाउँछ।
+</p>
+
+<pre><code>&lt;header&gt;
+    Website Header
+&lt;/header&gt;
+
+&lt;nav&gt;
+    Navigation
+&lt;/nav&gt;
+
+&lt;main&gt;
+
+    &lt;section&gt;
+
+        &lt;article&gt;
+            Article Content
+        &lt;/article&gt;
+
+    &lt;/section&gt;
+
+&lt;/main&gt;
+
+&lt;footer&gt;
+    Website Footer
+&lt;/footer&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="attributes">
+
+<h2>16. HTML Attributes</h2>
+
+<p>
+Attributes ले element लाई थप information दिन्छन्।
+</p>
+
+<pre><code>&lt;a
+    href="page.html"
+    title="Open Page"
+&gt;
+    Open Page
+&lt;/a&gt;
+
+&lt;img
+    src="photo.jpg"
+    alt="Photo"
+&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="comments">
+
+<h2>17. HTML Comments</h2>
+
+<p>
+Code मा note लेख्न comment प्रयोग गरिन्छ।
+Browser मा comment देखिँदैन।
+</p>
+
+<pre><code>&lt;!-- This is an HTML comment --&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="meta">
+
+<h2>18. Meta Tags</h2>
+
+<p>
+Meta tags ले browser र search engines लाई webpage बारे information दिन्छ।
+</p>
+
+<pre><code>&lt;meta charset="UTF-8"&gt;
+
+&lt;meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+&gt;
+
+&lt;meta
+    name="description"
+    content="HTML Complete Course"
+&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="entities">
+
+<h2>19. HTML Entities</h2>
+
+<p>
+Special characters लेख्न HTML entities प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>&amp;copy;   = ©
+
+&amp;reg;    = ®
+
+&amp;amp;    = &amp;
+
+&amp;lt;     = &lt;
+
+&amp;gt;     = &gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="iframe">
+
+<h2>20. iframe</h2>
+
+<p>
+अर्को webpage वा supported content लाई webpage भित्र embed गर्न iframe प्रयोग हुन्छ।
+</p>
+
+<pre><code>&lt;iframe
+    src="https://example.com"
+    width="600"
+    height="400"
+&gt;
+&lt;/iframe&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="accessibility">
+
+<h2>21. Accessibility</h2>
+
+<p>
+Website सबै user का लागि सजिलो बनाउन accessibility महत्त्वपूर्ण हुन्छ।
+</p>
+
+<pre><code>&lt;label for="email"&gt;
+Email Address
+&lt;/label&gt;
+
+&lt;input
+    id="email"
+    type="email"
+    aria-label="Email Address"
+&gt;</code></pre>
+
+<div class="note">
+Images मा राम्रो alt text राख्नुहोस्।
+Forms मा labels प्रयोग गर्नुहोस्।
+Heading लाई सही क्रमले प्रयोग गर्नुहोस्।
+</div>
+
+</section>
+
+
+<section class="lesson" id="seo">
+
+<h2>22. SEO Basics</h2>
+
+<p>
+SEO ले search engine लाई webpage को content बुझ्न मद्दत गर्छ।
+</p>
+
+<pre><code>&lt;title&gt;
+HTML Complete Course
+&lt;/title&gt;
+
+&lt;meta
+    name="description"
+    content="Learn HTML from beginner to advanced."
+&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="css">
+
+<h2>23. HTML + CSS</h2>
+
+<p>
+HTML ले structure बनाउँछ र CSS ले design बनाउँछ।
+</p>
+
+<pre><code>&lt;style&gt;
+
+body{
+    background:black;
+    color:white;
+}
+
+h1{
+    color:cyan;
+}
+
+&lt;/style&gt;
+
+&lt;h1&gt;
+My Website
+&lt;/h1&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="javascript">
+
+<h2>24. HTML + JavaScript</h2>
+
+<p>
+JavaScript ले webpage लाई interactive बनाउँछ।
+</p>
+
+<pre><code>&lt;button onclick="showMessage()"&gt;
+Click Me
+&lt;/button&gt;
+
+&lt;script&gt;
+
+function showMessage(){
+
+    alert("Hello World!");
+
+}
+
+&lt;/script&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="project">
+
+<h2>25. Final HTML Project</h2>
+
+<p>
+अब सिकेका HTML concepts प्रयोग गरेर एउटा simple website बनाऔँ।
+</p>
+
+<div class="project">
+
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+
+    &lt;meta charset="UTF-8"&gt;
+
+    &lt;meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    &gt;
+
+    &lt;title&gt;
+        My Website
+    &lt;/title&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+    &lt;header&gt;
+
+        &lt;h1&gt;
+            My Website
+        &lt;/h1&gt;
+
+        &lt;nav&gt;
+
+            &lt;a href="#home"&gt;
+                Home
+            &lt;/a&gt;
+
+            &lt;a href="#about"&gt;
+                About
+            &lt;/a&gt;
+
+            &lt;a href="#contact"&gt;
+                Contact
+            &lt;/a&gt;
+
+        &lt;/nav&gt;
+
+    &lt;/header&gt;
+
+
+    &lt;main&gt;
+
+        &lt;section id="home"&gt;
+
+            &lt;h2&gt;
+                Welcome
+            &lt;/h2&gt;
+
+            &lt;p&gt;
+                Welcome to my website.
+            &lt;/p&gt;
+
+        &lt;/section&gt;
+
+
+        &lt;section id="about"&gt;
+
+            &lt;h2&gt;
+                About
+            &lt;/h2&gt;
+
+            &lt;p&gt;
+                I am learning HTML.
+            &lt;/p&gt;
+
+        &lt;/section&gt;
+
+
+        &lt;section id="contact"&gt;
+
+            &lt;h2&gt;
+                Contact
+            &lt;/h2&gt;
+
+            &lt;form&gt;
+
+                &lt;input
+                    type="text"
+                    placeholder="Your Name"
+                &gt;
+
+                &lt;input
+                    type="email"
+                    placeholder="Your Email"
+                &gt;
+
+                &lt;button type="submit"&gt;
+                    Send
+                &lt;/button&gt;
+
+            &lt;/form&gt;
+
+        &lt;/section&gt;
+
+    &lt;/main&gt;
+
+
+    &lt;footer&gt;
+
+        &lt;p&gt;
+            © 2026 My Website
+        &lt;/p&gt;
+
+    &lt;/footer&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+
+</div>
+
+</section>
+
+
+<section class="lesson" id="quiz">
+
+<h2>26. HTML Quiz</h2>
+
+<div class="quiz">
+
+<p>
+<strong>Question:</strong>
+HTML को पूरा नाम के हो?
+</p>
+
+<label>
+<input type="radio" name="answer" value="wrong">
+Hyper Transfer Machine Language
+</label>
+
+<label>
+<input type="radio" name="answer" value="correct">
+HyperText Markup Language
+</label>
+
+<label>
+<input type="radio" name="answer" value="wrong">
+High Text Modern Language
+</label>
+
+<button onclick="checkAnswer()">
+Check Answer
+</button>
+
+<div id="result"></div>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
 
 <footer>
-    <h3>🎮 GameBook GK Hub</h3>
-    <p>Play • Read • Learn • Explore</p>
-    <p>© 2026 Roshan Joshi</p>
+
+<h3>🌐 HTML Complete Course</h3>
+
+<p>
+Learn • Practice • Build
+</p>
+
+<p>
+GameBook GK Hub © 2026
+</p>
+
 </footer>
+
+
+<script>
+
+function checkAnswer(){
+
+    const selected =
+        document.querySelector(
+            'input[name="answer"]:checked'
+        );
+
+    const result =
+        document.getElementById("result");
+
+    if(!selected){
+
+        result.textContent =
+            "⚠️ कृपया एउटा answer छान्नुहोस्।";
+
+        result.style.color = "#fbbf24";
+
+        return;
+    }
+
+    if(selected.value === "correct"){
+
+        result.textContent =
+            "✅ Correct Answer!";
+
+        result.style.color = "#4ade80";
+
+    }else{
+
+        result.textContent =
+            "❌ Wrong Answer! सही उत्तर: HyperText Markup Language";
+
+        result.style.color = "#f87171";
+
+    }
+
+}
+
+</script>
 
 </body>
 </html>
-```
