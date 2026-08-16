@@ -1,0 +1,1313 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>Card Battle Arena</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    min-height:100vh;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+    color:white;
+    background:
+        radial-gradient(circle at top,#39206b,#130d2c 55%,#070511);
+}
+
+#game{
+    min-height:100vh;
+    position:relative;
+    overflow:hidden;
+}
+
+/* Background particles */
+
+.particle{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:#ffffff88;
+    border-radius:50%;
+    animation:float 5s linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+    20%{opacity:1}
+    to{
+        transform:translateY(-20vh);
+        opacity:0;
+    }
+}
+
+/* Header */
+
+.header{
+    position:relative;
+    z-index:5;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+    background:#09061599;
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid #ffffff18;
+}
+
+.logo{
+    font-weight:bold;
+    font-size:20px;
+}
+
+.stats{
+    display:flex;
+    gap:8px;
+}
+
+.stat{
+    padding:8px 12px;
+    border-radius:15px;
+    background:#ffffff12;
+    border:1px solid #ffffff18;
+    font-size:13px;
+}
+
+/* Arena */
+
+.arena{
+    position:relative;
+    z-index:2;
+    width:min(900px,94%);
+    margin:auto;
+    padding-top:20px;
+}
+
+.players{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.player{
+    text-align:center;
+}
+
+.avatar{
+    width:55px;
+    height:55px;
+    display:grid;
+    place-items:center;
+    margin:auto;
+    border-radius:50%;
+    background:linear-gradient(145deg,#ffcf4a,#9b4dff);
+    font-size:29px;
+    box-shadow:0 0 25px #9b4dff77;
+}
+
+.player b{
+    display:block;
+    margin-top:5px;
+}
+
+.vs{
+    font-size:25px;
+    font-weight:bold;
+    color:#ffd34e;
+}
+
+/* Cards */
+
+.battle{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:clamp(35px,10vw,110px);
+    min-height:290px;
+}
+
+.card-wrap{
+    perspective:1000px;
+    width:145px;
+    height:205px;
+}
+
+.card{
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform .65s cubic-bezier(.2,.8,.2,1);
+}
+
+.card.flipped{
+    transform:rotateY(180deg);
+}
+
+.face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 15px 35px #0009;
+}
+
+.back{
+    background:
+        linear-gradient(135deg,#43218b,#11183f);
+    border:4px solid #d4a93c;
+    font-size:50px;
+}
+
+.back span{
+    width:90px;
+    height:135px;
+    display:grid;
+    place-items:center;
+    border:2px solid #d4a93c;
+    border-radius:12px;
+}
+
+.front{
+    transform:rotateY(180deg);
+    background:#fff;
+    color:#151515;
+    border:5px solid #d4a93c;
+    flex-direction:column;
+}
+
+.rank{
+    font-size:55px;
+    font-weight:bold;
+}
+
+.suit{
+    font-size:42px;
+}
+
+.red{
+    color:#d92745;
+}
+
+/* Result */
+
+.result{
+    min-height:45px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.result.win{
+    color:#62ffab;
+}
+
+.result.lose{
+    color:#ff647c;
+}
+
+.result.draw{
+    color:#ffd85a;
+}
+
+/* Controls */
+
+.controls{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+    margin-top:10px;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    color:white;
+    font-weight:bold;
+    border-radius:16px;
+    padding:13px 20px;
+    background:linear-gradient(135deg,#8d4cff,#4d32d4);
+    box-shadow:0 7px 20px #0005;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+button:active{
+    transform:scale(.94);
+}
+
+button:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+}
+
+.draw-btn{
+    background:linear-gradient(135deg,#f0b429,#d46b19);
+}
+
+.rules-btn{
+    background:#ffffff14;
+    border:1px solid #ffffff25;
+}
+
+/* Combo */
+
+.combo{
+    text-align:center;
+    margin-top:12px;
+    color:#ffd65c;
+    min-height:22px;
+}
+
+.combo strong{
+    font-size:22px;
+}
+
+/* Overlay */
+
+.overlay{
+    position:absolute;
+    inset:0;
+    z-index:20;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    background:#05030dcc;
+    backdrop-filter:blur(8px);
+}
+
+.panel{
+    width:min(430px,95%);
+    padding:35px 25px;
+    border-radius:25px;
+    background:
+        linear-gradient(
+            145deg,
+            #291858,
+            #0c0a20
+        );
+    border:1px solid #ffffff22;
+    box-shadow:0 25px 70px #000b;
+}
+
+.panel h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.panel p{
+    color:#c9c2df;
+    line-height:1.7;
+    margin-bottom:20px;
+}
+
+.hidden{
+    display:none;
+}
+
+/* Rules */
+
+.rules{
+    position:absolute;
+    inset:0;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#000b;
+    padding:20px;
+}
+
+.rules-box{
+    max-width:430px;
+    padding:28px;
+    border-radius:22px;
+    background:#17102e;
+    border:1px solid #ffffff22;
+}
+
+.rules-box h2{
+    margin-bottom:15px;
+}
+
+.rules-box li{
+    margin:10px 0;
+    color:#d7d0e8;
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+    .header{
+        padding:10px;
+    }
+
+    .logo{
+        font-size:16px;
+    }
+
+    .stat{
+        padding:7px 8px;
+        font-size:11px;
+    }
+
+    .card-wrap{
+        width:120px;
+        height:175px;
+    }
+
+    .battle{
+        min-height:245px;
+        gap:25px;
+    }
+
+    .rank{
+        font-size:43px;
+    }
+
+    .suit{
+        font-size:34px;
+    }
+
+    button{
+        padding:12px 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<!-- Background -->
+
+<script>
+for(let i=0;i<35;i++){
+    const p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"%";
+    p.style.animationDelay=Math.random()*5+"s";
+    p.style.animationDuration=(3+Math.random()*5)+"s";
+    document.getElementById("game").appendChild(p);
+}
+</script>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="logo">
+        🃏 Card Battle Arena
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            ⭐ <span id="score">0</span>
+        </div>
+
+        <div class="stat">
+            🪙 <span id="coins">100</span>
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ARENA -->
+
+<main class="arena">
+
+    <div class="players">
+
+        <div class="player">
+            <div class="avatar">😎</div>
+            <b>YOU</b>
+        </div>
+
+        <div class="vs">
+            VS
+        </div>
+
+        <div class="player">
+            <div class="avatar">🤖</div>
+            <b>CPU</b>
+        </div>
+
+    </div>
+
+
+    <section class="battle">
+
+        <!-- CPU CARD -->
+
+        <div class="card-wrap">
+
+            <div class="card" id="cpuCard">
+
+                <div class="face back">
+                    <span>🃏</span>
+                </div>
+
+                <div class="face front"
+                     id="cpuFront">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PLAYER CARD -->
+
+        <div class="card-wrap">
+
+            <div class="card" id="playerCard">
+
+                <div class="face back">
+                    <span>🃏</span>
+                </div>
+
+                <div class="face front"
+                     id="playerFront">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="result"
+         id="result">
+        Press DRAW CARD to play
+    </div>
+
+
+    <div class="combo">
+        Combo:
+        <strong id="combo">0</strong>
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            class="draw-btn"
+            id="drawBtn">
+            🃏 DRAW CARD
+        </button>
+
+        <button
+            class="rules-btn"
+            id="rulesBtn">
+            📜 RULES
+        </button>
+
+    </div>
+
+</main>
+
+
+<!-- START -->
+
+<div class="overlay"
+     id="startScreen">
+
+    <div class="panel">
+
+        <div style="font-size:70px">
+            🃏
+        </div>
+
+        <h1>
+            Card Battle
+        </h1>
+
+        <p>
+            Draw a card and battle the computer.
+            Higher card wins the round!
+        </p>
+
+        <button id="startBtn">
+            START GAME
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- GAME OVER -->
+
+<div class="overlay hidden"
+     id="endScreen">
+
+    <div class="panel">
+
+        <div style="font-size:65px">
+            🏆
+        </div>
+
+        <h1>
+            Battle Complete
+        </h1>
+
+        <p>
+            Final Score:
+            <strong id="finalScore">
+                0
+            </strong>
+            <br>
+            Virtual Coins:
+            <strong id="finalCoins">
+                100
+            </strong>
+        </p>
+
+        <button id="againBtn">
+            🔄 PLAY AGAIN
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- RULES -->
+
+<div class="rules hidden"
+     id="rules">
+
+    <div class="rules-box">
+
+        <h2>
+            📜 How To Play
+        </h2>
+
+        <ul>
+            <li>Draw one card for you and one for CPU.</li>
+            <li>The higher card wins the round.</li>
+            <li>A = 14, K = 13, Q = 12, J = 11.</li>
+            <li>Win a round to increase your combo.</li>
+            <li>Combo gives bonus score.</li>
+            <li>Coins are virtual game points only.</li>
+            <li>No real-money betting is included.</li>
+        </ul>
+
+        <br>
+
+        <button id="closeRules">
+            CLOSE
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+/* =====================================================
+   CARD BATTLE ARENA
+===================================================== */
+
+const suits=[
+    {
+        symbol:"♥",
+        name:"Hearts",
+        red:true
+    },
+    {
+        symbol:"♦",
+        name:"Diamonds",
+        red:true
+    },
+    {
+        symbol:"♣",
+        name:"Clubs",
+        red:false
+    },
+    {
+        symbol:"♠",
+        name:"Spades",
+        red:false
+    }
+];
+
+const ranks=[
+    {
+        name:"A",
+        value:14
+    },
+    {
+        name:"K",
+        value:13
+    },
+    {
+        name:"Q",
+        value:12
+    },
+    {
+        name:"J",
+        value:11
+    },
+    {
+        name:"10",
+        value:10
+    },
+    {
+        name:"9",
+        value:9
+    },
+    {
+        name:"8",
+        value:8
+    },
+    {
+        name:"7",
+        value:7
+    },
+    {
+        name:"6",
+        value:6
+    },
+    {
+        name:"5",
+        value:5
+    },
+    {
+        name:"4",
+        value:4
+    },
+    {
+        name:"3",
+        value:3
+    },
+    {
+        name:"2",
+        value:2
+    }
+];
+
+let deck=[];
+let score=0;
+let coins=100;
+let combo=0;
+let playing=false;
+let round=0;
+
+const playerCard=
+document.getElementById(
+    "playerCard"
+);
+
+const cpuCard=
+document.getElementById(
+    "cpuCard"
+);
+
+const playerFront=
+document.getElementById(
+    "playerFront"
+);
+
+const cpuFront=
+document.getElementById(
+    "cpuFront"
+);
+
+const result=
+document.getElementById(
+    "result"
+);
+
+const drawBtn=
+document.getElementById(
+    "drawBtn"
+);
+
+
+/* =====================================================
+   SOUND
+===================================================== */
+
+let audio=null;
+
+function initAudio(){
+
+    if(!audio){
+
+        audio=
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+    }
+
+    if(
+        audio.state==="suspended"
+    ){
+        audio.resume();
+    }
+
+}
+
+function sound(
+    frequency,
+    duration=.1,
+    type="sine",
+    volume=.05
+){
+
+    if(!audio)return;
+
+    const osc=
+    audio.createOscillator();
+
+    const gain=
+    audio.createGain();
+
+    osc.type=type;
+
+    osc.frequency.value=
+    frequency;
+
+    gain.gain.value=
+    volume;
+
+    osc.connect(gain);
+
+    gain.connect(
+        audio.destination
+    );
+
+    osc.start();
+
+    gain.gain.exponentialRampToValueAtTime(
+        .001,
+        audio.currentTime+duration
+    );
+
+    osc.stop(
+        audio.currentTime+duration
+    );
+
+}
+
+
+/* =====================================================
+   DECK
+===================================================== */
+
+function createDeck(){
+
+    deck=[];
+
+    suits.forEach(
+        suit=>{
+
+            ranks.forEach(
+                rank=>{
+
+                    deck.push({
+
+                        suit:suit,
+
+                        rank:rank.name,
+
+                        value:rank.value
+
+                    });
+
+                }
+            );
+
+        }
+    );
+
+    shuffle();
+
+}
+
+function shuffle(){
+
+    for(
+        let i=deck.length-1;
+        i>0;
+        i--
+    ){
+
+        const j=
+        Math.floor(
+            Math.random()*(i+1)
+        );
+
+        [
+            deck[i],
+            deck[j]
+        ]=[
+            deck[j],
+            deck[i]
+        ];
+
+    }
+
+}
+
+
+/* =====================================================
+   CARD HTML
+===================================================== */
+
+function showCard(
+    element,
+    card
+){
+
+    element.innerHTML=`
+
+        <div class="rank ${
+            card.suit.red
+            ? "red"
+            : ""
+        }">
+            ${card.rank}
+        </div>
+
+        <div class="suit ${
+            card.suit.red
+            ? "red"
+            : ""
+        }">
+            ${card.suit.symbol}
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   DRAW
+===================================================== */
+
+function drawCard(){
+
+    if(
+        !playing ||
+        drawBtn.disabled
+    )return;
+
+    initAudio();
+
+    drawBtn.disabled=true;
+
+    result.textContent=
+        "Drawing cards...";
+
+    result.className=
+        "result";
+
+    playerCard.classList.remove(
+        "flipped"
+    );
+
+    cpuCard.classList.remove(
+        "flipped"
+    );
+
+    const player=
+        deck.pop();
+
+    const cpu=
+        deck.pop();
+
+    if(
+        deck.length<10
+    ){
+        createDeck();
+    }
+
+    setTimeout(
+        ()=>{
+
+            showCard(
+                playerFront,
+                player
+            );
+
+            playerCard.classList.add(
+                "flipped"
+            );
+
+            sound(
+                400,
+                .08,
+                "square",
+                .03
+            );
+
+        },
+        300
+    );
+
+    setTimeout(
+        ()=>{
+
+            showCard(
+                cpuFront,
+                cpu
+            );
+
+            cpuCard.classList.add(
+                "flipped"
+            );
+
+            sound(
+                550,
+                .08,
+                "square",
+                .03
+            );
+
+        },
+        650
+    );
+
+    setTimeout(
+        ()=>{
+
+            decideWinner(
+                player,
+                cpu
+            );
+
+        },
+        1250
+    );
+
+}
+
+
+/* =====================================================
+   RESULT
+===================================================== */
+
+function decideWinner(
+    player,
+    cpu
+){
+
+    round++;
+
+    if(
+        player.value>
+        cpu.value
+    ){
+
+        combo++;
+
+        const bonus=
+        combo*5;
+
+        score+=
+        50+
+        bonus;
+
+        coins+=
+        10+
+        combo;
+
+        result.textContent=
+        `🔥 YOU WIN! +${
+            50+bonus
+        } points`;
+
+        result.className=
+        "result win";
+
+        sound(
+            800,
+            .12,
+            "sine",
+            .06
+        );
+
+        setTimeout(
+            ()=>{
+                sound(
+                    1100,
+                    .18,
+                    "sine",
+                    .05
+                );
+            },
+            100
+        );
+
+    }
+
+    else if(
+        player.value<
+        cpu.value
+    ){
+
+        combo=0;
+
+        score=
+        Math.max(
+            0,
+            score-10
+        );
+
+        result.textContent=
+        "💥 CPU WINS!";
+
+        result.className=
+        "result lose";
+
+        sound(
+            140,
+            .25,
+            "sawtooth",
+            .06
+        );
+
+    }
+
+    else{
+
+        combo=0;
+
+        score+=20;
+
+        result.textContent=
+        "⚡ DRAW! +20 points";
+
+        result.className=
+        "result draw";
+
+        sound(
+            500,
+            .2,
+            "triangle",
+            .05
+        );
+
+    }
+
+    updateStats();
+
+    drawBtn.disabled=false;
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function updateStats(){
+
+    document.getElementById(
+        "score"
+    ).textContent=
+        score;
+
+    document.getElementById(
+        "coins"
+    ).textContent=
+        coins;
+
+    document.getElementById(
+        "combo"
+    ).textContent=
+        combo;
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+function startGame(){
+
+    initAudio();
+
+    score=0;
+    coins=100;
+    combo=0;
+    round=0;
+
+    playing=true;
+
+    createDeck();
+
+    updateStats();
+
+    playerCard.classList.remove(
+        "flipped"
+    );
+
+    cpuCard.classList.remove(
+        "flipped"
+    );
+
+    result.textContent=
+        "Press DRAW CARD to battle";
+
+    result.className=
+        "result";
+
+    drawBtn.disabled=false;
+
+    document.getElementById(
+        "startScreen"
+    ).classList.add(
+        "hidden"
+    );
+
+    document.getElementById(
+        "endScreen"
+    ).classList.add(
+        "hidden"
+    );
+
+    sound(
+        600,
+        .12,
+        "sine",
+        .05
+    );
+
+}
+
+
+/* =====================================================
+   END
+===================================================== */
+
+function endGame(){
+
+    playing=false;
+
+    document.getElementById(
+        "finalScore"
+    ).textContent=
+        score;
+
+    document.getElementById(
+        "finalCoins"
+    ).textContent=
+        coins;
+
+    document.getElementById(
+        "endScreen"
+    ).classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+document.getElementById(
+    "startBtn"
+).onclick=
+startGame;
+
+document.getElementById(
+    "againBtn"
+).onclick=
+startGame;
+
+
+/* =====================================================
+   RULES
+===================================================== */
+
+document.getElementById(
+    "rulesBtn"
+).onclick=()=>{
+
+    document.getElementById(
+        "rules"
+    ).classList.remove(
+        "hidden"
+    );
+
+};
+
+document.getElementById(
+    "closeRules"
+).onclick=()=>{
+
+    document.getElementById(
+        "rules"
+    ).classList.add(
+        "hidden"
+    );
+
+};
+
+
+drawBtn.onclick=
+drawCard;
+
+
+/* =====================================================
+   KEYBOARD
+===================================================== */
+
+window.addEventListener(
+    "keydown",
+    e=>{
+
+        if(
+            e.code==="Space" ||
+            e.key==="Enter"
+        ){
+
+            drawCard();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
