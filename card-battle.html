@@ -3,1353 +3,2010 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Classic Card Games</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Realistic Call Break</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+*{box-sizing:border-box}
+
+:root{
+  --green:#08733e;
+  --dark:#031b11;
+  --gold:#e7bd58;
+  --cream:#fffaf0;
+  --red:#d9273f;
 }
 
 body{
-    min-height:100vh;
-    font-family:Arial,sans-serif;
-    color:white;
-    background:
-    radial-gradient(circle at 50% 20%,#176d46,#062b1d 50%,#020b07);
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  color:white;
+  background:
+    radial-gradient(circle at 50% 0%,#164f35 0,#061d12 48%,#010906 100%);
 }
 
-.header{
-    text-align:center;
-    padding:25px 10px 15px;
+button{
+  font:inherit;
 }
 
-.header h1{
-    color:#ffe37a;
-    font-size:34px;
-    text-shadow:0 4px 15px #000;
+header{
+  text-align:center;
+  padding:18px 10px 8px;
 }
 
-.header p{
-    color:#c8dfd2;
-    margin-top:7px;
+header h1{
+  margin:0;
+  font-size:clamp(25px,5vw,42px);
+  color:var(--gold);
+  text-shadow:0 3px 15px #000;
 }
 
-.menu{
-    width:min(950px,94%);
-    margin:15px auto;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:10px;
+header p{
+  margin:7px 0;
+  color:#c9ddd2;
 }
 
-.game-btn{
-    border:1px solid #ffffff25;
-    border-radius:17px;
-    padding:15px 8px;
-    background:#ffffff12;
-    color:white;
-    cursor:pointer;
-    transition:.2s;
+.topbar{
+  width:min(1050px,96%);
+  margin:auto;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
 }
 
-.game-btn:hover{
-    transform:translateY(-4px);
+.stat{
+  background:#071b12dd;
+  border:1px solid #ffffff1c;
+  border-radius:12px;
+  padding:8px 13px;
+  font-size:14px;
 }
 
-.game-btn.active{
-    background:linear-gradient(145deg,#bd912c,#674a0d);
-    border-color:#ffe477;
+.stat b{
+  color:#ffe08a;
 }
 
-.game-btn .icon{
-    font-size:35px;
-    margin-bottom:6px;
-}
-
-.game-btn h3{
-    font-size:15px;
-}
-
-.game-btn small{
-    color:#cce3d6;
+#game{
+  width:min(1100px,97%);
+  margin:10px auto 25px;
 }
 
 .table{
-    width:min(1000px,96%);
-    height:580px;
-    margin:15px auto 30px;
-    position:relative;
-
-    border:12px solid #573318;
-    border-radius:45px;
-
-    background:
-    radial-gradient(
-        ellipse,
-        #149052,
-        #075f37 65%,
-        #034127
-    );
-
-    box-shadow:
-    inset 0 0 70px #00190e,
-    0 25px 60px #000b;
-
-    overflow:hidden;
+  position:relative;
+  height:690px;
+  overflow:hidden;
+  border:12px solid #4c2915;
+  border-radius:48px;
+  background:
+    radial-gradient(ellipse at center,#109352 0,#08703c 48%,#034426 82%);
+  box-shadow:
+    inset 0 0 80px #00180d,
+    inset 0 0 20px #000,
+    0 20px 55px #000;
 }
 
-.table:after{
-    content:"";
-    position:absolute;
-    inset:25px;
-    border:2px solid #ffffff18;
-    border-radius:35px;
-    pointer-events:none;
+.table:before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:2px solid #ffffff25;
+  border-radius:35px;
+  pointer-events:none;
 }
 
 .player{
-    position:absolute;
-    z-index:5;
-    text-align:center;
-    min-width:100px;
+  position:absolute;
+  z-index:10;
+  text-align:center;
 }
 
 .avatar{
-    width:55px;
-    height:55px;
-    margin:auto;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    border-radius:50%;
-
-    background:
-    linear-gradient(
-        145deg,
-        #ffd866,
-        #9b6115
-    );
-
-    border:3px solid #fff0a0;
-
-    box-shadow:
-    0 7px 18px #0009;
-
-    font-size:30px;
+  width:50px;
+  height:50px;
+  margin:auto;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  background:linear-gradient(#263f52,#08131b);
+  border:2px solid #d8b85d;
+  box-shadow:0 5px 15px #0008;
 }
 
-.player strong{
-    display:block;
-    margin-top:5px;
+.player-name{
+  margin-top:4px;
+  font-weight:bold;
+  font-size:13px;
 }
 
-.top{
-    top:20px;
-    left:50%;
-    transform:translateX(-50%);
+.player-status{
+  font-size:11px;
+  color:#ffe49a;
+  min-height:15px;
 }
 
-.left{
-    left:18px;
-    top:50%;
-    transform:translateY(-50%);
+.p-bottom{
+  left:50%;
+  bottom:8px;
+  transform:translateX(-50%);
+  width:96%;
 }
 
-.right{
-    right:18px;
-    top:50%;
-    transform:translateY(-50%);
+.p-top{
+  left:50%;
+  top:10px;
+  transform:translateX(-50%);
 }
 
-.bottom{
-    bottom:15px;
-    left:50%;
-    transform:translateX(-50%);
+.p-left{
+  left:8px;
+  top:43%;
+  transform:translateY(-50%);
 }
 
-.cards{
-    display:flex;
-    justify-content:center;
-    gap:7px;
-    margin-top:7px;
+.p-right{
+  right:8px;
+  top:43%;
+  transform:translateY(-50%);
+}
+
+.hand{
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  gap:3px;
+  margin-top:5px;
 }
 
 .card{
-    width:60px;
-    height:86px;
-
-    background:white;
-    color:#111;
-
-    border-radius:9px;
-    border:2px solid #ddd;
-
-    box-shadow:
-    0 8px 15px #0009;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    font-size:22px;
-    font-weight:bold;
-
-    animation:deal .3s ease;
+  width:57px;
+  height:82px;
+  border-radius:8px;
+  background:linear-gradient(145deg,#fff,#e8e5dc);
+  color:#151515;
+  border:2px solid #ddd;
+  box-shadow:0 5px 12px #0009;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  user-select:none;
+  transition:.16s;
+  position:relative;
 }
 
-.red{
-    color:#d51635;
+.card .rank{
+  font-size:20px;
+  font-weight:900;
+  line-height:1;
 }
 
-.black{
-    color:#111;
+.card .suit{
+  font-size:27px;
+  line-height:1;
 }
 
-.back{
-    color:white;
+.card.red{
+  color:var(--red);
+}
 
-    background:
+.card:hover{
+  transform:translateY(-12px);
+}
+
+.card.disabled{
+  opacity:.38;
+  filter:grayscale(.4);
+  cursor:not-allowed;
+  transform:none;
+}
+
+.card-back{
+  width:43px;
+  height:61px;
+  border-radius:6px;
+  background:
     repeating-linear-gradient(
-        45deg,
-        #152d78,
-        #152d78 5px,
-        #2848a8 5px,
-        #2848a8 10px
+      45deg,
+      #152d73 0,
+      #152d73 5px,
+      #294da2 5px,
+      #294da2 10px
     );
+  border:2px solid #f7e9bd;
+  box-shadow:0 4px 9px #0009;
+}
 
-    border-color:white;
+.hidden-cards{
+  display:flex;
+  justify-content:center;
+  gap:3px;
+  margin-top:5px;
 }
 
 .center{
-    position:absolute;
-    left:50%;
-    top:47%;
-
-    transform:translate(-50%,-50%);
-
-    text-align:center;
-    z-index:3;
+  position:absolute;
+  z-index:4;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:min(530px,60%);
+  text-align:center;
 }
 
-.center h2{
-    color:#ffe789;
-    text-shadow:0 3px 10px #000;
+.message{
+  min-height:38px;
+  padding:8px 12px;
+  border-radius:12px;
+  background:#00150de6;
+  border:1px solid #ffffff18;
+  color:#ffe59a;
+  font-weight:bold;
 }
 
-.status{
-    margin-top:8px;
-    color:#d6f0df;
-    min-height:25px;
+.trick{
+  margin:15px auto;
+  width:310px;
+  height:210px;
+  position:relative;
 }
 
-.controls{
-    position:absolute;
-    bottom:20px;
-    left:50%;
-
-    transform:translateX(-50%);
-
-    z-index:10;
-
-    display:flex;
-    gap:8px;
-
-    flex-wrap:wrap;
-    justify-content:center;
+.played-card{
+  position:absolute;
+  width:65px;
+  height:92px;
+  border-radius:9px;
+  background:#fff;
+  color:#111;
+  border:2px solid #ddd;
+  box-shadow:0 7px 16px #000b;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  animation:deal .22s ease-out;
 }
 
-button.action{
-    border:0;
-    border-radius:13px;
-
-    padding:12px 19px;
-
-    cursor:pointer;
-
-    font-weight:bold;
-
-    color:#15110a;
-
-    background:#ffe071;
-
-    box-shadow:
-    0 4px 0 #876014;
+.played-card.red{
+  color:var(--red);
 }
 
-button.action:active{
-    transform:translateY(3px);
+.played-card .rank{
+  font-size:23px;
+  font-weight:bold;
 }
 
-button.dark{
-    background:white;
+.played-card .suit{
+  font-size:30px;
 }
 
-.score{
-    position:absolute;
+.played-you{
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+}
 
-    right:18px;
-    top:15px;
+.played-left{
+  left:0;
+  top:50%;
+  transform:translateY(-50%);
+}
 
-    z-index:20;
+.played-top{
+  left:50%;
+  top:0;
+  transform:translateX(-50%);
+}
 
-    padding:8px 12px;
-
-    background:#0007;
-
-    border-radius:12px;
-
-    color:#ffe57c;
-
-    font-weight:bold;
+.played-right{
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
 }
 
 @keyframes deal{
-
-    from{
-        opacity:0;
-        transform:
-        translateY(25px)
-        scale(.8);
-    }
-
-    to{
-        opacity:1;
-        transform:
-        translateY(0)
-        scale(1);
-    }
+  from{transform:scale(.5);opacity:0}
+  to{opacity:1}
 }
 
-@media(max-width:600px){
+.played-left{animation-name:slideLeft}
+.played-right{animation-name:slideRight}
+.played-top{animation-name:slideTop}
 
-    .table{
-        height:540px;
-        border-width:8px;
-        border-radius:30px;
-    }
+@keyframes slideLeft{
+  from{transform:translate(-80px,-50%);opacity:0}
+  to{transform:translateY(-50%);opacity:1}
+}
+@keyframes slideRight{
+  from{transform:translate(80px,-50%);opacity:0}
+  to{transform:translateY(-50%);opacity:1}
+}
+@keyframes slideTop{
+  from{transform:translate(-50%,-80px);opacity:0}
+  to{transform:translateX(-50%);opacity:1}
+}
 
-    .table:after{
-        inset:15px;
-    }
+.controls{
+  width:min(900px,96%);
+  margin:12px auto;
+  padding:14px;
+  background:#04180fd9;
+  border:1px solid #ffffff1b;
+  border-radius:18px;
+  text-align:center;
+}
 
-    .card{
-        width:48px;
-        height:70px;
-        font-size:17px;
-    }
+.controls h3{
+  margin:0 0 10px;
+  color:#ffe394;
+}
 
-    .avatar{
-        width:47px;
-        height:47px;
-        font-size:25px;
-    }
+.bid-buttons{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:7px;
+}
 
-    .left{
-        left:2px;
-    }
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 15px;
+  cursor:pointer;
+  font-weight:bold;
+  background:linear-gradient(#ffe891,#cfa33c);
+  color:#17120a;
+  box-shadow:0 3px 0 #74581b;
+}
 
-    .right{
-        right:2px;
-    }
+.btn:active{
+  transform:translateY(2px);
+  box-shadow:0 1px 0 #74581b;
+}
 
-    .header h1{
-        font-size:25px;
-    }
+.btn:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+#newRound{
+  display:none;
+  margin:10px auto;
+}
+
+.scoreboard{
+  width:min(900px,96%);
+  margin:auto;
+  display:none;
+  background:#04180fd9;
+  border:1px solid #ffffff1b;
+  border-radius:18px;
+  padding:14px;
+}
+
+.scoreboard h2{
+  text-align:center;
+  color:#ffe394;
+}
+
+.score-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+
+.score-cell{
+  background:#0c2a1ddd;
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+}
+
+.score-cell b{
+  display:block;
+  color:#ffe394;
+}
+
+@media(max-width:700px){
+
+  .table{
+    height:640px;
+    border-width:7px;
+    border-radius:30px;
+  }
+
+  .card{
+    width:39px;
+    height:58px;
+  }
+
+  .card .rank{
+    font-size:15px;
+  }
+
+  .card .suit{
+    font-size:20px;
+  }
+
+  .card-back{
+    width:28px;
+    height:43px;
+  }
+
+  .center{
+    width:72%;
+    top:49%;
+  }
+
+  .trick{
+    transform:scale(.8);
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .p-left{left:3px}
+  .p-right{right:3px}
+
+  .avatar{
+    width:40px;
+    height:40px;
+    font-size:22px;
+  }
+
+  .score-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
+<header>
+  <h1>♠️ REAL CALL BREAK</h1>
+  <p>4 Players • Hard AI • 52 Cards • Spade Trump</p>
+</header>
 
-    <h1>🃏 Classic Card Games</h1>
+<div class="topbar">
 
-    <p>
-        Choose a game and start playing
-    </p>
+  <div class="stat">
+    Round:
+    <b id="round">1</b>
+  </div>
 
-</div>
+  <div class="stat">
+    Trick:
+    <b id="trickNo">0</b>/13
+  </div>
 
+  <div class="stat">
+    Your Bid:
+    <b id="yourBid">—</b>
+  </div>
 
-<!-- GAME MENU -->
+  <div class="stat">
+    Your Tricks:
+    <b id="yourTricks">0</b>
+  </div>
 
-<div class="menu">
-
-    <button
-    class="game-btn active"
-    onclick="chooseGame('teen',this)">
-
-        <div class="icon">👑</div>
-
-        <h3>Teen Patti</h3>
-
-        <small>3 Card</small>
-
-    </button>
-
-
-    <button
-    class="game-btn"
-    onclick="chooseGame('call',this)">
-
-        <div class="icon">♠️</div>
-
-        <h3>Call Break</h3>
-
-        <small>Trick Game</small>
-
-    </button>
-
-
-    <button
-    class="game-btn"
-    onclick="chooseGame('rummy',this)">
-
-        <div class="icon">🃏</div>
-
-        <h3>Rummy</h3>
-
-        <small>Classic</small>
-
-    </button>
-
-
-    <button
-    class="game-btn"
-    onclick="chooseGame('high',this)">
-
-        <div class="icon">🏆</div>
-
-        <h3>High Card</h3>
-
-        <small>Quick Game</small>
-
-    </button>
+  <div class="stat">
+    Score:
+    <b id="yourScore">0</b>
+  </div>
 
 </div>
 
 
-<!-- GAME TABLE -->
+<div id="game">
 
-<div class="table">
+  <div class="table">
 
-    <div class="score">
+    <!-- TOP COMPUTER -->
 
-        ⭐ Points:
-        <span id="score">0</span>
+    <div class="player p-top">
 
-    </div>
+      <div class="avatar">🤖</div>
 
+      <div class="player-name">
+        CPU 2 • HARD
+      </div>
 
-    <!-- COMPUTER -->
+      <div
+      class="player-status"
+      id="status2">
+      Waiting
+      </div>
 
-    <div class="player top">
-
-        <div class="avatar">
-            🤖
-        </div>
-
-        <strong>
-            Computer
-        </strong>
-
-        <div
-        id="enemyCards"
-        class="cards">
-        </div>
+      <div
+      class="hidden-cards"
+      id="hand2">
+      </div>
 
     </div>
 
 
-    <!-- PLAYER 2 -->
+    <!-- LEFT COMPUTER -->
 
-    <div class="player left">
+    <div class="player p-left">
 
-        <div class="avatar">
-            👨
-        </div>
+      <div class="avatar">🤖</div>
 
-        <strong>
-            Player 2
-        </strong>
+      <div class="player-name">
+        CPU 1 • HARD
+      </div>
 
-        <div class="cards">
+      <div
+      class="player-status"
+      id="status1">
+      Waiting
+      </div>
 
-            <div class="card back">
-                ★
-            </div>
-
-            <div class="card back">
-                ★
-            </div>
-
-        </div>
+      <div
+      class="hidden-cards"
+      id="hand1">
+      </div>
 
     </div>
 
 
-    <!-- PLAYER 3 -->
+    <!-- RIGHT COMPUTER -->
 
-    <div class="player right">
+    <div class="player p-right">
 
-        <div class="avatar">
-            👩
-        </div>
+      <div class="avatar">🤖</div>
 
-        <strong>
-            Player 3
-        </strong>
+      <div class="player-name">
+        CPU 3 • HARD
+      </div>
 
-        <div class="cards">
+      <div
+      class="player-status"
+      id="status3">
+      Waiting
+      </div>
 
-            <div class="card back">
-                ★
-            </div>
-
-            <div class="card back">
-                ★
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- CENTER -->
-
-    <div class="center">
-
-        <h2 id="gameTitle">
-            👑 Teen Patti
-        </h2>
-
-        <div
-        id="status"
-        class="status">
-
-            Press Deal to start
-
-        </div>
+      <div
+      class="hidden-cards"
+      id="hand3">
+      </div>
 
     </div>
 
 
     <!-- PLAYER -->
 
-    <div class="player bottom">
+    <div class="player p-bottom">
 
-        <div
-        id="playerCards"
-        class="cards">
-        </div>
+      <div class="avatar">😎</div>
 
-        <div class="avatar">
-            😎
-        </div>
+      <div class="player-name">
+        YOU
+      </div>
 
-        <strong>
-            You
-        </strong>
+      <div
+      class="player-status"
+      id="status0">
+      Waiting
+      </div>
+
+      <div
+      class="hand"
+      id="hand0">
+      </div>
+
+    </div>
+
+
+    <!-- CENTER TABLE -->
+
+    <div class="center">
+
+      <div
+      class="message"
+      id="message">
+      Choose your Call/Bid to start.
+      </div>
+
+      <div
+      class="trick"
+      id="trick">
+      </div>
 
     </div>
 
-
-    <!-- BUTTONS -->
-
-    <div class="controls">
-
-        <button
-        class="action"
-        onclick="deal()">
-
-            🃏 Deal
-
-        </button>
+  </div>
 
 
-        <button
-        class="action dark"
-        onclick="play()">
+  <!-- BID CONTROLS -->
 
-            ⚔️ Play
+  <div class="controls" id="bidPanel">
 
-        </button>
+    <h3>
+      📣 Choose Your Call
+    </h3>
 
+    <div class="bid-buttons">
 
-        <button
-        class="action dark"
-        onclick="resetGame()">
-
-            🔄 Reset
-
-        </button>
+      <button class="btn" onclick="chooseBid(1)">1</button>
+      <button class="btn" onclick="chooseBid(2)">2</button>
+      <button class="btn" onclick="chooseBid(3)">3</button>
+      <button class="btn" onclick="chooseBid(4)">4</button>
+      <button class="btn" onclick="chooseBid(5)">5</button>
+      <button class="btn" onclick="chooseBid(6)">6</button>
+      <button class="btn" onclick="chooseBid(7)">7</button>
+      <button class="btn" onclick="chooseBid(8)">8</button>
+      <button class="btn" onclick="chooseBid(9)">9</button>
+      <button class="btn" onclick="chooseBid(10)">10</button>
+      <button class="btn" onclick="chooseBid(11)">11</button>
+      <button class="btn" onclick="chooseBid(12)">12</button>
+      <button class="btn" onclick="chooseBid(13)">13</button>
 
     </div>
+
+    <p style="color:#bcd6c8;font-size:13px">
+      Your bid is private. Computer bids are hidden.
+    </p>
+
+  </div>
+
+
+  <button
+  class="btn"
+  id="newRound"
+  onclick="startNewRound()">
+  🔄 Start New Round
+  </button>
+
+
+  <!-- SCOREBOARD -->
+
+  <div
+  class="scoreboard"
+  id="scoreboard">
+
+    <h2>🏆 Round Result</h2>
+
+    <div class="score-grid">
+
+      <div class="score-cell">
+        <b>You</b>
+        <span id="r0"></span>
+      </div>
+
+      <div class="score-cell">
+        <b>CPU 1</b>
+        <span id="r1"></span>
+      </div>
+
+      <div class="score-cell">
+        <b>CPU 2</b>
+        <span id="r2"></span>
+      </div>
+
+      <div class="score-cell">
+        <b>CPU 3</b>
+        <span id="r3"></span>
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 
 
 <script>
 
-const suits = [
+/* =====================================================
+   REAL CALL BREAK GAME
+   ===================================================== */
 
-    {
-        s:"♥",
-        red:true
-    },
+const suits = ["♠","♥","♦","♣"];
 
-    {
-        s:"♦",
-        red:true
-    },
-
-    {
-        s:"♣",
-        red:false
-    },
-
-    {
-        s:"♠",
-        red:false
-    }
-
+const ranks = [
+  "2","3","4","5","6","7",
+  "8","9","10","J","Q","K","A"
 ];
-
-
-const values = [
-
-    "A",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "J",
-    "Q",
-    "K"
-
-];
-
 
 let deck = [];
 
-let player = [];
+let hands = [[],[],[],[]];
 
-let enemy = [];
+let bids = [0,0,0,0];
 
-let game = "teen";
+let tricksWon = [0,0,0,0];
 
-let points = 0;
+let scores = [0,0,0,0];
+
+let played = [];
+
+let currentPlayer = 0;
+
+let leader = 0;
+
+let leadSuit = null;
+
+let round = 1;
+
+let trickNumber = 0;
+
+let userBid = 0;
+
+let roundFinished = false;
 
 
-/* CREATE DECK */
+/* =====================================================
+   SOUND
+   ===================================================== */
 
-function createDeck(){
+let audioContext = null;
 
-    deck = [];
+function sound(type){
 
-    suits.forEach(
+  try{
 
-        suit => {
+    if(!audioContext)
+      audioContext =
+        new (window.AudioContext ||
+        window.webkitAudioContext)();
 
-            values.forEach(
+    const osc =
+      audioContext.createOscillator();
 
-                value => {
+    const gain =
+      audioContext.createGain();
 
-                    deck.push({
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
 
-                        value:value,
+    let freq = 400;
 
-                        suit:suit.s,
+    if(type==="card")
+      freq=520;
 
-                        red:suit.red
+    if(type==="win")
+      freq=760;
 
-                    });
+    if(type==="error")
+      freq=170;
 
-                }
+    if(type==="deal")
+      freq=300;
 
-            );
+    osc.frequency.value=freq;
 
-        }
-
+    gain.gain.setValueAtTime(
+      .08,
+      audioContext.currentTime
     );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      audioContext.currentTime+.16
+    );
+
+    osc.start();
+
+    osc.stop(
+      audioContext.currentTime+.16
+    );
+
+  }catch(e){}
 
 }
 
 
-/* SHUFFLE */
+/* =====================================================
+   DECK
+   ===================================================== */
 
-function shuffle(){
+function makeDeck(){
 
-    for(
-        let i = deck.length - 1;
-        i > 0;
-        i--
-    ){
+  const d=[];
 
-        const j =
-            Math.floor(
-                Math.random() *
-                (i + 1)
-            );
+  for(const suit of suits){
 
-        [
-            deck[i],
-            deck[j]
-        ] =
-        [
-            deck[j],
-            deck[i]
-        ];
+    for(let i=0;i<ranks.length;i++){
+
+      d.push({
+        suit:suit,
+        rank:ranks[i],
+        value:i+2
+      });
 
     }
 
+  }
+
+  return d;
 }
 
 
-/* CHOOSE GAME */
+/* =====================================================
+   SHUFFLE
+   ===================================================== */
 
-function chooseGame(
-    type,
-    button
-){
+function shuffle(array){
 
-    game = type;
+  for(let i=array.length-1;i>0;i--){
 
-    document
-    .querySelectorAll(
-        ".game-btn"
-    )
-    .forEach(
-        b =>
-        b.classList
-        .remove("active")
-    );
+    const j =
+      Math.floor(
+        Math.random()*(i+1)
+      );
 
-    button
-    .classList
-    .add("active");
+    [
+      array[i],
+      array[j]
+    ] =
+    [
+      array[j],
+      array[i]
+    ];
 
+  }
 
-    const names = {
-
-        teen:"👑 Teen Patti",
-
-        call:"♠️ Call Break",
-
-        rummy:"🃏 Rummy",
-
-        high:"🏆 High Card"
-
-    };
-
-
-    document
-    .getElementById(
-        "gameTitle"
-    )
-    .innerText =
-        names[type];
-
-
-    document
-    .getElementById(
-        "status"
-    )
-    .innerText =
-        "Press Deal to start";
-
-
-    player = [];
-
-    enemy = [];
-
-    document
-    .getElementById(
-        "playerCards"
-    )
-    .innerHTML = "";
-
-    document
-    .getElementById(
-        "enemyCards"
-    )
-    .innerHTML = "";
+  return array;
 
 }
 
 
-/* DEAL */
+/* =====================================================
+   CARD HTML
+   ===================================================== */
+
+function cardHTML(card,clickable=true){
+
+  const red =
+    card.suit==="♥" ||
+    card.suit==="♦"
+    ? " red"
+    : "";
+
+  return `
+    <div
+      class="card${red}"
+      ${clickable ? "" : "style='cursor:default'"}
+      data-rank="${card.rank}"
+      data-suit="${card.suit}">
+
+      <span class="rank">
+        ${card.rank}
+      </span>
+
+      <span class="suit">
+        ${card.suit}
+      </span>
+
+    </div>
+  `;
+
+}
+
+
+/* =====================================================
+   DEAL
+   ===================================================== */
 
 function deal(){
 
-    createDeck();
+  deck =
+    shuffle(makeDeck());
 
-    shuffle();
+  hands =
+    [[],[],[],[]];
 
-    player = [];
+  for(let i=0;i<52;i++){
 
-    enemy = [];
+    hands[i%4].push(deck[i]);
+
+  }
+
+  for(const hand of hands){
+
+    hand.sort(
+      (a,b)=>
+        a.value-b.value
+    );
+
+  }
+
+  tricksWon =
+    [0,0,0,0];
+
+  played=[];
+
+  trickNumber=0;
+
+  leadSuit=null;
+
+  /*
+    Random dealer/leader.
+  */
+
+  leader =
+    Math.floor(
+      Math.random()*4
+    );
+
+  currentPlayer=leader;
+
+  renderAll();
+
+  sound("deal");
+
+}
 
 
-    let count =
-        game === "teen"
-        ? 3
-        : 2;
+/* =====================================================
+   RENDER ALL CARDS
+   ===================================================== */
 
+function renderAll(){
+
+  renderPlayerCards();
+
+  renderBacks();
+
+  renderTrick();
+
+  updateStats();
+
+}
+
+
+/* =====================================================
+   PLAYER CARDS
+   ===================================================== */
+
+function renderPlayerCards(){
+
+  const el =
+    document.getElementById("hand0");
+
+  el.innerHTML="";
+
+  hands[0].forEach(
+    (card,index)=>{
+
+      const wrapper =
+        document.createElement("div");
+
+      wrapper.innerHTML =
+        cardHTML(card);
+
+      const element =
+        wrapper.firstElementChild;
+
+      element.onclick =
+        () => playerPlay(index);
+
+      /*
+        Disable illegal cards visually.
+      */
+
+      if(
+        currentPlayer===0 &&
+        !isLegalCard(
+          hands[0][index]
+        )
+      ){
+
+        element.classList.add(
+          "disabled"
+        );
+
+      }
+
+      el.appendChild(element);
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   COMPUTER CARD BACKS
+   ===================================================== */
+
+function renderBacks(){
+
+  for(let p=1;p<4;p++){
+
+    const el =
+      document.getElementById(
+        "hand"+p
+      );
+
+    el.innerHTML="";
 
     for(
-        let i=0;
-        i<count;
-        i++
+      let i=0;
+      i<hands[p].length;
+      i++
     ){
 
-        player.push(
-            deck.pop()
-        );
+      const card =
+        document.createElement("div");
 
-        enemy.push(
-            deck.pop()
-        );
+      card.className=
+        "card-back";
+
+      el.appendChild(card);
 
     }
 
-
-    renderPlayer();
-
-    renderEnemy(true);
-
-
-    document
-    .getElementById(
-        "status"
-    )
-    .innerText =
-        "Cards dealt! Press Play.";
+  }
 
 }
 
 
-/* CREATE CARD */
+/* =====================================================
+   TRICK RENDER
+   ===================================================== */
 
-function makeCard(card){
+function renderTrick(){
 
-    const div =
-        document.createElement(
-            "div"
+  const el =
+    document.getElementById("trick");
+
+  el.innerHTML="";
+
+  for(const item of played){
+
+    const wrapper =
+      document.createElement("div");
+
+    const red =
+      item.card.suit==="♥" ||
+      item.card.suit==="♦"
+      ? " red"
+      : "";
+
+    wrapper.className =
+      "played-card "+red;
+
+    wrapper.innerHTML=`
+      <span class="rank">
+        ${item.card.rank}
+      </span>
+      <span class="suit">
+        ${item.card.suit}
+      </span>
+    `;
+
+    if(item.player===0)
+      wrapper.classList.add("played-you");
+
+    if(item.player===1)
+      wrapper.classList.add("played-left");
+
+    if(item.player===2)
+      wrapper.classList.add("played-top");
+
+    if(item.player===3)
+      wrapper.classList.add("played-right");
+
+    el.appendChild(wrapper);
+
+  }
+
+}
+
+
+/* =====================================================
+   LEGAL CARD
+   ===================================================== */
+
+function isLegalCard(card){
+
+  if(
+    played.length===0
+  ){
+
+    return true;
+
+  }
+
+  const hasLead =
+    hands[0].some(
+      c =>
+      c.suit===leadSuit
+    );
+
+  if(!hasLead)
+    return true;
+
+  return card.suit===leadSuit;
+
+}
+
+
+/* =====================================================
+   CHOOSE BID
+   ===================================================== */
+
+function chooseBid(bid){
+
+  if(userBid!==0)
+    return;
+
+  userBid=bid;
+
+  bids[0]=bid;
+
+  document.getElementById(
+    "yourBid"
+  ).innerText=bid;
+
+  /*
+    AI bids.
+  */
+
+  for(let p=1;p<4;p++){
+
+    bids[p]=calculateBid(
+      hands[p]
+    );
+
+  }
+
+  document.getElementById(
+    "bidPanel"
+  ).style.display="none";
+
+  message(
+    "Cards are ready. " +
+    nameOf(currentPlayer) +
+    " leads the first trick."
+  );
+
+  renderAll();
+
+  setTimeout(
+    processTurn,
+    700
+  );
+
+}
+
+
+/* =====================================================
+   HARD AI BID
+   ===================================================== */
+
+function calculateBid(hand){
+
+  let strong=0;
+
+  let spades=0;
+
+  for(const card of hand){
+
+    if(card.suit==="♠"){
+
+      spades++;
+
+      if(card.value>=11)
+        strong+=1.4;
+
+      if(card.value>=13)
+        strong+=.8;
+
+    }
+    else{
+
+      if(card.value===14)
+        strong+=1;
+
+      if(card.value===13)
+        strong+=.6;
+
+      if(card.value===12)
+        strong+=.35;
+
+    }
+
+  }
+
+  strong +=
+    Math.max(
+      0,
+      spades-3
+    )*.5;
+
+  let bid =
+    Math.round(
+      strong
+    );
+
+  return Math.max(
+    1,
+    Math.min(
+      8,
+      bid
+    )
+  );
+
+}
+
+
+/* =====================================================
+   PLAYER MOVE
+   ===================================================== */
+
+function playerPlay(index){
+
+  if(
+    userBid===0 ||
+    currentPlayer!==0 ||
+    roundFinished
+  )
+    return;
+
+  const card =
+    hands[0][index];
+
+  if(
+    !isLegalCard(card)
+  ){
+
+    sound("error");
+
+    message(
+      "❌ You must follow the " +
+      leadSuit +
+      " suit."
+    );
+
+    return;
+
+  }
+
+  playCard(
+    0,
+    index
+  );
+
+  setTimeout(
+    processTurn,
+    350
+  );
+
+}
+
+
+/* =====================================================
+   PLAY CARD
+   ===================================================== */
+
+function playCard(
+  player,
+  index
+){
+
+  const card =
+    hands[player].splice(
+      index,
+      1
+    )[0];
+
+  if(
+    played.length===0
+  ){
+
+    leadSuit=card.suit;
+
+  }
+
+  played.push({
+    player:player,
+    card:card
+  });
+
+  sound("card");
+
+  renderAll();
+
+}
+
+
+/* =====================================================
+   TURN PROCESSOR
+   ===================================================== */
+
+function processTurn(){
+
+  if(roundFinished)
+    return;
+
+  if(
+    played.length===4
+  ){
+
+    finishTrick();
+
+    return;
+
+  }
+
+  /*
+    Find whose turn it is.
+  */
+
+  if(
+    currentPlayer===0
+  ){
+
+    message(
+      "🫵 Your turn — choose a legal card."
+    );
+
+    renderPlayerCards();
+
+    return;
+
+  }
+
+  /*
+    Computer plays.
+  */
+
+  const player=currentPlayer;
+
+  message(
+    nameOf(player)+
+    " is thinking..."
+  );
+
+  setTimeout(
+    ()=>{
+
+      const index =
+        chooseHardCard(
+          player
         );
 
+      playCard(
+        player,
+        index
+      );
 
-    div.className =
-        "card " +
+      currentPlayer =
+        (currentPlayer+1)%4;
+
+      processTurn();
+
+    },
+    650+Math.random()*450
+  );
+
+}
+
+
+/* =====================================================
+   HARD AI CARD DECISION
+   ===================================================== */
+
+function chooseHardCard(player){
+
+  const hand =
+    hands[player];
+
+  const legal=[];
+
+  for(let i=0;i<hand.length;i++){
+
+    if(
+      isLegalForHand(
+        hand,
+        hand[i]
+      )
+    ){
+
+      legal.push(i);
+
+    }
+
+  }
+
+  if(legal.length===1)
+    return legal[0];
+
+
+  /*
+    First player:
+    lead strategically.
+  */
+
+  if(
+    played.length===0
+  ){
+
+    return chooseLead(
+      player,
+      legal
+    );
+
+  }
+
+
+  /*
+    Find cards that can win.
+  */
+
+  const winning=[];
+
+  for(const index of legal){
+
+    if(
+      wouldWin(
+        hand[index]
+      )
+    ){
+
+      winning.push(index);
+
+    }
+
+  }
+
+
+  /*
+    If we can win:
+    use smallest winning card.
+  */
+
+  if(winning.length){
+
+    winning.sort(
+      (a,b)=>
+        hand[a].value-
+        hand[b].value
+    );
+
+    /*
+      Avoid wasting a huge trump
+      if a smaller card can win.
+    */
+
+    return winning[0];
+
+  }
+
+
+  /*
+    Cannot win.
+    Throw the lowest useful card.
+  */
+
+  legal.sort(
+    (a,b)=>
+      discardValue(
+        hand[a]
+      )-
+      discardValue(
+        hand[b]
+      )
+  );
+
+  return legal[0];
+
+}
+
+
+/* =====================================================
+   LEGAL FOR ANY HAND
+   ===================================================== */
+
+function isLegalForHand(
+  hand,
+  card
+){
+
+  if(
+    played.length===0
+  )
+    return true;
+
+  const hasLead =
+    hand.some(
+      c =>
+      c.suit===leadSuit
+    );
+
+  if(!hasLead)
+    return true;
+
+  return card.suit===leadSuit;
+
+}
+
+
+/* =====================================================
+   AI LEAD
+   ===================================================== */
+
+function chooseLead(
+  player,
+  legal
+){
+
+  const hand =
+    hands[player];
+
+  /*
+    If holding many spades,
+    sometimes lead a low spade.
+  */
+
+  const spades =
+    legal.filter(
+      i =>
+      hand[i].suit==="♠"
+    );
+
+  if(
+    spades.length>=5
+  ){
+
+    spades.sort(
+      (a,b)=>
+        hand[a].value-
+        hand[b].value
+    );
+
+    return spades[0];
+
+  }
+
+  /*
+    Lead from shortest suit
+    to create a possible void.
+  */
+
+  const counts={
+    "♠":0,
+    "♥":0,
+    "♦":0,
+    "♣":0
+  };
+
+  for(const c of hand)
+    counts[c.suit]++;
+
+  let bestSuit=null;
+  let bestCount=99;
+
+  for(const s of suits){
+
+    if(
+      counts[s]>0 &&
+      counts[s]<bestCount
+    ){
+
+      bestCount=counts[s];
+      bestSuit=s;
+
+    }
+
+  }
+
+  const candidates =
+    legal.filter(
+      i =>
+      hand[i].suit===bestSuit
+    );
+
+  candidates.sort(
+    (a,b)=>
+      hand[a].value-
+      hand[b].value
+  );
+
+  return candidates[0] ??
+         legal[0];
+
+}
+
+
+/* =====================================================
+   WOULD WIN
+   ===================================================== */
+
+function wouldWin(card){
+
+  let best =
+    played[0].card;
+
+  for(let i=1;i<played.length;i++){
+
+    const other =
+      played[i].card;
+
+    if(
+      beats(
+        other,
+        best,
+        leadSuit
+      )
+    ){
+
+      best=other;
+
+    }
+
+  }
+
+  return beats(
+    card,
+    best,
+    leadSuit
+  );
+
+}
+
+
+/* =====================================================
+   CARD COMPARISON
+   ===================================================== */
+
+function beats(
+  a,
+  b,
+  lead
+){
+
+  /*
+    Trump beats non-trump.
+  */
+
+  if(
+    a.suit==="♠" &&
+    b.suit!=="♠"
+  )
+    return true;
+
+  if(
+    b.suit==="♠" &&
+    a.suit!=="♠"
+  )
+    return false;
+
+  /*
+    Different non-trump suits:
+    only lead suit can win.
+  */
+
+  if(
+    a.suit!==b.suit
+  ){
+
+    if(a.suit===lead)
+      return true;
+
+    return false;
+
+  }
+
+  return a.value>b.value;
+
+}
+
+
+/* =====================================================
+   DISCARD VALUE
+   ===================================================== */
+
+function discardValue(card){
+
+  let value=card.value;
+
+  /*
+    Keep spades valuable.
+  */
+
+  if(card.suit==="♠")
+    value+=20;
+
+  return value;
+
+}
+
+
+/* =====================================================
+   FINISH TRICK
+   ===================================================== */
+
+function finishTrick(){
+
+  let best =
+    played[0];
+
+  for(let i=1;i<played.length;i++){
+
+    if(
+      beats(
+        played[i].card,
+        best.card,
+        leadSuit
+      )
+    ){
+
+      best=
+        played[i];
+
+    }
+
+  }
+
+  const winner =
+    best.player;
+
+  tricksWon[winner]++;
+
+  trickNumber++;
+
+  sound("win");
+
+  message(
+    "🏆 "+
+    nameOf(winner)+
+    " wins the trick with "+
+    best.card.rank+
+    best.card.suit+
+    "."
+  );
+
+  updateStats();
+
+  if(
+    trickNumber>=13
+  ){
+
+    setTimeout(
+      finishRound,
+      1100
+    );
+
+    return;
+
+  }
+
+  /*
+    Winner starts next trick.
+  */
+
+  leader=winner;
+
+  currentPlayer=winner;
+
+  played=[];
+
+  leadSuit=null;
+
+  renderAll();
+
+  setTimeout(
+    processTurn,
+    1000
+  );
+
+}
+
+
+/* =====================================================
+   FINISH ROUND
+   ===================================================== */
+
+function finishRound(){
+
+  roundFinished=true;
+
+  for(let p=0;p<4;p++){
+
+    if(
+      tricksWon[p]>=bids[p]
+    ){
+
+      scores[p] +=
+        bids[p] +
         (
-            card.red
-            ? "red"
-            : "black"
-        );
-
-
-    div.innerHTML =
-
-        "<b>" +
-        card.value +
-        "</b>" +
-
-        "<span>" +
-        card.suit +
-        "</span>";
-
-
-    return div;
-
-}
-
-
-/* SHOW PLAYER */
-
-function renderPlayer(){
-
-    const area =
-        document.getElementById(
-            "playerCards"
-        );
-
-    area.innerHTML = "";
-
-
-    player.forEach(
-
-        card => {
-
-            area.appendChild(
-                makeCard(card)
-            );
-
-        }
-
-    );
-
-}
-
-
-/* SHOW ENEMY */
-
-function renderEnemy(
-    hidden
-){
-
-    const area =
-        document.getElementById(
-            "enemyCards"
-        );
-
-    area.innerHTML = "";
-
-
-    enemy.forEach(
-
-        card => {
-
-            if(hidden){
-
-                const div =
-                    document.createElement(
-                        "div"
-                    );
-
-                div.className =
-                    "card back";
-
-                div.innerText =
-                    "★";
-
-                area.appendChild(
-                    div
-                );
-
-            }else{
-
-                area.appendChild(
-                    makeCard(card)
-                );
-
-            }
-
-        }
-
-    );
-
-}
-
-
-/* CARD VALUE */
-
-function value(card){
-
-    if(card.value === "A")
-        return 14;
-
-    if(card.value === "K")
-        return 13;
-
-    if(card.value === "Q")
-        return 12;
-
-    if(card.value === "J")
-        return 11;
-
-    return Number(
-        card.value
-    );
-
-}
-
-
-/* TEEN PATTI */
-
-function teenPatti(){
-
-    const playerValue =
-        evaluate(player);
-
-    const enemyValue =
-        evaluate(enemy);
-
-
-    if(
-        playerValue >
-        enemyValue
-    ){
-
-        points += 10;
-
-        result(
-            "🏆 You Win!",
-            "Your hand is stronger."
-        );
+          tricksWon[p]-
+          bids[p]
+        )*.1;
 
     }
-
-    else if(
-        playerValue <
-        enemyValue
-    ){
-
-        result(
-            "🤖 Computer Wins!",
-            "Computer has the stronger hand."
-        );
-
-    }
-
     else{
 
-        points += 2;
-
-        result(
-            "🤝 Draw!",
-            "Both hands are equal."
-        );
+      scores[p] -=
+        bids[p];
 
     }
 
-    updatePoints();
+  }
 
-}
-
-
-/* EVALUATE HAND */
-
-function evaluate(cards){
-
-    const nums =
-        cards
-        .map(value)
-        .sort(
-            (a,b) => b-a
-        );
-
-
-    const counts = {};
-
-
-    nums.forEach(
-        n => {
-
-            counts[n] =
-                (
-                    counts[n] || 0
-                ) + 1;
-
-        }
+  scores =
+    scores.map(
+      x =>
+      Math.round(x*10)/10
     );
 
+  document.getElementById(
+    "r0"
+  ).innerText =
+    `${tricksWon[0]} tricks / Bid ${bids[0]} / Score ${scores[0]}`;
 
-    const groups =
-        Object
-        .values(counts)
-        .sort(
-            (a,b) => b-a
-        );
+  document.getElementById(
+    "r1"
+  ).innerText =
+    `${tricksWon[1]} tricks / Bid ${bids[1]} / Score ${scores[1]}`;
 
+  document.getElementById(
+    "r2"
+  ).innerText =
+    `${tricksWon[2]} tricks / Bid ${bids[2]} / Score ${scores[2]}`;
 
-    /* THREE OF A KIND */
+  document.getElementById(
+    "r3"
+  ).innerText =
+    `${tricksWon[3]} tricks / Bid ${bids[3]} / Score ${scores[3]}`;
 
-    if(
-        groups[0] === 3
-    ){
+  document.getElementById(
+    "scoreboard"
+  ).style.display="block";
 
-        return 1000 + nums[0];
+  document.getElementById(
+    "newRound"
+  ).style.display="block";
 
-    }
+  document.getElementById(
+    "bidPanel"
+  ).style.display="none";
 
-
-    /* PAIR */
-
-    if(
-        groups[0] === 2
-    ){
-
-        return 500 + nums[0];
-
-    }
-
-
-    /* HIGH CARD */
-
-    return (
-        nums[0] * 10 +
-        nums[1] +
-        nums[2] / 100
-    );
+  message(
+    "🎉 Round finished! Check the scoreboard below."
+  );
 
 }
 
 
-/* HIGH CARD */
+/* =====================================================
+   NEW ROUND
+   ===================================================== */
 
-function highCard(){
+function startNewRound(){
 
-    const p =
-        value(player[0]);
+  round++;
 
-    const e =
-        value(enemy[0]);
+  userBid=0;
+
+  bids=[
+    0,0,0,0
+  ];
+
+  roundFinished=false;
+
+  document.getElementById(
+    "round"
+  ).innerText=round;
+
+  document.getElementById(
+    "yourBid"
+  ).innerText="—";
+
+  document.getElementById(
+    "scoreboard"
+  ).style.display="none";
+
+  document.getElementById(
+    "newRound"
+  ).style.display="none";
+
+  document.getElementById(
+    "bidPanel"
+  ).style.display="block";
+
+  document.getElementById(
+    "message"
+  ).innerText=
+    "Choose your Call/Bid to start.";
+
+  deal();
+
+}
 
 
-    if(p > e){
+/* =====================================================
+   NAME
+   ===================================================== */
 
-        points += 5;
+function nameOf(player){
 
-        result(
-            "🏆 You Win!",
-            "Your card is higher."
-        );
+  if(player===0)
+    return "You";
+
+  return "CPU "+player;
+
+}
+
+
+/* =====================================================
+   MESSAGE
+   ===================================================== */
+
+function message(text){
+
+  document.getElementById(
+    "message"
+  ).innerText=text;
+
+}
+
+
+/* =====================================================
+   STATS
+   ===================================================== */
+
+function updateStats(){
+
+  document.getElementById(
+    "trickNo"
+  ).innerText=
+    trickNumber;
+
+  document.getElementById(
+    "yourTricks"
+  ).innerText=
+    tricksWon[0];
+
+  document.getElementById(
+    "yourScore"
+  ).innerText=
+    scores[0];
+
+  /*
+    Show only turn/status,
+    never reveal computer cards.
+  */
+
+  for(let p=0;p<4;p++){
+
+    let status =
+      document.getElementById(
+        "status"+p
+      );
+
+    if(
+      currentPlayer===p
+    ){
+
+      status.innerText =
+        "● Your turn";
 
     }
-
-    else if(p < e){
-
-        result(
-            "🤖 Computer Wins!",
-            "Computer's card is higher."
-        );
-
-    }
-
     else{
 
-        points++;
-
-        result(
-            "🤝 Draw!",
-            "Same value."
-        );
+      status.innerText =
+        "Waiting";
 
     }
 
-
-    updatePoints();
+  }
 
 }
 
 
-/* CALL BREAK */
-
-function callBreak(){
-
-    const p =
-        value(player[0]);
-
-    const e =
-        value(enemy[0]);
-
-
-    if(p > e){
-
-        points += 5;
-
-        result(
-            "♠️ Trick Won!",
-            "You won this trick."
-        );
-
-    }
-
-    else{
-
-        result(
-            "♠️ Trick Lost",
-            "Computer won this trick."
-        );
-
-    }
-
-
-    updatePoints();
-
-}
-
-
-/* RUMMY */
-
-function rummy(){
-
-    const nums =
-        player.map(value);
-
-
-    const unique =
-        new Set(nums).size;
-
-
-    if(
-        unique <
-        nums.length
-    ){
-
-        points += 8;
-
-        result(
-            "🃏 Pair Found!",
-            "You made a matching pair."
-        );
-
-    }
-
-    else{
-
-        result(
-            "🔄 Try Again",
-            "No matching pair yet."
-        );
-
-    }
-
-
-    updatePoints();
-
-}
-
-
-/* PLAY */
-
-function play(){
-
-    if(
-        !player.length
-    ){
-
-        document
-        .getElementById(
-            "status"
-        )
-        .innerText =
-            "❌ First press Deal!";
-
-        return;
-
-    }
-
-
-    renderEnemy(false);
-
-
-    if(
-        game === "teen"
-    ){
-
-        teenPatti();
-
-    }
-
-    else if(
-        game === "call"
-    ){
-
-        callBreak();
-
-    }
-
-    else if(
-        game === "rummy"
-    ){
-
-        rummy();
-
-    }
-
-    else{
-
-        highCard();
-
-    }
-
-}
-
-
-/* RESULT */
-
-function result(
-    title,
-    message
-){
-
-    document
-    .getElementById(
-        "status"
-    )
-    .innerHTML =
-
-        "<b>" +
-        title +
-        "</b><br>" +
-        message;
-
-}
-
-
-/* POINTS */
-
-function updatePoints(){
-
-    document
-    .getElementById(
-        "score"
-    )
-    .innerText =
-        points;
-
-}
-
-
-/* RESET */
-
-function resetGame(){
-
-    player = [];
-
-    enemy = [];
-
-    points = 0;
-
-
-    document
-    .getElementById(
-        "playerCards"
-    )
-    .innerHTML = "";
-
-
-    document
-    .getElementById(
-        "enemyCards"
-    )
-    .innerHTML = "";
-
-
-    document
-    .getElementById(
-        "status"
-    )
-    .innerText =
-        "Press Deal to start";
-
-
-    updatePoints();
-
-}
+/* =====================================================
+   INITIALIZE
+   ===================================================== */
+
+deal();
 
 </script>
 
