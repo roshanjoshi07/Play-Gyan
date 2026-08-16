@@ -1,0 +1,2357 @@
+```html
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Python Programming Complete Course</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,"Noto Sans",sans-serif;
+    background:#07111d;
+    color:#eaf3fb;
+    line-height:1.8;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background:
+    radial-gradient(circle at 10% 10%,#3776ab55,transparent 30%),
+    radial-gradient(circle at 90% 80%,#ffd43b25,transparent 30%),
+    linear-gradient(135deg,#050b12,#091a2a);
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#07111df2;
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #ffffff18;
+}
+
+.nav{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#ffd43b;
+    font-size:21px;
+    font-weight:bold;
+}
+
+.home{
+    color:white;
+    text-decoration:none;
+    border:1px solid #ffffff20;
+    padding:7px 14px;
+    border-radius:10px;
+}
+
+.hero{
+    text-align:center;
+    padding:65px 20px 45px;
+}
+
+.python{
+    font-size:65px;
+}
+
+.hero h1{
+    color:#ffd43b;
+    font-size:clamp(38px,7vw,68px);
+    margin:10px 0;
+}
+
+.hero p{
+    max-width:850px;
+    margin:auto;
+    color:#c4d3df;
+    font-size:18px;
+}
+
+.badges{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:25px;
+}
+
+.badges span{
+    padding:7px 14px;
+    background:#ffffff0d;
+    border:1px solid #ffffff18;
+    border-radius:30px;
+    color:#dce9f2;
+}
+
+.progress-box{
+    max-width:800px;
+    margin:25px auto;
+}
+
+.progress{
+    height:9px;
+    background:#ffffff15;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#ffd43b;
+    transition:.3s;
+}
+
+.layout{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+    display:grid;
+    grid-template-columns:260px 1fr;
+    gap:25px;
+}
+
+.sidebar{
+    position:sticky;
+    top:80px;
+    height:calc(100vh - 100px);
+    overflow:auto;
+    padding:16px;
+    border:1px solid #ffffff12;
+    background:#ffffff08;
+    border-radius:18px;
+}
+
+.sidebar h3{
+    color:#ffd43b;
+    margin-bottom:12px;
+}
+
+.sidebar a{
+    display:block;
+    text-decoration:none;
+    color:#bdcedb;
+    padding:7px 10px;
+    border-radius:8px;
+    font-size:14px;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    color:#ffd43b;
+    background:#ffd43b12;
+}
+
+.chapter{
+    margin-bottom:30px;
+    padding:30px;
+    background:#ffffff08;
+    border:1px solid #ffffff13;
+    border-radius:20px;
+    box-shadow:0 15px 45px #0005;
+}
+
+.chapter h2{
+    color:#ffd43b;
+    font-size:27px;
+    margin-bottom:15px;
+}
+
+.chapter h3{
+    color:#8ed3ff;
+    margin-top:25px;
+    margin-bottom:8px;
+}
+
+.chapter p{
+    color:#d5e1e9;
+    margin:10px 0;
+}
+
+.chapter ul,
+.chapter ol{
+    margin:10px 0 10px 25px;
+}
+
+.chapter li{
+    margin:4px 0;
+}
+
+pre{
+    background:#02070d;
+    border:1px solid #ffffff13;
+    border-radius:12px;
+    padding:18px;
+    overflow-x:auto;
+    margin:15px 0;
+}
+
+code{
+    font-family:Consolas,monospace;
+    color:#e4f2ff;
+}
+
+.output{
+    padding:13px 16px;
+    margin:12px 0;
+    border-left:4px solid #ffd43b;
+    background:#ffd43b0c;
+    border-radius:6px;
+}
+
+.tip{
+    padding:15px;
+    margin:15px 0;
+    border-left:4px solid #3776ab;
+    background:#3776ab12;
+    border-radius:7px;
+}
+
+.warning{
+    padding:15px;
+    margin:15px 0;
+    border-left:4px solid #ff7043;
+    background:#ff704312;
+    border-radius:7px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:15px 0;
+}
+
+th,td{
+    border:1px solid #ffffff18;
+    padding:10px;
+    text-align:left;
+}
+
+th{
+    color:#ffd43b;
+    background:#ffffff09;
+}
+
+.quiz{
+    margin-top:18px;
+    padding:18px;
+    background:#ffffff06;
+    border:1px solid #ffffff12;
+    border-radius:14px;
+}
+
+.quiz button{
+    border:0;
+    padding:9px 14px;
+    margin:6px 4px;
+    border-radius:9px;
+    cursor:pointer;
+    background:#ffd43b;
+    color:#111;
+    font-weight:bold;
+}
+
+.quiz button:hover{
+    transform:translateY(-2px);
+}
+
+.result{
+    margin-top:8px;
+    font-weight:bold;
+}
+
+.project{
+    border:1px solid #ffd43b22;
+    padding:20px;
+    border-radius:14px;
+    margin-top:20px;
+    background:#ffd43b05;
+}
+
+footer{
+    text-align:center;
+    padding:45px 20px;
+    margin-top:30px;
+    border-top:1px solid #ffffff12;
+    color:#91a2af;
+}
+
+@media(max-width:850px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:relative;
+        top:0;
+        height:auto;
+        max-height:300px;
+    }
+
+    .chapter{
+        padding:20px;
+    }
+
+    .chapter h2{
+        font-size:23px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="nav">
+
+<div class="logo">🐍 Python Programming</div>
+
+<a href="index.html" class="home">← Home</a>
+
+</div>
+</header>
+
+
+<section class="hero">
+
+<div class="python">🐍</div>
+
+<h1>Python Programming</h1>
+
+<p>
+Python लाई शून्यबाट सिकेर वास्तविक programming project
+बनाउनका लागि तयार गरिएको पूर्ण नेपाली course।
+Theory र explanation नेपालीमा तथा actual Python code
+English/Python syntax मा राखिएको छ।
+</p>
+
+<div class="badges">
+<span>Beginner</span>
+<span>Intermediate</span>
+<span>Advanced</span>
+<span>Projects</span>
+<span>Practice</span>
+</div>
+
+<div class="progress-box">
+
+<p id="progressText">Course Progress: 0%</p>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+</div>
+
+</section>
+
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<h3>📚 Course Chapters</h3>
+
+<a href="#intro">१. Python परिचय</a>
+<a href="#setup">२. Installation र Setup</a>
+<a href="#print">३. print() र Comments</a>
+<a href="#variables">४. Variables</a>
+<a href="#types">५. Data Types</a>
+<a href="#conversion">६. Type Conversion</a>
+<a href="#input">७. User Input</a>
+<a href="#operators">८. Operators</a>
+<a href="#conditions">९. Conditions</a>
+<a href="#loops">१०. Loops</a>
+<a href="#strings">११. Strings</a>
+<a href="#lists">१२. Lists</a>
+<a href="#tuples">१३. Tuples</a>
+<a href="#sets">१४. Sets</a>
+<a href="#dictionary">१५. Dictionaries</a>
+<a href="#functions">१६. Functions</a>
+<a href="#advanced-functions">१७. Advanced Functions</a>
+<a href="#scope">१८. Scope</a>
+<a href="#comprehension">१९. Comprehensions</a>
+<a href="#modules">२०. Modules</a>
+<a href="#exceptions">२१. Exception Handling</a>
+<a href="#files">२२. File Handling</a>
+<a href="#json">२३. JSON</a>
+<a href="#datetime">२४. Date & Time</a>
+<a href="#oop">२५. OOP</a>
+<a href="#inheritance">२६. Inheritance</a>
+<a href="#polymorphism">२७. Polymorphism</a>
+<a href="#regex">२८. Regular Expressions</a>
+<a href="#pip">२९. pip र Packages</a>
+<a href="#venv">३०. Virtual Environment</a>
+<a href="#sqlite">३१. SQLite Database</a>
+<a href="#debugging">३२. Debugging</a>
+<a href="#projects">३३. Practical Projects</a>
+<a href="#practice">३४. Practice</a>
+
+</aside>
+
+
+<main>
+
+
+<!-- 1 -->
+
+<section class="chapter" id="intro">
+
+<h2>१. Python भनेको के हो?</h2>
+
+<p>
+Python एउटा high-level, general-purpose programming language हो।
+यसलाई website, software, automation, data analysis, artificial
+intelligence, machine learning लगायत विभिन्न क्षेत्रमा प्रयोग
+गरिन्छ।
+</p>
+
+<p>
+Python सिक्न सजिलो हुनुको मुख्य कारण यसको syntax धेरै
+readable हुनु हो। Programming सुरु गर्ने विद्यार्थीका लागि
+यो राम्रो language मध्ये एक हो।
+</p>
+
+<h3>पहिलो Python Program</h3>
+
+<pre><code>print("Hello, World!")</code></pre>
+
+<div class="output">
+Output:<br>
+Hello, World!
+</div>
+
+<p>
+यहाँ <b>print()</b> function ले quotation भित्र रहेको
+text लाई screen मा देखाउँछ।
+</p>
+
+<div class="tip">
+💡 Python code लेख्दा indentation अर्थात् code को अगाडिको
+space पनि महत्वपूर्ण हुन्छ।
+</div>
+
+</section>
+
+
+<!-- 2 -->
+
+<section class="chapter" id="setup">
+
+<h2>२. Python Installation र Setup</h2>
+
+<p>
+Python program चलाउन पहिले Python interpreter आवश्यक हुन्छ।
+Computer मा Python install गरेपछि terminal वा code editor बाट
+Python program चलाउन सकिन्छ।
+</p>
+
+<h3>Python Version जाँच्ने</h3>
+
+<pre><code>python --version</code></pre>
+
+<p>
+यदि system अनुसार command फरक छ भने Python 3 का लागि
+यसरी पनि जाँच्न सकिन्छ।
+</p>
+
+<pre><code>python3 --version</code></pre>
+
+<h3>Python File</h3>
+
+<p>
+Python file को extension सामान्यतया <b>.py</b> हुन्छ।
+उदाहरण:
+</p>
+
+<pre><code>hello.py</code></pre>
+
+<p>
+त्यस file भित्र Python code लेखेर Python interpreter बाट
+चलाउन सकिन्छ।
+</p>
+
+</section>
+
+
+<!-- 3 -->
+
+<section class="chapter" id="print">
+
+<h2>३. print() र Comments</h2>
+
+<p>
+Screen मा information देखाउन <b>print()</b> प्रयोग गरिन्छ।
+</p>
+
+<pre><code>print("Welcome to Python")
+print(100)
+print(10 + 20)</code></pre>
+
+<div class="output">
+Output:<br>
+Welcome to Python<br>
+100<br>
+30
+</div>
+
+<h3>एक Line Comment</h3>
+
+<p>
+Program बुझ्न सजिलो बनाउन code मा note लेख्न comment प्रयोग
+गरिन्छ। Python मा single-line comment को सुरुवात <b>#</b>
+बाट हुन्छ।
+</p>
+
+<pre><code># This is a comment
+
+print("Python")</code></pre>
+
+<h3>String प्रयोग गरेर Multi-line Text</h3>
+
+<pre><code>message = """
+This is
+multiple line text.
+"""
+
+print(message)</code></pre>
+
+</section>
+
+
+<!-- 4 -->
+
+<section class="chapter" id="variables">
+
+<h2>४. Variables</h2>
+
+<p>
+Variable भनेको कुनै value लाई नाम दिएर राख्ने तरिका हो।
+Program चलिरहेको बेला variable को value प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>name = "Roshan"
+age = 19
+score = 95.5
+
+print(name)
+print(age)
+print(score)</code></pre>
+
+<h3>Variable Naming Rules</h3>
+
+<ul>
+<li>नाम letter वा underscore बाट सुरु गर्न सकिन्छ।</li>
+<li>Number बाट variable सुरु गर्नु हुँदैन।</li>
+<li>Space प्रयोग गर्नु हुँदैन।</li>
+<li>Python का reserved keywords लाई variable name बनाउनु हुँदैन।</li>
+</ul>
+
+<pre><code>student_name = "Ram"
+student_age = 18</code></pre>
+
+<div class="warning">
+❌ <b>2name</b> जस्तो variable name प्रयोग गर्नु हुँदैन।
+</div>
+
+</section>
+
+
+<!-- 5 -->
+
+<section class="chapter" id="types">
+
+<h2>५. Python Data Types</h2>
+
+<p>
+Data type ले variable भित्र रहेको data कस्तो प्रकारको हो भनेर
+जनाउँछ।
+</p>
+
+<table>
+
+<tr>
+<th>Data Type</th>
+<th>उदाहरण</th>
+<th>प्रयोग</th>
+</tr>
+
+<tr>
+<td>str</td>
+<td>"Python"</td>
+<td>Text</td>
+</tr>
+
+<tr>
+<td>int</td>
+<td>25</td>
+<td>पूर्ण संख्या</td>
+</tr>
+
+<tr>
+<td>float</td>
+<td>25.5</td>
+<td>दशमलव संख्या</td>
+</tr>
+
+<tr>
+<td>bool</td>
+<td>True</td>
+<td>True/False</td>
+</tr>
+
+<tr>
+<td>list</td>
+<td>[1,2,3]</td>
+<td>धेरै values</td>
+</tr>
+
+<tr>
+<td>tuple</td>
+<td>(1,2,3)</td>
+<td>परिवर्तन गर्न नहुने collection</td>
+</tr>
+
+<tr>
+<td>set</td>
+<td>{1,2,3}</td>
+<td>Unique values</td>
+</tr>
+
+<tr>
+<td>dict</td>
+<td>{"name":"Ram"}</td>
+<td>Key-value data</td>
+</tr>
+
+</table>
+
+<h3>Data Type जाँच्ने</h3>
+
+<pre><code>age = 19
+
+print(type(age))</code></pre>
+
+</section>
+
+
+<!-- 6 -->
+
+<section class="chapter" id="conversion">
+
+<h2>६. Type Conversion</h2>
+
+<p>
+एक data type लाई अर्को data type मा परिवर्तन गर्न type conversion
+प्रयोग गरिन्छ।
+</p>
+
+<h3>String बाट Integer</h3>
+
+<pre><code>age = "19"
+
+age = int(age)
+
+print(age)</code></pre>
+
+<h3>Integer बाट Float</h3>
+
+<pre><code>number = 10
+
+result = float(number)
+
+print(result)</code></pre>
+
+<h3>Number बाट String</h3>
+
+<pre><code>age = 19
+
+text = str(age)
+
+print(text)</code></pre>
+
+<p>
+मुख्य conversion functions मा <b>int()</b>, <b>float()</b>,
+<b>str()</b> र <b>bool()</b> पर्छन्।
+</p>
+
+</section>
+
+
+<!-- 7 -->
+
+<section class="chapter" id="input">
+
+<h2>७. User Input</h2>
+
+<p>
+Program ले user बाट data लिन <b>input()</b> function प्रयोग गर्छ।
+</p>
+
+<pre><code>name = input("Enter your name: ")
+
+print("Hello", name)</code></pre>
+
+<h3>Integer Input</h3>
+
+<pre><code>age = int(input("Enter your age: "))
+
+print("Your age is", age)</code></pre>
+
+<h3>दुई वटा Number लिएर जोड्ने</h3>
+
+<pre><code>a = int(input("Enter first number: "))
+b = int(input("Enter second number: "))
+
+result = a + b
+
+print("Result:", result)</code></pre>
+
+<p>
+यहाँ user बाट आएको input लाई <b>int()</b> प्रयोग गरेर integer
+मा परिवर्तन गरिएको छ।
+</p>
+
+</section>
+
+
+<!-- 8 -->
+
+<section class="chapter" id="operators">
+
+<h2>८. Operators</h2>
+
+<p>
+Operators ले data माथि calculation, comparison वा logical
+operation गर्न मद्दत गर्छ।
+</p>
+
+<h3>Arithmetic Operators</h3>
+
+<pre><code>a = 10
+b = 3
+
+print(a + b)
+print(a - b)
+print(a * b)
+print(a / b)
+print(a // b)
+print(a % b)
+print(a ** b)</code></pre>
+
+<table>
+
+<tr>
+<th>Operator</th>
+<th>अर्थ</th>
+</tr>
+
+<tr><td>+</td><td>जोड</td></tr>
+<tr><td>-</td><td>घटाउ</td></tr>
+<tr><td>*</td><td>गुणा</td></tr>
+<tr><td>/</td><td>भाग</td></tr>
+<tr><td>//</td><td>Floor Division</td></tr>
+<tr><td>%</td><td>Remainder</td></tr>
+<tr><td>**</td><td>Power</td></tr>
+
+</table>
+
+<h3>Comparison</h3>
+
+<pre><code>a = 10
+b = 5
+
+print(a > b)
+print(a < b)
+print(a == b)
+print(a != b)
+print(a >= b)
+print(a <= b)</code></pre>
+
+<h3>Logical Operators</h3>
+
+<pre><code>age = 20
+
+print(age >= 18 and age <= 60)
+print(age < 18 or age > 60)
+print(not age < 18)</code></pre>
+
+</section>
+
+
+<!-- 9 -->
+
+<section class="chapter" id="conditions">
+
+<h2>९. if, elif र else</h2>
+
+<p>
+Program मा condition अनुसार फरक काम गराउन <b>if</b>,
+<b>elif</b> र <b>else</b> प्रयोग गरिन्छ।
+</p>
+
+<h3>if</h3>
+
+<pre><code>age = 20
+
+if age >= 18:
+    print("You are an adult")</code></pre>
+
+<h3>if र else</h3>
+
+<pre><code>age = 16
+
+if age >= 18:
+    print("Adult")
+else:
+    print("Minor")</code></pre>
+
+<h3>elif</h3>
+
+<pre><code>marks = 75
+
+if marks >= 80:
+    print("A+")
+elif marks >= 60:
+    print("A")
+elif marks >= 40:
+    print("Pass")
+else:
+    print("Fail")</code></pre>
+
+</section>
+
+
+<!-- 10 -->
+
+<section class="chapter" id="loops">
+
+<h2>१०. Loops</h2>
+
+<p>
+एउटै काम धेरै पटक दोहोर्याउन loops प्रयोग गरिन्छ।
+Python मा मुख्य रूपमा <b>for</b> र <b>while</b> loop प्रयोग हुन्छ।
+</p>
+
+<h3>for Loop</h3>
+
+<pre><code>for i in range(5):
+    print(i)</code></pre>
+
+<div class="output">
+Output:<br>
+0<br>
+1<br>
+2<br>
+3<br>
+4
+</div>
+
+<h3>while Loop</h3>
+
+<pre><code>i = 1
+
+while i <= 5:
+    print(i)
+    i += 1</code></pre>
+
+<h3>break</h3>
+
+<p>
+कुनै condition पूरा भएपछि loop तुरुन्त रोक्न <b>break</b>
+प्रयोग गरिन्छ।
+</p>
+
+<pre><code>for i in range(10):
+
+    if i == 5:
+        break
+
+    print(i)</code></pre>
+
+<h3>continue</h3>
+
+<p>
+Current iteration छोडेर अर्को iteration मा जान
+<b>continue</b> प्रयोग हुन्छ।
+</p>
+
+<pre><code>for i in range(5):
+
+    if i == 2:
+        continue
+
+    print(i)</code></pre>
+
+</section>
+
+
+<!-- 11 -->
+
+<section class="chapter" id="strings">
+
+<h2>११. Strings</h2>
+
+<p>
+Text data लाई Python मा string भनिन्छ। String quotation marks
+भित्र लेखिन्छ।
+</p>
+
+<pre><code>name = "Python"
+
+print(name)
+print(name[0])
+print(name[-1])
+print(len(name))</code></pre>
+
+<h3>String Slicing</h3>
+
+<pre><code>text = "Python"
+
+print(text[0:3])
+print(text[2:6])</code></pre>
+
+<h3>महत्वपूर्ण String Methods</h3>
+
+<pre><code>text = "hello python"
+
+print(text.upper())
+print(text.lower())
+print(text.title())
+print(text.capitalize())
+print(text.replace("python", "world"))
+print(text.split())</code></pre>
+
+<h3>f-string</h3>
+
+<pre><code>name = "Roshan"
+age = 19
+
+print(f"My name is {name} and I am {age} years old.")</code></pre>
+
+<p>
+f-string ले variable को value लाई string भित्र सजिलै राख्न
+मद्दत गर्छ।
+</p>
+
+</section>
+
+
+<!-- 12 -->
+
+<section class="chapter" id="lists">
+
+<h2>१२. Lists</h2>
+
+<p>
+List मा एउटै variable भित्र धेरै values राख्न सकिन्छ।
+List परिवर्तन गर्न मिल्छ।
+</p>
+
+<pre><code>fruits = [
+    "Apple",
+    "Banana",
+    "Mango"
+]
+
+print(fruits)</code></pre>
+
+<h3>Index बाट value लिन</h3>
+
+<pre><code>print(fruits[0])
+print(fruits[1])</code></pre>
+
+<h3>Item थप्ने</h3>
+
+<pre><code>fruits.append("Orange")</code></pre>
+
+<h3>Item हटाउने</h3>
+
+<pre><code>fruits.remove("Banana")</code></pre>
+
+<h3>महत्वपूर्ण Methods</h3>
+
+<pre><code>numbers = [5, 2, 8, 1]
+
+numbers.append(10)
+numbers.insert(1, 20)
+numbers.remove(8)
+numbers.sort()
+numbers.reverse()
+
+print(numbers)</code></pre>
+
+<h3>List Loop</h3>
+
+<pre><code>for fruit in fruits:
+    print(fruit)</code></pre>
+
+</section>
+
+
+<!-- 13 -->
+
+<section class="chapter" id="tuples">
+
+<h2>१३. Tuples</h2>
+
+<p>
+Tuple पनि collection हो तर यसको values सामान्यतया
+परिवर्तन गर्न मिल्दैन। त्यसैले परिवर्तन गर्न नहुने data
+राख्न tuple उपयोगी हुन्छ।
+</p>
+
+<pre><code>numbers = (10, 20, 30)
+
+print(numbers[0])
+print(len(numbers))</code></pre>
+
+<h3>Tuple Unpacking</h3>
+
+<pre><code>person = ("Roshan", 19)
+
+name, age = person
+
+print(name)
+print(age)</code></pre>
+
+</section>
+
+
+<!-- 14 -->
+
+<section class="chapter" id="sets">
+
+<h2>१४. Sets</h2>
+
+<p>
+Set मा duplicate values स्वतः हट्छन्। Unique values राख्न
+set उपयोगी हुन्छ।
+</p>
+
+<pre><code>numbers = {1, 2, 3, 3, 4}
+
+print(numbers)</code></pre>
+
+<h3>Set Operations</h3>
+
+<pre><code>a = {1, 2, 3}
+b = {3, 4, 5}
+
+print(a.union(b))
+print(a.intersection(b))
+print(a.difference(b))</code></pre>
+
+<p>
+<b>union()</b> ले दुवै set का values जोड्छ।
+<b>intersection()</b> ले दुवैमा भएका common values निकाल्छ।
+<b>difference()</b> ले पहिलो set मा मात्र भएका values निकाल्छ।
+</p>
+
+</section>
+
+
+<!-- 15 -->
+
+<section class="chapter" id="dictionary">
+
+<h2>१५. Dictionaries</h2>
+
+<p>
+Dictionary ले data लाई key-value pair को रूपमा राख्छ।
+</p>
+
+<pre><code>student = {
+    "name": "Roshan",
+    "age": 19,
+    "course": "Python"
+}
+
+print(student["name"])
+print(student["age"])</code></pre>
+
+<h3>Value परिवर्तन</h3>
+
+<pre><code>student["age"] = 20</code></pre>
+
+<h3>नयाँ Value थप्ने</h3>
+
+<pre><code>student["city"] = "Dhangadhi"</code></pre>
+
+<h3>महत्वपूर्ण Methods</h3>
+
+<pre><code>print(student.keys())
+print(student.values())
+print(student.items())
+
+student.pop("city")</code></pre>
+
+</section>
+
+
+<!-- 16 -->
+
+<section class="chapter" id="functions">
+
+<h2>१६. Functions</h2>
+
+<p>
+Function भनेको कुनै निश्चित काम गर्न बनाइएको reusable code
+block हो। एउटै काम बारम्बार गर्नुपर्दा function प्रयोग गर्दा
+code छोटो र व्यवस्थित हुन्छ।
+</p>
+
+<h3>Basic Function</h3>
+
+<pre><code>def greet():
+    print("Hello Python")
+
+greet()</code></pre>
+
+<h3>Parameter</h3>
+
+<pre><code>def greet(name):
+    print("Hello", name)
+
+greet("Roshan")</code></pre>
+
+<h3>Return</h3>
+
+<pre><code>def add(a, b):
+    return a + b
+
+result = add(10, 20)
+
+print(result)</code></pre>
+
+<div class="output">
+Output:<br>
+30
+</div>
+
+<h3>Default Parameter</h3>
+
+<pre><code>def greet(name="Friend"):
+    print("Hello", name)
+
+greet()
+greet("Ram")</code></pre>
+
+</section>
+
+
+<!-- 17 -->
+
+<section class="chapter" id="advanced-functions">
+
+<h2>१७. Advanced Functions</h2>
+
+<h3>*args</h3>
+
+<p>
+Function मा कति वटा positional arguments आउने हो निश्चित नभए
+<b>*args</b> प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>def total(*numbers):
+
+    result = 0
+
+    for number in numbers:
+        result += number
+
+    return result
+
+print(total(10, 20, 30, 40))</code></pre>
+
+<h3>**kwargs</h3>
+
+<p>
+धेरै keyword arguments लिन <b>**kwargs</b> प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>def profile(**data):
+
+    for key, value in data.items():
+        print(key, value)
+
+profile(
+    name="Roshan",
+    age=19,
+    course="Python"
+)</code></pre>
+
+<h3>Lambda Function</h3>
+
+<p>
+सानो function लाई छोटकरीमा लेख्न lambda उपयोगी हुन्छ।
+</p>
+
+<pre><code>square = lambda x: x * x
+
+print(square(5))</code></pre>
+
+<h3>Recursion</h3>
+
+<p>
+Function ले आफैंलाई call गर्ने प्रक्रियालाई recursion भनिन्छ।
+यसमा stopping condition अर्थात् base case हुनु आवश्यक हुन्छ।
+</p>
+
+<pre><code>def countdown(n):
+
+    if n <= 0:
+        return
+
+    print(n)
+
+    countdown(n - 1)
+
+countdown(5)</code></pre>
+
+</section>
+
+
+<!-- 18 -->
+
+<section class="chapter" id="scope">
+
+<h2>१८. Variable Scope</h2>
+
+<p>
+Variable कहाँबाट access गर्न सकिन्छ भन्ने कुरालाई scope भनिन्छ।
+मुख्य रूपमा local र global scope बुझ्न आवश्यक हुन्छ।
+</p>
+
+<h3>Local Variable</h3>
+
+<pre><code>def test():
+
+    x = 10
+
+    print(x)
+
+test()</code></pre>
+
+<h3>Global Variable</h3>
+
+<pre><code>x = 100
+
+def test():
+
+    print(x)
+
+test()</code></pre>
+
+<h3>global Keyword</h3>
+
+<pre><code>x = 10
+
+def change():
+
+    global x
+    x = 20
+
+change()
+
+print(x)</code></pre>
+
+</section>
+
+
+<!-- 19 -->
+
+<section class="chapter" id="comprehension">
+
+<h2>१९. Comprehensions</h2>
+
+<p>
+Comprehension प्रयोग गरेर collection तयार गर्ने code लाई
+छोटो र readable बनाउन सकिन्छ।
+</p>
+
+<h3>List Comprehension</h3>
+
+<pre><code>squares = [
+    x * x
+    for x in range(10)
+]
+
+print(squares)</code></pre>
+
+<h3>Condition सहित</h3>
+
+<pre><code>even_numbers = [
+    x
+    for x in range(20)
+    if x % 2 == 0
+]
+
+print(even_numbers)</code></pre>
+
+<h3>Dictionary Comprehension</h3>
+
+<pre><code>squares = {
+    x: x * x
+    for x in range(5)
+}
+
+print(squares)</code></pre>
+
+</section>
+
+
+<!-- 20 -->
+
+<section class="chapter" id="modules">
+
+<h2>२०. Modules</h2>
+
+<p>
+ठूलो program लाई छुट्टाछुट्टै भागमा व्यवस्थित गर्न module
+प्रयोग गर्न सकिन्छ। Python मा धेरै built-in modules पनि हुन्छन्।
+</p>
+
+<h3>math Module</h3>
+
+<pre><code>import math
+
+print(math.sqrt(25))
+print(math.pi)</code></pre>
+
+<h3>random Module</h3>
+
+<pre><code>import random
+
+number = random.randint(1, 10)
+
+print(number)</code></pre>
+
+<h3>Specific Function Import</h3>
+
+<pre><code>from math import sqrt
+
+print(sqrt(36))</code></pre>
+
+</section>
+
+
+<!-- 21 -->
+
+<section class="chapter" id="exceptions">
+
+<h2>२१. Exception Handling</h2>
+
+<p>
+Program चलाउँदा गलत input वा अन्य runtime समस्या आउन सक्छ।
+त्यस्ता समस्या व्यवस्थित रूपमा handle गर्न exception handling
+प्रयोग गरिन्छ।
+</p>
+
+<pre><code>try:
+
+    number = int(
+        input("Enter a number: ")
+    )
+
+    print(10 / number)
+
+except ValueError:
+
+    print("Please enter a valid number.")
+
+except ZeroDivisionError:
+
+    print("Cannot divide by zero.")</code></pre>
+
+<h3>else र finally</h3>
+
+<pre><code>try:
+
+    print("Program running")
+
+except Exception:
+
+    print("Something went wrong")
+
+else:
+
+    print("No error occurred")
+
+finally:
+
+    print("Program finished")</code></pre>
+
+</section>
+
+
+<!-- 22 -->
+
+<section class="chapter" id="files">
+
+<h2>२२. File Handling</h2>
+
+<p>
+Python बाट text file सिर्जना गर्ने, पढ्ने र update गर्ने काम
+गर्न सकिन्छ।
+</p>
+
+<h3>File मा लेख्ने</h3>
+
+<pre><code>with open("data.txt", "w") as file:
+
+    file.write("Hello Python")</code></pre>
+
+<h3>File पढ्ने</h3>
+
+<pre><code>with open("data.txt", "r") as file:
+
+    content = file.read()
+
+print(content)</code></pre>
+
+<h3>File मा थप्ने</h3>
+
+<pre><code>with open("data.txt", "a") as file:
+
+    file.write("\nNew line")</code></pre>
+
+<p>
+<b>w</b> ले write, <b>r</b> ले read र <b>a</b> ले append
+operation जनाउँछ।
+</p>
+
+</section>
+
+
+<!-- 23 -->
+
+<section class="chapter" id="json">
+
+<h2>२३. JSON</h2>
+
+<p>
+JSON data लाई web applications र विभिन्न systems बीच
+exchange गर्न धेरै प्रयोग गरिन्छ।
+</p>
+
+<pre><code>import json
+
+data = {
+    "name": "Roshan",
+    "age": 19
+}
+
+json_text = json.dumps(data)
+
+print(json_text)</code></pre>
+
+<h3>JSON बाट Python Data</h3>
+
+<pre><code>text = '{"name":"Roshan","age":19}'
+
+data = json.loads(text)
+
+print(data["name"])</code></pre>
+
+</section>
+
+
+<!-- 24 -->
+
+<section class="chapter" id="datetime">
+
+<h2>२४. Date र Time</h2>
+
+<p>
+Date र time सम्बन्धी कामका लागि Python को datetime module
+प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now)</code></pre>
+
+<h3>Formatted Date</h3>
+
+<pre><code>print(
+    now.strftime("%Y-%m-%d")
+)</code></pre>
+
+<h3>Current Date</h3>
+
+<pre><code>from datetime import date
+
+today = date.today()
+
+print(today)</code></pre>
+
+</section>
+
+
+<!-- 25 -->
+
+<section class="chapter" id="oop">
+
+<h2>२५. Object-Oriented Programming</h2>
+
+<p>
+Object-Oriented Programming अर्थात् OOP मा program लाई
+class र object को आधारमा व्यवस्थित गरिन्छ।
+</p>
+
+<h3>Class र Object</h3>
+
+<pre><code>class Student:
+
+    def __init__(self, name, age):
+
+        self.name = name
+        self.age = age
+
+    def introduce(self):
+
+        print(
+            f"My name is {self.name}"
+        )
+
+
+student = Student("Roshan", 19)
+
+student.introduce()</code></pre>
+
+<p>
+यहाँ <b>Student</b> class हो र <b>student</b> object हो।
+<b>__init__()</b> constructor हो। <b>self</b> ले current object
+लाई जनाउँछ।
+</p>
+
+</section>
+
+
+<!-- 26 -->
+
+<section class="chapter" id="inheritance">
+
+<h2>२६. Inheritance</h2>
+
+<p>
+एउटा class का properties र methods अर्को class ले प्रयोग
+गर्न सक्ने concept लाई inheritance भनिन्छ।
+</p>
+
+<pre><code>class Animal:
+
+    def speak(self):
+        print("Animal sound")
+
+
+class Dog(Animal):
+
+    def bark(self):
+        print("Woof!")
+
+
+dog = Dog()
+
+dog.speak()
+dog.bark()</code></pre>
+
+<p>
+यहाँ Dog class ले Animal बाट <b>speak()</b> method प्राप्त गरेको छ।
+</p>
+
+</section>
+
+
+<!-- 27 -->
+
+<section class="chapter" id="polymorphism">
+
+<h2>२७. Polymorphism</h2>
+
+<p>
+एउटै method name फरक class मा फरक तरिकाले काम गर्न सक्ने
+concept लाई polymorphism भनिन्छ।
+</p>
+
+<pre><code>class Dog:
+
+    def sound(self):
+        print("Dog barks")
+
+
+class Cat:
+
+    def sound(self):
+        print("Cat meows")
+
+
+animals = [
+    Dog(),
+    Cat()
+]
+
+for animal in animals:
+    animal.sound()</code></pre>
+
+<p>
+दुवै object मा <b>sound()</b> method छ तर output फरक हुन्छ।
+</p>
+
+</section>
+
+
+<!-- 28 -->
+
+<section class="chapter" id="regex">
+
+<h2>२८. Regular Expressions</h2>
+
+<p>
+Text भित्र कुनै विशेष pattern खोज्न वा जाँच गर्न regular
+expression अर्थात् regex प्रयोग गरिन्छ।
+</p>
+
+<pre><code>import re
+
+text = "My phone is 9841234567"
+
+numbers = re.findall(
+    r"\d+",
+    text
+)
+
+print(numbers)</code></pre>
+
+<p>
+यहाँ <b>\d+</b> ले लगातार आएका digits खोज्न प्रयोग गरिएको छ।
+</p>
+
+</section>
+
+
+<!-- 29 -->
+
+<section class="chapter" id="pip">
+
+<h2>२९. pip र Python Packages</h2>
+
+<p>
+Python मा बाहिरी library वा package install गर्न pip प्रयोग
+गर्न सकिन्छ।
+</p>
+
+<pre><code>pip install requests</code></pre>
+
+<p>
+Package install गरेपछि program मा import गरेर प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>import requests
+
+response = requests.get(
+    "https://example.com"
+)
+
+print(response.status_code)</code></pre>
+
+<div class="warning">
+⚠️ बाहिरी package प्रयोग गर्दा trusted source र package को
+documentation जाँच गर्नु राम्रो हुन्छ।
+</div>
+
+</section>
+
+
+<!-- 30 -->
+
+<section class="chapter" id="venv">
+
+<h2>३०. Virtual Environment</h2>
+
+<p>
+ठूला Python projects मा प्रत्येक project का dependencies
+अलग राख्न virtual environment उपयोगी हुन्छ।
+</p>
+
+<h3>Environment बनाउने</h3>
+
+<pre><code>python -m venv myenv</code></pre>
+
+<h3>Activation</h3>
+
+<p>
+Operating system अनुसार activation command फरक हुन सक्छ।
+</p>
+
+<pre><code>myenv\Scripts\activate</code></pre>
+
+<p>
+Virtual environment प्रयोग गर्दा एउटा project का packages ले
+अर्को project मा अनावश्यक असर गर्ने सम्भावना घट्छ।
+</p>
+
+</section>
+
+
+<!-- 31 -->
+
+<section class="chapter" id="sqlite">
+
+<h2>३१. SQLite Database</h2>
+
+<p>
+Python मा SQLite database प्रयोग गरेर data स्थायी रूपमा
+store गर्न सकिन्छ।
+</p>
+
+<h3>Database बनाउने</h3>
+
+<pre><code>import sqlite3
+
+connection = sqlite3.connect(
+    "school.db"
+)
+
+cursor = connection.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS students(
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    age INTEGER
+)
+""")
+
+connection.commit()
+
+connection.close()</code></pre>
+
+<h3>Data Insert गर्ने</h3>
+
+<pre><code>cursor.execute(
+    "INSERT INTO students(name, age) VALUES (?, ?)",
+    ("Roshan", 19)
+)
+
+connection.commit()</code></pre>
+
+<p>
+Database प्रयोग गर्दा user input लाई query मा सिधै जोड्नुको
+सट्टा parameterized query प्रयोग गर्नु सुरक्षित अभ्यास हो।
+</p>
+
+</section>
+
+
+<!-- 32 -->
+
+<section class="chapter" id="debugging">
+
+<h2>३२. Debugging</h2>
+
+<p>
+Program अपेक्षित रूपमा नचल्दा error को कारण खोजेर सुधार गर्ने
+प्रक्रियालाई debugging भनिन्छ।
+</p>
+
+<h3>सामान्य Error हरू</h3>
+
+<table>
+
+<tr>
+<th>Error</th>
+<th>सामान्य कारण</th>
+</tr>
+
+<tr>
+<td>SyntaxError</td>
+<td>Python syntax गलत हुनु</td>
+</tr>
+
+<tr>
+<td>NameError</td>
+<td>नचिनिएको variable/function प्रयोग हुनु</td>
+</tr>
+
+<tr>
+<td>TypeError</td>
+<td>गलत data type को operation</td>
+</tr>
+
+<tr>
+<td>ValueError</td>
+<td>गलत value conversion</td>
+</tr>
+
+<tr>
+<td>IndexError</td>
+<td>नभएको list index प्रयोग गर्नु</td>
+</tr>
+
+<tr>
+<td>KeyError</td>
+<td>नभएको dictionary key प्रयोग गर्नु</td>
+</tr>
+
+</table>
+
+<h3>Debug गर्न print()</h3>
+
+<pre><code>name = "Roshan"
+
+print("DEBUG:", name)</code></pre>
+
+<p>
+सानो program मा print() बाट variable को value जाँच्न सकिन्छ।
+ठूला project मा debugger र logging जस्ता tools पनि प्रयोग
+गर्न सकिन्छ।
+</p>
+
+</section>
+
+
+<!-- 33 -->
+
+<section class="chapter" id="projects">
+
+<h2>३३. Practical Python Projects</h2>
+
+<p>
+अब सिकेका concepts प्रयोग गरेर केही साना projects बनाऔँ।
+यी project हरू अभ्यासका लागि हुन्।
+</p>
+
+
+<div class="project">
+
+<h3>Project 1 — Calculator</h3>
+
+<pre><code>def calculator():
+
+    a = float(input("Enter first number: "))
+    operator = input("Enter operator (+ - * /): ")
+    b = float(input("Enter second number: "))
+
+    if operator == "+":
+        result = a + b
+
+    elif operator == "-":
+        result = a - b
+
+    elif operator == "*":
+        result = a * b
+
+    elif operator == "/":
+
+        if b == 0:
+            print("Cannot divide by zero.")
+            return
+
+        result = a / b
+
+    else:
+        print("Invalid operator.")
+        return
+
+    print("Result:", result)
+
+
+calculator()</code></pre>
+
+<p>
+यो project मा function, input, condition, arithmetic operators
+र return concept प्रयोग गरिएको छ।
+</p>
+
+</div>
+
+
+<div class="project">
+
+<h3>Project 2 — Number Guessing Game</h3>
+
+<pre><code>import random
+
+secret_number = random.randint(1, 100)
+
+while True:
+
+    guess = int(
+        input("Guess the number: ")
+    )
+
+    if guess == secret_number:
+
+        print("Correct!")
+        break
+
+    elif guess < secret_number:
+
+        print("Too low.")
+
+    else:
+
+        print("Too high.")</code></pre>
+
+<p>
+यसमा random number, loop, condition र user input प्रयोग भएको छ।
+</p>
+
+</div>
+
+
+<div class="project">
+
+<h3>Project 3 — Quiz Game</h3>
+
+<pre><code>questions = [
+    {
+        "question": "What is 2 + 2?",
+        "answer": "4"
+    },
+    {
+        "question": "What programming language is this?",
+        "answer": "python"
+    }
+]
+
+score = 0
+
+for item in questions:
+
+    answer = input(
+        item["question"] + " "
+    )
+
+    if answer.lower() == item["answer"].lower():
+
+        print("Correct!")
+        score += 1
+
+    else:
+
+        print("Wrong!")
+
+print("Final Score:", score)</code></pre>
+
+<p>
+यसमा list, dictionary, loop, condition, string method र score
+system प्रयोग गरिएको छ।
+</p>
+
+</div>
+
+
+<div class="project">
+
+<h3>Project 4 — To-Do List</h3>
+
+<pre><code>tasks = []
+
+while True:
+
+    print("\n1. Add Task")
+    print("2. View Tasks")
+    print("3. Remove Task")
+    print("4. Exit")
+
+    choice = input("Choose an option: ")
+
+    if choice == "1":
+
+        task = input("Enter task: ")
+        tasks.append(task)
+
+    elif choice == "2":
+
+        if not tasks:
+
+            print("No tasks found.")
+
+        else:
+
+            for index, task in enumerate(tasks, 1):
+
+                print(index, task)
+
+    elif choice == "3":
+
+        number = int(
+            input("Enter task number: ")
+        )
+
+        if 1 <= number <= len(tasks):
+
+            tasks.pop(number - 1)
+
+            print("Task removed.")
+
+        else:
+
+            print("Invalid task number.")
+
+    elif choice == "4":
+
+        print("Goodbye!")
+        break
+
+    else:
+
+        print("Invalid option.")</code></pre>
+
+</div>
+
+
+<div class="project">
+
+<h3>Project 5 — Simple Banking Program</h3>
+
+<pre><code>balance = 1000
+
+while True:
+
+    print("\n1. Check Balance")
+    print("2. Deposit")
+    print("3. Withdraw")
+    print("4. Exit")
+
+    choice = input("Choose: ")
+
+    if choice == "1":
+
+        print("Balance:", balance)
+
+    elif choice == "2":
+
+        amount = float(
+            input("Enter deposit amount: ")
+        )
+
+        if amount > 0:
+
+            balance += amount
+
+            print("Deposit successful.")
+
+        else:
+
+            print("Invalid amount.")
+
+    elif choice == "3":
+
+        amount = float(
+            input("Enter withdrawal amount: ")
+        )
+
+        if amount <= 0:
+
+            print("Invalid amount.")
+
+        elif amount > balance:
+
+            print("Insufficient balance.")
+
+        else:
+
+            balance -= amount
+
+            print("Withdrawal successful.")
+
+    elif choice == "4":
+
+        break
+
+    else:
+
+        print("Invalid option.")</code></pre>
+
+<p>
+यो अभ्यासमा variable, loop, condition, input र arithmetic
+concept जोडेर एउटा सानो menu-based program बनाइएको छ।
+</p>
+
+</div>
+
+</section>
+
+
+<!-- 34 -->
+
+<section class="chapter" id="practice">
+
+<h2>३४. Practice Questions</h2>
+
+<p>
+अब आफैं code लेखेर अभ्यास गर्नुहोस्। केवल answer पढ्नु भन्दा
+आफैं program लेख्दा programming skill धेरै राम्रोसँग विकास हुन्छ।
+</p>
+
+<div class="quiz">
+
+<p><b>१. Python मा output देखाउन कुन function प्रयोग हुन्छ?</b></p>
+
+<button onclick="checkAnswer(this,true)">print()</button>
+<button onclick="checkAnswer(this,false)">show()</button>
+<button onclick="checkAnswer(this,false)">display()</button>
+
+<div class="result"></div>
+
+</div>
+
+
+<div class="quiz">
+
+<p><b>२. Function बनाउन कुन keyword प्रयोग हुन्छ?</b></p>
+
+<button onclick="checkAnswer(this,false)">function</button>
+<button onclick="checkAnswer(this,true)">def</button>
+<button onclick="checkAnswer(this,false)">fun</button>
+
+<div class="result"></div>
+
+</div>
+
+
+<div class="quiz">
+
+<p><b>३. Key-value pair राख्न कुन data type प्रयोग हुन्छ?</b></p>
+
+<button onclick="checkAnswer(this,false)">list</button>
+<button onclick="checkAnswer(this,true)">dict</button>
+<button onclick="checkAnswer(this,false)">tuple</button>
+
+<div class="result"></div>
+
+</div>
+
+
+<div class="quiz">
+
+<p><b>४. Python मा comment सुरु गर्न कुन symbol प्रयोग हुन्छ?</b></p>
+
+<button onclick="checkAnswer(this,true)">#</button>
+<button onclick="checkAnswer(this,false)">//</button>
+<button onclick="checkAnswer(this,false)">--</button>
+
+<div class="result"></div>
+
+</div>
+
+
+<div class="quiz">
+
+<p><b>५. Loop बाट तुरुन्त बाहिर निस्कन कुन keyword प्रयोग हुन्छ?</b></p>
+
+<button onclick="checkAnswer(this,false)">stop</button>
+<button onclick="checkAnswer(this,true)">break</button>
+<button onclick="checkAnswer(this,false)">exitloop</button>
+
+<div class="result"></div>
+
+</div>
+
+
+<h3>आफैं बनाउनुपर्ने Programs</h3>
+
+<ol>
+<li>दुईवटा number जोड्ने program बनाउनुहोस्।</li>
+<li>Number odd वा even हो भनेर जाँच गर्ने program बनाउनुहोस्।</li>
+<li>तीनवटा number मध्ये ठूलो number पत्ता लगाउनुहोस्।</li>
+<li>१ देखि १०० सम्मका even numbers print गर्नुहोस्।</li>
+<li>List का सबै values को total निकाल्नुहोस्।</li>
+<li>String palindrome हो कि होइन जाँच गर्नुहोस्।</li>
+<li>Simple calculator बनाउनुहोस्।</li>
+<li>Number guessing game बनाउनुहोस्।</li>
+<li>Quiz game बनाउनुहोस्।</li>
+<li>To-do list program बनाउनुहोस्।</li>
+</ol>
+
+<div class="tip">
+🎯 राम्रो programmer बन्ने सबैभन्दा राम्रो तरिका भनेको
+code पढ्नु मात्र होइन, आफैंले code लेख्नु र error आएपछि
+त्यसको कारण खोज्नु हो।
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<footer>
+
+<p>🐍 Python Programming Complete Course</p>
+
+<p>
+सिक्नुहोस् • अभ्यास गर्नुहोस् • Program बनाउनुहोस्
+</p>
+
+<p>
+GameBook GK Hub © 2026
+</p>
+
+</footer>
+
+
+<script>
+
+/* COURSE PROGRESS */
+
+const progressBar =
+document.getElementById("progressBar");
+
+const progressText =
+document.getElementById("progressText");
+
+
+function updateProgress(){
+
+    const top =
+        window.scrollY;
+
+    const height =
+        document.documentElement.scrollHeight -
+        window.innerHeight;
+
+    let percent = 0;
+
+    if(height > 0){
+
+        percent =
+        Math.round(
+            (top / height) * 100
+        );
+
+    }
+
+    progressBar.style.width =
+        percent + "%";
+
+    progressText.textContent =
+        "Course Progress: " +
+        percent + "%";
+
+}
+
+window.addEventListener(
+    "scroll",
+    updateProgress
+);
+
+
+/* QUIZ */
+
+function checkAnswer(button,correct){
+
+    const quiz =
+        button.parentElement;
+
+    const result =
+        quiz.querySelector(".result");
+
+    if(correct){
+
+        result.textContent =
+            "✅ सही उत्तर!";
+
+        result.style.color =
+            "#70e89b";
+
+    }else{
+
+        result.textContent =
+            "❌ गलत उत्तर। फेरि प्रयास गर्नुहोस्।";
+
+        result.style.color =
+            "#ff8585";
+
+    }
+
+}
+
+
+/* ACTIVE SIDEBAR */
+
+const sections =
+document.querySelectorAll(".chapter");
+
+const links =
+document.querySelectorAll(".sidebar a");
+
+
+window.addEventListener("scroll",function(){
+
+    let current = "";
+
+    sections.forEach(function(section){
+
+        const top =
+            section.offsetTop - 150;
+
+        if(window.scrollY >= top){
+
+            current =
+            section.getAttribute("id");
+
+        }
+
+    });
+
+    links.forEach(function(link){
+
+        link.classList.remove("active");
+
+        if(
+            link.getAttribute("href")
+            === "#" + current
+        ){
+
+            link.classList.add("active");
+
+        }
+
+    });
+
+});
+
+
+/* INITIAL */
+
+updateProgress();
+
+</script>
+
+</body>
+</html>
+```
