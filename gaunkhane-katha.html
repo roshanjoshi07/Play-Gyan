@@ -2,336 +2,1200 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0">
 
-<title>🇳🇵 गाउँखाने कथा Quiz</title>
+<title>गाउँखाने कथा | GameBook GK Hub</title>
 
 <style>
+
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 body{
+    font-family:
+    system-ui,
+    "Noto Sans Devanagari",
+    sans-serif;
+
     min-height:100vh;
-    font-family:"Noto Sans Devanagari",Arial,sans-serif;
-    background:
-        linear-gradient(135deg,#061b2e,#075985,#064e3b);
+
     color:white;
-    padding:12px;
+
+    background:
+    radial-gradient(
+        circle at 15% 20%,
+        #164e63,
+        transparent 35%
+    ),
+    radial-gradient(
+        circle at 85% 80%,
+        #581c87,
+        transparent 35%
+    ),
+    linear-gradient(
+        135deg,
+        #020617,
+        #0f172a,
+        #170b2b
+    );
+
+    overflow-x:hidden;
 }
 
-.container{
-    width:100%;
-    max-width:850px;
+
+/* =========================
+   FLOATING BACKGROUND
+========================= */
+
+.bg{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(5px);
+    opacity:.18;
+    animation:float 8s infinite ease-in-out;
+}
+
+.orb1{
+    width:220px;
+    height:220px;
+    background:#22d3ee;
+    left:-80px;
+    top:10%;
+}
+
+.orb2{
+    width:280px;
+    height:280px;
+    background:#a855f7;
+    right:-100px;
+    bottom:5%;
+    animation-delay:2s;
+}
+
+.orb3{
+    width:150px;
+    height:150px;
+    background:#f59e0b;
+    left:45%;
+    top:60%;
+    animation-delay:4s;
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0) scale(1);
+    }
+
+    50%{
+        transform:translateY(-35px) scale(1.08);
+    }
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+
+    width:min(1000px,94%);
+
     margin:auto;
+
+    padding:20px 0;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
 }
 
-header{
+.logo{
+
+    font-size:22px;
+
+    font-weight:800;
+
+}
+
+.home{
+
+    text-decoration:none;
+
+    color:white;
+
+    padding:10px 16px;
+
+    border-radius:20px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    border:
+    1px solid rgba(255,255,255,.1);
+
+    transition:.25s;
+
+}
+
+.home:hover{
+
+    background:
+    rgba(255,255,255,.16);
+
+    transform:translateY(-2px);
+
+}
+
+
+/* =========================
+   GAME CONTAINER
+========================= */
+
+.game{
+
+    width:min(850px,94%);
+
+    margin:15px auto 40px;
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title{
+
     text-align:center;
-    padding:15px 5px 20px;
+
+    margin:15px 0 25px;
+
 }
 
-header h1{
-    font-size:clamp(26px,7vw,44px);
-    text-shadow:0 4px 12px #000;
+.title .emoji{
+
+    font-size:60px;
+
+    animation:
+    bounce 2s infinite;
+
 }
 
-header p{
-    color:#cde8e5;
-    margin-top:6px;
+@keyframes bounce{
+
+    0%,100%{
+        transform:translateY(0)
+    }
+
+    50%{
+        transform:translateY(-12px)
+    }
+
 }
 
-/* STATS */
+.title h1{
+
+    font-size:
+    clamp(32px,7vw,52px);
+
+    margin-top:5px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #67e8f9,
+        #c084fc,
+        #facc15
+    );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+}
+
+.title p{
+
+    color:#94a3b8;
+
+    margin-top:8px;
+
+}
+
+
+/* =========================
+   STATS
+========================= */
 
 .stats{
+
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:8px;
-    margin-bottom:12px;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:10px;
+
+    margin-bottom:18px;
+
 }
 
 .stat{
+
+    padding:14px 8px;
+
     text-align:center;
-    padding:10px 4px;
-    border-radius:15px;
-    background:#ffffff12;
-    border:1px solid #ffffff25;
+
+    border-radius:18px;
+
+    background:
+    rgba(15,23,42,.75);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:
+    blur(12px);
+
 }
 
 .stat small{
+
     display:block;
-    color:#b9d2dc;
-    font-size:12px;
+
+    color:#94a3b8;
+
+    font-size:11px;
+
+    margin-bottom:4px;
+
 }
 
 .stat strong{
-    font-size:19px;
+
+    font-size:22px;
+
 }
 
-/* GAME */
 
-.game{
-    background:#ffffff0d;
-    border:1px solid #ffffff25;
-    border-radius:22px;
-    padding:20px;
-    box-shadow:0 15px 40px #0008;
-    backdrop-filter:blur(10px);
-}
+/* =========================
+   CARD
+========================= */
 
-.progress{
-    height:9px;
-    background:#ffffff18;
-    border-radius:20px;
+.question-card{
+
+    position:relative;
+
+    padding:
+    clamp(22px,5vw,40px);
+
+    border-radius:30px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(15,23,42,.94),
+        rgba(30,41,59,.86)
+    );
+
+    border:
+    1px solid
+    rgba(255,255,255,.1);
+
+    box-shadow:
+    0 30px 80px
+    rgba(0,0,0,.4);
+
     overflow:hidden;
-    margin-bottom:20px;
-}
 
-.progress-bar{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg,#00d4ff,#00ff88);
     transition:.3s;
+
 }
 
-.riddle-box{
-    background:#ffffff0d;
-    border-radius:18px;
-    padding:20px;
-    margin-bottom:18px;
-    border:1px solid #ffffff20;
+.question-card.change{
+
+    animation:
+    questionIn .45s ease;
+
 }
 
-.label{
-    text-align:center;
-    color:#ffd166;
+@keyframes questionIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(20px)
+        scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+}
+
+
+/* =========================
+   QUESTION
+========================= */
+
+.question-label{
+
+    color:#67e8f9;
+
     font-weight:bold;
-    margin-bottom:10px;
+
+    margin-bottom:14px;
+
 }
 
-.riddle{
-    text-align:center;
-    font-size:clamp(20px,5vw,30px);
+.question{
+
+    font-size:
+    clamp(23px,5vw,34px);
+
     line-height:1.6;
-    font-weight:bold;
-}
 
-/* OPTIONS */
-
-.options{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.option{
-    min-height:60px;
-    padding:12px;
-    border-radius:15px;
-    border:2px solid #ffffff20;
-    background:#ffffff0c;
-    color:white;
-    font-size:16px;
-    font-family:inherit;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.option:hover{
-    transform:translateY(-3px);
-    background:#ffffff18;
-}
-
-.option.correct{
-    background:#087c4a;
-    border-color:#20e695;
-}
-
-.option.wrong{
-    background:#8d2020;
-    border-color:#ff6262;
-}
-
-.option:disabled{
-    cursor:not-allowed;
-}
-
-/* FEEDBACK */
-
-.feedback{
-    min-height:45px;
     text-align:center;
-    font-size:17px;
-    font-weight:bold;
-    margin:15px 0 5px;
-    line-height:1.5;
+
+    margin-bottom:28px;
+
 }
 
-/* BUTTON */
 
-.next,
-.restart{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:14px;
+/* =========================
+   ANSWERS
+========================= */
+
+.answers{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:13px;
+
+}
+
+.answer{
+
+    padding:17px;
+
+    border:1px solid
+    rgba(255,255,255,.1);
+
+    border-radius:18px;
+
     color:white;
-    font-size:17px;
-    font-family:inherit;
-    font-weight:bold;
+
+    background:
+    rgba(255,255,255,.055);
+
+    font-size:16px;
+
     cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.answer:hover{
+
+    transform:
+    translateY(-3px);
+
+    background:
+    rgba(103,232,249,.12);
+
+    border-color:
+    rgba(103,232,249,.5);
+
+}
+
+.answer.correct{
+
+    background:
+    rgba(34,197,94,.22);
+
+    border-color:#22c55e;
+
+    animation:
+    correct .45s;
+
+}
+
+.answer.wrong{
+
+    background:
+    rgba(239,68,68,.2);
+
+    border-color:#ef4444;
+
+    animation:
+    shake .4s;
+
+}
+
+.answer.disabled{
+
+    pointer-events:none;
+
+    opacity:.75;
+
+}
+
+@keyframes correct{
+
+    50%{
+        transform:scale(1.04);
+    }
+
+}
+
+@keyframes shake{
+
+    25%{
+        transform:translateX(-8px);
+    }
+
+    50%{
+        transform:translateX(8px);
+    }
+
+    75%{
+        transform:translateX(-5px);
+    }
+
+}
+
+
+/* =========================
+   BOTTOM CONTROLS
+========================= */
+
+.controls{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    margin-top:22px;
+
+    flex-wrap:wrap;
+
+}
+
+.btn{
+
+    border:0;
+
+    padding:13px 22px;
+
+    border-radius:25px;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.btn:hover{
+
+    transform:
+    translateY(-2px);
+
+}
+
+.hint{
+
+    background:
+    linear-gradient(
+        135deg,
+        #d97706,
+        #ea580c
+    );
+
 }
 
 .next{
-    background:linear-gradient(135deg,#00aaff,#0066ff);
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
 }
 
-.restart{
-    background:#00b86b;
+.next:disabled{
+
+    opacity:.4;
+
+    cursor:not-allowed;
+
 }
 
-/* RESULT */
 
-.result{
-    display:none;
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+
+    min-height:30px;
+
+    margin-top:18px;
+
     text-align:center;
-}
 
-.result h2{
-    font-size:30px;
-    margin-bottom:10px;
-}
-
-.final-score{
-    font-size:55px;
     font-weight:bold;
-    margin:10px;
+
 }
 
-.result-text{
+.message.good{
+
+    color:#4ade80;
+
+}
+
+.message.bad{
+
+    color:#fb7185;
+
+}
+
+
+/* =========================
+   HINT BOX
+========================= */
+
+.hint-box{
+
+    display:none;
+
+    margin-top:16px;
+
+    padding:15px;
+
+    border-radius:16px;
+
+    background:
+    rgba(245,158,11,.1);
+
+    border:
+    1px solid
+    rgba(245,158,11,.25);
+
+    color:#fde68a;
+
+    text-align:center;
+
+}
+
+.hint-box.show{
+
+    display:block;
+
+    animation:
+    questionIn .3s;
+
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-wrap{
+
+    margin-top:22px;
+
+}
+
+.progress-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+    margin-bottom:7px;
+
+}
+
+.progress{
+
+    height:7px;
+
+    border-radius:10px;
+
+    background:#1e293b;
+
+    overflow:hidden;
+
+}
+
+.progress-bar{
+
+    height:100%;
+
+    width:0%;
+
+    background:
+    linear-gradient(
+        90deg,
+        #22d3ee,
+        #a855f7
+    );
+
+    transition:.4s;
+
+}
+
+
+/* =========================
+   START / RESULT SCREEN
+========================= */
+
+.overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+    rgba(0,0,0,.7);
+
+    backdrop-filter:
+    blur(12px);
+
+}
+
+.overlay.hide{
+
+    display:none;
+
+}
+
+.modal{
+
+    width:min(460px,100%);
+
+    padding:35px 25px;
+
+    text-align:center;
+
+    border-radius:28px;
+
+    background:
+    linear-gradient(
+        145deg,
+        #0f172a,
+        #1e293b
+    );
+
+    border:
+    1px solid
+    rgba(255,255,255,.1);
+
+    box-shadow:
+    0 30px 100px
+    rgba(0,0,0,.7);
+
+    animation:
+    modalIn .5s ease;
+
+}
+
+.modal .big{
+
+    font-size:70px;
+
+    margin-bottom:10px;
+
+}
+
+.modal h2{
+
+    font-size:32px;
+
+}
+
+.modal p{
+
+    color:#94a3b8;
+
     line-height:1.7;
+
+    margin:12px 0 22px;
+
 }
 
-/* MOBILE */
+.start{
+
+    width:100%;
+
+    padding:16px;
+
+    border:0;
+
+    border-radius:18px;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0891b2,
+        #7c3aed
+    );
+
+}
+
+@keyframes modalIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        scale(.8)
+        translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        scale(1)
+        translateY(0);
+
+    }
+
+}
+
+
+/* =========================
+   CONFETTI
+========================= */
+
+.confetti{
+
+    position:fixed;
+
+    width:8px;
+
+    height:12px;
+
+    top:-20px;
+
+    z-index:200;
+
+    animation:
+    fall 1.5s linear forwards;
+
+}
+
+@keyframes fall{
+
+    to{
+
+        transform:
+        translateY(110vh)
+        rotate(720deg);
+
+        opacity:0;
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:600px){
 
-    body{
-        padding:7px;
-    }
-
-    .game{
-        padding:13px;
-    }
-
     .stats{
-        grid-template-columns:repeat(2,1fr);
+
+        grid-template-columns:
+        repeat(2,1fr);
+
     }
 
-    .options{
+    .answers{
+
         grid-template-columns:1fr;
+
     }
 
-    .riddle{
-        font-size:21px;
+    .question-card{
+
+        border-radius:22px;
+
     }
 
-    .option{
-        min-height:55px;
+    .header{
+
+        padding-top:12px;
+
     }
+
+    .logo{
+
+        font-size:17px;
+
+    }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
-<div class="container">
 
-<header>
-    <h1>🇳🇵 गाउँखाने कथा</h1>
-    <p>🧩 नेपाली पहेली Quiz Game</p>
-</header>
+<div class="bg">
 
+    <div class="orb orb1"></div>
 
-<!-- STATS -->
+    <div class="orb orb2"></div>
 
-<div class="stats">
-
-    <div class="stat">
-        <small>प्रश्न</small>
-        <strong id="number">1</strong>
-    </div>
-
-    <div class="stat">
-        <small>स्कोर</small>
-        <strong id="score">0</strong>
-    </div>
-
-    <div class="stat">
-        <small>सही</small>
-        <strong id="right">0</strong>
-    </div>
-
-    <div class="stat">
-        <small>Life</small>
-        <strong id="lives">❤️❤️❤️</strong>
-    </div>
+    <div class="orb orb3"></div>
 
 </div>
 
 
-<!-- GAME -->
+<header class="header">
 
-<div class="game" id="game">
-
-    <div class="progress">
-        <div class="progress-bar" id="progress"></div>
+    <div class="logo">
+        🧠 GameBook GK Hub
     </div>
 
-    <div class="riddle-box">
+    <a
+        href="index.html"
+        class="home">
+        🏠 Home
+    </a>
 
-        <div class="label">
-            🧩 गाउँखाने कथा
+</header>
+
+
+<main class="game">
+
+
+    <section class="title">
+
+        <div class="emoji">
+            🤔
         </div>
 
-        <div class="riddle" id="riddle"></div>
+        <h1>
+            गाउँखाने कथा
+        </h1>
+
+        <p>
+            सोच्नुहोस् • अनुमान गर्नुहोस् • जित्नुहोस्!
+        </p>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <small>
+                SCORE
+            </small>
+
+            <strong id="score">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                LIFE
+            </small>
+
+            <strong id="life">
+                ❤️❤️❤️
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                COMBO
+            </small>
+
+            <strong id="combo">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat">
+
+            <small>
+                BEST
+            </small>
+
+            <strong id="best">
+                0
+            </strong>
+
+        </div>
 
     </div>
 
-    <div class="options" id="options"></div>
 
-    <div class="feedback" id="feedback"></div>
+    <!-- QUESTION -->
 
-    <button class="next" onclick="nextQuestion()">
-        अर्को गाउँखाने कथा ➜
-    </button>
+    <section
+        class="question-card"
+        id="questionCard">
+
+
+        <div class="question-label">
+            🏮 गाउँखाने कथा
+        </div>
+
+
+        <div
+            class="question"
+            id="question">
+
+            प्रश्न तयार हुँदैछ...
+
+        </div>
+
+
+        <div
+            class="answers"
+            id="answers">
+        </div>
+
+
+        <div
+            class="message"
+            id="message">
+        </div>
+
+
+        <div
+            class="hint-box"
+            id="hintBox">
+        </div>
+
+
+        <div class="controls">
+
+            <button
+                class="btn hint"
+                id="hintBtn">
+
+                💡 Hint
+
+            </button>
+
+
+            <button
+                class="btn next"
+                id="nextBtn"
+                disabled>
+
+                अर्को कथा ➜
+
+            </button>
+
+        </div>
+
+
+        <div class="progress-wrap">
+
+            <div class="progress-info">
+
+                <span>
+                    प्रगति
+                </span>
+
+                <span id="progressText">
+                    1 / 20
+                </span>
+
+            </div>
+
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    id="progressBar">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- START -->
+
+<div
+    class="overlay"
+    id="startOverlay">
+
+    <div class="modal">
+
+        <div class="big">
+            🏮
+        </div>
+
+        <h2>
+            गाउँखाने कथा
+        </h2>
+
+        <p>
+            यहाँ तपाईंलाई अलि अप्ठ्यारा
+            र रमाइला गाउँखाने कथाहरू
+            दिइनेछन्।
+            <br><br>
+            लगातार ३ वटा गलत उत्तर
+            भएमा ❤️ १ Life घट्नेछ।
+        </p>
+
+        <button
+            class="start"
+            id="startBtn">
+
+            🎮 खेल सुरु गर्नुहोस्
+
+        </button>
+
+    </div>
 
 </div>
 
 
 <!-- RESULT -->
 
-<div class="game result" id="result">
+<div
+    class="overlay hide"
+    id="resultOverlay">
 
-    <h2 id="resultTitle">
-        🎉 खेल समाप्त!
-    </h2>
+    <div class="modal">
 
-    <div class="final-score" id="finalScore">
-        0
+        <div
+            class="big"
+            id="resultEmoji">
+            🏆
+        </div>
+
+        <h2>
+            खेल सकियो!
+        </h2>
+
+        <p>
+
+            तपाईंको Score:
+
+            <strong
+                id="finalScore">
+                0
+            </strong>
+
+            <br>
+
+            सही उत्तर:
+
+            <strong
+                id="correctCount">
+                0
+            </strong>
+
+        </p>
+
+        <button
+            class="start"
+            id="restartBtn">
+
+            🔄 फेरि खेल्नुहोस्
+
+        </button>
+
     </div>
-
-    <div class="result-text" id="resultText"></div>
-
-    <br>
-
-    <button class="restart" onclick="restartGame()">
-        🎲 नयाँ प्रश्नबाट सुरु गर्नुहोस्
-    </button>
-
-</div>
 
 </div>
 
@@ -339,309 +1203,149 @@ header p{
 <script>
 
 /* =====================================================
-   QUESTION DATABASE
-   ===================================================== */
+   QUESTION BANK
+===================================================== */
 
-const riddles = [
-
-{
-q:"सेतो घरमा कालो मान्छे, कालो मान्छेले सेतो लेख्छ। त्यो के हो?",
-a:["किताब","कलम","ढुंगा","झोला"],
-c:1
-},
-
-{
-q:"जति तान्यो उति छोटो हुन्छ। त्यो के हो?",
-a:["डोरी","मैनबत्ती","रबर","कपडा"],
-c:1
-},
-
-{
-q:"चार खुट्टा छन् तर हिँड्न सक्दैन। त्यो के हो?",
-a:["कुकुर","टेबल","घोडा","बिरालो"],
-c:1
-},
+const questions = [
 
 {
 q:"मुख छैन तर बोल्छ, कान छैन तर सुन्छ। त्यो के हो?",
-a:["रेडियो","किताब","ढुंगा","रुख"],
-c:0
-},
-
-{
-q:"पखेटा छैन तर आकाशमा उड्छ। त्यो के हो?",
-a:["चरा","बादल","घोडा","माछा"],
-c:1
-},
-
-{
-q:"आँखा छ तर देख्दैन। त्यो के हो?",
-a:["सुई","मान्छे","कुकुर","चरा"],
-c:0
-},
-
-{
-q:"खुट्टा छैन तर दौडिरहन्छ। त्यो के हो?",
-a:["पानी","ढुंगा","कुर्सी","घर"],
-c:0
-},
-
-{
-q:"दाँत धेरै छन् तर खाना खाँदैन। त्यो के हो?",
-a:["काइँयो","कुकुर","बाघ","मान्छे"],
-c:0
-},
-
-{
-q:"घाम लाग्दा जन्मिन्छ, घाम अस्ताउँदा मर्छ। त्यो के हो?",
-a:["छायाँ","पानी","हावा","ढुंगा"],
-c:0
+a:["रेडियो","प्रतिध्वनि","टेलिफोन","घडी"],
+correct:1,
+hint:"आवाज फर्किएर आउँछ।"
 },
 
 {
 q:"जति निकाल्यो उति ठूलो हुन्छ। त्यो के हो?",
-a:["खाल्डो","घर","रुख","बाटो"],
-c:0
+a:["खाल्डो","ढुंगा","रुख","बाटो"],
+correct:0,
+hint:"जमिनसँग सम्बन्धित छ।"
 },
 
 {
-q:"टाउको छ, पुच्छर छ तर शरीर छैन। त्यो के हो?",
-a:["सिक्का","सर्प","कुकुर","माछा"],
-c:0
+q:"खुट्टा चार वटा छन् तर हिँड्न सक्दैन। त्यो के हो?",
+a:["कुकुर","कुर्सी","घोडा","बाख्रा"],
+correct:1,
+hint:"यसमा मानिस बस्छ।"
 },
 
 {
-q:"न पानी हो, न आगो हो, तर पानीमा बस्छ। त्यो के हो?",
-a:["माछा","ढुंगा","काग","घोडा"],
-c:0
+q:"आफू भिज्छ तर अरूलाई सुकाउँछ। त्यो के हो?",
+a:["छाता","तौलिया","पानी","घाम"],
+correct:1,
+hint:"नुहाएपछि प्रयोग हुन्छ।"
 },
 
 {
-q:"आफैं हिँड्दैन तर संसार घुमाउँछ। त्यो के हो?",
-a:["सडक","गाडी","नक्सा","हावा"],
-c:1
+q:"दिनभरि दौडिन्छ तर एक पाइला पनि अगाडि बढ्दैन। त्यो के हो?",
+a:["घडी","नदी","हावा","मानिस"],
+correct:0,
+hint:"यसमा काँटा हुन्छ।"
 },
 
 {
-q:"घरभित्र बस्छ, घरलाई नै खाइरहन्छ। त्यो के हो?",
-a:["दीमक","कुकुर","बिरालो","मान्छे"],
-c:0
+q:"टाउको र पुच्छर छ तर शरीर छैन। त्यो के हो?",
+a:["सर्प","सिक्का","चराचुरुङ्गी","माछा"],
+correct:1,
+hint:"पैसासँग सम्बन्धित छ।"
 },
 
 {
-q:"बिहान चार खुट्टा, दिउँसो दुई खुट्टा, साँझ तीन खुट्टा। त्यो के हो?",
-a:["मान्छे","कुकुर","घोडा","बिरालो"],
-c:0
+q:"जति धेरै तान्यो उति छोटो हुँदै जान्छ। त्यो के हो?",
+a:["डोरी","सिगरेट","रबर","बाटो"],
+correct:1,
+hint:"जलाउँदा सानो हुन्छ।"
 },
 
 {
-q:"दिनभरि दौडिन्छ तर एक कदम पनि अघि बढ्दैन। त्यो के हो?",
-a:["घडी","गाडी","मान्छे","कुकुर"],
-c:0
+q:"कालो हुँदा सफा गर्छ, सेतो हुँदा फोहोर गर्छ। त्यो के हो?",
+a:["ब्ल्याकबोर्ड","कपडा","कागज","कोइला"],
+correct:0,
+hint:"स्कुलमा धेरै प्रयोग हुन्छ।"
 },
 
 {
-q:"घर छ तर ढोका छैन, मानिस बस्छ तर झ्याल छैन। त्यो के हो?",
-a:["अण्डा","पाल","गुफा","घर"],
-c:0
+q:"पखेटा छैन तर उड्छ, आँखा छैन तर रुन्छ। त्यो के हो?",
+a:["बादल","चराचुरुङ्गी","हावा","पतंग"],
+correct:0,
+hint:"आकाशमा देखिन्छ।"
 },
 
 {
-q:"पानीमा जन्मिन्छ, पानीमै मर्छ। त्यो के हो?",
-a:["माछा","बरफ","ढुंगा","कमल"],
-c:0
+q:"मुखमा दाँत धेरै छन् तर खान सक्दैन। त्यो के हो?",
+a:["गोही","काँगियो","कंघी","आरी"],
+correct:2,
+hint:"कपालसँग सम्बन्धित छ।"
 },
 
 {
-q:"आफैं जलेर अरूलाई उज्यालो दिन्छ। त्यो के हो?",
-a:["मैनबत्ती","ढुंगा","कपडा","काठ"],
-c:0
+q:"जति दौडियो उति ठाउँमै रहन्छ। त्यो के हो?",
+a:["साइकल","ट्रेडमिल","घोडा","गाडी"],
+correct:1,
+hint:"व्यायाम गर्ने ठाउँमा हुन्छ।"
 },
 
 {
-q:"जति पुरानो भयो उति मूल्यवान हुन्छ। त्यो के हो?",
-a:["ज्ञान","पानी","माटो","हावा"],
-c:0
+q:"घर छ तर ढोका छैन, मानिस छैन तर कोठा धेरै छन्। त्यो के हो?",
+a:["अण्डा","मौरीको घार","आलु","किताब"],
+correct:1,
+hint:"सानो जीवहरूले बनाउँछन्।"
 },
 
 {
-q:"आकाशमा हुन्छ तर बादल होइन, रातमा देखिन्छ तर तारा होइन। त्यो के हो?",
-a:["चन्द्रमा","सूर्य","पक्षी","हवाईजहाज"],
-c:0
+q:"आफू नचलिकन संसार घुमाउँछ। त्यो के हो?",
+a:["नक्सा","हवाईजहाज","पृथ्वी","किताब"],
+correct:0,
+hint:"यसले ठाउँहरू देखाउँछ।"
 },
 
 {
-q:"पखेटा नभए पनि उड्छ, मुख नभए पनि गीत गाउँछ। त्यो के हो?",
-a:["हावा","ढुंगा","पानी","रुख"],
-c:0
+q:"एक खुट्टामा उभिन्छ, वर्षामा काम लाग्छ। त्यो के हो?",
+a:["छाता","रुख","लठ्ठी","टेबल"],
+correct:0,
+hint:"वर्षा पर्दा खोलिन्छ।"
 },
 
 {
-q:"जति खुवायो उति बढ्छ, पानी खुवायो भने मर्छ। त्यो के हो?",
-a:["आगो","रुख","मान्छे","माछा"],
-c:0
+q:"आफ्नै घरमा बसेर संसार देखाउँछ। त्यो के हो?",
+a:["झ्याल","टेलिभिजन","ढोका","ऐना"],
+correct:1,
+hint:"स्क्रिन हुन्छ।"
 },
 
 {
-q:"चारैतिर हरियो, बीचमा रातो। त्यो के हो?",
-a:["तरबुजा","स्याउ","काक्रो","केरा"],
-c:0
+q:"आफू कालो, बच्चा सेतो; पढ्ने मानिसको साथी। त्यो के हो?",
+a:["पेन्सिल","कलम","कापी","चस्मा"],
+correct:0,
+hint:"लेख्दा प्रयोग हुन्छ।"
 },
 
 {
-q:"बाहिर हरियो, भित्र रातो, कालो बीउले भरिएको। त्यो के हो?",
-a:["तरबुजा","आलु","केरा","सुन्तला"],
-c:0
+q:"दिनमा लुच्छ, रातमा फुल्छ। त्यो के हो?",
+a:["सूर्यमुखी","चन्द्रमा","फूल","तारा"],
+correct:2,
+hint:"वनस्पति हो।"
 },
 
 {
-q:"टाउकोमा टोपी, शरीरमा लुगा, खुट्टामा जुत्ता छैन। त्यो के हो?",
-a:["च्याउ","मान्छे","कुकुर","रुख"],
-c:0
+q:"न पानीमा डुब्छ, न आगोमा जल्छ। त्यो के हो?",
+a:["छायाँ","कागज","फलाम","काठ"],
+correct:0,
+hint:"प्रकाशसँग यसको सम्बन्ध छ।"
 },
 
 {
-q:"जति काट्यो उति बढ्दै जान्छ। त्यो के हो?",
-a:["कपाल","खाल्डो","रुख","कपडा"],
-c:1
+q:"आफू अँध्यारोमा जन्मिन्छ, उज्यालोमा मर्छ। त्यो के हो?",
+a:["छायाँ","अन्धकार","मैनबत्ती","बिरुवा"],
+correct:0,
+hint:"प्रकाश परेपछि देखिन्छ।"
 },
 
 {
-q:"कानमा बस्छ तर कुरा सुन्दैन। त्यो के हो?",
-a:["झुम्का","काग","कपाल","टोपी"],
-c:0
-},
-
-{
-q:"आँखा धेरै छन् तर देख्दैन। त्यो के हो?",
-a:["आलु","मान्छे","चरा","घोडा"],
-c:0
-},
-
-{
-q:"दुई दाजुभाइ सँगै हिँड्छन् तर भेटिँदैनन्। त्यो के हो?",
-a:["आँखा","जुत्ता","हात","खुट्टा"],
-c:0
-},
-
-{
-q:"सधैं अगाडि जान्छ तर कहिल्यै फर्केर आउँदैन। त्यो के हो?",
-a:["समय","गाडी","मान्छे","हावा"],
-c:0
-},
-
-{
-q:"दिनमा लुक्छ, रातमा देखिन्छ। त्यो के हो?",
-a:["तारा","सूर्य","चन्द्रमा","बादल"],
-c:0
-},
-
-{
-q:"घरको छानोमा बस्छ तर घरभित्र पस्दैन। त्यो के हो?",
-a:["धुवाँ","मान्छे","कुकुर","किताब"],
-c:0
-},
-
-{
-q:"बिना खुट्टा दौडिन्छ, बिना मुख कराउँछ। त्यो के हो?",
-a:["नदी","मान्छे","घोडा","कुकुर"],
-c:0
-},
-
-{
-q:"नदेखिने तर महसुस गर्न सकिने कुरा के हो?",
-a:["हावा","ढुंगा","घर","किताब"],
-c:0
-},
-
-{
-q:"बाहिर कडा, भित्र नरम। त्यो के हो?",
-a:["अण्डा","ढुंगा","काठ","कागज"],
-c:0
-},
-
-{
-q:"बाहिर काँडा, भित्र मीठो। त्यो के हो?",
-a:["अनानास","स्याउ","केरा","अंगुर"],
-c:0
-},
-
-{
-q:"रातो टोपी लगाएको सेतो मान्छे। त्यो के हो?",
-a:["मुला","स्याउ","खरबुजा","आलु"],
-c:0
-},
-
-{
-q:"आकाशमा उड्छ तर चरा होइन, मानिस बोक्छ तर गाडी होइन। त्यो के हो?",
-a:["हवाईजहाज","बादल","पतंग","चन्द्रमा"],
-c:0
-},
-
-{
-q:"बिना मुख हाँस्छ, बिना आँखा रुन्छ। त्यो के हो?",
-a:["बादल","मान्छे","पानी","रुख"],
-c:0
-},
-
-{
-q:"पानी पर्दा जन्मिन्छ, घाम लाग्दा हराउँछ। त्यो के हो?",
-a:["इन्द्रेणी","बादल","नदी","माछा"],
-c:0
-},
-
-{
-q:"आफू उभिन्छ, अरूलाई बसाउँछ। त्यो के हो?",
-a:["कुर्सी","रुख","घर","टेबल"],
-c:0
-},
-
-{
-q:"दुई हात छन् तर ताली बजाउँदैन। त्यो के हो?",
-a:["घडी","मान्छे","कुर्सी","ढोका"],
-c:0
-},
-
-{
-q:"बाहिर पहेँलो, भित्र सेतो र बीचमा धेरै बीउ। त्यो के हो?",
-a:["मकै","केरा","सुन्तला","आलु"],
-c:0
-},
-
-{
-q:"नदीमा बग्छ तर पानी होइन। त्यो के हो?",
-a:["डुंगा","माछा","ढुंगा","बालुवा"],
-c:0
-},
-
-{
-q:"जति लेख्यो उति कालो हुन्छ। त्यो के हो?",
-a:["कागज","कालोपाटी","कलम","किताब"],
-c:1
-},
-
-{
-q:"आफ्नो घर बोकेर हिँड्छ। त्यो के हो?",
-a:["घोंघा","कुकुर","चरा","माछा"],
-c:0
-},
-
-{
-q:"दिनभरि सुत्छ, रातभरि जाग्छ। त्यो के हो?",
-a:["चमेरा","गाई","कुकुर","घोडा"],
-c:0
-},
-
-{
-q:"आकाशबाट आउँछ तर पानी होइन। त्यो के हो?",
-a:["घाम","बादल","पक्षी","हावा"],
-c:0
-},
-
-{
-q:"सानो हुँदा ठूलो हुन्छ, ठूलो भएपछि सानो हुन्छ। त्यो के हो?",
-a:["उमेर","मोमबत्ती","बच्चा","रुख"],
-c:1
+q:"हात छैन तर ढोका खोल्छ, खुट्टा छैन तर घर पस्छ। त्यो के हो?",
+a:["हावा","मानिस","पानी","धुवाँ"],
+correct:0,
+hint:"झ्यालबाट पनि आउँछ।"
 }
 
 ];
@@ -649,531 +1353,900 @@ c:1
 
 /* =====================================================
    VARIABLES
-   ===================================================== */
+===================================================== */
 
-let current = 0;
-let score = 0;
-let right = 0;
+let current=0;
 
-let lives = 3;
+let score=0;
 
-let answered = false;
+let lives=3;
 
-let gameQuestions = [];
+let combo=0;
+
+let wrongStreak=0;
+
+let correctCount=0;
+
+let answered=false;
+
+let hintUsed=false;
 
 
 /* =====================================================
-   ELEMENTS
-   ===================================================== */
+   DOM
+===================================================== */
 
-const riddle =
-document.getElementById("riddle");
+const question =
+document.getElementById(
+    "question"
+);
 
-const options =
-document.getElementById("options");
-
-const feedback =
-document.getElementById("feedback");
+const answers =
+document.getElementById(
+    "answers"
+);
 
 const scoreEl =
-document.getElementById("score");
+document.getElementById(
+    "score"
+);
 
-const rightEl =
-document.getElementById("right");
+const lifeEl =
+document.getElementById(
+    "life"
+);
 
-const numberEl =
-document.getElementById("number");
+const comboEl =
+document.getElementById(
+    "combo"
+);
 
-const livesEl =
-document.getElementById("lives");
+const bestEl =
+document.getElementById(
+    "best"
+);
 
-const progress =
-document.getElementById("progress");
+const message =
+document.getElementById(
+    "message"
+);
 
-const game =
-document.getElementById("game");
+const hintBox =
+document.getElementById(
+    "hintBox"
+);
 
-const result =
-document.getElementById("result");
+const nextBtn =
+document.getElementById(
+    "nextBtn"
+);
 
-const finalScore =
-document.getElementById("finalScore");
+const hintBtn =
+document.getElementById(
+    "hintBtn"
+);
 
-const resultText =
-document.getElementById("resultText");
+const progressBar =
+document.getElementById(
+    "progressBar"
+);
 
-const resultTitle =
-document.getElementById("resultTitle");
+const progressText =
+document.getElementById(
+    "progressText"
+);
 
-
-/* =====================================================
-   SHUFFLE QUESTIONS
-   ===================================================== */
-
-function shuffleQuestions(){
-
-    gameQuestions =
-        [...riddles];
-
-    for(
-        let i = gameQuestions.length - 1;
-        i > 0;
-        i--
-    ){
-
-        const j =
-            Math.floor(
-                Math.random() * (i + 1)
-            );
-
-        [
-            gameQuestions[i],
-            gameQuestions[j]
-        ] =
-        [
-            gameQuestions[j],
-            gameQuestions[i]
-        ];
-    }
-}
+const card =
+document.getElementById(
+    "questionCard"
+);
 
 
 /* =====================================================
-   SHUFFLE OPTIONS
-   ===================================================== */
+   BEST SCORE
+===================================================== */
 
-function shuffleOptions(item){
+let best =
+Number(
+    localStorage.getItem(
+        "gaunkhaneBest"
+    ) || 0
+);
 
-    let answers =
-        item.a.map(
-            (answer,index)=>({
-                text:answer,
-                correct:index === item.c
-            })
-        );
-
-    for(
-        let i = answers.length - 1;
-        i > 0;
-        i--
-    ){
-
-        const j =
-            Math.floor(
-                Math.random() * (i + 1)
-            );
-
-        [
-            answers[i],
-            answers[j]
-        ] =
-        [
-            answers[j],
-            answers[i]
-        ];
-    }
-
-    return answers;
-}
+bestEl.textContent =
+best;
 
 
 /* =====================================================
    LOAD QUESTION
-   ===================================================== */
+===================================================== */
 
 function loadQuestion(){
 
-    answered = false;
-
-    const item =
-        gameQuestions[current];
-
-    numberEl.textContent =
-        current + 1;
-
-    scoreEl.textContent =
-        score;
-
-    rightEl.textContent =
-        right;
-
-    updateLives();
-
-    riddle.textContent =
-        item.q;
-
-    options.innerHTML = "";
-
-    feedback.textContent = "";
-
-    progress.style.width =
-        (
-            current /
-            gameQuestions.length *
-            100
-        ) + "%";
-
-
-    const answers =
-        shuffleOptions(item);
-
-
-    answers.forEach(
-        answer=>{
-
-            const button =
-                document.createElement("button");
-
-            button.className =
-                "option";
-
-            button.textContent =
-                answer.text;
-
-            button.dataset.correct =
-                answer.correct;
-
-            button.onclick =
-                function(){
-
-                    checkAnswer(
-                        answer.correct,
-                        button,
-                        answers
-                    );
-
-                };
-
-            options.appendChild(button);
-
-        }
-    );
-}
-
-
-/* =====================================================
-   LIFE DISPLAY
-   ===================================================== */
-
-function updateLives(){
-
-    let hearts = "";
-
-    for(
-        let i = 0;
-        i < 3;
-        i++
-    ){
-
-        if(i < lives){
-
-            hearts += "❤️";
-
-        }else{
-
-            hearts += "🖤";
-
-        }
-    }
-
-    livesEl.textContent =
-        hearts;
-}
-
-
-/* =====================================================
-   CHECK ANSWER
-   ===================================================== */
-
-function checkAnswer(
-    isCorrect,
-    button,
-    answers
-){
-
-    if(answered){
-        return;
-    }
-
-    answered = true;
-
-
-    const all =
-        document.querySelectorAll(
-            ".option"
-        );
-
-
-    all.forEach(
-        b=>{
-            b.disabled = true;
-        }
-    );
-
-
-    if(isCorrect){
-
-        button.classList.add(
-            "correct"
-        );
-
-        feedback.innerHTML =
-            "🎉 बिल्कुल सही! +10 Points";
-
-        score += 10;
-
-        right++;
-
-    }else{
-
-        button.classList.add(
-            "wrong"
-        );
-
-
-        /* SHOW CORRECT ANSWER */
-
-        all.forEach(
-            b=>{
-
-                if(
-                    b.dataset.correct ===
-                    "true"
-                ){
-
-                    b.classList.add(
-                        "correct"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* REMOVE LIFE */
-
-        lives--;
-
-        updateLives();
-
-
-        let correctAnswer =
-            answers.find(
-                a=>a.correct
-            );
-
-
-        feedback.innerHTML =
-            "❌ गलत!<br>" +
-            "सही उत्तर: <b>" +
-            correctAnswer.text +
-            "</b><br>" +
-            "❤️ बाँकी Life: " +
-            lives;
-
-
-        /* 3 WRONG ANSWERS */
-
-        if(lives <= 0){
-
-            setTimeout(
-                gameOver,
-                1300
-            );
-
-            return;
-        }
-
-    }
-
-
-    scoreEl.textContent =
-        score;
-
-    rightEl.textContent =
-        right;
-}
-
-
-/* =====================================================
-   NEXT QUESTION
-   ===================================================== */
-
-function nextQuestion(){
-
-    if(!answered){
-
-        feedback.textContent =
-            "👇 पहिले एउटा उत्तर छान्नुहोस्।";
-
-        return;
-    }
-
-
-    current++;
-
-
     if(
-        current >=
-        gameQuestions.length
+        current>=questions.length
     ){
 
         finishGame();
 
         return;
+
     }
 
 
-    loadQuestion();
+    const item =
+        questions[current];
+
+
+    answered=false;
+
+    hintUsed=false;
+
+
+    message.textContent="";
+
+    message.className=
+        "message";
+
+
+    hintBox.classList.remove(
+        "show"
+    );
+
+
+    hintBtn.disabled=false;
+
+    nextBtn.disabled=true;
+
+
+    question.textContent =
+        item.q;
+
+
+    answers.innerHTML="";
+
+
+    item.a.forEach(
+        (answer,index)=>{
+
+            const btn =
+                document.createElement(
+                    "button"
+                );
+
+
+            btn.className=
+                "answer";
+
+
+            btn.textContent =
+                answer;
+
+
+            btn.onclick =
+                ()=>{
+                    checkAnswer(
+                        index,
+                        btn
+                    );
+                };
+
+
+            answers.appendChild(
+                btn
+            );
+
+        }
+    );
+
+
+    progressText.textContent =
+        `${current+1} / ${questions.length}`;
+
+
+    progressBar.style.width =
+        `${
+            (
+                current /
+                questions.length
+            )*100
+        }%`;
+
+
+    card.classList.remove(
+        "change"
+    );
+
+    void card.offsetWidth;
+
+    card.classList.add(
+        "change"
+    );
+
 }
 
 
 /* =====================================================
-   GAME OVER
-   ===================================================== */
+   CHECK ANSWER
+===================================================== */
 
-function gameOver(){
+function checkAnswer(
+    selected,
+    clicked
+){
 
-    game.style.display =
-        "none";
+    if(answered)
+        return;
 
-    result.style.display =
-        "block";
 
-    resultTitle.textContent =
-        "💔 Game Over!";
+    answered=true;
 
-    finalScore.textContent =
+
+    const item =
+        questions[current];
+
+
+    const all =
+        document.querySelectorAll(
+            ".answer"
+        );
+
+
+    all.forEach(
+        btn=>{
+            btn.classList.add(
+                "disabled"
+            );
+        }
+    );
+
+
+    if(
+        selected===
+        item.correct
+    ){
+
+        /* =====================
+           CORRECT
+        ===================== */
+
+        clicked.classList.add(
+            "correct"
+        );
+
+
+        correctCount++;
+
+
+        wrongStreak=0;
+
+
+        combo++;
+
+
+        const points =
+            10+
+            combo*5;
+
+
+        score += points;
+
+
+        message.textContent =
+            `🎉 सही! +${points} अंक`;
+
+
+        message.className =
+            "message good";
+
+
+        successSound();
+
+
+        showConfetti();
+
+
+        if(
+            combo>=2
+        ){
+
+            message.textContent +=
+                ` 🔥 ${combo} Combo!`;
+
+        }
+
+
+        updateUI();
+
+
+    }else{
+
+        /* =====================
+           WRONG
+        ===================== */
+
+        clicked.classList.add(
+            "wrong"
+        );
+
+
+        all[
+            item.correct
+        ].classList.add(
+            "correct"
+        );
+
+
+        wrongStreak++;
+
+
+        combo=0;
+
+
+        message.textContent =
+            "❌ गलत उत्तर!";
+
+
+        message.className =
+            "message bad";
+
+
+        wrongSound();
+
+
+        /*
+         * लगातार 3 गलत भएमा
+         * LIFE -1
+         */
+
+        if(
+            wrongStreak>=3
+        ){
+
+            lives--;
+
+            wrongStreak=0;
+
+
+            message.textContent =
+                "💔 लगातार ३ गलत! १ Life घट्यो";
+
+
+            lifeLostSound();
+
+
+            updateUI();
+
+
+            if(
+                lives<=0
+            ){
+
+                setTimeout(
+                    finishGame,
+                    700
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        updateUI();
+
+    }
+
+
+    nextBtn.disabled=false;
+
+}
+
+
+/* =====================================================
+   NEXT
+===================================================== */
+
+nextBtn.onclick =
+()=>{
+
+    current++;
+
+    loadQuestion();
+
+};
+
+
+/* =====================================================
+   HINT
+===================================================== */
+
+hintBtn.onclick =
+()=>{
+
+    if(
+        hintUsed ||
+        answered
+    )
+        return;
+
+
+    hintUsed=true;
+
+
+    const item =
+        questions[current];
+
+
+    hintBox.textContent =
+        `💡 Hint: ${item.hint}`;
+
+
+    hintBox.classList.add(
+        "show"
+    );
+
+
+    hintBtn.disabled=true;
+
+
+    hintSound();
+
+};
+
+
+/* =====================================================
+   UI UPDATE
+===================================================== */
+
+function updateUI(){
+
+    scoreEl.textContent =
         score;
 
 
-    resultText.innerHTML =
-        "तपाईंका सबै ❤️ Life सकिए।" +
-        "<br><br>" +
-
-        "सही उत्तर: " +
-        right +
-        "<br>" +
-
-        "Score: " +
-        score +
-        "<br><br>" +
-
-        "🎲 फेरि खेल्दा प्रश्नहरू " +
-        "<b>नयाँ Random क्रम</b> मा आउनेछन्।";
+    lifeEl.textContent =
+        "❤️".repeat(
+            Math.max(
+                0,
+                lives
+            )
+        );
 
 
-    document.querySelector(
-        ".restart"
-    ).textContent =
-        "🎲 नयाँ प्रश्नबाट फेरि खेल्नुहोस्";
+    comboEl.textContent =
+        combo;
+
+
+    if(
+        score>best
+    ){
+
+        best=
+            score;
+
+        bestEl.textContent=
+            best;
+
+        localStorage.setItem(
+            "gaunkhaneBest",
+            best
+        );
+
+    }
+
 }
 
 
 /* =====================================================
    FINISH GAME
-   ===================================================== */
+===================================================== */
 
 function finishGame(){
 
-    game.style.display =
-        "none";
-
-    result.style.display =
-        "block";
-
-    resultTitle.textContent =
-        "🏆 सबै प्रश्न सकियो!";
-
-    finalScore.textContent =
+    document.getElementById(
+        "finalScore"
+    ).textContent =
         score;
 
 
-    const percent =
-        Math.round(
-            right /
-            gameQuestions.length *
-            100
-        );
+    document.getElementById(
+        "correctCount"
+    ).textContent =
+        `${correctCount}/${questions.length}`;
 
 
-    if(percent >= 90){
+    document.getElementById(
+        "resultEmoji"
+    ).textContent =
+        score>=150
+        ? "🏆"
+        : score>=80
+        ? "🎉"
+        : "💪";
 
-        resultText.innerHTML =
-            "🔥 शानदार!" +
-            "<br>" +
-            "तपाईं गाउँखाने कथा Master हुनुहुन्छ!";
 
-    }
-    else if(percent >= 70){
+    document.getElementById(
+        "resultOverlay"
+    ).classList.remove(
+        "hide"
+    );
 
-        resultText.innerHTML =
-            "👏 धेरै राम्रो!" +
-            "<br>" +
-            "तपाईंलाई गाउँखाने कथा राम्रोसँग आउँछ।";
 
-    }
-    else if(percent >= 50){
-
-        resultText.innerHTML =
-            "👍 राम्रो प्रयास!" +
-            "<br>" +
-            "अझै केही अभ्यास गर्नुहोस्।";
-
-    }
-    else{
-
-        resultText.innerHTML =
-            "📚 अझै अभ्यास गर्नुहोस्!" +
-            "<br>" +
-            "फेरि खेल्दा अझ राम्रो गर्न सक्नुहुन्छ।";
-
-    }
+    finishSound();
 
 }
 
 
 /* =====================================================
-   RESTART WITH NEW RANDOM QUESTIONS
-   ===================================================== */
+   START
+===================================================== */
 
-function restartGame(){
+function startGame(){
 
-    current = 0;
+    current=0;
 
-    score = 0;
+    score=0;
 
-    right = 0;
+    lives=3;
 
-    lives = 3;
+    combo=0;
 
-    answered = false;
+    wrongStreak=0;
 
-
-    /* NEW RANDOM ORDER */
-
-    shuffleQuestions();
+    correctCount=0;
 
 
-    game.style.display =
-        "block";
+    updateUI();
 
-    result.style.display =
-        "none";
+
+    document.getElementById(
+        "startOverlay"
+    ).classList.add(
+        "hide"
+    );
+
+
+    document.getElementById(
+        "resultOverlay"
+    ).classList.add(
+        "hide"
+    );
+
+
+    startSound();
 
 
     loadQuestion();
+
 }
 
 
 /* =====================================================
-   START GAME
-   ===================================================== */
+   RESTART
+===================================================== */
 
-shuffleQuestions();
+document.getElementById(
+    "startBtn"
+).onclick =
+startGame;
 
-loadQuestion();
+
+document.getElementById(
+    "restartBtn"
+).onclick =
+startGame;
+
+
+/* =====================================================
+   SOUND ENGINE
+===================================================== */
+
+let audioCtx=null;
+
+
+function audio(){
+
+    if(!audioCtx){
+
+        audioCtx=
+        new(
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+    }
+
+
+    if(
+        audioCtx.state==="suspended"
+    ){
+
+        audioCtx.resume();
+
+    }
+
+}
+
+
+function tone(
+    frequency,
+    duration,
+    type="sine",
+    volume=.07
+){
+
+    audio();
+
+
+    const osc =
+        audioCtx.createOscillator();
+
+
+    const gain =
+        audioCtx.createGain();
+
+
+    osc.type=type;
+
+    osc.frequency.value=
+        frequency;
+
+
+    gain.gain.setValueAtTime(
+        .001,
+        audioCtx.currentTime
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+        volume,
+        audioCtx.currentTime+.02
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+        .001,
+        audioCtx.currentTime+
+        duration
+    );
+
+
+    osc.connect(gain);
+
+    gain.connect(
+        audioCtx.destination
+    );
+
+
+    osc.start();
+
+    osc.stop(
+        audioCtx.currentTime+
+        duration+
+        .03
+    );
+
+}
+
+
+/* =====================
+   SOUNDS
+===================== */
+
+function successSound(){
+
+    tone(
+        600,
+        .08,
+        "sine",
+        .08
+    );
+
+    setTimeout(
+        ()=>{
+            tone(
+                850,
+                .1,
+                "sine",
+                .08
+            );
+        },
+        90
+    );
+
+    setTimeout(
+        ()=>{
+            tone(
+                1100,
+                .15,
+                "sine",
+                .08
+            );
+        },
+        180
+    );
+
+}
+
+
+function wrongSound(){
+
+    tone(
+        180,
+        .2,
+        "sawtooth",
+        .07
+    );
+
+}
+
+
+function lifeLostSound(){
+
+    tone(
+        150,
+        .3,
+        "square",
+        .1
+    );
+
+    setTimeout(
+        ()=>{
+            tone(
+                80,
+                .4,
+                "sawtooth",
+                .08
+            );
+        },
+        120
+    );
+
+}
+
+
+function hintSound(){
+
+    tone(
+        700,
+        .08
+    );
+
+    setTimeout(
+        ()=>{
+            tone(
+                900,
+                .12
+            );
+        },
+        100
+    );
+
+}
+
+
+function startSound(){
+
+    tone(
+        500,
+        .1
+    );
+
+    setTimeout(
+        ()=>{
+            tone(
+                700,
+                .1
+            );
+        },
+        100
+    );
+
+    setTimeout(
+        ()=>{
+            tone(
+                1000,
+                .2
+            );
+        },
+        200
+    );
+
+}
+
+
+function finishSound(){
+
+    tone(
+        400,
+        .1
+    );
+
+    setTimeout(
+        ()=>{
+            tone(
+                300,
+                .15
+            );
+        },
+        130
+    );
+
+}
+
+
+/* =====================================================
+   CONFETTI
+===================================================== */
+
+function showConfetti(){
+
+    for(
+        let i=0;
+        i<25;
+        i++
+    ){
+
+        const c =
+            document.createElement(
+                "div"
+            );
+
+
+        c.className=
+            "confetti";
+
+
+        c.style.left=
+            Math.random()*100+
+            "%";
+
+
+        c.style.background=
+            [
+                "#22d3ee",
+                "#a855f7",
+                "#facc15",
+                "#4ade80",
+                "#fb7185"
+            ][
+                Math.floor(
+                    Math.random()*5
+                )
+            ];
+
+
+        c.style.animationDuration=
+            (
+                1+
+                Math.random()*
+                .8
+            )+
+            "s";
+
+
+        document.body.appendChild(c);
+
+
+        setTimeout(
+            ()=>{
+                c.remove();
+            },
+            2000
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   INITIAL
+===================================================== */
+
+updateUI();
 
 </script>
 
