@@ -1,0 +1,1343 @@
+```html
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JavaScript Complete Course</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#07111f;
+    color:#e5e7eb;
+    line-height:1.7;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 5%;
+    background:#0b1728;
+    border-bottom:1px solid #263b50;
+}
+
+.logo{
+    color:#facc15;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.home{
+    text-decoration:none;
+    color:white;
+    background:#eab308;
+    padding:8px 17px;
+    border-radius:20px;
+}
+
+.hero{
+    text-align:center;
+    padding:70px 20px;
+    background:
+    radial-gradient(circle at top,#713f12,#07111f 70%);
+}
+
+.hero-icon{
+    font-size:75px;
+}
+
+.hero h1{
+    font-size:clamp(38px,7vw,68px);
+    margin:10px 0;
+}
+
+.hero h1 span{
+    color:#facc15;
+}
+
+.hero p{
+    max-width:800px;
+    margin:auto;
+    color:#cbd5e1;
+}
+
+.layout{
+    display:flex;
+    max-width:1450px;
+    margin:auto;
+}
+
+.sidebar{
+    width:275px;
+    min-width:275px;
+    height:calc(100vh - 67px);
+    position:sticky;
+    top:67px;
+    overflow-y:auto;
+    padding:25px 17px;
+    border-right:1px solid #263b50;
+}
+
+.sidebar h3{
+    color:#facc15;
+    margin-bottom:15px;
+}
+
+.sidebar a{
+    display:block;
+    color:#cbd5e1;
+    text-decoration:none;
+    padding:7px 10px;
+    margin:3px 0;
+    border-radius:7px;
+    font-size:14px;
+}
+
+.sidebar a:hover{
+    background:#172a3d;
+    color:#facc15;
+}
+
+.content{
+    flex:1;
+    max-width:1000px;
+    padding:45px;
+}
+
+.lesson{
+    margin-bottom:65px;
+    scroll-margin-top:90px;
+}
+
+.lesson h2{
+    color:#facc15;
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.lesson h3{
+    color:#fde68a;
+    margin:25px 0 10px;
+}
+
+.lesson p{
+    color:#cbd5e1;
+    margin-bottom:15px;
+}
+
+.note{
+    background:#0d1b2a;
+    border-left:4px solid #facc15;
+    padding:18px;
+    border-radius:8px;
+    margin:20px 0;
+}
+
+.code-title{
+    background:#172a3d;
+    color:#fde68a;
+    padding:10px 15px;
+    border-radius:8px 8px 0 0;
+    font-weight:bold;
+}
+
+pre{
+    background:#020617;
+    color:#d1fae5;
+    padding:20px;
+    overflow-x:auto;
+    border:1px solid #263b50;
+    border-radius:0 0 8px 8px;
+    margin-bottom:20px;
+}
+
+code{
+    font-family:Consolas,monospace;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+th,td{
+    border:1px solid #334155;
+    padding:10px;
+}
+
+th{
+    background:#172a3d;
+    color:#fde68a;
+}
+
+.demo{
+    background:#0d1b2a;
+    padding:20px;
+    border-radius:15px;
+    border:1px solid #263b50;
+    margin-top:20px;
+}
+
+.demo button,
+.quiz button{
+    border:0;
+    background:#eab308;
+    color:#111827;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:5px;
+}
+
+.demo input{
+    padding:10px;
+    border-radius:7px;
+    border:1px solid #475569;
+    background:#020617;
+    color:white;
+}
+
+.quiz{
+    background:#0d1b2a;
+    border:1px solid #263b50;
+    padding:25px;
+    border-radius:15px;
+}
+
+.quiz label{
+    display:block;
+    margin:10px 0;
+    cursor:pointer;
+}
+
+#result{
+    margin-top:15px;
+    font-weight:bold;
+}
+
+.project{
+    background:#0d1b2a;
+    border:1px solid #263b50;
+    border-radius:15px;
+    padding:20px;
+}
+
+footer{
+    text-align:center;
+    padding:40px 20px;
+    background:#020617;
+    color:#94a3b8;
+}
+
+@media(max-width:850px){
+
+    .layout{
+        display:block;
+    }
+
+    .sidebar{
+        width:100%;
+        min-width:0;
+        height:auto;
+        position:relative;
+        top:0;
+        border-right:0;
+        border-bottom:1px solid #263b50;
+    }
+
+    .sidebar a{
+        display:inline-block;
+    }
+
+    .content{
+        padding:25px 17px;
+    }
+
+    header{
+        padding:13px 18px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+⚡ JavaScript Complete Course
+</div>
+
+<a href="index.html" class="home">
+← Home
+</a>
+
+</header>
+
+
+<section class="hero">
+
+<div class="hero-icon">⚡</div>
+
+<h1>
+JavaScript <span>Complete Course</span>
+</h1>
+
+<p>
+JavaScript लाई Basic देखि Advanced सम्म नेपालीमा सिक्नुहोस्।
+Theory नेपालीमा र practical code English मा।
+</p>
+
+</section>
+
+
+<div class="layout">
+
+
+<aside class="sidebar">
+
+<h3>📚 Course Menu</h3>
+
+<a href="#intro">1. Introduction</a>
+<a href="#variables">2. Variables</a>
+<a href="#datatype">3. Data Types</a>
+<a href="#operators">4. Operators</a>
+<a href="#conditions">5. Conditions</a>
+<a href="#loops">6. Loops</a>
+<a href="#functions">7. Functions</a>
+<a href="#arrays">8. Arrays</a>
+<a href="#objects">9. Objects</a>
+<a href="#strings">10. Strings</a>
+<a href="#numbers">11. Numbers</a>
+<a href="#math">12. Math</a>
+<a href="#dates">13. Dates</a>
+<a href="#dom">14. DOM</a>
+<a href="#events">15. Events</a>
+<a href="#forms">16. Forms</a>
+<a href="#storage">17. Local Storage</a>
+<a href="#json">18. JSON</a>
+<a href="#errors">19. Error Handling</a>
+<a href="#es6">20. ES6+</a>
+<a href="#async">21. Async JavaScript</a>
+<a href="#fetch">22. Fetch API</a>
+<a href="#classes">23. Classes</a>
+<a href="#modules">24. Modules</a>
+<a href="#projects">25. Mini Projects</a>
+<a href="#quiz">26. Quiz</a>
+
+</aside>
+
+
+<main class="content">
+
+
+<section class="lesson" id="intro">
+
+<h2>1. JavaScript के हो?</h2>
+
+<p>
+JavaScript एउटा programming language हो जसले webpage लाई
+interactive र dynamic बनाउन मद्दत गर्छ।
+</p>
+
+<div class="note">
+HTML ले structure बनाउँछ, CSS ले design गर्छ र
+JavaScript ले website मा functionality तथा interaction थप्छ।
+</div>
+
+<pre><code>&lt;script&gt;
+
+console.log("Hello World");
+
+&lt;/script&gt;</code></pre>
+
+</section>
+
+
+<section class="lesson" id="variables">
+
+<h2>2. Variables</h2>
+
+<p>
+Variable मा data store गर्न सकिन्छ। आधुनिक JavaScript मा
+मुख्य रूपमा let र const प्रयोग गरिन्छ।
+</p>
+
+<pre><code>let name = "Roshan";
+
+const age = 20;
+
+let score = 100;
+
+console.log(name);
+console.log(age);
+console.log(score);</code></pre>
+
+</section>
+
+
+<section class="lesson" id="datatype">
+
+<h2>3. Data Types</h2>
+
+<p>
+JavaScript मा विभिन्न प्रकारका data हुन्छन्।
+</p>
+
+<table>
+
+<tr>
+<th>Type</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>String</td>
+<td>"Hello"</td>
+</tr>
+
+<tr>
+<td>Number</td>
+<td>100</td>
+</tr>
+
+<tr>
+<td>Boolean</td>
+<td>true</td>
+</tr>
+
+<tr>
+<td>Array</td>
+<td>[1,2,3]</td>
+</tr>
+
+<tr>
+<td>Object</td>
+<td>{name:"Ram"}</td>
+</tr>
+
+<tr>
+<td>Null</td>
+<td>null</td>
+</tr>
+
+<tr>
+<td>Undefined</td>
+<td>undefined</td>
+</tr>
+
+</table>
+
+<pre><code>let username = "Ram";
+
+let age = 20;
+
+let student = true;
+
+let fruits = ["Apple","Mango"];
+
+let person = {
+    name: "Ram",
+    age: 20
+};</code></pre>
+
+</section>
+
+
+<section class="lesson" id="operators">
+
+<h2>4. Operators</h2>
+
+<p>
+Operators गणना तथा comparison गर्न प्रयोग हुन्छन्।
+</p>
+
+<pre><code>let a = 10;
+let b = 5;
+
+console.log(a + b);
+console.log(a - b);
+console.log(a * b);
+console.log(a / b);
+console.log(a % b);
+
+console.log(a > b);
+console.log(a < b);
+console.log(a === b);</code></pre>
+
+</section>
+
+
+<section class="lesson" id="conditions">
+
+<h2>5. Conditions</h2>
+
+<p>
+Condition अनुसार फरक code चलाउन if, else if र else प्रयोग हुन्छ।
+</p>
+
+<pre><code>let age = 20;
+
+if(age >= 18){
+
+    console.log("Adult");
+
+}else{
+
+    console.log("Minor");
+
+}</code></pre>
+
+</section>
+
+
+<section class="lesson" id="loops">
+
+<h2>6. Loops</h2>
+
+<p>
+एउटै काम धेरै पटक गर्न loop प्रयोग हुन्छ।
+</p>
+
+<h3>For Loop</h3>
+
+<pre><code>for(let i = 1; i <= 5; i++){
+
+    console.log(i);
+
+}</code></pre>
+
+<h3>While Loop</h3>
+
+<pre><code>let i = 1;
+
+while(i <= 5){
+
+    console.log(i);
+
+    i++;
+
+}</code></pre>
+
+</section>
+
+
+<section class="lesson" id="functions">
+
+<h2>7. Functions</h2>
+
+<p>
+Function भनेको reusable code block हो।
+</p>
+
+<pre><code>function greet(name){
+
+    return "Hello " + name;
+
+}
+
+console.log(greet("Ram"));</code></pre>
+
+<h3>Arrow Function</h3>
+
+<pre><code>const add = (a,b) => {
+
+    return a + b;
+
+};
+
+console.log(add(10,20));</code></pre>
+
+</section>
+
+
+<section class="lesson" id="arrays">
+
+<h2>8. Arrays</h2>
+
+<p>
+एकै variable मा धेरै values राख्न Array प्रयोग गरिन्छ।
+</p>
+
+<pre><code>let fruits = [
+    "Apple",
+    "Mango",
+    "Banana"
+];
+
+console.log(fruits[0]);
+
+fruits.push("Orange");
+
+fruits.pop();
+
+console.log(fruits.length);</code></pre>
+
+</section>
+
+
+<section class="lesson" id="objects">
+
+<h2>9. Objects</h2>
+
+<p>
+Object ले related information लाई key र value को रूपमा राख्छ।
+</p>
+
+<pre><code>const person = {
+
+    name: "Ram",
+    age: 20,
+    city: "Kathmandu"
+
+};
+
+console.log(person.name);
+console.log(person.age);</code></pre>
+
+</section>
+
+
+<section class="lesson" id="strings">
+
+<h2>10. Strings</h2>
+
+<p>
+Text सँग काम गर्न String methods प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>let text = "JavaScript";
+
+console.log(text.length);
+
+console.log(text.toUpperCase());
+
+console.log(text.toLowerCase());
+
+console.log(text.includes("Script"));
+
+console.log(text.slice(0,4));</code></pre>
+
+</section>
+
+
+<section class="lesson" id="numbers">
+
+<h2>11. Numbers</h2>
+
+<p>
+JavaScript मा numbers सँग calculation गर्न सकिन्छ।
+</p>
+
+<pre><code>let x = 10;
+
+let y = 20;
+
+console.log(x + y);
+
+console.log(x * y);
+
+console.log(x / y);</code></pre>
+
+</section>
+
+
+<section class="lesson" id="math">
+
+<h2>12. Math Object</h2>
+
+<p>
+Math object ले mathematical operations गर्न मद्दत गर्छ।
+</p>
+
+<pre><code>console.log(Math.round(4.6));
+
+console.log(Math.floor(4.9));
+
+console.log(Math.ceil(4.1));
+
+console.log(Math.max(10,20,30));
+
+console.log(Math.min(10,20,30));
+
+console.log(Math.random());</code></pre>
+
+</section>
+
+
+<section class="lesson" id="dates">
+
+<h2>13. Dates</h2>
+
+<p>
+Date object बाट current date र time प्राप्त गर्न सकिन्छ।
+</p>
+
+<pre><code>const now = new Date();
+
+console.log(now);
+
+console.log(now.getFullYear());
+
+console.log(now.getMonth());
+
+console.log(now.getDate());
+
+console.log(now.getHours());</code></pre>
+
+</section>
+
+
+<section class="lesson" id="dom">
+
+<h2>14. DOM</h2>
+
+<p>
+DOM को प्रयोग गरेर JavaScript बाट HTML elements परिवर्तन गर्न सकिन्छ।
+</p>
+
+<pre><code>const title =
+document.getElementById("title");
+
+title.textContent =
+"New Heading";</code></pre>
+
+<div class="demo">
+
+<h3 id="demoTitle">
+Original Heading
+</h3>
+
+<button onclick="changeTitle()">
+Change Heading
+</button>
+
+</div>
+
+</section>
+
+
+<section class="lesson" id="events">
+
+<h2>15. Events</h2>
+
+<p>
+User ले click, typing, mouse movement जस्ता काम गर्दा event हुन्छ।
+</p>
+
+<pre><code>button.addEventListener(
+    "click",
+    function(){
+
+        console.log("Button clicked");
+
+    }
+);</code></pre>
+
+<div class="demo">
+
+<button id="eventButton">
+Click Me
+</button>
+
+<p id="eventText">
+Button click गर्नुहोस्।
+</p>
+
+</div>
+
+</section>
+
+
+<section class="lesson" id="forms">
+
+<h2>16. Forms</h2>
+
+<p>
+JavaScript बाट form input को value लिन सकिन्छ।
+</p>
+
+<pre><code>const name =
+document.getElementById("name").value;
+
+console.log(name);</code></pre>
+
+<div class="demo">
+
+<input
+id="name"
+type="text"
+placeholder="Enter your name"
+>
+
+<button onclick="showName()">
+Submit
+</button>
+
+<p id="nameResult"></p>
+
+</div>
+
+</section>
+
+
+<section class="lesson" id="storage">
+
+<h2>17. Local Storage</h2>
+
+<p>
+Browser मा data save गर्न localStorage प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>localStorage.setItem(
+    "username",
+    "Roshan"
+);
+
+const name =
+localStorage.getItem("username");
+
+console.log(name);
+
+localStorage.removeItem("username");</code></pre>
+
+</section>
+
+
+<section class="lesson" id="json">
+
+<h2>18. JSON</h2>
+
+<p>
+JSON data exchange गर्न प्रयोग हुने common format हो।
+</p>
+
+<pre><code>const user = {
+
+    name: "Ram",
+    age: 20
+
+};
+
+const json =
+JSON.stringify(user);
+
+console.log(json);
+
+const object =
+JSON.parse(json);
+
+console.log(object.name);</code></pre>
+
+</section>
+
+
+<section class="lesson" id="errors">
+
+<h2>19. Error Handling</h2>
+
+<p>
+Unexpected error handle गर्न try, catch र finally प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>try{
+
+    let result =
+    unknownFunction();
+
+}catch(error){
+
+    console.log(
+        "An error occurred"
+    );
+
+}finally{
+
+    console.log(
+        "Finished"
+    );
+
+}</code></pre>
+
+</section>
+
+
+<section class="lesson" id="es6">
+
+<h2>20. ES6+</h2>
+
+<p>
+Modern JavaScript मा धेरै नयाँ features थपिएका छन्।
+</p>
+
+<pre><code>const name = "Ram";
+
+const message =
+`Hello ${name}`;
+
+console.log(message);
+
+const numbers = [1,2,3];
+
+const doubled =
+numbers.map(
+    number => number * 2
+);
+
+console.log(doubled);</code></pre>
+
+</section>
+
+
+<section class="lesson" id="async">
+
+<h2>21. Async JavaScript</h2>
+
+<p>
+Asynchronous code ले लामो समय लाग्ने कामलाई राम्रोसँग handle गर्न मद्दत गर्छ।
+</p>
+
+<pre><code>function loadData(){
+
+    return new Promise(
+        function(resolve){
+
+            setTimeout(
+                function(){
+
+                    resolve(
+                        "Data loaded"
+                    );
+
+                },
+                1000
+            );
+
+        }
+    );
+
+}
+
+async function start(){
+
+    const data =
+    await loadData();
+
+    console.log(data);
+
+}
+
+start();</code></pre>
+
+</section>
+
+
+<section class="lesson" id="fetch">
+
+<h2>22. Fetch API</h2>
+
+<p>
+Server बाट data लिन Fetch API प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>fetch("https://example.com/data.json")
+
+.then(response => response.json())
+
+.then(data => {
+
+    console.log(data);
+
+})
+
+.catch(error => {
+
+    console.log(error);
+
+});</code></pre>
+
+<div class="note">
+वास्तविक API प्रयोग गर्दा server ले उपलब्ध गराएको सही URL र data format प्रयोग गर्नुपर्छ।
+</div>
+
+</section>
+
+
+<section class="lesson" id="classes">
+
+<h2>23. Classes</h2>
+
+<p>
+Object-oriented programming को structure बनाउन class प्रयोग गर्न सकिन्छ।
+</p>
+
+<pre><code>class Student{
+
+    constructor(name,age){
+
+        this.name = name;
+        this.age = age;
+
+    }
+
+    introduce(){
+
+        console.log(
+            `My name is ${this.name}`
+        );
+
+    }
+
+}
+
+const student =
+new Student("Ram",20);
+
+student.introduce();</code></pre>
+
+</section>
+
+
+<section class="lesson" id="modules">
+
+<h2>24. Modules</h2>
+
+<p>
+ठूला JavaScript projects लाई धेरै files मा organize गर्न modules प्रयोग गरिन्छ।
+</p>
+
+<h3>Export</h3>
+
+<pre><code>export function add(a,b){
+
+    return a + b;
+
+}</code></pre>
+
+<h3>Import</h3>
+
+<pre><code>import { add }
+from "./math.js";
+
+console.log(
+    add(10,20)
+);</code></pre>
+
+</section>
+
+
+<section class="lesson" id="projects">
+
+<h2>25. Mini Projects</h2>
+
+<p>
+अब JavaScript प्रयोग गरेर साना projects बनाउन सकिन्छ।
+</p>
+
+<div class="project">
+
+<h3>Project 1 — Counter</h3>
+
+<pre><code>let count = 0;
+
+function increase(){
+
+    count++;
+
+    document.getElementById(
+        "counter"
+    ).textContent = count;
+
+}</code></pre>
+
+<div class="demo">
+
+<h2 id="counter">0</h2>
+
+<button onclick="increase()">
++ Increase
+</button>
+
+<button onclick="decrease()">
+- Decrease
+</button>
+
+<button onclick="resetCounter()">
+Reset
+</button>
+
+</div>
+
+</div>
+
+
+<div class="project">
+
+<h3>Project 2 — Random Number</h3>
+
+<pre><code>function randomNumber(){
+
+    const number =
+    Math.floor(
+        Math.random() * 100
+    ) + 1;
+
+    console.log(number);
+
+}</code></pre>
+
+<div class="demo">
+
+<button onclick="generateNumber()">
+Generate Number
+</button>
+
+<h2 id="randomNumber">?</h2>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="lesson" id="quiz">
+
+<h2>26. JavaScript Quiz</h2>
+
+<div class="quiz">
+
+<p>
+<strong>Question:</strong>
+JavaScript मुख्य रूपमा केका लागि प्रयोग हुन्छ?
+</p>
+
+<label>
+<input
+type="radio"
+name="answer"
+value="wrong"
+>
+Website interactive बनाउन
+</label>
+
+<label>
+<input
+type="radio"
+name="answer"
+value="wrong"
+>
+Website को structure मात्र बनाउन
+</label>
+
+<label>
+<input
+type="radio"
+name="answer"
+value="correct"
+>
+Website लाई dynamic र interactive बनाउन
+</label>
+
+<button onclick="checkQuiz()">
+Check Answer
+</button>
+
+<div id="result"></div>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<footer>
+
+<h3>⚡ JavaScript Complete Course</h3>
+
+<p>
+Learn • Practice • Build
+</p>
+
+<p>
+GameBook GK Hub © 2026
+</p>
+
+</footer>
+
+
+<script>
+
+/* DOM DEMO */
+
+function changeTitle(){
+
+    document.getElementById(
+        "demoTitle"
+    ).textContent =
+    "JavaScript Changed This Heading!";
+
+}
+
+
+/* FORM DEMO */
+
+function showName(){
+
+    const name =
+    document.getElementById(
+        "name"
+    ).value;
+
+    document.getElementById(
+        "nameResult"
+    ).textContent =
+    name
+    ? "Hello, " + name + "!"
+    : "Please enter your name.";
+
+}
+
+
+/* EVENT DEMO */
+
+document.getElementById(
+    "eventButton"
+).addEventListener(
+    "click",
+    function(){
+
+        document.getElementById(
+            "eventText"
+        ).textContent =
+        "✅ Button clicked successfully!";
+
+    }
+);
+
+
+/* COUNTER */
+
+let count = 0;
+
+function increase(){
+
+    count++;
+
+    document.getElementById(
+        "counter"
+    ).textContent = count;
+
+}
+
+function decrease(){
+
+    count--;
+
+    document.getElementById(
+        "counter"
+    ).textContent = count;
+
+}
+
+function resetCounter(){
+
+    count = 0;
+
+    document.getElementById(
+        "counter"
+    ).textContent = count;
+
+}
+
+
+/* RANDOM NUMBER */
+
+function generateNumber(){
+
+    const number =
+    Math.floor(
+        Math.random() * 100
+    ) + 1;
+
+    document.getElementById(
+        "randomNumber"
+    ).textContent = number;
+
+}
+
+
+/* QUIZ */
+
+function checkQuiz(){
+
+    const selected =
+    document.querySelector(
+        'input[name="answer"]:checked'
+    );
+
+    const result =
+    document.getElementById(
+        "result"
+    );
+
+    if(!selected){
+
+        result.textContent =
+        "⚠️ Please select an answer.";
+
+        result.style.color =
+        "#facc15";
+
+        return;
+
+    }
+
+    if(selected.value === "correct"){
+
+        result.textContent =
+        "✅ Correct Answer!";
+
+        result.style.color =
+        "#4ade80";
+
+    }else{
+
+        result.textContent =
+        "❌ Wrong Answer. Try again.";
+
+        result.style.color =
+        "#f87171";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
+```
