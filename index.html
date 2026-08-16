@@ -3,543 +3,363 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>GameBook GK Hub</title>
 
 <link rel="stylesheet" href="style.css">
 
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
 
-<link
-href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
-rel="stylesheet">
-
-<!-- Cloudinary -->
+<!-- Cloudinary Upload Widget -->
 <script src="https://upload-widget.cloudinary.com/latest/global/all.js"></script>
-
 
 <style>
 
-/* =================================================
-   MOVIE SECTION
-================================================= */
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Poppins,Arial,sans-serif;
+}
 
 #movies{
-
     padding:70px 20px;
-
-    background:
-    linear-gradient(
-        135deg,
-        #080a10,
-        #15101a
-    );
-
+    background:linear-gradient(135deg,#080a10,#15101a);
     color:white;
-
+    min-height:600px;
 }
 
 .movies-container{
-
     width:min(1200px,94%);
-
     margin:auto;
-
 }
 
 .movies-title{
-
     text-align:center;
-
     margin-bottom:35px;
-
 }
 
 .movies-title h2{
-
-    font-size:
-    clamp(32px,6vw,50px);
-
+    font-size:clamp(32px,6vw,50px);
     margin-bottom:8px;
-
 }
 
 .movies-title p{
-
     color:#aaa;
-
 }
-
 
 /* ADMIN */
 
 .admin-box{
-
-    max-width:450px;
-
+    max-width:500px;
     margin:0 auto 30px;
-
     padding:25px;
-
     border-radius:20px;
-
     background:#171b25;
-
-    box-shadow:
-    0 15px 40px #0008;
-
+    box-shadow:0 15px 40px #0008;
 }
 
 .admin-box h3{
-
     text-align:center;
-
     margin-bottom:18px;
-
 }
 
 .admin-box input{
-
     width:100%;
-
     padding:14px;
-
     margin-bottom:12px;
-
     border:1px solid #ffffff18;
-
     border-radius:10px;
-
     outline:none;
-
     background:#0d1119;
-
     color:white;
-
 }
 
 .admin-buttons{
-
     display:flex;
-
     gap:10px;
-
 }
 
 .admin-buttons button{
-
     flex:1;
-
     padding:13px;
-
     border:0;
-
     border-radius:25px;
-
     cursor:pointer;
-
     font-weight:bold;
-
 }
 
 .login-btn{
-
     background:#e50914;
-
     color:white;
-
 }
 
 .logout-btn{
-
     background:#555;
-
     color:white;
-
 }
-
 
 /* UPLOAD */
 
 .upload-area{
-
     display:none;
-
     text-align:center;
-
     padding:25px;
-
     margin-bottom:30px;
-
     border-radius:20px;
-
     background:#171b25;
-
 }
 
 .upload-area.show{
-
     display:block;
-
 }
 
 .upload-area button{
-
     padding:15px 30px;
-
     border:0;
-
     border-radius:30px;
-
     background:#e50914;
-
     color:white;
-
     font-weight:bold;
-
     cursor:pointer;
-
 }
 
+.upload-area button:hover{
+    opacity:.85;
+}
+
+.upload-info{
+    color:#aaa;
+    font-size:13px;
+    margin-top:12px;
+}
 
 /* SEARCH */
 
 .movie-search{
-
     max-width:700px;
-
     margin:30px auto;
-
 }
 
 .movie-search input{
-
     width:100%;
-
     padding:16px 22px;
-
     border-radius:30px;
-
     border:1px solid #ffffff18;
-
     outline:none;
-
     background:#171b25;
-
     color:white;
-
     font-size:16px;
-
 }
 
-
-/* MOVIE GRID */
+/* GRID */
 
 .movie-grid{
-
     display:grid;
-
-    grid-template-columns:
-    repeat(
+    grid-template-columns:repeat(
         auto-fit,
         minmax(210px,1fr)
     );
-
     gap:25px;
-
 }
 
-
-/* MOVIE CARD */
+/* CARD */
 
 .movie-card{
-
     overflow:hidden;
-
     border-radius:18px;
-
     background:#171b25;
-
-    box-shadow:
-    0 15px 40px #0008;
-
+    box-shadow:0 15px 40px #0008;
     transition:.3s;
-
 }
 
 .movie-card:hover{
-
-    transform:
-    translateY(-7px);
-
+    transform:translateY(-7px);
 }
 
 .movie-poster{
-
     width:100%;
-
     height:290px;
-
     background:#222;
-
 }
 
 .movie-poster img{
-
     width:100%;
-
     height:100%;
-
     object-fit:cover;
-
     display:block;
-
 }
 
 .movie-info{
-
     padding:18px;
-
 }
 
 .movie-info h3{
-
-    margin-bottom:8px;
-
+    margin:0 0 8px;
+    word-break:break-word;
 }
 
 .movie-info p{
-
     color:#888;
-
     font-size:13px;
-
     margin-bottom:15px;
-
 }
 
 .movie-buttons{
-
     display:flex;
-
     gap:8px;
-
 }
 
 .movie-buttons button,
 .movie-buttons a{
-
     flex:1;
-
     padding:11px;
-
     border:0;
-
     border-radius:25px;
-
     text-align:center;
-
     text-decoration:none;
-
     cursor:pointer;
-
     font-size:13px;
-
     font-weight:bold;
-
 }
 
 .watch-btn{
-
     background:#e50914;
-
     color:white;
-
 }
 
 .download-btn{
-
     background:#087f86;
-
     color:white;
-
 }
 
 .delete-btn{
-
     width:100%;
-
     margin-top:8px;
-
     padding:9px;
-
     border:0;
-
     border-radius:20px;
-
     background:#492027;
-
     color:#ff9ca3;
-
     cursor:pointer;
-
-    display:none;
-
 }
 
-.delete-btn.show{
-
-    display:block;
-
+.delete-btn:hover{
+    background:#6d2730;
 }
 
-
-/* VIDEO PLAYER */
+/* VIDEO MODAL */
 
 .video-modal{
-
     position:fixed;
-
     inset:0;
-
     z-index:99999;
-
     display:none;
-
     align-items:center;
-
     justify-content:center;
-
     padding:15px;
-
     background:#000e;
-
 }
 
 .video-modal.show{
-
     display:flex;
-
 }
 
 .video-box{
-
     width:min(1000px,100%);
-
     background:#000;
-
     border-radius:16px;
-
     overflow:hidden;
-
     position:relative;
-
 }
 
 .video-box video{
-
     width:100%;
-
     max-height:85vh;
-
     display:block;
-
 }
 
 .close-video{
-
     position:absolute;
-
     right:10px;
-
     top:10px;
-
     z-index:5;
-
     width:40px;
-
     height:40px;
-
     border:0;
-
     border-radius:50%;
-
     background:#e50914;
-
     color:white;
-
     font-size:20px;
-
     cursor:pointer;
-
 }
 
+/* STATUS */
+
+.status-box{
+    text-align:center;
+    padding:30px;
+    color:#aaa;
+}
+
+.empty-box{
+    grid-column:1/-1;
+    text-align:center;
+    padding:50px;
+    color:#888;
+}
+
+.error-box{
+    grid-column:1/-1;
+    text-align:center;
+    padding:50px;
+    color:#ff7777;
+}
 
 /* MOBILE */
 
 @media(max-width:600px){
 
     .movie-buttons{
-
         flex-direction:column;
-
     }
 
     .movie-poster{
-
         height:260px;
-
     }
 
+    .admin-buttons{
+        flex-direction:column;
+    }
 }
 
 </style>
-
 </head>
-
 
 <body>
 
-
 <!-- =================================================
-     ORIGINAL HEADER
+     HEADER
 ================================================= -->
 
 <header>
 
 <div class="logo">
-
 🎮 GameBook GK Hub
-
 </div>
 
 <nav>
 
-<a href="#games">
-Games
-</a>
-
-<a href="#books">
-Books
-</a>
-
-<a href="#computer">
-Computer
-</a>
-
-<a href="#gk">
-GK Questions
-</a>
-
-<a href="#movies">
-Movies
-</a>
+<a href="#games">Games</a>
+<a href="#books">Books</a>
+<a href="#computer">Computer</a>
+<a href="#gk">GK Questions</a>
+<a href="#movies">Movies</a>
 
 </nav>
 
@@ -560,11 +380,8 @@ Welcome To GameBook GK Hub
 Play Games, Read Books and Improve Your Knowledge.
 </p>
 
-<button
-onclick="document.getElementById('games').scrollIntoView()">
-
+<button onclick="document.getElementById('games').scrollIntoView()">
 Explore Now
-
 </button>
 
 </section>
@@ -572,6 +389,7 @@ Explore Now
 
 <!-- =================================================
      GAMES
+     DO NOT CONNECT THIS TO MOVIE DELETE SYSTEM
 ================================================= -->
 
 <section id="games">
@@ -580,120 +398,29 @@ Explore Now
 
 <div class="grid">
 
-<a href="flying-bird.html"
-class="card">
-🐦 Flying Bird
-</a>
-
-<a href="snake-game.html"
-class="card">
-🐍 Snake Game
-</a>
-
-<a href="fruit-cutter.html"
-class="card">
-🍎 Fruit Cutter
-</a>
-
-<a href="gaunkhane-katha.html"
-class="card">
-📖 Gaunkhane Kathe
-</a>
-
-<a href="memory-card.html"
-class="card">
-🧠 Memory Card
-</a>
-
-<a href="pong.html"
-class="card">
-🏓 Pong
-</a>
-
-<a href="ballon-pop.html"
-class="card">
-🎈 Balloon Pop
-</a>
-
-<a href="tic-tac-toe.html"
-class="card">
-⭕ Tic Tac Toe
-</a>
-
-<a href="math-quiz.html"
-class="card">
-➗ Math Quiz
-</a>
-
-<a href="quiz.html"
-class="card">
-❓ Quiz
-</a>
-
-<a href="chess.html"
-class="card">
-♟ Chess
-</a>
-
-<a href="sliding-puzzle.html"
-class="card">
-🧩 Sliding Puzzle
-</a>
-
-<a href="aim-trainer.html"
-class="card">
-🎯 Aim Trainer
-</a>
-
-<a href="zombie-survival.html"
-class="card">
-🧟 Zombie Survival
-</a>
-
-<a href="highway-racer.html"
-class="card">
-🏎 Highway Racer
-</a>
-
-<a href="bike-race.html"
-class="card">
-🚴‍♂️ Bike Race
-</a>
-
-<a href="game/ninja-runner.html"
-class="card">
-🏃 Ninja Runner
-</a>
-
-<a href="penalty-shootout.html"
-class="card">
-⚽ Penalty Shootout
-</a>
-
-<a href="golf-challeng.html"
-class="card">
-🏌️ Golf Challenge
-</a>
-
-<a href="basketball.html"
-class="card">
-🏀 Basketball
-</a>
-
-<a href="space-shooter.html"
-class="card">
-🚀 Space Shooter
-</a>
-
-<a href="brick-breaker.html"
-class="card">
-🧱 Brick Breaker
-</a>
-
-<a href="carem.html"
-class="card">
-🎯 Carrom
-</a>
+<a href="flying-bird.html" class="card">🐦 Flying Bird</a>
+<a href="snake-game.html" class="card">🐍 Snake Game</a>
+<a href="fruit-cutter.html" class="card">🍎 Fruit Cutter</a>
+<a href="gaunkhane-katha.html" class="card">📖 Gaunkhane Kathe</a>
+<a href="memory-card.html" class="card">🧠 Memory Card</a>
+<a href="pong.html" class="card">🏓 Pong</a>
+<a href="ballon-pop.html" class="card">🎈 Balloon Pop</a>
+<a href="tic-tac-toe.html" class="card">⭕ Tic Tac Toe</a>
+<a href="math-quiz.html" class="card">➗ Math Quiz</a>
+<a href="quiz.html" class="card">❓ Quiz</a>
+<a href="chess.html" class="card">♟ Chess</a>
+<a href="sliding-puzzle.html" class="card">🧩 Sliding Puzzle</a>
+<a href="aim-trainer.html" class="card">🎯 Aim Trainer</a>
+<a href="zombie-survival.html" class="card">🧟 Zombie Survival</a>
+<a href="highway-racer.html" class="card">🏎 Highway Racer</a>
+<a href="bike-race.html" class="card">🚴‍♂️ Bike Race</a>
+<a href="game/ninja-runner.html" class="card">🏃 Ninja Runner</a>
+<a href="penalty-shootout.html" class="card">⚽ Penalty Shootout</a>
+<a href="golf-challeng.html" class="card">🏌️ Golf Challenge</a>
+<a href="basketball.html" class="card">🏀 Basketball</a>
+<a href="space-shooter.html" class="card">🚀 Space Shooter</a>
+<a href="brick-breaker.html" class="card">🧱 Brick Breaker</a>
+<a href="carem.html" class="card">🎯 Carrom</a>
 
 </div>
 
@@ -702,6 +429,7 @@ class="card">
 
 <!-- =================================================
      BOOKS
+     DO NOT CONNECT THIS TO MOVIE DELETE SYSTEM
 ================================================= -->
 
 <section id="books">
@@ -710,33 +438,27 @@ class="card">
 
 <div class="grid">
 
-<a href="god-stories.html"
-class="card">
+<a href="god-stories.html" class="card">
 📚 God Story
 </a>
 
-<a href="mahabharat-book.html"
-class="card">
+<a href="mahabharat-book.html" class="card">
 📚 Mahabharata Book
 </a>
 
-<a href="ramayan.html"
-class="card">
+<a href="ramayan.html" class="card">
 📚 Ramayan Book
 </a>
 
-<a href="horror-book.html"
-class="card">
+<a href="horror-book.html" class="card">
 👻 Horror Books
 </a>
 
-<a href="children-book.html"
-class="card">
+<a href="children-book.html" class="card">
 🧒 Children Books
 </a>
 
-<a href="love-story.html"
-class="card">
+<a href="love-story.html" class="card">
 ❤️ Love Story
 </a>
 
@@ -757,21 +479,12 @@ class="card">
 
 <div class="grid">
 
-<a
-href="complet-web-coding-book.html"
-class="card">
-
+<a href="complet-web-coding-book.html" class="card">
 📚 Complete Web Coding Course
-
 </a>
 
-
-<a
-href="ethical-heaking.html"
-class="card">
-
+<a href="ethical-heaking.html" class="card">
 📚 Ethical Hacking
-
 </a>
 
 </div>
@@ -791,25 +504,11 @@ class="card">
 
 <div class="grid">
 
-<div class="card">
-🌍 World GK
-</div>
-
-<div class="card">
-🇳🇵 Nepal GK
-</div>
-
-<div class="card">
-🔬 Science GK
-</div>
-
-<div class="card">
-💻 Computer GK
-</div>
-
-<div class="card">
-⚽ Sports GK
-</div>
+<div class="card">🌍 World GK</div>
+<div class="card">🇳🇵 Nepal GK</div>
+<div class="card">🔬 Science GK</div>
+<div class="card">💻 Computer GK</div>
+<div class="card">⚽ Sports GK</div>
 
 </div>
 
@@ -823,7 +522,6 @@ class="card">
 <section id="movies">
 
 <div class="movies-container">
-
 
 <div class="movies-title">
 
@@ -851,50 +549,44 @@ Watch your authorized movies and videos
 <input
 type="email"
 id="adminEmail"
-placeholder="Admin Email">
+placeholder="Admin Email"
+autocomplete="username"
+>
 
 <input
 type="password"
 id="adminPassword"
-placeholder="Password">
+placeholder="Password"
+autocomplete="current-password"
+>
 
 <div class="admin-buttons">
 
 <button
 class="login-btn"
 id="loginBtn">
-
 Login
-
 </button>
 
 <button
 class="logout-btn"
 id="logoutBtn">
-
 Logout
-
 </button>
 
 </div>
 
 <p
 id="loginStatus"
-style="
-text-align:center;
-margin-top:15px;
-color:#999;
-">
-
+style="text-align:center;margin-top:15px;color:#999;">
 Not logged in
-
 </p>
 
 </div>
 
 
 <!-- =================================================
-     UPLOAD
+     UPLOAD AREA
 ================================================= -->
 
 <div
@@ -902,18 +594,20 @@ class="upload-area"
 id="uploadArea">
 
 <h3>
-🎥 Upload Movie
+🎥 Upload Authorized Video
 </h3>
 
 <p>
-Maximum video size: 1000 MB
+Supports MP4, WebM, MOV and MKV
 </p>
 
-<button
-id="uploadBtn">
+<p class="upload-info">
+Large videos use Cloudinary chunked upload.
+Your Cloudinary account must allow the file size.
+</p>
 
+<button id="uploadBtn">
 ⬆ Upload Video
-
 </button>
 
 </div>
@@ -941,8 +635,11 @@ placeholder="🔎 Search movies...">
 class="movie-grid"
 id="movieGrid">
 
+<div class="status-box">
+Loading movies... 🎬
 </div>
 
+</div>
 
 </div>
 
@@ -962,16 +659,14 @@ id="videoModal">
 <button
 class="close-video"
 id="closeVideo">
-
 ✕
-
 </button>
 
 <video
 id="videoPlayer"
 controls
-playsinline>
-
+playsinline
+preload="metadata">
 </video>
 
 </div>
@@ -985,49 +680,34 @@ playsinline>
 
 <script type="module">
 
-
 /* =================================================
    FIREBASE IMPORTS
 ================================================= */
 
 import {
-
-initializeApp
-
+    initializeApp
 }
-
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
-
-getFirestore,
-collection,
-addDoc,
-getDocs,
-query,
-orderBy,
-deleteDoc,
-doc
-
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    orderBy,
+    deleteDoc,
+    doc
 }
-
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 import {
-
-getAuth,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
-
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
 }
-
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
 /* =================================================
@@ -1036,27 +716,26 @@ from
 
 const firebaseConfig = {
 
-apiKey:
-"AIzaSyB9urPvhLdG7o4K4q6Srp6OK9PpRkmnJb8",
+    apiKey:
+    "AIzaSyB9urPvhLdG7o4K4q6Srp6OK9PpRkmnJb8",
 
-authDomain:
-"my-movie-websit.firebaseapp.com",
+    authDomain:
+    "my-movie-websit.firebaseapp.com",
 
-projectId:
-"my-movie-websit",
+    projectId:
+    "my-movie-websit",
 
-storageBucket:
-"my-movie-websit.firebasestorage.app",
+    storageBucket:
+    "my-movie-websit.firebasestorage.app",
 
-messagingSenderId:
-"789490555831",
+    messagingSenderId:
+    "789490555831",
 
-appId:
-"1:789490555831:web:1b1cfbde4af2a555f1e632",
+    appId:
+    "1:789490555831:web:1b1cfbde4af2a555f1e632",
 
-measurementId:
-"G-JG1G2WQH5G"
-
+    measurementId:
+    "G-JG1G2WQH5G"
 };
 
 
@@ -1064,30 +743,29 @@ measurementId:
    FIREBASE START
 ================================================= */
 
-const app =
-initializeApp(
-firebaseConfig
-);
+const app = initializeApp(firebaseConfig);
 
+const db = getFirestore(app);
 
-const db =
-getFirestore(app);
-
-
-const auth =
-getAuth(app);
+const auth = getAuth(app);
 
 
 /* =================================================
    CLOUDINARY
 ================================================= */
 
-const CLOUD_NAME =
-"rckdxy0p";
+const CLOUD_NAME = "rckdxy0p";
+
+const UPLOAD_PRESET = "my_movie_upload";
 
 
-const UPLOAD_PRESET =
-"my_movie_upload";
+/* =================================================
+   ADMIN UID
+   IMPORTANT:
+   Replace this with your Firebase Admin user's UID.
+================================================= */
+
+const ADMIN_UID = "REPLACE_WITH_YOUR_ADMIN_UID";
 
 
 /* =================================================
@@ -1095,27 +773,19 @@ const UPLOAD_PRESET =
 ================================================= */
 
 const uploadArea =
-document.getElementById(
-"uploadArea"
-);
-
+document.getElementById("uploadArea");
 
 const loginStatus =
-document.getElementById(
-"loginStatus"
-);
-
+document.getElementById("loginStatus");
 
 const uploadBtn =
-document.getElementById(
-"uploadBtn"
-);
-
+document.getElementById("uploadBtn");
 
 const movieGrid =
-document.getElementById(
-"movieGrid"
-);
+document.getElementById("movieGrid");
+
+const searchInput =
+document.getElementById("searchInput");
 
 
 /* =================================================
@@ -1123,40 +793,33 @@ document.getElementById(
 ================================================= */
 
 onAuthStateChanged(
-auth,
-function(user){
+    auth,
+    function(user){
 
-if(user){
+        if(user){
 
-uploadArea.classList.add(
-"show"
+            uploadArea.classList.add("show");
+
+            loginStatus.textContent =
+            "Logged in as: " + user.email;
+
+            loginStatus.style.color =
+            "#48d597";
+
+        }else{
+
+            uploadArea.classList.remove("show");
+
+            loginStatus.textContent =
+            "Not logged in";
+
+            loginStatus.style.color =
+            "#999";
+        }
+
+        loadMovies();
+    }
 );
-
-loginStatus.textContent =
-"Logged in as: "
-+
-user.email;
-
-loginStatus.style.color =
-"#48d597";
-
-}else{
-
-uploadArea.classList.remove(
-"show"
-);
-
-loginStatus.textContent =
-"Not logged in";
-
-loginStatus.style.color =
-"#999";
-
-}
-
-loadMovies();
-
-});
 
 
 /* =================================================
@@ -1164,64 +827,52 @@ loadMovies();
 ================================================= */
 
 document
-.getElementById(
-"loginBtn"
-)
+.getElementById("loginBtn")
 .addEventListener(
 "click",
 async function(){
 
-const email =
-document.getElementById(
-"adminEmail"
-).value.trim();
+    const email =
+    document
+    .getElementById("adminEmail")
+    .value
+    .trim();
 
+    const password =
+    document
+    .getElementById("adminPassword")
+    .value;
 
-const password =
-document.getElementById(
-"adminPassword"
-).value;
+    if(!email || !password){
 
+        alert(
+        "Enter email and password."
+        );
 
-if(!email || !password){
+        return;
+    }
 
-alert(
-"Enter email and password."
-);
+    try{
 
-return;
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-}
+        alert(
+        "Login successful! ✅"
+        );
 
+    }
+    catch(error){
 
-try{
+        console.error(error);
 
-await signInWithEmailAndPassword(
-
-auth,
-
-email,
-
-password
-
-);
-
-
-alert(
-"Login successful! ✅"
-);
-
-}
-
-catch(error){
-
-console.error(error);
-
-alert(
-"Login failed. Check your email and password."
-);
-
-}
+        alert(
+        "Login failed. Check your email and password."
+        );
+    }
 
 });
 
@@ -1231,186 +882,217 @@ alert(
 ================================================= */
 
 document
-.getElementById(
-"logoutBtn"
-)
+.getElementById("logoutBtn")
 .addEventListener(
 "click",
 async function(){
 
-try{
+    try{
 
-await signOut(auth);
+        await signOut(auth);
 
-alert(
-"Logged out."
-);
+        alert(
+        "Logged out successfully."
+        );
 
-}
+    }
+    catch(error){
 
-catch(error){
+        console.error(error);
 
-console.error(error);
-
-}
+        alert(
+        "Logout failed."
+        );
+    }
 
 });
 
 
 /* =================================================
-   CLOUDINARY WIDGET
+   CLOUDINARY UPLOAD WIDGET
 ================================================= */
 
 const uploadWidget =
-
 cloudinary.createUploadWidget(
 
 {
 
-cloudName:
-CLOUD_NAME,
+    cloudName:
+    CLOUD_NAME,
 
-uploadPreset:
-UPLOAD_PRESET,
+    uploadPreset:
+    UPLOAD_PRESET,
 
-sources:
-["local"],
+    sources:
+    ["local"],
 
-resourceType:
-"video",
+    resourceType:
+    "video",
 
-multiple:
-false,
+    multiple:
+    false,
 
-clientAllowedFormats:
-[
-"mp4",
-"webm",
-"mov"
-],
+    clientAllowedFormats:
+    [
+        "mp4",
+        "webm",
+        "mov",
+        "mkv"
+    ],
 
-maxFileSize:
-500000000,
+    /*
+       IMPORTANT:
+       Your previous value was 500 MB.
 
-folder:
-"my_movies"
+       This value is approximately 2 GB.
+       Cloudinary account limits still apply.
+    */
+
+    maxFileSize:
+    2147483648,
+
+    /*
+       Chunk size = 20 MB.
+       Cloudinary Upload Widget supports
+       maxChunkSize for large uploads.
+    */
+
+    maxChunkSize:
+    20000000,
+
+    folder:
+    "my_movies"
 
 },
 
 async function(error,result){
 
-if(error){
+    if(error){
 
-console.error(error);
+        console.error(
+        "Cloudinary error:",
+        error
+        );
 
-alert(
-"Cloudinary upload failed."
-);
+        alert(
+        "Cloudinary upload failed. Check your Cloudinary account limit and upload preset."
+        );
 
-return;
-
-}
-
-
-if(
-result &&
-result.event === "success"
-){
-
-const user =
-auth.currentUser;
+        return;
+    }
 
 
-if(!user){
+    if(
+        result &&
+        result.event === "success"
+    ){
 
-alert(
-"Please login first."
-);
-
-return;
-
-}
+        const user =
+        auth.currentUser;
 
 
-const info =
-result.info;
+        if(!user){
+
+            alert(
+            "Please login first."
+            );
+
+            return;
+        }
 
 
-const title =
-prompt(
-"Enter movie name:"
-);
+        const info =
+        result.info;
 
 
-if(!title){
-
-alert(
-"Movie name is required."
-);
-
-return;
-
-}
+        const title =
+        prompt(
+        "Enter video/movie name:"
+        );
 
 
-try{
+        if(!title){
 
-await addDoc(
+            alert(
+            "Video name is required."
+            );
 
-collection(
-db,
-"movies"
-),
-
-{
-
-title:
-title,
-
-url:
-info.secure_url,
-
-poster:
-info.thumbnail_url || "",
-
-date:
-new Date().toLocaleDateString(),
-
-createdAt:
-Date.now(),
-
-uploadedBy:
-user.uid
-
-}
-
-);
+            return;
+        }
 
 
-alert(
-"Movie uploaded successfully! 🎉"
-);
+        try{
+
+            await addDoc(
+
+                collection(
+                    db,
+                    "movies"
+                ),
+
+                {
+
+                    title:
+                    title.trim(),
+
+                    url:
+                    info.secure_url,
+
+                    poster:
+                    info.thumbnail_url || "",
+
+                    publicId:
+                    info.public_id || "",
+
+                    format:
+                    info.format || "",
+
+                    bytes:
+                    info.bytes || 0,
+
+                    date:
+                    new Date()
+                    .toLocaleDateString(),
+
+                    createdAt:
+                    Date.now(),
+
+                    uploadedBy:
+                    user.uid,
+
+                    uploadedByEmail:
+                    user.email || ""
+
+                }
+
+            );
 
 
-loadMovies();
+            alert(
+            "Video uploaded and saved successfully! 🎉"
+            );
 
-}
 
-catch(error){
+            searchInput.value = "";
 
-console.error(error);
 
-alert(
-"Video uploaded but database save failed."
-);
+            loadMovies();
 
-}
+        }
+        catch(error){
 
-}
+            console.error(
+            "Firestore error:",
+            error
+            );
 
-}
+            alert(
+            "Video uploaded to Cloudinary, but Firestore save failed."
+            );
+        }
+    }
 
-);
+});
 
 
 /* =================================================
@@ -1421,17 +1103,21 @@ uploadBtn.addEventListener(
 "click",
 function(){
 
-if(!auth.currentUser){
+    const user =
+    auth.currentUser;
 
-alert(
-"Please login first."
-);
 
-return;
+    if(!user){
 
-}
+        alert(
+        "Please login first."
+        );
 
-uploadWidget.open();
+        return;
+    }
+
+
+    uploadWidget.open();
 
 });
 
@@ -1442,319 +1128,376 @@ uploadWidget.open();
 
 async function loadMovies(){
 
-movieGrid.innerHTML = `
+    movieGrid.innerHTML = `
 
-<div
-style="
-grid-column:1/-1;
-text-align:center;
-padding:40px;
-color:#888;
-">
+        <div class="status-box">
+            Loading movies... 🎬
+        </div>
 
-Loading movies... 🎬
+    `;
 
-</div>
 
-`;
+    try{
 
+        const movieQuery =
 
-try{
+        query(
 
-const movieQuery =
+            collection(
+                db,
+                "movies"
+            ),
 
-query(
+            orderBy(
+                "createdAt",
+                "desc"
+            )
 
-collection(
-db,
-"movies"
-),
+        );
 
-orderBy(
-"createdAt",
-"desc"
-)
 
-);
+        const snapshot =
+        await getDocs(
+            movieQuery
+        );
 
 
-const snapshot =
-await getDocs(
-movieQuery
-);
+        movieGrid.innerHTML = "";
 
 
-movieGrid.innerHTML = "";
+        if(snapshot.empty){
 
+            movieGrid.innerHTML = `
 
-if(snapshot.empty){
+                <div class="empty-box">
 
-movieGrid.innerHTML = `
+                    <h3>
+                        🎬 No Videos Yet
+                    </h3>
 
-<div
-style="
-grid-column:1/-1;
-text-align:center;
-padding:50px;
-color:#888;
-">
+                    <p>
+                        Login as admin to upload an authorized video.
+                    </p>
 
-<h3>
-🎬 No Movies Yet
-</h3>
+                </div>
 
-<p>
-Upload your first movie.
-</p>
+            `;
 
-</div>
+            return;
+        }
 
-`;
 
-return;
+        snapshot.forEach(
+        function(movieDoc){
 
-}
+            const movie =
+            movieDoc.data();
 
+            const id =
+            movieDoc.id;
 
-snapshot.forEach(
-function(movieDoc){
 
-const movie =
-movieDoc.data();
+            const card =
+            document.createElement(
+                "div"
+            );
 
 
-const id =
-movieDoc.id;
+            card.className =
+            "movie-card";
 
 
-const card =
-document.createElement(
-"div"
-);
+            /* =================================================
+               POSTER
+            ================================================= */
 
+            let posterHTML;
 
-card.className =
-"movie-card";
 
+            if(movie.poster){
 
-const poster =
-movie.poster
+                posterHTML = `
 
-?
+                    <img
+                    src="${escapeAttribute(movie.poster)}"
+                    alt="${escapeHTML(movie.title || "Video")}">
 
-`
+                `;
 
-<img
-src="${escapeHTML(movie.poster)}"
-alt="${escapeHTML(movie.title)}">
+            }else{
 
-`
+                posterHTML = `
 
-:
+                    <div
+                    style="
+                    height:100%;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:60px;
+                    ">
 
-`
+                    🎬
 
-<div
-style="
-height:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:60px;
-">
+                    </div>
 
-🎬
+                `;
+            }
 
-</div>
 
-`;
+            /* =================================================
+               CARD
+            ================================================= */
 
+            card.innerHTML = `
 
-card.innerHTML = `
+                <div class="movie-poster">
 
-<div class="movie-poster">
+                    ${posterHTML}
 
-${poster}
+                </div>
 
-</div>
 
+                <div class="movie-info">
 
-<div class="movie-info">
+                    <h3>
+                        ${escapeHTML(
+                            movie.title || "Untitled Video"
+                        )}
+                    </h3>
 
-<h3>
-${escapeHTML(movie.title)}
-</h3>
 
-<p>
-Uploaded:
-${escapeHTML(movie.date || "")}
-</p>
+                    <p>
+                        Uploaded:
+                        ${escapeHTML(
+                            movie.date || ""
+                        )}
+                    </p>
 
 
-<div class="movie-buttons">
+                    <div class="movie-buttons">
 
-<button
-class="watch-btn">
+                        <button
+                        class="watch-btn">
 
-▶ Watch
+                            ▶ Watch
 
-</button>
+                        </button>
 
 
-<a
-class="download-btn"
-href="${escapeAttribute(movie.url)}"
-target="_blank"
-rel="noopener">
+                        <a
+                        class="download-btn"
+                        href="${escapeAttribute(
+                            movie.url || "#"
+                        )}"
+                        target="_blank"
+                        rel="noopener noreferrer">
 
-⬇ Download
+                            ⬇ Open
 
-</a>
+                        </a>
 
-</div>
+                    </div>
 
 
-<button
-class="delete-btn">
+                    <button
+                    class="delete-btn"
+                    style="display:none;">
 
-🗑 Delete
+                        🗑 Delete
 
-</button>
+                    </button>
 
-</div>
+                </div>
 
-`;
+            `;
 
 
-/* WATCH */
+            /* =================================================
+               WATCH
+            ================================================= */
 
-card
-.querySelector(
-".watch-btn"
-)
-.addEventListener(
-"click",
-function(){
+            const watchButton =
+            card.querySelector(
+                ".watch-btn"
+            );
 
-playVideo(
-movie.url
-);
 
-});
+            watchButton.addEventListener(
+            "click",
+            function(){
 
+                if(movie.url){
 
-/* DELETE */
+                    playVideo(
+                        movie.url
+                    );
 
-const deleteButton =
-card.querySelector(
-".delete-btn"
-);
+                }else{
 
+                    alert(
+                    "Video URL is missing."
+                    );
+                }
 
-if(auth.currentUser){
+            });
 
-deleteButton.classList.add(
-"show"
-);
 
-}
+            /* =================================================
+               ADMIN DELETE BUTTON
+               ONLY YOUR ADMIN UID
+            ================================================= */
 
+            const deleteButton =
+            card.querySelector(
+                ".delete-btn"
+            );
 
-deleteButton.addEventListener(
-"click",
-async function(){
 
-if(!auth.currentUser){
+            const currentUser =
+            auth.currentUser;
 
-return;
 
-}
+            if(
+                currentUser &&
+                ADMIN_UID !== "REPLACE_WITH_YOUR_ADMIN_UID" &&
+                currentUser.uid === ADMIN_UID
+            ){
 
+                deleteButton.style.display =
+                "block";
+            }
 
-const confirmDelete =
-confirm(
-"Delete this movie from the database?"
-);
 
+            deleteButton.addEventListener(
+            "click",
+            async function(){
 
-if(!confirmDelete){
+                const user =
+                auth.currentUser;
 
-return;
 
-}
+                if(!user){
 
+                    alert(
+                    "Please login."
+                    );
 
-try{
+                    return;
+                }
 
-await deleteDoc(
 
-doc(
-db,
-"movies",
-id
-)
+                if(
+                    ADMIN_UID ===
+                    "REPLACE_WITH_YOUR_ADMIN_UID"
+                ){
 
-);
+                    alert(
+                    "Set your ADMIN_UID in the code first."
+                    );
 
+                    return;
+                }
 
-alert(
-"Movie removed from database."
-);
 
+                if(
+                    user.uid !==
+                    ADMIN_UID
+                ){
 
-loadMovies();
+                    alert(
+                    "Only the administrator can delete videos."
+                    );
 
-}
+                    return;
+                }
 
-catch(error){
 
-console.error(error);
+                const confirmDelete =
+                confirm(
+                "Delete this video record from Firestore?"
+                );
 
-alert(
-"Delete failed."
-);
 
-}
+                if(!confirmDelete){
 
-});
+                    return;
+                }
 
 
-movieGrid.appendChild(
-card
-);
+                try{
 
-});
+                    /*
+                       This deletes ONLY the movie document
+                       inside Firestore.
 
-}
+                       It does NOT touch games or books.
+                    */
 
-catch(error){
+                    await deleteDoc(
 
-console.error(error);
+                        doc(
+                            db,
+                            "movies",
+                            id
+                        )
 
+                    );
 
-movieGrid.innerHTML = `
 
-<div
-style="
-grid-column:1/-1;
-text-align:center;
-padding:50px;
-color:#ff7777;
-">
+                    alert(
+                    "Video removed from Movie Hub."
+                    );
 
-<h3>
-Unable to load movies
-</h3>
 
-<p>
-Check Firestore Database and Rules.
-</p>
+                    loadMovies();
 
-</div>
+                }
+                catch(error){
 
-`;
+                    console.error(
+                    error
+                    );
 
-}
+                    alert(
+                    "Delete failed."
+                    );
+                }
+
+            });
+
+
+            movieGrid.appendChild(
+                card
+            );
+
+        });
+
+    }
+    catch(error){
+
+        console.error(
+        "Load movies error:",
+        error
+        );
+
+
+        movieGrid.innerHTML = `
+
+            <div class="error-box">
+
+                <h3>
+                    Unable to load videos
+                </h3>
+
+                <p>
+                    Check Firestore database, index and security rules.
+                </p>
+
+            </div>
+
+        `;
+    }
 
 }
 
@@ -1763,44 +1506,36 @@ Check Firestore Database and Rules.
    SEARCH
 ================================================= */
 
-document
-.getElementById(
-"searchInput"
-)
-.addEventListener(
+searchInput.addEventListener(
 "input",
 function(){
 
-const search =
-this.value
-.toLowerCase()
-.trim();
+    const search =
+    this.value
+    .toLowerCase()
+    .trim();
 
 
-document
-.querySelectorAll(
-".movie-card"
-)
-.forEach(
-function(card){
+    document
+    .querySelectorAll(
+        ".movie-card"
+    )
+    .forEach(
+    function(card){
 
-const title =
-card
-.querySelector(
-"h3"
-)
-.textContent
-.toLowerCase();
+        const title =
+        card
+        .querySelector("h3")
+        .textContent
+        .toLowerCase();
 
 
-card.style.display =
-title.includes(search)
-?
-""
-:
-"none";
+        card.style.display =
+        title.includes(search)
+        ? ""
+        : "none";
 
-});
+    });
 
 });
 
@@ -1811,33 +1546,32 @@ title.includes(search)
 
 function playVideo(url){
 
-const modal =
-document.getElementById(
-"videoModal"
-);
+    const modal =
+    document.getElementById(
+        "videoModal"
+    );
 
 
-const player =
-document.getElementById(
-"videoPlayer"
-);
+    const player =
+    document.getElementById(
+        "videoPlayer"
+    );
 
 
-player.src =
-url;
+    player.src =
+    url;
 
 
-modal.classList.add(
-"show"
-);
+    modal.classList.add(
+        "show"
+    );
 
 
-player
-.play()
-.catch(
-function(){}
-);
-
+    player
+    .play()
+    .catch(
+        function(){}
+    );
 }
 
 
@@ -1847,54 +1581,80 @@ function(){}
 
 document
 .getElementById(
-"closeVideo"
+    "closeVideo"
 )
 .addEventListener(
-"click",
-closeVideo
+    "click",
+    closeVideo
 );
 
 
 function closeVideo(){
 
-const modal =
-document.getElementById(
-"videoModal"
-);
+    const modal =
+    document.getElementById(
+        "videoModal"
+    );
 
 
-const player =
-document.getElementById(
-"videoPlayer"
-);
+    const player =
+    document.getElementById(
+        "videoPlayer"
+    );
 
 
-player.pause();
+    player.pause();
 
-player.src = "";
+    player.removeAttribute(
+        "src"
+    );
 
-modal.classList.remove(
-"show"
-);
+    player.load();
 
+
+    modal.classList.remove(
+        "show"
+    );
 }
 
 
 /* =================================================
-   ESC
+   CLOSE WHEN CLICKING OUTSIDE VIDEO
+================================================= */
+
+document
+.getElementById(
+    "videoModal"
+)
+.addEventListener(
+"click",
+function(event){
+
+    if(
+        event.target === this
+    ){
+
+        closeVideo();
+    }
+
+});
+
+
+/* =================================================
+   ESC KEY
 ================================================= */
 
 document.addEventListener(
 "keydown",
 function(event){
 
-if(
-event.key === "Escape"
-){
+    if(
+        event.key ===
+        "Escape"
+    ){
 
-closeVideo();
-
-}
+        closeVideo();
+    }
 
 });
 
@@ -1905,36 +1665,48 @@ closeVideo();
 
 function escapeHTML(text){
 
-const div =
-document.createElement(
-"div"
-);
+    const div =
+    document.createElement(
+        "div"
+    );
 
-div.textContent =
-text;
+    div.textContent =
+    String(text ?? "");
 
-return div.innerHTML;
-
+    return div.innerHTML;
 }
 
 
 function escapeAttribute(text){
 
-return String(text)
-.replace(
-/"/g,
-"&quot;"
-)
-.replace(
-/'/g,
-"&#39;"
-);
-
+    return String(
+        text ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#39;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    );
 }
 
 
 /* =================================================
-   START
+   INITIAL LOAD
 ================================================= */
 
 loadMovies();
