@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="ne">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Gyan AI | Gyan Nepal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                Arial,
+                "Noto Sans Devanagari",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #182342,
+                    #080b14 60%
+                );
+
+            color: white;
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 25px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+            background:
+                rgba(8,11,20,.85);
+
+            backdrop-filter: blur(15px);
+
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+
+        .brand {
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .logo {
+
+            width: 44px;
+            height: 44px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7357ff,
+                    #3f9cff
+                );
+
+            box-shadow:
+                0 8px 30px
+                rgba(90,80,255,.35);
+        }
+
+
+        .brand h1 {
+
+            font-size: 19px;
+        }
+
+
+        .brand small {
+
+            display: block;
+
+            color: #8e9ab0;
+
+            margin-top: 2px;
+        }
+
+
+        .back-btn {
+
+            color: white;
+
+            text-decoration: none;
+
+            border:
+                1px solid #27334a;
+
+            padding:
+                9px 14px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,.03);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+
+            width: 100%;
+            max-width: 1000px;
+
+            margin: auto;
+
+            min-height:
+                calc(100vh - 70px);
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .welcome {
+
+            text-align: center;
+
+            padding:
+                55px 20px 25px;
+        }
+
+
+        .ai-circle {
+
+            width: 75px;
+            height: 75px;
+
+            margin: auto;
+
+            border-radius: 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7357ff,
+                    #328cff
+                );
+
+            box-shadow:
+                0 15px 50px
+                rgba(77,100,255,.35);
+        }
+
+
+        .welcome h2 {
+
+            font-size: 34px;
+
+            margin-top: 22px;
+        }
+
+
+        .welcome h2 span {
+
+            color: #8976ff;
+        }
+
+
+        .welcome p {
+
+            color: #8996a8;
+
+            margin-top: 10px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           CHAT
+        ========================= */
+
+        #chat {
+
+            flex: 1;
+
+            padding:
+                20px 18px 150px;
+        }
+
+
+        .message {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin:
+                20px 0;
+
+            animation:
+                messageIn .25s ease;
+        }
+
+
+        @keyframes messageIn {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        .message.user {
+
+            justify-content: flex-end;
+        }
+
+
+        .avatar {
+
+            width: 38px;
+            height: 38px;
+
+            flex-shrink: 0;
+
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #172237;
+        }
+
+
+        .user .avatar {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7357ff,
+                    #4a91ff
+                );
+        }
+
+
+        .bubble {
+
+            max-width: 78%;
+
+            padding:
+                14px 17px;
+
+            border-radius: 16px;
+
+            line-height: 1.75;
+
+            white-space: pre-wrap;
+
+            background: #111a29;
+
+            border:
+                1px solid #243149;
+        }
+
+
+        .user .bubble {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #5946b8,
+                    #4d5bb8
+                );
+
+            border-color:
+                rgba(255,255,255,.08);
+        }
+
+
+        /* =========================
+           SUGGESTIONS
+        ========================= */
+
+        .suggestions {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+
+            margin:
+                25px 18px 10px;
+        }
+
+
+        .suggestion {
+
+            padding: 15px;
+
+            border-radius: 13px;
+
+            background: #111a29;
+
+            border:
+                1px solid #253149;
+
+            color: #dce3ef;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+
+        .suggestion:hover {
+
+            transform:
+                translateY(-2px);
+
+            border-color:
+                #6556bd;
+
+            background:
+                #151f31;
+        }
+
+
+        /* =========================
+           TYPING
+        ========================= */
+
+        .typing {
+
+            display: flex;
+
+            gap: 5px;
+
+            align-items: center;
+        }
+
+
+        .typing span {
+
+            width: 7px;
+            height: 7px;
+
+            background: #9ba8bc;
+
+            border-radius: 50%;
+
+            animation:
+                typing .9s infinite;
+        }
+
+
+        .typing span:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+
+        .typing span:nth-child(3) {
+            animation-delay: .3s;
+        }
+
+
+        @keyframes typing {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-6px);
+            }
+        }
+
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        .input-area {
+
+            position: fixed;
+
+            bottom: 0;
+
+            left: 0;
+            right: 0;
+
+            padding:
+                14px 18px 18px;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    #080b14 35%
+                );
+        }
+
+
+        .input-box {
+
+            width: 100%;
+            max-width: 850px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            padding: 8px;
+
+            background: #0d1521;
+
+            border:
+                1px solid #29364d;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 10px 40px
+                rgba(0,0,0,.35);
+        }
+
+
+        textarea {
+
+            flex: 1;
+
+            min-height: 45px;
+            max-height: 150px;
+
+            resize: none;
+
+            outline: none;
+
+            border: none;
+
+            background:
+                transparent;
+
+            color: white;
+
+            padding:
+                12px;
+
+            font-size: 15px;
+
+            font-family: inherit;
+        }
+
+
+        textarea::placeholder {
+            color: #657389;
+        }
+
+
+        #send {
+
+            width: 44px;
+            height: 44px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            color: white;
+
+            font-size: 19px;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7357ff,
+                    #438cff
+                );
+        }
+
+
+        #send:disabled {
+            opacity: .5;
+        }
+
+
+        .warning {
+
+            text-align: center;
+
+            font-size: 10px;
+
+            color: #566276;
+
+            margin-top: 7px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            header {
+                padding: 0 14px;
+            }
+
+
+            .welcome {
+                padding-top: 35px;
+            }
+
+
+            .welcome h2 {
+                font-size: 27px;
+            }
+
+
+            .suggestions {
+
+                grid-template-columns:
+                    1fr;
+
+                margin:
+                    20px 10px;
+            }
+
+
+            #chat {
+                padding:
+                    10px 10px 150px;
+            }
+
+
+            .bubble {
+                max-width: 84%;
+            }
+
+
+            .back-btn {
+                padding:
+                    8px 10px;
+
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="brand">
+
+        <div class="logo">
+            ✦
+        </div>
+
+        <div>
+
+            <h1>
+                Gyan AI
+            </h1>
+
+            <small>
+                ज्ञान नेपाल
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="index.html"
+        class="back-btn">
+
+        ← Home
+
+    </a>
+
+</header>
+
+
+
+<main>
+
+
+    <section class="welcome">
+
+        <div class="ai-circle">
+            ✦
+        </div>
+
+
+        <h2>
+
+            नमस्ते! म
+            <span>Gyan AI</span>
+            हुँ।
+
+        </h2>
+
+
+        <p>
+
+            तपाईंले पढाइ, Coding, Mathematics,
+            Science, GK तथा अन्य विषयका
+            प्रश्नहरू सोध्न सक्नुहुन्छ।
+
+        </p>
+
+
+    </section>
+
+
+
+    <section id="chat">
+
+
+        <div id="messages"></div>
+
+
+        <div class="suggestions">
+
+            <button
+                class="suggestion"
+                data-question="मलाई Python programming सुरुदेखि नेपालीमा सिकाउनुहोस्।">
+
+                💻 Python programming सिकाउनुहोस्
+
+            </button>
+
+
+            <button
+                class="suggestion"
+                data-question="लोकसेवा परीक्षाका लागि नेपालको इतिहासका महत्वपूर्ण प्रश्नहरू र उत्तरहरू दिनुहोस्।">
+
+                🇳🇵 लोकसेवा GK
+
+            </button>
+
+
+            <button
+                class="suggestion"
+                data-question="मलाई यो गणितको प्रश्न step by step समाधान गरेर बुझाउनुहोस्: 125 × 24 ÷ 6">
+
+                🧮 Mathematics solve गर्नुहोस्
+
+            </button>
+
+
+            <button
+                class="suggestion"
+                data-question="HTML, CSS र JavaScript प्रयोग गरेर responsive website कसरी बनाउने? उदाहरणसहित बताउनुहोस्।">
+
+                🌐 Web Development
+
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<div class="input-area">
+
+    <div class="input-box">
+
+        <textarea
+            id="input"
+            placeholder="Gyan AI लाई केही सोध्नुहोस्..."
+            rows="1"></textarea>
+
+
+        <button id="send">
+            ➤
+        </button>
+
+    </div>
+
+
+    <div class="warning">
+
+        Gyan AI ले कहिलेकाहीँ गलत जानकारी दिन सक्छ।
+        महत्वपूर्ण जानकारी verify गर्नुहोस्।
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+    const input =
+        document.getElementById("input");
+
+    const send =
+        document.getElementById("send");
+
+    const messages =
+        document.getElementById("messages");
+
+
+    /* =========================
+       ADD MESSAGE
+    ========================= */
+
+    function addMessage(
+        text,
+        type
+    ) {
+
+        const message =
+            document.createElement("div");
+
+        message.className =
+            "message " + type;
+
+
+        const avatar =
+            document.createElement("div");
+
+        avatar.className =
+            "avatar";
+
+        avatar.textContent =
+            type === "user"
+                ? "👤"
+                : "✦";
+
+
+        const bubble =
+            document.createElement("div");
+
+        bubble.className =
+            "bubble";
+
+        bubble.textContent =
+            text;
+
+
+        message.appendChild(
+            avatar
+        );
+
+        message.appendChild(
+            bubble
+        );
+
+        messages.appendChild(
+            message
+        );
+
+
+        window.scrollTo({
+
+            top:
+                document.body.scrollHeight,
+
+            behavior:
+                "smooth"
+
+        });
+
+    }
+
+
+
+    /* =========================
+       TYPING
+    ========================= */
+
+    function showTyping() {
+
+        const message =
+            document.createElement("div");
+
+        message.id =
+            "typing";
+
+        message.className =
+            "message ai";
+
+
+        message.innerHTML = `
+
+            <div class="avatar">
+                ✦
+            </div>
+
+            <div class="bubble">
+
+                <div class="typing">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        messages.appendChild(
+            message
+        );
+
+        window.scrollTo(
+            0,
+            document.body.scrollHeight
+        );
+
+    }
+
+
+
+    function removeTyping() {
+
+        const typing =
+            document.getElementById(
+                "typing"
+            );
+
+        if (typing)
+            typing.remove();
+
+    }
+
+
+
+    /* =========================
+       SEND MESSAGE
+    ========================= */
+
+    async function sendMessage() {
+
+        const text =
+            input.value.trim();
+
+
+        if (!text)
+            return;
+
+
+        addMessage(
+            text,
+            "user"
+        );
+
+
+        input.value = "";
+
+        input.style.height =
+            "45px";
+
+
+        send.disabled =
+            true;
+
+
+        showTyping();
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/chat",
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                message:
+                                    text
+
+                            })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            removeTyping();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    "AI error"
+                );
+
+            }
+
+
+            addMessage(
+                data.reply,
+                "ai"
+            );
+
+
+        }
+        catch (error) {
+
+            removeTyping();
+
+
+            addMessage(
+
+                "माफ गर्नुहोस्। AI server सँग connection हुन सकेन। " +
+                "Backend र API configuration जाँच गर्नुहोस्।",
+
+                "ai"
+
+            );
+
+
+            console.error(
+                error
+            );
+
+        }
+
+
+        send.disabled =
+            false;
+
+        input.focus();
+
+    }
+
+
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    send.addEventListener(
+        "click",
+        sendMessage
+    );
+
+
+
+    /* =========================
+       ENTER
+    ========================= */
+
+    input.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================
+       AUTO RESIZE
+    ========================= */
+
+    input.addEventListener(
+        "input",
+        function() {
+
+            this.style.height =
+                "auto";
+
+            this.style.height =
+                Math.min(
+                    this.scrollHeight,
+                    150
+                ) + "px";
+
+        }
+    );
+
+
+
+    /* =========================
+       SUGGESTIONS
+    ========================= */
+
+    document
+        .querySelectorAll(
+            ".suggestion"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        input.value =
+                            this.dataset.question;
+
+                        sendMessage();
+
+                    }
+                );
+
+            }
+        );
+
+</script>
+
+
+</body>
+</html>
+```
