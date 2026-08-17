@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Computer GK | Gyan Nepal</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,"Noto Sans Devanagari",sans-serif;
+    background:
+        radial-gradient(circle at top left,#12395c,transparent 35%),
+        radial-gradient(circle at bottom right,#32134d,transparent 35%),
+        #06111b;
+    color:#fff;
+    min-height:100vh;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(3,12,22,.94);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(255,255,255,.1);
+    padding:16px 6%;
+}
+
+.header{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.logo{
+    width:52px;
+    height:52px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+    background:linear-gradient(135deg,#087bff,#00d4ff);
+    box-shadow:0 0 25px rgba(0,200,255,.3);
+}
+
+.brand h1{
+    font-size:22px;
+}
+
+.brand p{
+    font-size:11px;
+    color:#8da9b9;
+    margin-top:4px;
+}
+
+.container{
+    max-width:1050px;
+    margin:auto;
+    padding:45px 18px 70px;
+}
+
+.hero{
+    text-align:center;
+    padding:20px 10px 40px;
+}
+
+.hero-icon{
+    font-size:58px;
+    margin-bottom:15px;
+}
+
+.hero h2{
+    font-size:38px;
+    margin-bottom:12px;
+}
+
+.hero h2 span{
+    color:#32caff;
+}
+
+.hero p{
+    max-width:760px;
+    margin:auto;
+    color:#9db4c3;
+    line-height:1.8;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+
+.stat{
+    padding:9px 16px;
+    border-radius:30px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    color:#bdd3df;
+    font-size:13px;
+}
+
+.section{
+    margin-top:42px;
+}
+
+.section-title{
+    border-left:4px solid #19c7ff;
+    padding-left:14px;
+    margin-bottom:20px;
+}
+
+.section-title h3{
+    font-size:23px;
+}
+
+.section-title p{
+    color:#7893a4;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.question-card{
+    background:linear-gradient(
+        145deg,
+        rgba(19,48,71,.95),
+        rgba(6,20,33,.98)
+    );
+    border:1px solid rgba(130,210,255,.12);
+    border-radius:18px;
+    padding:21px;
+    margin-bottom:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.22);
+    transition:.25s;
+}
+
+.question-card:hover{
+    transform:translateY(-2px);
+    border-color:rgba(40,205,255,.35);
+}
+
+.number{
+    display:inline-block;
+    background:linear-gradient(135deg,#087bff,#00bfe8);
+    padding:5px 11px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.question{
+    font-size:16px;
+    line-height:1.8;
+    font-weight:600;
+}
+
+.answer{
+    margin-top:14px;
+    padding:13px 16px;
+    border-left:3px solid #20c7ff;
+    border-radius:11px;
+    background:rgba(0,190,255,.07);
+    color:#c3efff;
+    line-height:1.7;
+}
+
+.answer strong{
+    color:#36caff;
+}
+
+.back{
+    display:inline-block;
+    margin-top:30px;
+    padding:12px 20px;
+    border-radius:12px;
+    text-decoration:none;
+    color:#fff;
+    font-weight:bold;
+    background:linear-gradient(135deg,#087bff,#00bfe8);
+}
+
+footer{
+    text-align:center;
+    padding:35px 15px;
+    background:#030a12;
+    border-top:1px solid rgba(255,255,255,.08);
+    color:#718997;
+    font-size:13px;
+}
+
+@media(max-width:600px){
+    .hero h2{
+        font-size:29px;
+    }
+
+    .question-card{
+        padding:17px;
+    }
+
+    .question{
+        font-size:15px;
+    }
+
+    .answer{
+        font-size:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header">
+        <div class="logo">💻</div>
+
+        <div class="brand">
+            <h1>Gyan Nepal</h1>
+            <p>COMPUTER GK • COMPETITIVE EXAM PREPARATION</p>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+<div class="hero">
+
+    <div class="hero-icon">💻🖥️🌐</div>
+
+    <h2>
+        Computer <span>GK</span>
+    </h2>
+
+    <p>
+        लोकसेवा तथा प्रतियोगितात्मक परीक्षाका लागि
+        महत्वपूर्ण, प्राविधिक र अलि कठिन Computer
+        सम्बन्धी प्रश्न तथा उत्तर।
+    </p>
+
+    <div class="stats">
+        <div class="stat">📚 170 Questions</div>
+        <div class="stat">🎯 Competitive Exam</div>
+        <div class="stat">🧠 Advanced GK</div>
+    </div>
+
+</div>
+
+<div id="questions"></div>
+
+<a href="index.html" class="back">← Gyan Nepal मा फर्कनुहोस्</a>
+
+</main>
+
+<footer>
+    <strong>💻 Gyan Nepal</strong>
+    <br><br>
+    Computer GK • Technology • Competitive Exam
+    <br><br>
+    © 2026 Gyan Nepal
+</footer>
+
+<script>
+
+const questions = [
+
+/* =========================
+   COMPUTER ARCHITECTURE
+========================= */
+
+["Von Neumann architecture को प्रमुख विशेषता के हो?",
+"Program instructions र data एउटै memory system मा राखिने architecture हो।"],
+
+["Harvard architecture र Von Neumann architecture बीच मुख्य अन्तर के हो?",
+"Harvard architecture मा instruction र data का लागि छुट्टाछुट्टै memory/path हुन्छन् भने Von Neumann मा एउटै memory/path प्रयोग हुन्छ।"],
+
+["CPU मा instruction execution को क्रममा Fetch–Decode–Execute cycle को भूमिका के हो?",
+"Memory बाट instruction ल्याउने, त्यसलाई बुझ्ने र त्यसअनुसार operation गर्ने प्रक्रिया हो।"],
+
+["Instruction pipeline को मुख्य उद्देश्य के हो?",
+"CPU का विभिन्न execution stages लाई overlap गरेर instruction throughput बढाउनु।"],
+
+["Pipeline मा data hazard भन्नाले के बुझिन्छ?",
+"अघिल्लो instruction को परिणाममा पछिल्लो instruction निर्भर हुँदा उत्पन्न हुने समस्या।"],
+
+["Branch prediction CPU performance का लागि किन उपयोगी हुन्छ?",
+"Conditional branch को सम्भावित परिणाम अनुमान गरेर pipeline खाली हुन नदिन मद्दत गर्छ।"],
+
+["CPU cache मा locality of reference को अवधारणा किन महत्वपूर्ण हुन्छ?",
+"हाल प्रयोग भएका वा नजिकै प्रयोग हुने data/instructions पुनः प्रयोग हुने सम्भावना बढी भएकाले cache ले performance बढाउँछ।"],
+
+["Temporal locality र spatial locality बीच के अन्तर छ?",
+"Temporal locality मा हाल प्रयोग भएको data फेरि प्रयोग हुने सम्भावना हुन्छ; spatial locality मा नजिकको memory location प्रयोग हुने सम्भावना हुन्छ।"],
+
+["Cache coherence समस्या कुन अवस्थामा देखिन्छ?",
+"बहु-core वा बहु-processor system मा एउटै data का विभिन्न cached copies फरक अवस्थामा हुँदा।"],
+
+["Direct-mapped cache को मुख्य विशेषता के हो?",
+"Memory block लाई cache को निश्चित एउटै स्थानमा मात्र map गर्न सकिन्छ।"],
+
+["Associative cache मा memory block कसरी खोजिन्छ?",
+"Cache का धेरै वा सबै entries को tag सँग तुलना गरेर।"],
+
+["Memory hierarchy को मुख्य उद्देश्य के हो?",
+"Speed, capacity र cost बीच उचित सन्तुलन कायम गर्नु।"],
+
+["Register memory भन्दा cache memory सामान्यतः किन ढिलो हुन्छ?",
+"Register CPU भित्र अत्यन्त नजिक हुन्छ भने cache ठूलो र तुलनात्मक रूपमा बाहिरी memory स्तरमा हुन्छ।"],
+
+["DMA ले computer system मा के सुविधा दिन्छ?",
+"CPU को निरन्तर हस्तक्षेप बिना device र main memory बीच data transfer गर्न मद्दत गर्छ।"],
+
+["Interrupt-driven I/O को polling भन्दा मुख्य फाइदा के हो?",
+"Device ready नभएसम्म CPU ले लगातार status जाँच गरिरहनु पर्दैन।"],
+
+["Memory-mapped I/O भन्नाले के बुझिन्छ?",
+"I/O devices का registers लाई memory address space कै भागका रूपमा access गर्ने विधि।"],
+
+["Bus arbitration किन आवश्यक हुन्छ?",
+"एकभन्दा बढी device ले shared bus प्रयोग गर्न खोज्दा कसलाई bus control दिने भन्ने निर्धारण गर्न।"],
+
+["Clock cycle को frequency बढाउँदा सधैँ CPU performance समान अनुपातमा बढ्छ?",
+"हुँदैन; architecture, pipeline, memory latency र अन्य bottleneck ले performance प्रभावित गर्छन्।"],
+
+["Multicore processor को प्रमुख फाइदा के हो?",
+"एकै chip मा धेरै processing cores भएर parallel workload राम्रोसँग सञ्चालन गर्न सकिन्छ।"],
+
+["SIMD architecture कुन प्रकारको workload का लागि विशेष उपयोगी हुन्छ?",
+"एउटै operation धेरै data elements मा एकैपटक गर्नुपर्ने workload का लागि।"],
+
+/* =========================
+   OPERATING SYSTEM
+========================= */
+
+["Operating System मा kernel को मुख्य भूमिका के हो?",
+"Hardware resources र system services व्यवस्थापन गर्ने core software component हो।"],
+
+["User mode र kernel mode किन छुट्याइन्छ?",
+"महत्वपूर्ण system operations लाई privileged access मा सीमित गरेर system security र stability कायम गर्न।"],
+
+["System call को मुख्य उद्देश्य के हो?",
+"User-level program लाई operating system का kernel services access गर्न interface प्रदान गर्नु।"],
+
+["Process र program बीच मुख्य अन्तर के हो?",
+"Program executable instructions को passive set हो; process त्यस program को running instance हो।"],
+
+["Process Control Block मा सामान्यतया के–के जानकारी राखिन्छ?",
+"Process state, program counter, CPU registers, scheduling information र memory-management सम्बन्धी जानकारी।"],
+
+["Context switch भन्नाले के बुझिन्छ?",
+"CPU ले एउटा process/thread को execution state save गरी अर्कोको state load गर्ने प्रक्रिया।"],
+
+["Context switching को अत्यधिक मात्रा किन performance का लागि खराब हुन सक्छ?",
+"Switch गर्न CPU time खर्च हुन्छ तर त्यस समयमा वास्तविक application work हुँदैन।"],
+
+["Deadlock का लागि Coffman conditions कुन–कुन हुन्?",
+"Mutual exclusion, hold and wait, no preemption र circular wait।"],
+
+["Banker's algorithm कुन समस्यासँग सम्बन्धित छ?",
+"Deadlock avoidance।"],
+
+["Starvation र deadlock बीच मुख्य अन्तर के हो?",
+"Starvation मा कुनै process लामो समय resource/CPU नपाएर रोकिइरहन्छ; deadlock मा processes एकअर्काको resource कुरेर स्थायी रूपमा अड्किन सक्छन्।"],
+
+["Preemptive scheduling भन्नाले के बुझिन्छ?",
+"Operating system ले चलिरहेको process बाट CPU खोसेर अर्को process लाई दिन सक्ने scheduling।"],
+
+["Round Robin scheduling कुन प्रकारका system मा उपयोगी हुन्छ?",
+"Time-sharing र interactive systems मा।"],
+
+["Virtual memory को मुख्य उद्देश्य के हो?",
+"Disk/secondary storage को केही भाग प्रयोग गरेर process लाई physical RAM भन्दा ठूलो logical address space उपलब्ध गराउनु।"],
+
+["Page fault कहिले हुन्छ?",
+"Process ले access गरेको page आवश्यक अवस्थामा physical memory मा उपस्थित नभएमा।"],
+
+["Thrashing भन्नाले operating system मा के बुझिन्छ?",
+"System ले वास्तविक computation भन्दा धेरै समय pages swap गर्ने अवस्थामा पुग्नु।"],
+
+["Demand paging को अवधारणा के हो?",
+"आवश्यक परेको बेला मात्र page लाई secondary storage बाट memory मा ल्याउने विधि।"],
+
+["Page replacement algorithm को आवश्यकता किन पर्छ?",
+"Memory भरिएको अवस्थामा नयाँ page ल्याउन कुन पुरानो page हटाउने भन्ने निर्णय गर्न।"],
+
+["LRU page replacement algorithm ले कुन आधारमा page हटाउँछ?",
+"सबैभन्दा लामो समयदेखि प्रयोग नभएको page हटाउने प्रयास गर्छ।"],
+
+["Fragmentation का दुई प्रमुख प्रकार के हुन्?",
+"Internal fragmentation र external fragmentation।"],
+
+["File system को प्रमुख उद्देश्य के हो?",
+"Storage मा files तथा directories लाई व्यवस्थित, सुरक्षित र access गर्न मिल्ने गरी व्यवस्थापन गर्नु।"],
+
+/* =========================
+   NETWORKING
+========================= */
+
+["OSI model मा routing सम्बन्धी मुख्य जिम्मेवारी कुन layer मा हुन्छ?",
+"Network layer।"],
+
+["Transport layer को मुख्य जिम्मेवारी के हो?",
+"End-to-end communication, segmentation, reliability तथा flow/congestion control जस्ता काम गर्नु।"],
+
+["TCP र UDP बीच reliability को दृष्टिले मुख्य अन्तर के हो?",
+"TCP connection-oriented र reliable delivery प्रदान गर्छ; UDP connectionless र सामान्यतः best-effort delivery हो।"],
+
+["Three-way handshake कुन protocol मा प्रयोग हुन्छ?",
+"TCP।"],
+
+["TCP three-way handshake का मुख्य चरणहरू के हुन्?",
+"SYN, SYN-ACK र ACK।"],
+
+["TCP मा congestion control किन आवश्यक हुन्छ?",
+"Network मा अत्यधिक traffic भएर congestion तथा packet loss बढ्न नदिन।"],
+
+["Sliding window mechanism TCP मा किन प्रयोग हुन्छ?",
+"Flow control र efficient data transmission व्यवस्थापन गर्न।"],
+
+["IP address र MAC address बीच मुख्य अन्तर के हो?",
+"IP logical/network-layer addressing हो भने MAC data-link-layer hardware addressing हो।"],
+
+["ARP को मुख्य काम के हो?",
+"IPv4 address बाट सम्बन्धित MAC address पत्ता लगाउनु।"],
+
+["DNS मा recursive query र iterative query बीच के अन्तर हुन्छ?",
+"Recursive query मा resolver ले final answer खोजेर दिन्छ; iterative मा अर्को DNS server को referral प्राप्त हुन सक्छ।"],
+
+["DNS cache poisoning भन्नाले के बुझिन्छ?",
+"DNS cache मा गलत DNS information राखेर user लाई गलत destination मा redirect गर्ने attack।"],
+
+["Subnetting को प्रमुख उद्देश्य के हो?",
+"ठूलो IP network लाई साना logical networks मा विभाजन गर्नु।"],
+
+["CIDR ले IP networking मा के सुविधा दिन्छ?",
+"Flexible prefix-length प्रयोग गरेर efficient address allocation र route aggregation गर्न।"],
+
+["NAT को मुख्य उद्देश्य के हो?",
+"Private IP addresses लाई public network communication का लागि translate गर्न।"],
+
+["PAT र सामान्य NAT बीच के अन्तर हुन्छ?",
+"PAT ले धेरै private devices लाई एउटै public IP प्रयोग गराउँदै port numbers मार्फत connection छुट्याउँछ।"],
+
+["Default gateway को भूमिका के हो?",
+"Local network बाहिरका destination तर्फ packet पठाउन प्रयोग हुने router address।"],
+
+["Routing table मा मुख्यतः के जानकारी हुन्छ?",
+"Destination network, next hop, interface र routing metric जस्ता जानकारी।"],
+
+["Static routing र dynamic routing बीच के अन्तर छ?",
+"Static route manually configure गरिन्छ; dynamic routing protocols ले routes स्वतः सिक्छन्/अपडेट गर्छन्।"],
+
+["OSPF कुन प्रकारको routing protocol हो?",
+"Link-state interior gateway routing protocol।"],
+
+["BGP मुख्यतः कुन स्तरको routing का लागि प्रयोग हुन्छ?",
+"Autonomous Systems बीच Internet-scale inter-domain routing का लागि।"],
+
+["VLAN को मुख्य उद्देश्य के हो?",
+"एउटै physical network infrastructure लाई logical broadcast domains मा विभाजन गर्नु।"],
+
+["Trunk link networking मा किन प्रयोग गरिन्छ?",
+"एकै link बाट धेरै VLAN को traffic carry गर्न।"],
+
+["STP को मुख्य उद्देश्य के हो?",
+"Layer-2 network मा switching loops रोक्नु।"],
+
+["Broadcast domain र collision domain बीच के अन्तर छ?",
+"Broadcast domain मा broadcast पुग्ने क्षेत्र हो; collision domain मा shared medium मा collision हुन सक्ने क्षेत्र हो।"],
+
+["Full-duplex Ethernet मा collision किन हुँदैन?",
+"Transmit र receive का लागि अलग communication path भएकाले।"],
+
+["MTU भन्नाले networking मा के बुझिन्छ?",
+"कुनै network interface/link ले fragmentation बिना पठाउन सक्ने अधिकतम packet/frame payload size सँग सम्बन्धित सीमा।"],
+
+["Packet fragmentation किन हुन सक्छ?",
+"Packet को size अर्को network link को MTU भन्दा ठूलो हुँदा।"],
+
+["IPv6 मा address space IPv4 भन्दा किन धेरै ठूलो छ?",
+"IPv6 ले 128-bit address प्रयोग गर्छ भने IPv4 ले 32-bit address प्रयोग गर्छ।"],
+
+["IPv6 मा broadcast को सट्टा के प्रयोग गरिन्छ?",
+"Multicast र anycast जस्ता mechanisms प्रयोग गरिन्छ।"],
+
+/* =========================
+   DATABASE
+========================= */
+
+["Database normalization को मुख्य उद्देश्य के हो?",
+"Data redundancy घटाउने र update anomalies कम गर्दै database structure व्यवस्थित बनाउनु।"],
+
+["First Normal Form (1NF) को मुख्य आवश्यकता के हो?",
+"Attributes मा atomic values हुनुपर्छ र repeating groups हटाइनुपर्छ।"],
+
+["Second Normal Form (2NF) ले कुन प्रकारको dependency हटाउन खोज्छ?",
+"Partial functional dependency।"],
+
+["Third Normal Form (3NF) को मुख्य उद्देश्य के हो?",
+"Transitive dependency हटाउनु।"],
+
+["Primary key र candidate key बीच के सम्बन्ध हुन्छ?",
+"Candidate key सम्भावित unique identifier हो; तीमध्ये चयन गरिएको key primary key हुन्छ।"],
+
+["Foreign key को मुख्य उद्देश्य के हो?",
+"दुई relational tables बीच referential relationship कायम गर्नु।"],
+
+["Referential integrity भन्नाले के बुझिन्छ?",
+"Foreign key ले valid referenced record तर्फ मात्र सम्बन्ध जनाउने database constraint।"],
+
+["ACID properties database transaction मा किन महत्वपूर्ण छन्?",
+"Transaction को reliability र consistency कायम गर्न।"],
+
+["Atomicity ले database transaction मा के जनाउँछ?",
+"Transaction पूर्ण रूपमा सफल हुने वा पूर्ण रूपमा rollback हुने।"],
+
+["Consistency ले transaction मा के जनाउँछ?",
+"Transaction पछि database valid constraints सहित consistent state मा रहनु।"],
+
+["Isolation को उद्देश्य के हो?",
+"Concurrent transactions एकअर्काको intermediate state बाट अनुचित रूपमा प्रभावित हुन नदिनु।"],
+
+["Durability को अर्थ के हो?",
+"Committed transaction को परिणाम system failure पछि पनि कायम रहनु।"],
+
+["Database index को मुख्य फाइदा के हो?",
+"Data retrieval/search लाई छिटो बनाउन।"],
+
+["Database index को अत्यधिक प्रयोगले के समस्या ल्याउन सक्छ?",
+"Storage बढ्नु र INSERT/UPDATE/DELETE operations केही ढिलो हुनु।"],
+
+["Clustered र non-clustered index बीच मुख्य अवधारणात्मक अन्तर के हो?",
+"Clustered index ले data storage order सँग प्रत्यक्ष सम्बन्ध राख्छ; non-clustered index छुट्टै lookup structure जस्तो हुन्छ।"],
+
+["SQL injection vulnerability कसरी उत्पन्न हुन्छ?",
+"Untrusted user input लाई सुरक्षित parameterization बिना SQL query मा समावेश गर्दा।"],
+
+["Prepared statement ले SQL injection रोक्न कसरी मद्दत गर्छ?",
+"Query structure र user-supplied values लाई अलग राखेर।"],
+
+["Transaction rollback को उद्देश्य के हो?",
+"Transaction का परिवर्तनहरू undo गरेर previous consistent state मा फर्कनु।"],
+
+["Database deadlock कुन अवस्थामा हुन सक्छ?",
+"दुई वा बढी transactions ले एकअर्काले lock गरेका resources कुर्दा।"],
+
+["CAP theorem distributed database systems मा केसँग सम्बन्धित छ?",
+"Consistency, Availability र Partition tolerance बीचको trade-off सँग।"],
+
+/* =========================
+   CYBER SECURITY
+========================= */
+
+["Zero-day vulnerability भन्नाले के बुझिन्छ?",
+"Vendor वा defenders लाई पर्याप्त रूपमा थाहा/patch नभएको अवस्थामा exploit हुन सक्ने security vulnerability।"],
+
+["Phishing र spear phishing बीच मुख्य अन्तर के हो?",
+"Phishing सामान्य रूपमा धेरै target तर्फ हुन्छ; spear phishing विशेष व्यक्ति वा organization लाई लक्षित हुन्छ।"],
+
+["Social engineering attack मा मुख्य कमजोरी केलाई target गरिन्छ?",
+"मानिसको व्यवहार, विश्वास र निर्णय प्रक्रियालाई।"],
+
+["Multi-factor authentication ले security किन बढाउँछ?",
+"Login का लागि एकभन्दा बढी independent authentication factors आवश्यक पार्छ।"],
+
+["Password hashing र encryption बीच मुख्य अन्तर के हो?",
+"Hashing सामान्यतः one-way transformation हो; encryption reversible हुन्छ यदि उचित key उपलब्ध छ।"],
+
+["Salt password hashing मा किन प्रयोग गरिन्छ?",
+"समान password को hash फरक बनाउन र precomputed/rainbow-table attacks कठिन बनाउन।"],
+
+["Brute-force attack को आधारभूत अवधारणा के हो?",
+"सम्भावित password/key combinations क्रमशः प्रयास गर्नु।"],
+
+["DDoS attack को उद्देश्य के हुन्छ?",
+"धेरै traffic/requests पठाएर service वा resource लाई legitimate users का लागि unavailable बनाउनु।"],
+
+["Firewall को मुख्य उद्देश्य के हो?",
+"Network traffic लाई predefined security rules अनुसार allow वा block गर्नु।"],
+
+["IDS र IPS बीच मुख्य अन्तर के हो?",
+"IDS ले suspicious activity detect/alert गर्छ; IPS ले detect गरेर traffic रोक्न पनि सक्छ।"],
+
+["VPN ले सामान्यतया के सुविधा दिन्छ?",
+"Network communication लाई encrypted tunnel मार्फत सुरक्षित रूपमा transport गर्न।"],
+
+["Public-key cryptography मा encryption र decryption का लागि कस्ता keys प्रयोग हुन्छन्?",
+"Public key र corresponding private key।"],
+
+["Digital signature को मुख्य उद्देश्य के हो?",
+"Message/document को authenticity र integrity प्रमाणित गर्नु तथा signer सँग सम्बन्ध जोड्नु।"],
+
+["Certificate Authority (CA) को मुख्य भूमिका के हो?",
+"Digital certificates issue/validate गरेर public keys लाई identities सँग bind गर्न।"],
+
+["TLS को मुख्य उद्देश्य के हो?",
+"Network communication मा confidentiality, integrity र authentication प्रदान गर्नु।"],
+
+["Man-in-the-middle attack भन्नाले के बुझिन्छ?",
+"दुई पक्षबीचको communication लाई attacker ले बीचबाट intercept वा manipulate गर्नु।"],
+
+["Ransomware ले सामान्यतया victim system मा के गर्छ?",
+"Files/data लाई encrypt वा system access रोक्दै फिरौती माग्ने प्रयास गर्छ।"],
+
+["Principle of least privilege भन्नाले के बुझिन्छ?",
+"User वा process लाई आवश्यक पर्ने न्यूनतम permissions मात्र दिनु।"],
+
+["Security patch management किन आवश्यक हुन्छ?",
+"ज्ञात vulnerabilities लाई समयमै fix गरेर exploitation को जोखिम घटाउन।"],
+
+["Defense in depth security strategy के हो?",
+"एक मात्र security control मा निर्भर नभई धेरै तहका सुरक्षा उपाय प्रयोग गर्नु।"],
+
+/* =========================
+   PROGRAMMING
+========================= */
+
+["Compiler र interpreter बीच मुख्य conceptual अन्तर के हो?",
+"Compiler ले program लाई target form मा translate गर्ने प्रक्रिया गर्छ; interpreter ले execution का क्रममा instructions translate/execute गर्न सक्छ।"],
+
+["Recursion मा base case किन आवश्यक हुन्छ?",
+"Recursive calls कहिले रोकिने भन्ने निश्चित गर्न।"],
+
+["Time complexity ले algorithm को कुन पक्ष विश्लेषण गर्छ?",
+"Input size बढ्दा algorithm को running-time growth rate।"],
+
+["Space complexity ले के मापन गर्छ?",
+"Algorithm लाई आवश्यक पर्ने memory/resource growth।"],
+
+["Big-O notation ले सामान्यतः के जनाउँछ?",
+"Algorithm को asymptotic upper-bound growth rate।"],
+
+["Binary search कुन अवस्थामा प्रयोग गर्न सकिन्छ?",
+"Data sorted अवस्थामा र random access उपयुक्त हुँदा।"],
+
+["Binary search को average/asymptotic time complexity के हो?",
+"O(log n)।"],
+
+["Hash table को average lookup complexity सामान्य अवस्थामा कति हुन सक्छ?",
+"O(1) average, तर collision र implementation अनुसार performance फरक हुन सक्छ।"],
+
+["Hash collision भन्नाले के बुझिन्छ?",
+"दुई फरक keys एउटै hash index/value मा map हुनु।"],
+
+["Stack data structure को मुख्य principle के हो?",
+"LIFO — Last In, First Out।"],
+
+["Queue data structure को मुख्य principle के हो?",
+"FIFO — First In, First Out।"],
+
+["Graph मा BFS र DFS बीच मुख्य अन्तर के हो?",
+"BFS ले सामान्यतः level-by-level traversal गर्छ; DFS ले depth तर्फ अघि बढ्छ।"],
+
+["BFS मा सामान्यतया कुन data structure प्रयोग गरिन्छ?",
+"Queue।"],
+
+["DFS मा कुन data structure प्रयोग गर्न सकिन्छ?",
+"Stack वा recursion।"],
+
+["Dynamic programming को मुख्य अवधारणा के हो?",
+"Overlapping subproblems का परिणामहरू store गरेर repeated computation घटाउनु।"],
+
+["Greedy algorithm को मुख्य अवधारणा के हो?",
+"हरेक चरणमा तत्कालका लागि सबैभन्दा राम्रो विकल्प रोज्ने रणनीति।"],
+
+["Divide and conquer algorithm को मुख्य चरणहरू के हुन्?",
+"Problem divide गर्ने, subproblems solve गर्ने र परिणाम combine गर्ने।"],
+
+["Merge sort को asymptotic time complexity कति हुन्छ?",
+"O(n log n)।"],
+
+["Quick sort को average-case time complexity सामान्यतः कति हुन्छ?",
+"O(n log n)।"],
+
+["Worst-case quick sort complexity कति हुन सक्छ?",
+"O(n²)।"],
+
+/* =========================
+   INTERNET & WEB
+========================= */
+
+["HTTP र HTTPS बीच security को मुख्य अन्तर के हो?",
+"HTTPS ले TLS मार्फत HTTP communication लाई सुरक्षित गर्छ।"],
+
+["HTTP status code 301 को अर्थ के हो?",
+"Permanent redirect।"],
+
+["HTTP status code 404 ले के जनाउँछ?",
+"Requested resource not found।"],
+
+["HTTP status code 500 ले सामान्यतः के जनाउँछ?",
+"Internal server error।"],
+
+["HTTP methods मध्ये GET र POST को सामान्य प्रयोगमा के अन्तर हुन्छ?",
+"GET सामान्यतः resource retrieve गर्न र POST data submit/process गर्न प्रयोग हुन्छ।"],
+
+["REST API को मुख्य अवधारणा के हो?",
+"Stateless, resource-oriented web service architecture प्रयोग गरी HTTP methods मार्फत resources access/manage गर्नु।"],
+
+["Cookie र session बीच मुख्य अन्तर के हो?",
+"Cookie client side मा store हुन सक्छ; session state server side मा maintain गरिन्छ, प्रायः identifier client लाई दिइन्छ।"],
+
+["Web cache को मुख्य उद्देश्य के हो?",
+"Frequently requested resources लाई नजिकै राखेर latency र server load घटाउनु।"],
+
+["CDN को मुख्य फाइदा के हो?",
+"Users नजिकका distributed servers बाट content उपलब्ध गराएर latency घटाउनु।"],
+
+["Reverse proxy को मुख्य भूमिका के हुन सक्छ?",
+"Client requests लाई backend servers तर्फ forward गर्दै load balancing, caching वा security जस्ता काम गर्नु।"],
+
+["Load balancer किन प्रयोग गरिन्छ?",
+"Incoming traffic लाई धेरै servers बीच वितरण गर्न।"],
+
+["Horizontal scaling र vertical scaling बीच के अन्तर छ?",
+"Horizontal scaling मा servers थपिन्छन्; vertical scaling मा existing machine को resources बढाइन्छ।"],
+
+["WebSocket HTTP request-response model भन्दा कसरी फरक छ?",
+"WebSocket ले persistent two-way communication channel उपलब्ध गराउँछ।"],
+
+["API rate limiting किन प्रयोग गरिन्छ?",
+"अत्यधिक requests रोक्न, resources बचाउन र abuse नियन्त्रण गर्न।"],
+
+["CORS को उद्देश्य के हो?",
+"Browser बाट cross-origin resource requests का security rules नियन्त्रण गर्नु।"],
+
+["DNS TTL को अर्थ के हो?",
+"DNS record cache मा कति समयसम्म राख्न सकिन्छ भन्ने अवधि।"],
+
+["Domain name resolution को क्रममा DNS resolver को भूमिका के हो?",
+"Domain name लाई सम्बन्धित IP address लगायत DNS information मा resolve गर्न सहयोग गर्नु।"],
+
+["IPv4 private address ranges को प्रयोग किन गरिन्छ?",
+"Internal/private networks मा globally routable public addresses बचत गर्न र internal addressing गर्न।"],
+
+["Internet routing मा Autonomous System भन्नाले के बुझिन्छ?",
+"Common routing policy अन्तर्गत सञ्चालित IP networks तथा routers को administrative collection।"],
+
+["Anycast addressing को विशेषता के हो?",
+"एउटै address धेरै locations मा advertise गरेर network ले सामान्यतः topologically nearest/appropriate destination तर्फ traffic पुर्‍याउन सक्छ।"],
+
+/* =========================
+   AI & MODERN TECHNOLOGY
+========================= */
+
+["Machine learning मा supervised learning भन्नाले के बुझिन्छ?",
+"Label भएको training data बाट model ले input र desired output बीचको सम्बन्ध सिक्ने प्रक्रिया।"],
+
+["Unsupervised learning को मुख्य विशेषता के हो?",
+"Label नभएको data बाट patterns वा structure पत्ता लगाउने।"],
+
+["Reinforcement learning मा agent ले कसरी सिक्छ?",
+"Environment सँग interaction गरेर reward/penalty signal का आधारमा policy सुधार्दै।"],
+
+["Overfitting भन्नाले machine learning मा के बुझिन्छ?",
+"Model ले training data लाई अत्यधिक राम्रोसँग सिकेर unseen data मा कमजोर generalization गर्नु।"],
+
+["Underfitting किन हुन्छ?",
+"Model पर्याप्त complex नभएर underlying patterns राम्रोसँग सिक्न नसक्दा।"],
+
+["Training data र test data छुट्याउनुको उद्देश्य के हो?",
+"Model को unseen data मा generalization performance मूल्यांकन गर्न।"],
+
+["Neural network मा activation function किन प्रयोग गरिन्छ?",
+"Non-linearity introduce गरेर complex functions/patterns model गर्न।"],
+
+["Backpropagation algorithm को मुख्य उद्देश्य के हो?",
+"Neural network को weights update गर्न gradients गणना गर्नु।"],
+
+["Gradient descent को उद्देश्य के हो?",
+"Loss function minimize गर्न model parameters क्रमशः update गर्नु।"],
+
+["Generative AI र traditional classification model बीच मुख्य अन्तर के हो?",
+"Generative AI ले नयाँ content generate गर्न सक्छ; classification model ले input लाई predefined classes मा वर्गीकरण गर्छ।"],
+
+["Large Language Model ले text generation मा मुख्यतः के सिकेको हुन्छ?",
+"Training data बाट language patterns, relationships र statistical representations।"],
+
+["Hallucination भन्नाले AI system मा के बुझिन्छ?",
+"विश्वसनीय जस्तो देखिने तर तथ्यात्मक रूपमा गलत वा unsupported output उत्पन्न हुनु।"],
+
+["Cloud computing को मुख्य service models कुन–कुन हुन्?",
+"IaaS, PaaS र SaaS।"],
+
+["IaaS र SaaS बीच मुख्य अन्तर के हो?",
+"IaaS मा infrastructure resources उपलब्ध हुन्छन्; SaaS मा पूर्ण software application service का रूपमा उपलब्ध हुन्छ।"],
+
+["Containerization को मुख्य उद्देश्य के हो?",
+"Application र dependencies लाई isolated, portable execution environment मा package गर्नु।"],
+
+["Virtual machine र container बीच मुख्य अन्तर के हो?",
+"Virtual machine ले सामान्यतः पूर्ण guest OS virtualize गर्छ; container ले host OS kernel share गर्दै isolated processes चलाउँछ।"],
+
+["Kubernetes को मुख्य प्रयोग के हो?",
+"Containerized applications को deployment, scaling र orchestration व्यवस्थापन गर्नु।"],
+
+["Blockchain को प्रमुख विशेषता के हो?",
+"Distributed ledger मा records लाई cryptographically linked blocks को रूपमा maintain गर्ने architecture।"],
+
+["Smart contract भन्नाले blockchain मा के बुझिन्छ?",
+"Predefined rules अनुसार blockchain network मा स्वतः execute हुने program/code।"],
+
+["Edge computing को मुख्य उद्देश्य के हो?",
+"Data processing लाई data source/user नजिक ल्याएर latency र bandwidth usage घटाउनु।"]
+
+];
+
+/* =========================
+   DISPLAY QUESTIONS
+========================= */
+
+const container = document.getElementById("questions");
+
+questions.forEach((item,index)=>{
+
+    const card = document.createElement("div");
+
+    card.className = "question-card";
+
+    card.innerHTML = `
+        <div class="number">
+            प्रश्न ${index + 1}
+        </div>
+
+        <div class="question">
+            ${item[0]}
+        </div>
+
+        <div class="answer">
+            <strong>उत्तर:</strong>
+            ${item[1]}
+        </div>
+    `;
+
+    container.appendChild(card);
+
+});
+
+</script>
+
+</body>
+</html>
