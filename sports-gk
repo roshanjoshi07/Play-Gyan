@@ -1,235 +1,249 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ne">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sports GK Quiz - 150 Questions</title>
+
+<title>Sports GK | Gyan Nepal</title>
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
-  font-family:Arial, "Noto Sans Devanagari", sans-serif;
-  min-height:100vh;
-  background:linear-gradient(135deg,#06111f,#12345a,#071827);
-  color:#172033;
+    font-family:Arial,"Noto Sans Devanagari",sans-serif;
+    color:#fff;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 10% 0%,rgba(0,170,255,.18),transparent 30%),
+        radial-gradient(circle at 90% 20%,rgba(255,90,0,.14),transparent 30%),
+        radial-gradient(circle at 50% 100%,rgba(80,0,255,.14),transparent 35%),
+        #050b12;
 }
 
 header{
-  text-align:center;
-  color:white;
-  padding:30px 15px 20px;
-}
-
-header h1{
-  font-size:clamp(30px,7vw,55px);
-}
-
-header p{
-  margin-top:8px;
-  opacity:.9;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(3,9,16,.94);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(255,255,255,.09);
 }
 
 .nav{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:20px;
+    max-width:1150px;
+    margin:auto;
+    padding:14px 18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
 }
 
-.nav button{
-  border:0;
-  border-radius:30px;
-  padding:13px 22px;
-  cursor:pointer;
-  font-weight:bold;
-  font-size:15px;
+.logo{
+    width:52px;
+    height:52px;
+    border-radius:16px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:27px;
+    background:linear-gradient(135deg,#ff6a00,#ffb000);
+    box-shadow:0 0 28px rgba(255,130,0,.3);
+}
+
+.brand h1{
+    font-size:21px;
+}
+
+.brand p{
+    color:#8296a6;
+    font-size:11px;
+    margin-top:4px;
 }
 
 .container{
-  width:min(1050px,94%);
-  margin:auto;
+    max-width:1100px;
+    margin:auto;
+    padding:45px 18px 70px;
 }
 
-.panel{
-  background:white;
-  border-radius:24px;
-  padding:25px;
-  margin-bottom:30px;
-  box-shadow:0 20px 60px #0006;
+.hero{
+    text-align:center;
+    padding:20px 10px 42px;
 }
 
-.hidden{
-  display:none;
+.hero-icon{
+    font-size:60px;
+    margin-bottom:15px;
 }
 
-.search{
-  width:100%;
-  padding:15px;
-  border:2px solid #ddd;
-  border-radius:14px;
-  margin:18px 0;
-  font-size:16px;
+.hero h2{
+    font-size:40px;
+    line-height:1.2;
 }
 
-.card{
-  padding:18px;
-  margin:12px 0;
-  border-radius:15px;
-  background:#f8fafc;
-  border-left:6px solid #1479c9;
+.hero h2 span{
+    background:linear-gradient(90deg,#ff6a00,#ffd000);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    max-width:780px;
+    margin:15px auto 0;
+    color:#9db0bd;
+    line-height:1.8;
+}
+
+.badges{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:24px;
+}
+
+.badge{
+    padding:9px 15px;
+    border-radius:30px;
+    background:rgba(255,255,255,.055);
+    border:1px solid rgba(255,255,255,.1);
+    color:#c4d2db;
+    font-size:13px;
 }
 
 .category{
-  display:inline-block;
-  background:#e0f2fe;
-  color:#075985;
-  padding:5px 10px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:8px;
+    margin-top:40px;
+}
+
+.category-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+    padding:13px 17px;
+    border-radius:15px;
+    background:linear-gradient(
+        100deg,
+        rgba(255,105,0,.13),
+        rgba(255,255,255,.035)
+    );
+    border-left:4px solid #ff7900;
+}
+
+.category-title .icon{
+    font-size:27px;
+}
+
+.category-title h3{
+    font-size:21px;
+}
+
+.category-title p{
+    color:#8197a7;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.card{
+    margin-bottom:14px;
+    padding:21px;
+    border-radius:18px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22,39,53,.95),
+            rgba(7,15,24,.98)
+        );
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 12px 32px rgba(0,0,0,.23);
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-2px);
+    border-color:rgba(255,140,0,.35);
+}
+
+.q-number{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+    background:linear-gradient(135deg,#ff6100,#ffb000);
+    color:white;
+    margin-bottom:11px;
 }
 
 .question{
-  font-size:18px;
-  font-weight:bold;
-  line-height:1.55;
+    font-size:16px;
+    font-weight:600;
+    line-height:1.85;
 }
 
 .answer{
-  margin-top:10px;
-  padding:10px;
-  border-radius:10px;
-  background:#dcfce7;
-  color:#166534;
-  font-weight:bold;
+    margin-top:14px;
+    padding:14px 16px;
+    border-radius:12px;
+    background:rgba(255,125,0,.07);
+    border-left:3px solid #ff8a00;
+    color:#d9e8ef;
+    line-height:1.75;
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
+.answer strong{
+    color:#ffae35;
 }
 
-.stat{
-  background:#eff6ff;
-  padding:15px;
-  text-align:center;
-  border-radius:15px;
-  font-weight:bold;
+.back{
+    display:inline-block;
+    margin-top:32px;
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+    padding:12px 20px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ff6100,#ffb000);
 }
 
-.progress{
-  width:100%;
-  height:10px;
-  background:#e5e7eb;
-  border-radius:20px;
-  margin:18px 0;
-  overflow:hidden;
-}
-
-.progressBar{
-  height:100%;
-  width:0;
-  background:#16a34a;
-  transition:.3s;
-}
-
-.gameQuestion{
-  font-size:25px;
-  font-weight:bold;
-  line-height:1.5;
-  margin:25px 0;
-}
-
-.options{
-  display:grid;
-  gap:12px;
-}
-
-.option{
-  width:100%;
-  padding:16px;
-  border:2px solid #dbe4ee;
-  border-radius:14px;
-  background:white;
-  cursor:pointer;
-  text-align:left;
-  font-size:17px;
-  transition:.2s;
-}
-
-.option:hover{
-  background:#eff6ff;
-  transform:translateY(-2px);
-}
-
-.correct{
-  background:#bbf7d0 !important;
-  border-color:#16a34a !important;
-}
-
-.wrong{
-  background:#fecaca !important;
-  border-color:#dc2626 !important;
-}
-
-.next,
-.restart{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  padding:15px;
-  margin-top:18px;
-  background:#0879c9;
-  color:white;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.next:disabled{
-  opacity:.45;
-  cursor:not-allowed;
-}
-
-.result{
-  text-align:center;
-}
-
-.result h2{
-  font-size:36px;
-  margin-bottom:15px;
-}
-
-.footer{
-  text-align:center;
-  color:white;
-  padding:25px;
+footer{
+    text-align:center;
+    padding:38px 15px;
+    color:#728592;
+    background:#02070c;
+    border-top:1px solid rgba(255,255,255,.08);
+    font-size:13px;
 }
 
 @media(max-width:600px){
-  .panel{
-    padding:17px;
-  }
 
-  .stats{
-    grid-template-columns:1fr;
-  }
+    .hero h2{
+        font-size:30px;
+    }
 
-  .gameQuestion{
-    font-size:21px;
-  }
+    .hero-icon{
+        font-size:48px;
+    }
 
-  .option{
-    font-size:16px;
-  }
+    .card{
+        padding:17px;
+    }
+
+    .question{
+        font-size:15px;
+    }
+
+    .answer{
+        font-size:14px;
+    }
+
+    .category-title h3{
+        font-size:18px;
+    }
 }
 </style>
 </head>
@@ -237,613 +251,727 @@ header p{
 <body>
 
 <header>
-  <h1>🏆 Sports GK Quiz</h1>
-  <p>150 Sports Questions • 3 Lives • No Timer</p>
+    <div class="nav">
 
-  <div class="nav">
-    <button onclick="showBank()">📚 Question Bank</button>
-    <button onclick="startGame()">🎮 Play Quiz</button>
-  </div>
+        <div class="logo">🏆</div>
+
+        <div class="brand">
+            <h1>Gyan Nepal</h1>
+            <p>HARD SPORTS GK • COMPETITIVE EXAM</p>
+        </div>
+
+    </div>
 </header>
 
-<div class="container">
+<main class="container">
 
-<section id="bank" class="panel">
+<section class="hero">
 
-  <h2>📚 150 Sports Questions</h2>
-  <p>Football, Cricket, Volleyball, Basketball, Tennis, Badminton, Olympics र अन्य खेलहरू।</p>
+    <div class="hero-icon">🏆⚽🏏🥇</div>
 
-  <input
-    id="search"
-    class="search"
-    placeholder="🔎 Search question..."
-    oninput="displayBank()"
-  >
+    <h2>
+        Hard <span>Sports GK</span>
+    </h2>
 
-  <div id="bankList"></div>
+    <p>
+        सामान्य र अति सजिला प्रश्नभन्दा माथिल्लो स्तरका
+        खेलकुदसम्बन्धी महत्वपूर्ण प्रश्न–उत्तर।
+        प्रतियोगितात्मक परीक्षा तथा सामान्य ज्ञान तयारीका लागि।
+    </p>
+
+    <div class="badges">
+        <div class="badge">📚 200 Questions</div>
+        <div class="badge">🔥 Hard Level</div>
+        <div class="badge">🎯 Competitive Exam</div>
+        <div class="badge">🌎 International Sports</div>
+    </div>
 
 </section>
 
+<div id="questions"></div>
 
-<section id="game" class="panel hidden">
+<a href="index.html" class="back">
+    ← Gyan Nepal मा फर्कनुहोस्
+</a>
 
-  <div class="stats">
+</main>
 
-    <div class="stat">
-      📝 Question
-      <br>
-      <span id="questionNumber">1</span>/150
-    </div>
-
-    <div class="stat">
-      🏆 Score
-      <br>
-      <span id="score">0</span>
-    </div>
-
-    <div class="stat">
-      ❤️ Lives
-      <br>
-      <span id="lives">3</span>
-    </div>
-
-  </div>
-
-  <div class="progress">
-    <div id="progressBar" class="progressBar"></div>
-  </div>
-
-  <div id="gameQuestion" class="gameQuestion"></div>
-
-  <div id="options" class="options"></div>
-
-  <button
-    id="nextButton"
-    class="next"
-    onclick="nextQuestion()"
-    disabled>
-    Next Question ➡️
-  </button>
-
-</section>
-
-
-<section id="result" class="panel result hidden">
-
-  <h2>🏆 Quiz Finished!</h2>
-
-  <h3 id="resultScore"></h3>
-
-  <p id="resultMessage"></p>
-
-  <button class="restart" onclick="startGame()">
-    🔄 Play Again
-  </button>
-
-</section>
-
-</div>
-
-<div class="footer">
-  🏆 Sports GK Quiz • 150 Questions • ❤️ 3 Lives • ⏱️ No Timer
-</div>
-
+<footer>
+    <strong>🏆 Gyan Nepal</strong>
+    <br><br>
+    Hard Sports GK • Competitive Examination Preparation
+    <br><br>
+    © 2026 Gyan Nepal
+</footer>
 
 <script>
 
-/* =====================================================
-   150 SPORTS QUESTIONS
-   ===================================================== */
+const data = [
 
-const questions = [
+/* =========================
+   CRICKET
+========================= */
 
-/* ================= FOOTBALL 1-30 ================= */
+{
+title:"🏏 क्रिकेट",
+subtitle:"Cricket • Test • ODI • T20 • Laws",
+questions:[
 
-["⚽ Football","How many players does one football team normally have on the field?","11"],
-["⚽ Football","How long is a standard football match, excluding added time?","90 minutes"],
-["⚽ Football","How many halves are there in a normal football match?","2"],
-["⚽ Football","How long is each normal half in football?","45 minutes"],
-["⚽ Football","Which organization governs world football?","FIFA"],
-["⚽ Football","What does FIFA stand for?","Fédération Internationale de Football Association"],
-["⚽ Football","How many players can normally use their hands during open play?","1"],
-["⚽ Football","Which player can use their hands inside their own penalty area?","Goalkeeper"],
-["⚽ Football","What card normally means a warning?","Yellow card"],
-["⚽ Football","What card sends a player off?","Red card"],
-["⚽ Football","What is three goals by one player in a match called?","Hat-trick"],
-["⚽ Football","What is a kick taken from the corner called?","Corner kick"],
-["⚽ Football","What is awarded when the ball completely crosses the touchline?","Throw-in"],
-["⚽ Football","From where is a penalty kick taken?","Penalty mark"],
-["⚽ Football","How many points is a normal football win worth in a league using the standard system?","3"],
-["⚽ Football","What is the person who enforces the Laws of the Game called?","Referee"],
-["⚽ Football","What is the area directly in front of the goal called?","Penalty area"],
-["⚽ Football","What is the small rectangular area inside the penalty area called?","Goal area"],
-["⚽ Football","What is the restart from the center of the field called?","Kick-off"],
-["⚽ Football","What is a goal scored directly from a corner kick sometimes called?","Olympico"],
-["⚽ Football","What is UEFA mainly associated with?","European football"],
-["⚽ Football","What is CONMEBOL associated with?","South American football"],
-["⚽ Football","What is AFC associated with?","Asian football"],
-["⚽ Football","What is CAF associated with?","African football"],
-["⚽ Football","What is CONCACAF associated with?","North and Central American and Caribbean football"],
-["⚽ Football","What is OFC associated with?","Oceania football"],
-["⚽ Football","How often is the FIFA World Cup normally held?","Every 4 years"],
-["⚽ Football","Which country hosted the first FIFA World Cup in 1930?","Uruguay"],
-["⚽ Football","What is the maximum number of players a team can have on the field including the goalkeeper?","11"],
-["⚽ Football","What is the term for passing the ball to a teammate who then scores?","Assist"],
+["क्रिकेटमा Duckworth–Lewis–Stern (DLS) method को मुख्य उद्देश्य के हो?",
+"वर्षा वा अन्य कारणले खेल छोट्याउँदा दुई टोलीबीच लक्ष्यलाई परिस्थितिअनुसार समायोजन गर्नु।"],
 
+["क्रिकेटमा follow-on लागू गर्नका लागि Test match मा मुख्य आधार के हो?",
+"पहिलो innings पछि दुई टोलीको runs बीच आवश्यक न्यूनतम अन्तर हुनुपर्छ र नियमअनुसार अग्रता पाएको टोलीले विपक्षीलाई फेरि batting गर्न बोलाउन सक्छ।"],
 
-/* ================= CRICKET 31-60 ================= */
+["Cricket मा ‘timed out’ dismissal कुन परिस्थितिमा हुन सक्छ?",
+"अघिल्लो batter आउट भएपछि निर्धारित समयभित्र नयाँ batter ले आफ्नो innings का लागि तयार हुन नसकेमा।"],
 
-["🏏 Cricket","How many players are in a cricket team?","11"],
-["🏏 Cricket","How many legal deliveries are normally in an over?","6"],
-["🏏 Cricket","How long is a cricket pitch?","22 yards"],
-["🏏 Cricket","How many stumps are in one wicket?","3"],
-["🏏 Cricket","How many bails are placed on a wicket?","2"],
-["🏏 Cricket","How many runs are scored when the ball reaches the boundary after touching the ground?","4"],
-["🏏 Cricket","How many runs are normally scored when the ball crosses the boundary without touching the ground?","6"],
-["🏏 Cricket","What does LBW stand for?","Leg Before Wicket"],
-["🏏 Cricket","What does ICC stand for?","International Cricket Council"],
-["🏏 Cricket","What does ODI stand for?","One Day International"],
-["🏏 Cricket","How many overs does each team normally face in a T20 international?","20"],
-["🏏 Cricket","How many overs does each team normally face in an ODI?","50"],
-["🏏 Cricket","How many days can a Test match normally last?","5 days"],
-["🏏 Cricket","What is a score of 100 runs by a batter called?","Century"],
-["🏏 Cricket","What is a score of 50 runs called?","Half-century"],
-["🏏 Cricket","What is being dismissed without scoring called?","Duck"],
-["🏏 Cricket","What is three wickets in three consecutive deliveries called?","Hat-trick"],
-["🏏 Cricket","Who normally stands behind the stumps?","Wicketkeeper"],
-["🏏 Cricket","What is a delivery outside the batter's reach that is called illegal called?","Wide"],
-["🏏 Cricket","What is an illegal delivery that gives an extra run called?","No-ball"],
-["🏏 Cricket","What is a batter's score of zero called?","Duck"],
-["🏏 Cricket","What is the person who leads a cricket team called?","Captain"],
-["🏏 Cricket","What is the act of dismissing a batter by breaking the wicket while they are out of their crease called?","Run out"],
-["🏏 Cricket","What is dismissal by the wicketkeeper removing the bails while the batter is out of their crease called?","Stumping"],
-["🏏 Cricket","What is a ball caught by a fielder before it touches the ground called?","Catch"],
-["🏏 Cricket","What is the wooden equipment used by a batter called?","Bat"],
-["🏏 Cricket","What is the player who delivers the ball called?","Bowler"],
-["🏏 Cricket","What is the period in which a team bats called?","Innings"],
-["🏏 Cricket","What is the area between the two wickets called?","Pitch"],
-["🏏 Cricket","Which country is home to the Marylebone Cricket Club?","England"],
+["Cricket मा ‘obstructing the field’ dismissal भन्नाले के बुझिन्छ?",
+"फिल्डिङ टोलीको खेलमा जानाजानी अवरोध पुर्‍याउने batter लाई आउट गर्न सकिने अवस्था।"],
 
+["Test cricket मा declaration को रणनीतिक उद्देश्य के हो?",
+"आफ्नो innings समयमै समाप्त घोषणा गरेर विपक्षीलाई आउट गर्न पर्याप्त समय उपलब्ध गराउनु।"],
 
-/* ================= VOLLEYBALL 61-75 ================= */
+["Cricket मा reverse swing प्रभाव पार्न कुन अवस्थाले विशेष भूमिका खेल्न सक्छ?",
+"बलको एक भाग अपेक्षाकृत चम्किलो र अर्को भाग rough हुँदै गएपछि गति र seam/airflow को प्रभावबाट reverse swing उत्पन्न हुन सक्छ।"],
 
-["🏐 Volleyball","How many players from one team are normally on court in indoor volleyball?","6"],
-["🏐 Volleyball","What organization governs international volleyball?","FIVB"],
-["🏐 Volleyball","What does FIVB stand for?","Fédération Internationale de Volleyball"],
-["🏐 Volleyball","What is the opening hit that starts a rally called?","Serve"],
-["🏐 Volleyball","What is a powerful attacking hit called?","Spike"],
-["🏐 Volleyball","What is stopping an opponent's attack at the net called?","Block"],
-["🏐 Volleyball","How many times can a team normally contact the ball before sending it over the net?","3"],
-["🏐 Volleyball","What is the defensive specialist wearing a different colored jersey called?","Libero"],
-["🏐 Volleyball","How many players are on a beach volleyball team?","2"],
-["🏐 Volleyball","What is the system where every rally gives a point called?","Rally scoring"],
-["🏐 Volleyball","What is the act of moving positions after winning the right to serve called?","Rotation"],
-["🏐 Volleyball","What is the raised net used in volleyball called?","Net"],
-["🏐 Volleyball","Is volleyball played over a net?","Yes"],
-["🏐 Volleyball","How many points does a team normally need to win a standard set, subject to the required margin?","25"],
-["🏐 Volleyball","How many points are normally needed to win the deciding set, subject to the required margin?","15"],
+["Cricket मा doosra शब्दले सामान्यतः कुन प्रकारको delivery जनाउँछ?",
+"Off-spinner ले सामान्य off-break भन्दा विपरीत दिशामा turn गराउने प्रयास गरिएको delivery।"],
 
+["Cricket मा googly कुन bowler को विशेष delivery हो?",
+"Leg-spinner ले सामान्य leg-break भन्दा उल्टो दिशामा turn गराउने delivery।"],
 
-/* ================= BASKETBALL 76-90 ================= */
+["Cricket मा powerplay restrictions को रणनीतिक प्रभाव के हो?",
+"निर्धारित समयमा boundary नजिक राख्न मिल्ने fielders को संख्यामा सीमा लगाएर batting र fielding balance परिवर्तन गर्नु।"],
 
-["🏀 Basketball","How many players from one team are on court in basketball?","5"],
-["🏀 Basketball","What is bouncing the ball while moving called?","Dribbling"],
-["🏀 Basketball","How many points is a normal field goal worth inside the three-point line?","2"],
-["🏀 Basketball","How many points is a successful three-point shot worth?","3"],
-["🏀 Basketball","How many points is a successful free throw worth?","1"],
-["🏀 Basketball","What organization governs international basketball?","FIBA"],
-["🏀 Basketball","What does FIBA stand for?","International Basketball Federation"],
-["🏀 Basketball","What is collecting the ball after a missed shot called?","Rebound"],
-["🏀 Basketball","What is a pass that directly leads to a teammate scoring called?","Assist"],
-["🏀 Basketball","What is putting the ball through the hoop forcefully from above called?","Dunk"],
-["🏀 Basketball","What is moving illegally while holding the ball called?","Travelling"],
-["🏀 Basketball","What is an illegal physical action against an opponent called?","Foul"],
-["🏀 Basketball","What is the circular goal called?","Basket"],
-["🏀 Basketball","What is the rectangular board behind the basket called?","Backboard"],
-["🏀 Basketball","Which famous professional basketball league is based in the United States and Canada?","NBA"],
+["Cricket मा strike rotation किन महत्वपूर्ण हुन्छ?",
+"Single र double मार्फत strike परिवर्तन गर्दै bowler तथा fielding setup मा निरन्तर दबाब राख्न।"],
 
+["Cricket मा ‘Mankad’ शब्दले कुन प्रकारको dismissal को पुरानो नाम जनाउँछ?",
+"Non-striker crease बाट अगाडि निस्किएको अवस्थामा bowler ले wickets तोडेर रन आउट गर्ने dismissal।"],
 
-/* ================= TENNIS 91-100 ================= */
+["Cricket मा no-ball र wide बीच मुख्य नियमगत अन्तर के हो?",
+"No-ball illegal delivery का विभिन्न कारणले हुन सक्छ; wide भने batter को सामान्य playing reach भन्दा बाहिर गएको delivery का आधारमा दिइन्छ।"],
 
-["🎾 Tennis","How many Grand Slam tournaments are there in tennis?","4"],
-["🎾 Tennis","Where is the Australian Open held?","Australia"],
-["🎾 Tennis","Where is the French Open held?","France"],
-["🎾 Tennis","Where is Wimbledon held?","England"],
-["🎾 Tennis","Where is the US Open held?","United States"],
-["🎾 Tennis","What does 'love' mean in tennis scoring?","0"],
-["🎾 Tennis","What is the score called when both players have 40 points?","Deuce"],
-["🎾 Tennis","What organization governs international tennis?","ITF"],
-["🎾 Tennis","What does ITF stand for?","International Tennis Federation"],
-["🎾 Tennis","What piece of equipment is used to hit the tennis ball?","Racket"],
+["Cricket मा leg-before-wicket (LBW) निर्णयमा impact location किन महत्वपूर्ण हुन्छ?",
+"Ball ले pad मा कहाँ impact गर्‍यो भन्ने आधारमा wicket को trajectory र LBW conditions मूल्यांकन गरिन्छ।"],
 
+["Cricket मा ‘hit wicket’ dismissal कहिले हुन सक्छ?",
+"सामान्यतः batter ले आफ्नो batting action का क्रममा आफ्नो wicket आफैँ भत्काएमा।"],
 
-/* ================= BADMINTON 101-110 ================= */
+["Cricket मा seam movement र swing बीच मुख्य अन्तर के हो?",
+"Seam movement pitch मा ball को seam बाट हुने deviation हो; swing हावामा ball को lateral movement हो।"],
 
-["🏸 Badminton","What is the object hit with a badminton racket called?","Shuttlecock"],
-["🏸 Badminton","What organization governs world badminton?","BWF"],
-["🏸 Badminton","What does BWF stand for?","Badminton World Federation"],
-["🏸 Badminton","How many players compete in a singles badminton match?","2"],
-["🏸 Badminton","How many players are on one side in badminton doubles?","2"],
-["🏸 Badminton","Does badminton use a net?","Yes"],
-["🏸 Badminton","What equipment is used to hit the shuttlecock?","Racket"],
-["🏸 Badminton","What is the major world championship organized by BWF called?","BWF World Championships"],
-["🏸 Badminton","Is badminton played indoors in most major competitions?","Yes"],
-["🏸 Badminton","What is a serve in badminton?","The shot that starts a rally"],
+["Cricket मा ‘arm ball’ भन्नाले के बुझिन्छ?",
+"Spinner को delivery जसले सामान्य spin भन्दा कम turn भएर सिधातिर जाने प्रवृत्ति देखाउँछ।"],
 
+["Cricket मा ‘carrom ball’ को विशेषता के हो?",
+"Flicking action प्रयोग गरेर unexpected direction मा spin गराउन खोजिने delivery।"],
 
-/* ================= BOXING / MARTIAL ARTS 111-120 ================= */
+["Cricket मा a batter को strike rate कसरी गणना गरिन्छ?",
+"Scored runs लाई faced balls ले भाग गरी 100 ले गुणा गरिन्छ।"],
 
-["🥊 Combat Sports","What equipment protects a boxer's hands?","Boxing gloves"],
-["🥊 Combat Sports","What does KO stand for in boxing?","Knockout"],
-["🥊 Combat Sports","What area is boxing contested in?","Ring"],
-["🥊 Combat Sports","Who enforces the rules during a boxing bout?","Referee"],
-["🥊 Combat Sports","What is a period of boxing called?","Round"],
-["🥋 Combat Sports","Which country is the traditional birthplace of judo?","Japan"],
-["🥋 Combat Sports","Which country is strongly associated with the development of taekwondo?","South Korea"],
-["🥋 Combat Sports","Which Japanese martial art uses a colored belt ranking system?","Karate"],
-["🥋 Combat Sports","What is wrestling primarily based on?","Grappling and controlling an opponent"],
-["🥊 Combat Sports","Are boxing gloves used in boxing competitions?","Yes"],
+["Cricket मा economy rate ले के मापन गर्छ?",
+"Bowler ले प्रति over औसत कति runs concede गरिरहेको छ भन्ने।"],
 
+["Cricket मा Net Run Rate मुख्यतः कुन प्रतियोगितात्मक अवस्थामा महत्वपूर्ण हुन्छ?",
+"Limited-overs league/table मा टोलीहरूको relative performance निर्धारण गर्न।"],
 
-/* ================= OLYMPICS 121-135 ================= */
+["Cricket मा ‘retired hurt’ र ‘retired out’ बीच के फरक छ?",
+"Retired hurt सामान्यतः injury/illness का कारण हुन्छ र batter फर्कन सक्छ; retired out मा फर्कने अवस्था नियमअनुसार फरक हुन्छ।"],
 
-["🏅 Olympics","What does IOC stand for?","International Olympic Committee"],
-["🏅 Olympics","How many Olympic rings are there?","5"],
-["🏅 Olympics","What do the Olympic rings represent?","The Olympic movement and the union of the world's inhabited continents"],
-["🏅 Olympics","Where were the first modern Olympic Games held?","Athens"],
-["🏅 Olympics","In which year were the first modern Olympic Games held?","1896"],
-["🏅 Olympics","How often are Summer Olympic Games normally held?","Every 4 years"],
-["🏅 Olympics","What medal is awarded for first place?","Gold"],
-["🏅 Olympics","What medal is awarded for second place?","Silver"],
-["🏅 Olympics","What medal is awarded for third place?","Bronze"],
-["🏅 Olympics","What flame is associated with the Olympic Games?","Olympic flame"],
-["🏅 Olympics","What is the Olympic motto traditionally associated with the Games?","Faster, Higher, Stronger – Together"],
-["🏅 Olympics","Which city hosted the 2012 Summer Olympics?","London"],
-["🏅 Olympics","Which city hosted the 2016 Summer Olympics?","Rio de Janeiro"],
-["🏅 Olympics","Which city hosted the 2020 Summer Olympics, held in 2021?","Tokyo"],
-["🏅 Olympics","Which city hosted the 2024 Summer Olympics?","Paris"],
+["Cricket मा third umpire को भूमिका किन महत्वपूर्ण हुन्छ?",
+"On-field umpire ले review मागेको अवस्थामा technology प्रयोग गरेर close decisions जाँच गर्न।"],
 
+["DRS मा UltraEdge technology मुख्यतः के पत्ता लगाउन प्रयोग हुन्छ?",
+"Ball ले bat वा pad जस्ता वस्तुमा contact गरेको संकेत पत्ता लगाउन।"],
 
-/* ================= ATHLETICS 136-145 ================= */
+["Hawk-Eye technology cricket मा मुख्यतः कुन प्रकारको analysis का लागि प्रसिद्ध छ?",
+"Ball tracking तथा trajectory analysis।"],
 
-["🏃 Athletics","What is the standard marathon distance?","42.195 km"],
-["🏃 Athletics","What is the 100 metres primarily classified as?","Sprint"],
-["🏃 Athletics","What is the event where athletes jump horizontally for distance?","Long jump"],
-["🏃 Athletics","What event involves jumping over a horizontal bar?","High jump"],
-["🏃 Athletics","What is thrown in the javelin event?","Javelin"],
-["🏃 Athletics","What is thrown in the discus event?","Discus"],
-["🏃 Athletics","What is thrown in the shot put event?","Shot"],
-["🏃 Athletics","What is passed between runners in a relay race?","Baton"],
-["🏃 Athletics","Is athletics an Olympic sport?","Yes"],
-["🏃 Athletics","What is the 200 metres classified as?","Sprint"],
+["Cricket मा ball-tracking ले LBW decision मा कुन कुरा अनुमान गर्न मद्दत गर्छ?",
+"Ball को impact र wickets तर्फको projected trajectory।"],
 
+["Cricket मा concussion substitute को अवधारणा किन ल्याइएको हो?",
+"Head injury/concussion का कारण खेल्न नसक्ने खेलाडीको सुरक्षा र प्रतिस्पर्धात्मक निरन्तरता कायम गर्न।"],
 
-/* ================= NEPAL SPORTS 146-150 ================= */
+["Cricket मा ‘impact player’ जस्तो substitution rule को tactical प्रभाव के हुन्छ?",
+"विशेष परिस्थितिअनुसार batting वा bowling strength बढाउन squad selection मा tactical flexibility दिन्छ।"],
 
-["🇳🇵 Nepal Sports","What is Nepal's national sport?","Volleyball"],
-["🇳🇵 Nepal Sports","What is the governing body of football in Nepal commonly known as?","ANFA"],
-["🇳🇵 Nepal Sports","What is the governing body of cricket in Nepal commonly known as?","CAN"],
-["🇳🇵 Nepal Sports","What is the Nepal Olympic Committee commonly abbreviated as?","NOC"],
-["🇳🇵 Nepal Sports","What is the main international multi-sport event for South Asian countries called?","South Asian Games"]
+["Cricket मा Test match मा session-based रणनीति किन महत्वपूर्ण हुन्छ?",
+"दिनको विभिन्न समयमा pitch, light, fatigue र ball condition परिवर्तन हुने भएकाले।"],
+
+["Cricket मा new ball को विशेषता fast bowlers का लागि किन उपयोगी हुन्छ?",
+"नयाँ ball ले seam र swing का लागि तुलनात्मक रूपमा राम्रो अवस्था दिन सक्छ।"],
+
+["Cricket मा ‘declared innings’ को score official रूपमा कसरी व्यवहार गरिन्छ?",
+"Declaration भएको समयमा बनाइएको runs innings को final score को रूपमा कायम रहन्छ।"]
+
+]},
+
+/* =========================
+   FOOTBALL
+========================= */
+
+{
+title:"⚽ फुटबल",
+subtitle:"Football • FIFA • Laws • Tactics",
+questions:[
+
+["Football मा offside law को मूल उद्देश्य के हो?",
+"Attacker ले opponent को goal नजिक अनुचित positional advantage लिएर खेल्न नपाओस् भन्ने सुनिश्चित गर्नु।"],
+
+["Football मा advantage rule referee ले किन प्रयोग गर्छ?",
+"Foul भए पनि foul भएको टोलीलाई तत्काल whistle भन्दा play जारी राख्दा बढी लाभ हुने अवस्थामा खेल जारी राख्न।"],
+
+["Football मा VAR को मुख्य उद्देश्य के हो?",
+"Clear and obvious errors वा serious missed incidents सम्बन्धी केही निर्णायक घटनामा video review द्वारा referee लाई सहयोग गर्नु।"],
+
+["Football मा ‘tactical foul’ भन्नाले के बुझिन्छ?",
+"विपक्षीको promising attack रोक्न जानाजानी नियम उल्लंघन गर्ने tactical decision।"],
+
+["Football मा low block defensive system को मुख्य विशेषता के हो?",
+"टोलीले आफ्नै defensive third नजिक compact भएर opponent लाई space कम दिन्छ।"],
+
+["Football मा gegenpressing भन्नाले के बुझिन्छ?",
+"Ball गुमाएपछि तुरुन्त pressure दिएर possession फिर्ता लिने tactical approach।"],
+
+["Football मा false nine को tactical भूमिका के हुन्छ?",
+"परम्परागत striker जस्तो अगाडि स्थिर नरही midfield तर्फ drop भएर defenders लाई position बाट तान्ने।"],
+
+["Football मा inverted full-back ले सामान्य full-back भन्दा कसरी फरक भूमिका खेल्छ?",
+"Attack build-up मा wide position को सट्टा midfield भित्रतिर प्रवेश गरेर अतिरिक्त midfielder जस्तो भूमिका खेल्न सक्छ।"],
+
+["Football मा ‘half-space’ tactical concept किन महत्वपूर्ण छ?",
+"Wide र central zones बीचको channel भएकाले त्यहाँबाट passing, shooting र combination play का अवसर सिर्जना हुन्छन्।"],
+
+["Football मा xG metric ले के अनुमान गर्छ?",
+"कुनै shot बाट goal हुने सम्भावनालाई historical/model-based factors का आधारमा अनुमान गर्छ।"],
+
+["Football मा possession मात्र बढी हुनु किन जीतको ग्यारेन्टी होइन?",
+"Possession को quality, chance creation, defensive efficiency र finishing जस्ता अन्य factors पनि निर्णायक हुन्छन्।"],
+
+["Football मा aggregate score कुन प्रकारका प्रतियोगितामा प्रयोग हुन सक्छ?",
+"Home-and-away knockout ties मा दुई legs को combined score निर्धारण गर्न।"],
+
+["Football मा away-goals rule को ऐतिहासिक प्रयोगको उद्देश्य के थियो?",
+"Home-and-away ties मा away team को goals लाई अतिरिक्त tiebreaking value दिने।"],
+
+["Football मा penalty shootout को उद्देश्य के हो?",
+"Draw भएको knockout match को winner निर्धारण गर्नु।"],
+
+["Football मा goalkeeper ले penalty kick मा किन विशेष strategic role खेल्छ?",
+"Shot direction अनुमान, positioning र reaction मार्फत save गर्ने प्रयास गर्छ।"],
+
+["Football मा direct free kick र indirect free kick बीच मुख्य अन्तर के हो?",
+"Direct free kick बाट ball सिधै goal मा गएर goal हुन सक्छ; indirect मा अर्को खेलाडीले touch गरेपछि मात्र goal मान्य हुन्छ।"],
+
+["Football मा ‘sweeper keeper’ को भूमिका के हो?",
+"Goal line मात्र रक्षा नगरी defensive line पछाडिको space cover गर्दै passing/build-up मा पनि सक्रिय हुने goalkeeper।"],
+
+["Football मा ‘pressing trap’ भन्नाले के बुझिन्छ?",
+"Opponent लाई जानाजानी निश्चित क्षेत्रमा pass गर्न बाध्य बनाएर त्यहाँ सामूहिक pressure लगाउने रणनीति।"],
+
+["Football मा transition phase किन महत्वपूर्ण हुन्छ?",
+"Possession change भएको तुरुन्तको समय defensive वा attacking advantage सिर्जना गर्न सबैभन्दा संवेदनशील हुन सक्छ।"],
+
+["Football मा overload कसरी सिर्जना गरिन्छ?",
+"Ball भएको क्षेत्रमा opponent भन्दा बढी attacking players ल्याएर numerical advantage बनाइन्छ।"],
+
+["Football मा underlap र overlap बीच के अन्तर छ?",
+"Overlap मा बाहिरबाट runner अगाडि जान्छ; underlap मा runner भित्रतर्फको channel बाट अगाडि जान्छ।"],
+
+["Football मा zonal marking र man marking बीच मुख्य tactical अन्तर के हो?",
+"Zonal marking मा area defend गरिन्छ; man marking मा विशेष opponent लाई प्राथमिक रूपमा follow गरिन्छ।"],
+
+["Football मा defensive line धेरै अगाडि राख्दा मुख्य जोखिम के हुन्छ?",
+"पछाडि ठूलो space सिर्जना भएर fast attackers ले through ball बाट advantage लिन सक्छन्।"],
+
+["Football मा counter-attacking football को मूल अवधारणा के हो?",
+"Opponent attack गर्दा खाली हुने space प्रयोग गरी तीव्र रूपमा attack गर्नु।"],
+
+["Football मा ‘deep-lying playmaker’ को मुख्य भूमिका के हो?",
+"पछाडिबाट passing र tempo control गर्दै attack निर्माण गर्नु।"],
+
+["Football मा pressing intensity मापन गर्न कुन प्रकारका metrics प्रयोग गर्न सकिन्छ?",
+"PPDA, pressures, defensive actions र field-location आधारित metrics प्रयोग गर्न सकिन्छ।"],
+
+["Football मा PPDA ले सामान्यतः के संकेत गर्छ?",
+"Opponent ले defensive pressure सामना नगरी कति passes गर्न पाउँछ भन्ने आधारमा pressing intensity को अनुमान।"],
+
+["Football मा set-piece specialist को महत्व किन हुन्छ?",
+"Free kick र corner जस्ता dead-ball situations बाट planned scoring opportunities सिर्जना गर्न सकिन्छ।"],
+
+["Football मा ‘second ball’ जित्नु किन महत्वपूर्ण हुन्छ?",
+"Initial clearance वा duel पछि loose ball कब्जा गरेर attack जारी राख्न वा opponent attack रोक्न सकिन्छ।"],
+
+["Football मा tactical flexibility भन्नाले के बुझिन्छ?",
+"Match situation अनुसार formation, pressing र attacking/defensive roles परिवर्तन गर्न सक्ने क्षमता।"]
+
+]},
+
+/* =========================
+   TENNIS
+========================= */
+
+{
+title:"🎾 टेनिस",
+subtitle:"Grand Slam • Rules • Tactics",
+questions:[
+
+["Tennis मा Grand Slam tournaments का court surfaces किन tactical रूपमा फरक हुन्छन्?",
+"Grass, clay र hard court को speed तथा bounce फरक हुने भएकाले playing style प्रभावित हुन्छ।"],
+
+["Tennis मा clay court मा baseline players लाई किन advantage हुन सक्छ?",
+"Slow surface र high bounce ले rallies लामो बनाउने भएकाले consistency र topspin महत्वपूर्ण हुन्छ।"],
+
+["Tennis मा grass court historically serve-and-volley style का लागि किन उपयुक्त मानिन्थ्यो?",
+"Grass को relatively fast, low bounce ले serve र net approach लाई प्रभावकारी बनाउन सक्छ।"],
+
+["Tennis मा tie-break को मूल उद्देश्य के हो?",
+"Set अत्यधिक लामो नहोस् भनेर निश्चित score condition मा निर्णायक game मार्फत set winner निर्धारण गर्नु।"],
+
+["Tennis मा break point भन्नाले के बुझिन्छ?",
+"Receiver ले अर्को point जितेमा opponent को service game जित्ने अवस्था।"],
+
+["Tennis मा unforced error र forced error बीच के फरक हुन्छ?",
+"Unforced error मा opponent को direct pressure बिना गल्ती हुन्छ; forced error opponent को pressure बाट उत्पन्न हुन्छ।"],
+
+["Tennis मा topspin को tactical फाइदा के हो?",
+"Ball लाई बढी downward dip गराएर सुरक्षित रूपमा उच्च trajectory मा मार्न र bounce पछि ball माथि उठाउन मद्दत गर्छ।"],
+
+["Tennis मा slice shot को विशेषता के हो?",
+"Backspin वा underspin प्रयोग गरेर ball लाई low bounce र relatively slower trajectory दिन सकिन्छ।"],
+
+["Tennis मा serve percentage र first-serve points won बीच किन फरक महत्व हुन्छ?",
+"Serve in राख्ने consistency र successful first serve पछि point जित्ने efficiency अलग metrics हुन्।"],
+
+["Tennis मा rally tolerance भन्नाले के बुझिन्छ?",
+"Long rallies मा unforced errors नगरी लगातार high-quality shots खेल्ने क्षमता।"],
+
+["Tennis मा net-rushing strategy कुन परिस्थितिमा उपयोगी हुन सक्छ?",
+"Opponent लाई pressure दिएर short ball निकाल्न बाध्य बनाएपछि net मा finish गर्न।"],
+
+["Tennis मा tiebreak मा momentum किन महत्वपूर्ण हुन सक्छ?",
+"Points को सीमित संख्या भएकाले केही consecutive points को परिणामले score र psychological pressure मा ठूलो प्रभाव पार्न सक्छ।"],
+
+["Tennis मा return position धेरै पछाडि राख्दा के tactical परिणाम हुन सक्छ?",
+"Serve return गर्न बढी reaction time मिल्न सक्छ तर opponent लाई court position र net approach को अवसर पनि मिल्न सक्छ।"],
+
+["Tennis मा inside-out forehand भन्नाले के बुझिन्छ?",
+"Backhand side बाट forehand प्रयोग गरेर cross-court वा down-the-line direction मा attack गर्ने shot।"],
+
+["Tennis मा drop shot को मुख्य उद्देश्य के हो?",
+"Opponent baseline मा हुँदा short ball खेलेर उसलाई अगाडि ल्याउनु।"],
+
+["Tennis मा passing shot कहिले प्रयोग गरिन्छ?",
+"Opponent net मा आएको अवस्थामा उसलाई पार गरेर ball court मा राख्न।"],
+
+["Tennis मा defensive lob र offensive lob बीच के अन्तर हुन्छ?",
+"Defensive lob pressure बाट court reset गर्न प्रयोग हुन्छ; offensive lob opponent को position माथिबाट intentional attacking shot हुन सक्छ।"],
+
+["Tennis मा unreturned serve किन महत्वपूर्ण metric हो?",
+"Return गर्न नसकिएको serve ले server लाई तत्काल point advantage दिन्छ।"],
+
+["Tennis मा serve placement किन speed भन्दा कहिलेकाहीँ बढी महत्वपूर्ण हुन सक्छ?",
+"Wide, body वा T-zone मा सही placement ले opponent को return angle र balance बिगार्न सक्छ।"],
+
+["Tennis मा rally length बढ्दा कुन प्रकारका players लाई tactical advantage हुन सक्छ?",
+"Consistency, fitness र point construction मा बलिया baseline players लाई।"],
+
+["Tennis मा clay court मा sliding skill किन उपयोगी हुन्छ?",
+"Player ले wide balls मा balance कायम राख्दै efficient recovery गर्न सक्छ।"],
+
+["Tennis मा court positioning को महत्व के हो?",
+"Opponent को shot angle, recovery distance र attacking opportunity लाई प्रभाव पार्छ।"],
+
+["Tennis मा ‘bagel’ र ‘breadstick’ शब्दले के जनाउँछन्?",
+"6–0 set लाई bagel र 6–1 set लाई breadstick भन्ने informal terms हुन्।"],
+
+["Tennis मा walkover र retirement बीच के अन्तर हुन्छ?",
+"Walkover मा match सुरु हुनुअघि opponent नआए/withdraw गरेमा हुन्छ; retirement मा match सुरु भएपछि खेलाडीले खेल छोड्छ।"],
+
+["Tennis मा medical timeout को उद्देश्य के हो?",
+"Match समयमा नियमअनुसार treat गर्न मिल्ने medical issue का लागि खेलाडीलाई उपचारको अवसर दिनु।"],
+
+["Tennis मा doubles मा poaching भन्नाले के बुझिन्छ?",
+"Net player ले partner को side/trajectory तर्फ cross गरेर opponent को shot intercept गर्नु।"],
+
+["Tennis doubles मा communication किन महत्वपूर्ण हुन्छ?",
+"Coverage, positioning र shot responsibility मा confusion रोक्न।"],
+
+["Tennis मा return-of-serve strategy opponent को serve type अनुसार किन परिवर्तन हुन्छ?",
+"Fast serve, kick serve र slice serve को bounce/trajectory फरक हुने भएकाले return position र swing फरक हुन सक्छ।"],
+
+["Tennis मा rally pattern पढ्ने क्षमता किन महत्वपूर्ण हुन्छ?",
+"Opponent को repeated tendencies पहिचान गरेर targeted attack र positioning गर्न सकिन्छ।"],
+
+["Tennis मा unforced error rate घटाउनु competitive advantage किन हुन सक्छ?",
+"Opponent लाई free points नदिँदा लामो match मा scoreboard pressure बढ्छ।"]
+
+]},
+
+/* =========================
+   ATHLETICS
+========================= */
+
+{
+title:"🏃 एथलेटिक्स",
+subtitle:"Track • Field • Records • Techniques",
+questions:[
+
+["Athletics मा false start को मुख्य कारण के हुन सक्छ?",
+"Starting signal भन्दा अगाडि athlete ले reaction/starting movement गर्नु।"],
+
+["100m sprint मा reaction time किन महत्वपूर्ण हुन्छ?",
+"Race अत्यन्त छोटो भएकाले starting phase को सानो समय फरकले final result मा प्रभाव पार्न सक्छ।"],
+
+["Long jump मा take-off board को महत्व के हो?",
+"Valid jump का लागि athlete ले निर्धारित take-off zone भित्रबाट उफ्रिनुपर्छ।"],
+
+["Triple jump का तीन phases के हुन्?",
+"Hop, step र jump।"],
+
+["High jump मा Fosbury Flop technique को विशेषता के हो?",
+"Bar पार गर्दा athlete ले back-first curved approach प्रयोग गर्ने आधुनिक technique हो।"],
+
+["Pole vault मा pole को मुख्य कार्य के हो?",
+"Pole को elastic energy प्रयोग गरेर athlete लाई vertical height प्राप्त गर्न सहयोग गर्नु।"],
+
+["Shot put मा throw को सट्टा ‘put’ किन भनिन्छ?",
+"Shot लाई throwing motion भन्दा pushing action मार्फत release गरिन्छ।"],
+
+["Discus throw मा rotational technique को उद्देश्य के हो?",
+"Body rotation बाट momentum सिर्जना गरी discus लाई उच्च release speed दिनु।"],
+
+["Javelin throw मा release angle किन महत्वपूर्ण हुन्छ?",
+"Release speed, height र aerodynamic factors सँग मिलेर optimal distance प्रभावित गर्छ।"],
+
+["Decathlon मा athlete को performance कसरी निर्धारण हुन्छ?",
+"दशवटा athletics events मा प्राप्त performances लाई official scoring tables अनुसार points मा रूपान्तरण गरी कुल score निकालिन्छ।"],
+
+["Heptathlon मा कति events हुन्छन्?",
+"सात events।"],
+
+["Steeplechase मा पानीको बाधा किन विशेष हुन्छ?",
+"Water jump ले athlete को rhythm, landing र energy management मा अतिरिक्त चुनौती दिन्छ।"],
+
+["Marathon को official distance किन 42.195 km हो?",
+"Modern Olympic-era standardization पछि marathon distance 42.195 kilometres मा स्थापित भएको हो।"],
+
+["Race walking मा athlete लाई running भन्दा कसरी फरक पारिन्छ?",
+"Race walking मा एक खुट्टा जमिनसँग contact मा हुनुपर्ने र leading leg straight हुने नियमगत requirements हुन्छन्।"],
+
+["4×100m relay मा baton exchange zone को रणनीतिक महत्व के हो?",
+"Speed कायम राख्दै निर्धारित zone भित्र legal baton exchange गर्नुपर्छ।"],
+
+["Athletics मा wind reading किन sprint र long jump मा महत्वपूर्ण हुन्छ?",
+"Wind assistance वा headwind ले performance र record eligibility मा प्रभाव पार्न सक्छ।"],
+
+["Negative split pacing भन्नाले के बुझिन्छ?",
+"Race को दोस्रो भाग पहिलो भागभन्दा तुलनात्मक रूपमा छिटो पूरा गर्ने pacing strategy।"],
+
+["Middle-distance races मा drafting को सम्भावित फाइदा के हो?",
+"अगाडिको runner पछाडि बसेर aerodynamic resistance केही घटाउन सकिन्छ।"],
+
+["Athletics मा qualifying standard किन प्रयोग गरिन्छ?",
+"Major competition मा entry का लागि athlete ले न्यूनतम performance requirement पूरा गरेको सुनिश्चित गर्न।"],
+
+["Photo finish system किन प्रयोग गरिन्छ?",
+"अत्यन्त नजिकको finishing order उच्च precision का साथ निर्धारण गर्न।"],
+
+["Track lane infringement को परिणाम के हुन सक्छ?",
+"Event को नियमअनुसार athlete disqualified हुन सक्छ।"],
+
+["Athletics मा split time भन्नाले के बुझिन्छ?",
+"Race को निश्चित intermediate point सम्म पुगेको समय।"],
+
+["Pacing strategy marathon मा किन अत्यन्त महत्वपूर्ण हुन्छ?",
+"Energy conservation र fatigue management ले अन्तिम performance मा ठूलो प्रभाव पार्छ।"],
+
+["Altitude training ले endurance athletes लाई किन आकर्षित गर्छ?",
+"कम oxygen availability को adaptation बाट physiological benefits प्राप्त गर्ने उद्देश्यले।"],
+
+["Athletics मा qualifying round र final बीच मुख्य उद्देश्यगत अन्तर के हो?",
+"Qualifying ले final मा पुग्ने athletes छनोट गर्छ; final ले medal/position निर्धारण गर्छ।"],
+
+["Track surface को गुणले sprint performance मा कसरी प्रभाव पार्न सक्छ?",
+"Surface stiffness, energy return र traction ले acceleration र running efficiency प्रभावित गर्न सक्छ।"],
+
+["Sprint start मा starting blocks को मुख्य उद्देश्य के हो?",
+"Explosive acceleration का लागि athlete लाई स्थिर र प्रभावकारी starting position दिनु।"],
+
+["Field events मा fouled attempt को अर्थ के हो?",
+"नियम उल्लंघन भएको प्रयास valid result का रूपमा गणना नहुनु।"],
+
+["Athletics मा competition consistency किन महत्वपूर्ण हुन्छ?",
+"धेरै rounds वा attempts भएका event मा consistent valid performances ले final ranking मा ठूलो प्रभाव पार्छ।"]
+
+]},
+
+/* =========================
+   INTERNATIONAL SPORTS
+========================= */
+
+{
+title:"🌎 अन्तर्राष्ट्रिय खेलकुद",
+subtitle:"Federations • Championships • Sporting History",
+questions:[
+
+["International Olympic Committee को मुख्य भूमिका के हो?",
+"Olympic Movement को नेतृत्व, Olympic Games को coordination र Olympic Charter सम्बन्धी governance मा भूमिका खेल्नु।"],
+
+["International sports federation को मुख्य कार्य के हुन्छ?",
+"सम्बन्धित खेलको international rules, competitions, development र governance व्यवस्थापन गर्नु।"],
+
+["World Anti-Doping Agency को मुख्य उद्देश्य के हो?",
+"खेलमा doping विरुद्ध विश्वव्यापी harmonized anti-doping framework विकास र समन्वय गर्नु।"],
+
+["Doping मा ‘prohibited substance’ भन्नाले के बुझिन्छ?",
+"Anti-doping rules अनुसार athletes ले प्रयोग गर्न निषेध गरिएका substances मध्ये कुनै।"],
+
+["Athlete Biological Passport को उद्देश्य के हो?",
+"समयक्रममा athlete का biological markers monitor गरेर unusual changes बाट doping संकेत पहिचान गर्न सहयोग गर्नु।"],
+
+["Olympic Charter को महत्व के हो?",
+"Olympic Movement का principles, rules र governance framework निर्धारण गर्ने fundamental document हो।"],
+
+["Paralympic Movement मा classification किन आवश्यक हुन्छ?",
+"Different impairments भएका athletes बीच sporting impact को आधारमा fair competition कायम गर्न।"],
+
+["Sports arbitration मा Court of Arbitration for Sport को भूमिका के हो?",
+"International sport सम्बन्धी disputes को independent arbitration/appeal mechanism प्रदान गर्नु।"],
+
+["Sports governance मा integrity भन्नाले केसँग सम्बन्धित हुन्छ?",
+"Fairness, transparency, ethical conduct र manipulation/doping जस्ता misconduct विरुद्धको प्रणाली।"],
+
+["Match-fixing ले खेलकुदको integrity मा किन गम्भीर असर पार्छ?",
+"Competition को निष्पक्ष परिणाममा कृत्रिम हस्तक्षेप गरेर खेलप्रतिको विश्वास कमजोर बनाउँछ।"],
+
+["Sports betting integrity monitoring किन आवश्यक हुन्छ?",
+"Unusual betting patterns बाट सम्भावित match manipulation वा corruption का संकेत पत्ता लगाउन।"],
+
+["International sporting event को qualification system किन महत्वपूर्ण हुन्छ?",
+"योग्य athletes/teams छनोट गर्ने standardized competitive pathway प्रदान गर्न।"],
+
+["Seeded draw को उद्देश्य के हो?",
+"Strong competitors लाई प्रारम्भिक round मै एकअर्कासँग पर्ने सम्भावना घटाउँदै tournament structure व्यवस्थित गर्नु।"],
+
+["Knockout tournament मा seeding ले competitive balance मा कसरी प्रभाव पार्न सक्छ?",
+"Ranked participants को bracket placement व्यवस्थित गरेर प्रारम्भिक चरणमा शीर्ष competitors बीचको भिडन्त घटाउन सक्छ।"],
+
+["Round-robin tournament को मुख्य विशेषता के हो?",
+"प्रत्येक participant ले निर्धारित format अनुसार धेरै वा सबै अन्य participants विरुद्ध खेल्छ।"],
+
+["Head-to-head tiebreaker कहाँ प्रयोग हुन सक्छ?",
+"समान points भएका teams बीच previous direct encounter को result लाई ranking criterion का रूपमा प्रयोग गर्ने अवस्थामा।"],
+
+["Goal difference वा points difference जस्ता tiebreakers किन प्रयोग गरिन्छ?",
+"समान points/records भएका participants लाई थप performance measure बाट छुट्याउन।"],
+
+["Sports ranking system को मुख्य उद्देश्य के हो?",
+"Participants को comparative performance लाई standardized points/results को आधारमा क्रमबद्ध गर्नु।"],
+
+["World championship र continental championship बीच मुख्य अन्तर के हो?",
+"World championship global participants का लागि हुन्छ; continental championship सम्बन्धित continent/region केन्द्रित हुन्छ।"],
+
+["Home advantage sports science मा किन अध्ययन गरिन्छ?",
+"Home crowd, travel, familiarity, officiating perception र environment जस्ता factors ले performance प्रभावित गर्न सक्ने भएकाले।"],
+
+["Travel fatigue international tournaments मा किन महत्वपूर्ण हुन्छ?",
+"Time-zone changes, long-distance travel, sleep disruption र recovery demands ले performance घटाउन सक्छ।"],
+
+["Sports nutrition मा carbohydrate loading कुन प्रकारका event का लागि विशेष उपयोगी हुन सक्छ?",
+"लामो endurance events अघि muscle glycogen stores maximize गर्न।"],
+
+["Athlete recovery मा sleep किन महत्वपूर्ण हुन्छ?",
+"Physical recovery, hormonal regulation, cognitive function र performance maintenance मा sleep को भूमिका हुन्छ।"],
+
+["Sports biomechanics ले के अध्ययन गर्छ?",
+"Human movement मा forces, motion, technique र mechanical principles को अध्ययन गर्छ।"],
+
+["Sports psychology मा performance anxiety ले के असर पार्न सक्छ?",
+"Concentration, decision-making, confidence र motor performance मा नकारात्मक प्रभाव पार्न सक्छ।"],
+
+["Sports analytics मा expected performance models किन प्रयोग गरिन्छ?",
+"Historical तथा contextual data बाट future outcomes वा performance probabilities अनुमान गर्न।"],
+
+["Video analysis elite sports मा किन महत्वपूर्ण हुन्छ?",
+"Technique, opponent tendencies, tactical patterns र performance errors पहिचान गर्न।"],
+
+["Injury prevention मा workload monitoring किन गरिन्छ?",
+"Training load र recovery बीच balance राखेर overuse/injury risk कम गर्न।"],
+
+["Talent identification मा केवल physical ability पर्याप्त किन हुँदैन?",
+"Technical skill, decision-making, psychology, adaptability र long-term development potential पनि महत्वपूर्ण हुन्छ।"],
+
+["Sports science मा VO₂ max ले सामान्यतः के संकेत गर्छ?",
+"शरीरले maximal exercise समयमा oxygen uptake/utilization गर्ने अधिकतम क्षमता।"]
+
+]},
+
+/* =========================
+   OLYMPIC & MAJOR EVENTS
+========================= */
+
+{
+title:"🥇 प्रमुख खेल प्रतियोगिता",
+subtitle:"Olympic History • Major Events • Sporting Records",
+questions:[
+
+["Modern Olympic Games को पुनरुत्थानमा Pierre de Coubertin को भूमिका के थियो?",
+"Modern Olympic Movement स्थापना र Olympic Games पुनर्जीवित गर्ने प्रमुख व्यक्तित्वमध्ये एक थिए।"],
+
+["Olympic Games को host city चयनमा IOC को भूमिका के हुन्छ?",
+"IOC ले candidature process र voting/governance mechanism मार्फत host selection मा निर्णय गर्छ।"],
+
+["Olympic qualification र Olympic seeding बीच के अन्तर हुन्छ?",
+"Qualification ले Games मा सहभागी हुने eligibility निर्धारण गर्छ; seeding ले tournament draw/positioning प्रभावित गर्न सक्छ।"],
+
+["Olympic medal table लाई official overall ranking मान्न किन सावधानी आवश्यक हुन्छ?",
+"Medal counts लाई देशहरूको overall sporting strength को पूर्ण scientific ranking मान्ने एउटै universally mandated formula हुँदैन।"],
+
+["Paralympic Games को sporting significance के हो?",
+"Elite athletes with disabilities का लागि global high-level multi-sport competition प्रदान गर्छ।"],
+
+["Youth Olympic Games को मुख्य उद्देश्य के हो?",
+"युवा athletes को elite competition सँगै education, culture र Olympic values मा जोड दिनु।"],
+
+["World Games कुन प्रकारका खेलहरूका लागि विशेष रूपमा महत्वपूर्ण छन्?",
+"Olympic programme बाहिर वा गैर-Olympic sports का लागि international multi-sport platform प्रदान गर्ने event।"],
+
+["Asian Games को क्षेत्रीय महत्व के हो?",
+"Asia का राष्ट्रिय Olympic committees बीच multi-sport competition र regional sporting development को प्रमुख platform हो।"],
+
+["Commonwealth Games को ऐतिहासिक विशेषता के हो?",
+"Commonwealth सम्बन्धित देश/territories का athletes बीच हुने बहु-खेल अन्तर्राष्ट्रिय प्रतियोगिता हो।"],
+
+["Pan American Games कुन क्षेत्रका लागि हो?",
+"North, Central, South America तथा Caribbean क्षेत्रका countries/territories का athletes लाई समेट्ने multi-sport event।"],
+
+["African Games को उद्देश्य के हो?",
+"Africa का देशहरूबीच multi-sport competition र continental sporting development लाई प्रवर्द्धन गर्नु।"],
+
+["Winter sports र Summer sports लाई Olympic programme मा किन छुट्टाछुट्टै आयोजना गरिन्छ?",
+"Sports को seasonal/environmental requirements फरक भएकाले।"],
+
+["Olympic record र world record बीच के अन्तर हुन्छ?",
+"World record सम्बन्धित event मा विश्वकै सर्वोच्च recognized performance हो; Olympic record भने Olympic Games भित्रको सर्वोच्च performance हो।"],
+
+["World record ratification किन आवश्यक हुन्छ?",
+"Performance ले technical rules, equipment, timing, doping control र अन्य eligibility requirements पूरा गरेको प्रमाणित गर्न।"],
+
+["Electronic timing ले sprint events मा precision कसरी बढाउँछ?",
+"Human stopwatch भन्दा धेरै उच्च temporal precision मा finishing time capture गर्न सक्छ।"],
+
+["Photo finish र electronic timing लाई सँगै किन प्रयोग गर्न सकिन्छ?",
+"Timing र finishing order लाई उच्च precision का साथ verify गर्न।"],
+
+["Sports equipment regulations किन महत्वपूर्ण हुन्छन्?",
+"Equipment ले अनुचित technological advantage नदियोस् र competition standardization कायम होस् भनेर।"],
+
+["Technological doping भन्नाले खेलकुदमा के बुझिन सक्छ?",
+"Equipment वा technology को अनुचित प्रयोगबाट athlete लाई rules ले अनुमति नदिएको performance advantage दिनु।"],
+
+["Sports federation ले equipment standards किन निर्धारण गर्छ?",
+"सबै competitors का लागि fair, safe र comparable competition conditions कायम गर्न।"],
+
+["Major international tournaments मा anti-doping testing किन कडा हुन्छ?",
+"Competition integrity कायम गर्न र prohibited performance-enhancing methods रोक्न।"],
+
+["Sports records मा wind assistance को उल्लेख किन गरिन्छ?",
+"विशेषतः sprint/jump events मा अत्यधिक tailwind ले performance artificially assist गर्न सक्ने भएकाले।"],
+
+["Athlete eligibility rules किन विवादको विषय बन्न सक्छन्?",
+"Nationality, age, gender eligibility, classification वा federation regulations जस्ता जटिल criteria का कारण।"],
+
+["International transfer rules football जस्ता team sports मा किन आवश्यक हुन्छ?",
+"Player registration, contract, club movement र competitive integrity व्यवस्थित गर्न।"],
+
+["Salary cap को अवधारणा केही professional sports leagues मा किन प्रयोग गरिन्छ?",
+"Teams बीच financial imbalance कम गर्दै competitive balance कायम गर्न।"],
+
+["Draft system को मुख्य उद्देश्य के हो?",
+"Talent distribution लाई व्यवस्थित गरेर कमजोर teams लाई future talent प्राप्त गर्ने अवसर दिनु।"],
+
+["Free agency professional sports मा केसँग सम्बन्धित हुन्छ?",
+"Contract समाप्त भएपछि athlete ले eligible अवस्थामा अर्को team सँग contract negotiation गर्न सक्ने व्यवस्था।"],
+
+["Transfer window को उद्देश्य के हो?",
+"Professional football जस्ता sports मा player registrations/transfers का लागि निर्धारित समयसीमा राख्नु।"],
+
+["Promotion and relegation system को मुख्य विशेषता के हो?",
+"Performance का आधारमा teams माथिल्लो र तल्लो divisions बीच season-to-season move हुन्छन्।"],
+
+["Franchise league र open league बीच मुख्य अन्तर के हो?",
+"Franchise league मा fixed franchises हुन्छन्; open league मा sporting merit का आधारमा promotion/relegation हुन सक्छ।"],
+
+["Salary cap र luxury tax बीच मुख्य अन्तर के हो?",
+"Salary cap ले payroll मा limit राख्छ; luxury tax system मा निर्धारित threshold भन्दा बढी खर्च गर्दा financial penalty लाग्न सक्छ।"]
+
+]}
 
 ];
 
 
-/* =====================================================
-   SHUFFLE
-===================================================== */
+/* =========================
+   RENDER
+========================= */
 
-function shuffle(array){
-  let a=[...array];
+const container = document.getElementById("questions");
 
-  for(let i=a.length-1;i>0;i--){
-    let j=Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
+let total = 0;
 
-  return a;
-}
+data.forEach(category => {
 
+    const section = document.createElement("section");
+    section.className = "category";
 
-/* =====================================================
-   QUESTION BANK
-===================================================== */
+    section.innerHTML = `
+        <div class="category-title">
+            <div class="icon">
+                ${category.title.split(" ")[0]}
+            </div>
 
-function displayBank(){
+            <div>
+                <h3>
+                    ${category.title.substring(category.title.indexOf(" ")+1)}
+                </h3>
 
-  const search=document
-    .getElementById("search")
-    .value
-    .toLowerCase();
-
-  let html="";
-
-  questions.forEach((q,index)=>{
-
-    if(
-      !q[1].toLowerCase().includes(search) &&
-      !q[2].toLowerCase().includes(search)
-    ){
-      return;
-    }
-
-    html+=`
-      <div class="card">
-        <div class="category">${q[0]}</div>
-
-        <div class="question">
-          ${index+1}. ${q[1]}
+                <p>${category.subtitle}</p>
+            </div>
         </div>
-
-        <div class="answer">
-          ✅ Answer: ${q[2]}
-        </div>
-      </div>
     `;
-  });
 
-  document.getElementById("bankList").innerHTML=html;
-}
+    category.questions.forEach((q) => {
 
+        total++;
 
-/* =====================================================
-   GAME VARIABLES
-===================================================== */
+        const card = document.createElement("div");
+        card.className = "card";
 
-let gameQuestions=[];
-let currentQuestion=0;
-let score=0;
-let lives=3;
-let answered=false;
+        card.innerHTML = `
+            <div class="q-number">
+                प्रश्न ${total}
+            </div>
 
+            <div class="question">
+                ${q[0]}
+            </div>
 
-/* =====================================================
-   START GAME
-===================================================== */
+            <div class="answer">
+                <strong>उत्तर:</strong>
+                ${q[1]}
+            </div>
+        `;
 
-function startGame(){
-
-  gameQuestions=shuffle(questions);
-  currentQuestion=0;
-  score=0;
-  lives=3;
-  answered=false;
-
-  document.getElementById("bank").classList.add("hidden");
-  document.getElementById("result").classList.add("hidden");
-  document.getElementById("game").classList.remove("hidden");
-
-  loadQuestion();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-
-/* =====================================================
-   CREATE OPTIONS
-===================================================== */
-
-function createOptions(correct){
-
-  let wrongAnswers=questions
-    .map(q=>q[2])
-    .filter(a=>a!==correct);
-
-  wrongAnswers=[...new Set(wrongAnswers)];
-
-  wrongAnswers=shuffle(wrongAnswers).slice(0,3);
-
-  return shuffle([
-    correct,
-    ...wrongAnswers
-  ]);
-}
-
-
-/* =====================================================
-   LOAD QUESTION
-===================================================== */
-
-function loadQuestion(){
-
-  answered=false;
-
-  const q=gameQuestions[currentQuestion];
-
-  document.getElementById("questionNumber")
-    .textContent=currentQuestion+1;
-
-  document.getElementById("score")
-    .textContent=score;
-
-  document.getElementById("lives")
-    .textContent=lives;
-
-  document.getElementById("progressBar")
-    .style.width=
-    ((currentQuestion/questions.length)*100)+"%";
-
-  document.getElementById("gameQuestion")
-    .textContent=q[1];
-
-  const optionsBox=document.getElementById("options");
-
-  optionsBox.innerHTML="";
-
-  const options=createOptions(q[2]);
-
-  options.forEach(answer=>{
-
-    const button=document.createElement("button");
-
-    button.className="option";
-    button.textContent=answer;
-
-    button.onclick=()=>{
-      checkAnswer(button,answer,q[2]);
-    };
-
-    optionsBox.appendChild(button);
-  });
-
-  document.getElementById("nextButton").disabled=true;
-}
-
-
-/* =====================================================
-   CHECK ANSWER
-===================================================== */
-
-function checkAnswer(button,selected,correct){
-
-  if(answered)return;
-
-  answered=true;
-
-  const buttons=
-    document.querySelectorAll(".option");
-
-  buttons.forEach(b=>{
-    b.disabled=true;
-  });
-
-  if(selected===correct){
-
-    button.classList.add("correct");
-
-    score++;
-
-  }else{
-
-    button.classList.add("wrong");
-
-    lives--;
-
-    buttons.forEach(b=>{
-
-      if(b.textContent===correct){
-        b.classList.add("correct");
-      }
+        section.appendChild(card);
 
     });
-  }
 
-  document.getElementById("score")
-    .textContent=score;
+    container.appendChild(section);
 
-  document.getElementById("lives")
-    .textContent=lives;
-
-  if(lives<=0){
-
-    setTimeout(gameOver,600);
-
-  }else{
-
-    document.getElementById("nextButton")
-      .disabled=false;
-  }
-}
-
-
-/* =====================================================
-   NEXT QUESTION
-===================================================== */
-
-function nextQuestion(){
-
-  if(!answered)return;
-
-  currentQuestion++;
-
-  if(currentQuestion>=gameQuestions.length){
-
-    finishGame();
-
-  }else{
-
-    loadQuestion();
-  }
-}
-
-
-/* =====================================================
-   GAME OVER
-===================================================== */
-
-function gameOver(){
-
-  document.getElementById("game")
-    .classList.add("hidden");
-
-  document.getElementById("result")
-    .classList.remove("hidden");
-
-  document.getElementById("resultScore")
-    .textContent=
-    `💔 Game Over — ${score}/${questions.length}`;
-
-  document.getElementById("resultMessage")
-    .textContent=
-    "तपाईंका 3 वटा Life सकिए। फेरि खेल्न सक्नुहुन्छ।";
-}
-
-
-/* =====================================================
-   FINISH
-===================================================== */
-
-function finishGame(){
-
-  document.getElementById("game")
-    .classList.add("hidden");
-
-  document.getElementById("result")
-    .classList.remove("hidden");
-
-  const percentage=
-    Math.round((score/questions.length)*100);
-
-  document.getElementById("resultScore")
-    .textContent=
-    `🏆 Final Score: ${score}/${questions.length}`;
-
-  document.getElementById("resultMessage")
-    .textContent=
-    `📊 Your Percentage: ${percentage}%`;
-}
-
-
-/* =====================================================
-   SHOW QUESTION BANK
-===================================================== */
-
-function showBank(){
-
-  document.getElementById("game")
-    .classList.add("hidden");
-
-  document.getElementById("result")
-    .classList.add("hidden");
-
-  document.getElementById("bank")
-    .classList.remove("hidden");
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-}
-
-
-/* =====================================================
-   INITIAL LOAD
-===================================================== */
-
-displayBank();
+});
 
 </script>
 
