@@ -1,23 +1,1164 @@
-```html
-<a href="surfing-game.html"
-   class="content-card reveal">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <div class="card-icon">
-        🏄
+<title>Gyan Nepal - Surfing Game</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    user-select:none;
+    -webkit-user-select:none;
+    touch-action:none;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+    background:#05294a;
+}
+
+/* GAME SCREEN */
+
+.game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #65d9ff 0%,
+            #c7f7ff 25%,
+            #008fc2 25%,
+            #005d91 100%
+        );
+}
+
+/* SUN */
+
+.sun{
+    position:absolute;
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:#fff2a3;
+    top:55px;
+    right:25px;
+    box-shadow:0 0 35px #fff2a3;
+}
+
+/* CLOUDS */
+
+.cloud{
+    position:absolute;
+    width:110px;
+    height:32px;
+    border-radius:40px;
+    background:white;
+    opacity:.75;
+    animation:cloudMove 24s linear infinite;
+}
+
+.cloud::before{
+    content:"";
+    position:absolute;
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:white;
+    left:15px;
+    top:-22px;
+}
+
+.cloud::after{
+    content:"";
+    position:absolute;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:white;
+    right:10px;
+    top:-30px;
+}
+
+.cloud1{
+    top:90px;
+    left:-150px;
+}
+
+.cloud2{
+    top:150px;
+    left:-300px;
+    transform:scale(.7);
+    animation-delay:8s;
+}
+
+@keyframes cloudMove{
+
+    from{
+        transform:translateX(-200px);
+    }
+
+    to{
+        transform:translateX(calc(100vw + 300px));
+    }
+
+}
+
+/* SEA */
+
+.sea{
+    position:absolute;
+    top:25%;
+    left:0;
+    right:0;
+    bottom:0;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            #007bb0 0px,
+            #008fbd 35px,
+            #006c9d 70px
+        );
+}
+
+/* WAVES */
+
+.wave{
+    position:absolute;
+    width:180%;
+    height:100px;
+    left:-40%;
+    border-radius:50%;
+    background:rgba(255,255,255,.16);
+    animation:waveMove 4s ease-in-out infinite;
+}
+
+.wave1{
+    top:29%;
+}
+
+.wave2{
+    top:47%;
+    animation-delay:1s;
+}
+
+.wave3{
+    top:68%;
+    animation-delay:2s;
+}
+
+@keyframes waveMove{
+
+    0%,100%{
+        transform:translateX(-4%);
+    }
+
+    50%{
+        transform:translateX(4%);
+    }
+
+}
+
+/* HEADER */
+
+.hud{
+    position:absolute;
+    z-index:50;
+    top:12px;
+    left:12px;
+    right:12px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.scoreBox{
+    padding:9px 14px;
+    border-radius:15px;
+
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+
+    background:rgba(0,0,0,.35);
+    backdrop-filter:blur(8px);
+}
+
+.title{
+    position:absolute;
+    z-index:50;
+    top:65px;
+    width:100%;
+
+    text-align:center;
+
+    color:white;
+    font-size:20px;
+    font-weight:800;
+
+    text-shadow:
+        0 3px 8px rgba(0,0,0,.6);
+}
+
+/* PLAYER */
+
+.player{
+    position:absolute;
+    z-index:30;
+
+    width:120px;
+    height:115px;
+
+    left:50%;
+    top:62%;
+
+    transform:translate(-50%,-50%);
+
+    transition:
+        left .08s linear,
+        top .08s linear;
+}
+
+/* LARGE SURFER */
+
+.surfer{
+    position:absolute;
+
+    left:18px;
+    top:-10px;
+
+    font-size:78px;
+
+    transform:rotate(-8deg);
+
+    filter:
+        drop-shadow(
+            0 5px 3px rgba(0,0,0,.25)
+        );
+}
+
+/* BOARD */
+
+.board{
+    position:absolute;
+
+    bottom:10px;
+    left:5px;
+
+    width:110px;
+    height:24px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff4d6d,
+            #ffd166,
+            #06d6a0
+        );
+
+    transform:rotate(-3deg);
+
+    box-shadow:
+        0 6px 0 rgba(0,0,0,.18),
+        0 0 15px rgba(255,255,255,.4);
+}
+
+/* PLAYER WAVE */
+
+.playerWave{
+    position:absolute;
+
+    bottom:-2px;
+    left:-10px;
+
+    width:130px;
+    height:20px;
+
+    border-bottom:
+        5px solid rgba(255,255,255,.65);
+
+    border-radius:50%;
+}
+
+/* OBSTACLE */
+
+.obstacle{
+    position:absolute;
+    z-index:20;
+
+    right:-100px;
+
+    font-size:60px;
+
+    filter:
+        drop-shadow(
+            0 5px 3px rgba(0,0,0,.25)
+        );
+}
+
+/* COIN */
+
+.coin{
+    position:absolute;
+    z-index:21;
+
+    right:-60px;
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:28px;
+
+    background:#ffd700;
+
+    border:
+        3px solid #fff4a3;
+
+    box-shadow:
+        0 0 20px #ffd700;
+
+    animation:
+        coinSpin .6s linear infinite;
+}
+
+@keyframes coinSpin{
+
+    50%{
+        transform:scale(.75);
+    }
+
+}
+
+/* TOUCH MESSAGE */
+
+.touchMessage{
+    position:absolute;
+    z-index:40;
+
+    bottom:25px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:90%;
+
+    text-align:center;
+
+    color:white;
+
+    font-size:14px;
+
+    padding:10px 15px;
+
+    border-radius:20px;
+
+    background:rgba(0,0,0,.25);
+
+    backdrop-filter:blur(5px);
+}
+
+/* GAME OVER */
+
+.gameOver{
+    position:absolute;
+
+    z-index:100;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    background:
+        rgba(0,20,40,.75);
+
+    backdrop-filter:blur(7px);
+}
+
+.panel{
+    width:88%;
+    max-width:360px;
+
+    padding:30px 20px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    color:white;
+
+    background:
+        rgba(4,28,50,.95);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.5);
+}
+
+.panel h1{
+    font-size:36px;
+    margin-bottom:12px;
+}
+
+.panel p{
+    margin:8px;
+    font-size:19px;
+}
+
+.restart{
+    border:none;
+
+    margin-top:15px;
+
+    padding:13px 28px;
+
+    border-radius:30px;
+
+    color:white;
+
+    font-size:17px;
+    font-weight:bold;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00b894,
+            #0984e3
+        );
+
+    cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="game" id="game">
+
+    <div class="sun"></div>
+
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <div class="sea"></div>
+
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+
+
+    <!-- HUD -->
+
+    <div class="hud">
+
+        <div class="scoreBox">
+            🏆 Score:
+            <span id="score">0</span>
+        </div>
+
+        <div class="scoreBox">
+            🪙
+            <span id="coins">0</span>
+        </div>
+
     </div>
 
-    <h3>
-        Surfing Game
-    </h3>
 
-    <p>
-        Ride the waves, avoid obstacles,
-        collect coins and beat your high score.
-    </p>
+    <div class="title">
+        🏄 Gyan Nepal Surfing
+    </div>
 
-    <span class="play-link">
-        Play Now →
-    </span>
 
-</a>
+    <!-- PLAYER -->
+
+    <div class="player" id="player">
+
+        <div class="surfer">
+            🏄
+        </div>
+
+        <div class="board"></div>
+
+        <div class="playerWave"></div>
+
+    </div>
+
+
+    <!-- TOUCH INSTRUCTION -->
+
+    <div class="touchMessage">
+        👆 Touch & Drag to Move
+    </div>
+
+
+    <!-- GAME OVER -->
+
+    <div class="gameOver" id="gameOver">
+
+        <div class="panel">
+
+            <h1>
+                🌊 Game Over
+            </h1>
+
+            <p>
+                🏆 Score:
+                <strong id="finalScore">
+                    0
+                </strong>
+            </p>
+
+            <p>
+                🪙 Coins:
+                <strong id="finalCoins">
+                    0
+                </strong>
+            </p>
+
+            <button
+                class="restart"
+                onclick="restartGame()">
+
+                🔄 Play Again
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ============================================
+   GAME VARIABLES
+============================================ */
+
+const game =
+    document.getElementById("game");
+
+const player =
+    document.getElementById("player");
+
+const scoreText =
+    document.getElementById("score");
+
+const coinsText =
+    document.getElementById("coins");
+
+const gameOver =
+    document.getElementById("gameOver");
+
+const finalScore =
+    document.getElementById("finalScore");
+
+const finalCoins =
+    document.getElementById("finalCoins");
+
+
+let score = 0;
+let coins = 0;
+
+let running = true;
+
+
+/* PLAYER POSITION */
+
+let playerX = 50;
+let playerY = 62;
+
+
+/* TOUCH VARIABLES */
+
+let dragging = false;
+
+let touchOffsetX = 0;
+let touchOffsetY = 0;
+
+
+/* ============================================
+   SET PLAYER POSITION
+============================================ */
+
+function setPlayerPosition(){
+
+    player.style.left =
+        playerX + "%";
+
+    player.style.top =
+        playerY + "%";
+
+}
+
+
+setPlayerPosition();
+
+
+
+/* ============================================
+   TOUCH START
+============================================ */
+
+game.addEventListener(
+    "touchstart",
+    function(e){
+
+        if(!running) return;
+
+        const touch =
+            e.touches[0];
+
+        const rect =
+            player.getBoundingClientRect();
+
+
+        const playerCenterX =
+            rect.left +
+            rect.width / 2;
+
+        const playerCenterY =
+            rect.top +
+            rect.height / 2;
+
+
+        touchOffsetX =
+            touch.clientX -
+            playerCenterX;
+
+        touchOffsetY =
+            touch.clientY -
+            playerCenterY;
+
+
+        dragging = true;
+
+    },
+    {passive:false}
+);
+
+
+
+/* ============================================
+   TOUCH MOVE
+============================================ */
+
+game.addEventListener(
+    "touchmove",
+    function(e){
+
+        if(!dragging || !running)
+            return;
+
+
+        e.preventDefault();
+
+
+        const touch =
+            e.touches[0];
+
+        const width =
+            window.innerWidth;
+
+        const height =
+            window.innerHeight;
+
+
+        let newX =
+            ((touch.clientX -
+              touchOffsetX) /
+             width) * 100;
+
+
+        let newY =
+            ((touch.clientY -
+              touchOffsetY) /
+             height) * 100;
+
+
+        /*
+          PLAYER LIMITS
+        */
+
+        newX =
+            Math.max(
+                10,
+                Math.min(90,newX)
+            );
+
+
+        newY =
+            Math.max(
+                35,
+                Math.min(82,newY)
+            );
+
+
+        playerX = newX;
+        playerY = newY;
+
+
+        setPlayerPosition();
+
+    },
+    {passive:false}
+);
+
+
+
+/* ============================================
+   TOUCH END
+============================================ */
+
+game.addEventListener(
+    "touchend",
+    function(){
+
+        dragging = false;
+
+    }
+);
+
+
+
+/* ============================================
+   MOUSE DRAG FOR COMPUTER
+============================================ */
+
+let mouseDown = false;
+
+
+game.addEventListener(
+    "mousedown",
+    function(e){
+
+        if(!running) return;
+
+        mouseDown = true;
+
+    }
+);
+
+
+game.addEventListener(
+    "mousemove",
+    function(e){
+
+        if(!mouseDown || !running)
+            return;
+
+
+        const width =
+            window.innerWidth;
+
+        const height =
+            window.innerHeight;
+
+
+        playerX =
+            (e.clientX / width) * 100;
+
+
+        playerY =
+            (e.clientY / height) * 100;
+
+
+        playerX =
+            Math.max(
+                10,
+                Math.min(90,playerX)
+            );
+
+
+        playerY =
+            Math.max(
+                35,
+                Math.min(82,playerY)
+            );
+
+
+        setPlayerPosition();
+
+    }
+);
+
+
+game.addEventListener(
+    "mouseup",
+    function(){
+
+        mouseDown = false;
+
+    }
+);
+
+
+
+/* ============================================
+   COLLISION FUNCTION
+============================================ */
+
+function collision(a,b){
+
+    const r1 =
+        a.getBoundingClientRect();
+
+    const r2 =
+        b.getBoundingClientRect();
+
+
+    return !(
+        r1.right < r2.left ||
+        r1.left > r2.right ||
+        r1.bottom < r2.top ||
+        r1.top > r2.bottom
+    );
+
+}
+
+
+
+/* ============================================
+   CREATE OBSTACLE
+============================================ */
+
+function createObstacle(){
+
+    if(!running)
+        return;
+
+
+    const obstacle =
+        document.createElement("div");
+
+
+    obstacle.className =
+        "obstacle";
+
+
+    const objects = [
+        "🪨",
+        "🪵",
+        "🌴",
+        "🦀",
+        "🐙"
+    ];
+
+
+    obstacle.textContent =
+        objects[
+            Math.floor(
+                Math.random() *
+                objects.length
+            )
+        ];
+
+
+    obstacle.style.top =
+        (35 +
+         Math.random() * 45)
+        + "%";
+
+
+    game.appendChild(obstacle);
+
+
+    let position = -100;
+
+
+    const timer =
+        setInterval(
+            function(){
+
+                if(!running){
+
+                    clearInterval(timer);
+
+                    obstacle.remove();
+
+                    return;
+
+                }
+
+
+                position += 5;
+
+
+                obstacle.style.right =
+                    position + "px";
+
+
+                if(
+                    collision(
+                        player,
+                        obstacle
+                    )
+                ){
+
+                    clearInterval(timer);
+
+                    obstacle.remove();
+
+                    endGame();
+
+                    return;
+
+                }
+
+
+                if(
+                    position >
+                    window.innerWidth + 150
+                ){
+
+                    clearInterval(timer);
+
+                    obstacle.remove();
+
+                }
+
+            },
+            30
+        );
+
+}
+
+
+
+/* ============================================
+   CREATE COIN
+============================================ */
+
+function createCoin(){
+
+    if(!running)
+        return;
+
+
+    const coin =
+        document.createElement("div");
+
+
+    coin.className =
+        "coin";
+
+
+    coin.textContent =
+        "🪙";
+
+
+    coin.style.top =
+        (35 +
+         Math.random() * 45)
+        + "%";
+
+
+    game.appendChild(coin);
+
+
+    let position = -60;
+
+
+    const timer =
+        setInterval(
+            function(){
+
+                if(!running){
+
+                    clearInterval(timer);
+
+                    coin.remove();
+
+                    return;
+
+                }
+
+
+                position += 5;
+
+
+                coin.style.right =
+                    position + "px";
+
+
+                if(
+                    collision(
+                        player,
+                        coin
+                    )
+                ){
+
+                    coins++;
+
+                    coinsText.textContent =
+                        coins;
+
+
+                    clearInterval(timer);
+
+                    coin.remove();
+
+                    return;
+
+                }
+
+
+                if(
+                    position >
+                    window.innerWidth + 100
+                ){
+
+                    clearInterval(timer);
+
+                    coin.remove();
+
+                }
+
+            },
+            30
+        );
+
+}
+
+
+
+/* ============================================
+   CREATE OBJECTS
+============================================ */
+
+setInterval(
+    createObstacle,
+    1500
+);
+
+
+setInterval(
+    createCoin,
+    1000
+);
+
+
+
+/* ============================================
+   SCORE
+============================================ */
+
+setInterval(
+    function(){
+
+        if(!running)
+            return;
+
+
+        score++;
+
+        scoreText.textContent =
+            score;
+
+    },
+    400
+);
+
+
+
+/* ============================================
+   GAME OVER
+============================================ */
+
+function endGame(){
+
+    running = false;
+
+    dragging = false;
+
+    finalScore.textContent =
+        score;
+
+    finalCoins.textContent =
+        coins;
+
+    gameOver.style.display =
+        "flex";
+
+}
+
+
+
+/* ============================================
+   RESTART GAME
+============================================ */
+
+function restartGame(){
+
+    score = 0;
+
+    coins = 0;
+
+    running = true;
+
+    playerX = 50;
+
+    playerY = 62;
+
+
+    scoreText.textContent =
+        "0";
+
+    coinsText.textContent =
+        "0";
+
+
+    finalScore.textContent =
+        "0";
+
+    finalCoins.textContent =
+        "0";
+
+
+    document
+        .querySelectorAll(
+            ".obstacle,.coin"
+        )
+        .forEach(
+            element =>
+                element.remove()
+        );
+
+
+    gameOver.style.display =
+        "none";
+
+
+    setPlayerPosition();
+
+}
+
+</script>
+
+</body>
+</html>
 ```
