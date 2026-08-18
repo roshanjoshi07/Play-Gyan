@@ -1,321 +1,225 @@
-```html
 <!DOCTYPE html>
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>Ethical Hacking & Cybersecurity Course</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberLab Nepal - Ethical Hacking Learning Lab</title>
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
-    font-family:"Noto Sans Devanagari",Arial,sans-serif;
-    background:#071018;
-    color:#17212b;
+  font-family:Arial,sans-serif;
+  background:#07111f;
+  color:#e8f0ff;
+  line-height:1.6;
 }
-
-/* HEADER */
 
 header{
-    min-height:320px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:35px 20px;
-    color:white;
-
-    background:
-    radial-gradient(circle at center,#176b68,#0b3038 48%,#03090d);
-    box-shadow:0 15px 45px #0009;
-}
-
-.logo{
-    font-size:70px;
-    margin-bottom:10px;
+  background:linear-gradient(135deg,#07111f,#102d4d);
+  padding:35px 20px;
+  text-align:center;
+  border-bottom:1px solid #1e4b70;
 }
 
 header h1{
-    font-size:clamp(30px,7vw,60px);
-    text-shadow:0 5px 20px #000;
+  color:#00ff9d;
+  font-size:clamp(28px,6vw,48px);
 }
 
 header p{
-    margin-top:12px;
-    color:#c9ffff;
+  margin-top:10px;
+  color:#a9bdd3;
 }
 
-.badges{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:10px;
-    margin-top:20px;
+nav{
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:#0a1727;
+  padding:12px;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  border-bottom:1px solid #17334e;
 }
 
-.badges span{
-    padding:8px 15px;
-    border:1px solid #ffffff35;
-    background:#ffffff12;
-    border-radius:30px;
+nav button{
+  white-space:nowrap;
+  background:#10253b;
+  color:#dcecff;
+  border:1px solid #214563;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-/* MAIN */
+nav button:hover{
+  background:#00ff9d;
+  color:#06121f;
+}
 
 .container{
-    width:min(1100px,94%);
-    margin:30px auto 80px;
+  width:min(1100px,94%);
+  margin:auto;
 }
 
-/* CLASS MENU */
-
-.menu{
-    background:#101c27;
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 15px 40px #0008;
-    margin-bottom:25px;
+section{
+  padding:35px 0;
 }
 
-.menu h2{
-    text-align:center;
-    color:#71eeee;
-    margin-bottom:16px;
+.card{
+  background:#0c1b2d;
+  border:1px solid #1b3a56;
+  border-radius:15px;
+  padding:22px;
+  margin:15px 0;
+  box-shadow:0 8px 25px #0005;
 }
 
-.class-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:8px;
+.card h2{
+  color:#00ff9d;
+  margin-bottom:12px;
 }
 
-.class-buttons button{
-    border:0;
-    padding:10px 14px;
-    border-radius:25px;
-    background:#145c62;
-    color:white;
-    cursor:pointer;
-    font-weight:bold;
+.card h3{
+  color:#62b8ff;
+  margin:12px 0 6px;
 }
 
-.class-buttons button:hover{
-    background:#1c8180;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
 }
 
-.class-buttons button.active{
-    background:#73eeee;
-    color:#062027;
+.topic{
+  cursor:pointer;
+  transition:.2s;
 }
 
-/* BOOK */
-
-.book{
-    background:#fffdf6;
-    min-height:720px;
-    padding:clamp(25px,7vw,75px);
-    position:relative;
-    box-shadow:0 20px 70px #000b;
+.topic:hover{
+  transform:translateY(-4px);
+  border-color:#00ff9d;
 }
 
-.book:before{
-    content:"";
-    position:absolute;
-    inset:15px;
-    border:2px solid #bdd8d7;
-    pointer-events:none;
+.badge{
+  display:inline-block;
+  background:#123f35;
+  color:#00ff9d;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  margin-bottom:8px;
 }
 
-.class-number{
-    text-align:center;
-    color:#167375;
-    font-weight:bold;
-    letter-spacing:2px;
-    margin-bottom:12px;
-}
-
-.book h2{
-    text-align:center;
-    color:#104c54;
-    font-size:clamp(27px,6vw,45px);
-    margin-bottom:10px;
-}
-
-.subtitle{
-    text-align:center;
-    color:#738285;
-    margin-bottom:35px;
-}
-
-.content{
-    font-size:18px;
-    line-height:2;
-    text-align:justify;
-}
-
-.content p{
-    margin-bottom:20px;
-    text-indent:35px;
-}
-
-.content h3{
-    color:#12696c;
-    margin:28px 0 12px;
-}
-
-.content ul,
-.content ol{
-    margin:10px 0 25px 30px;
-}
-
-.content li{
-    margin-bottom:9px;
-}
-
-.info,
-.tip,
-.warning,
-.exercise{
-    padding:18px;
-    margin:25px 0;
-    border-radius:10px;
-    line-height:1.8;
-}
-
-.info{
-    background:#e8fafa;
-    border-left:5px solid #168b8b;
-}
-
-.tip{
-    background:#eef9ee;
-    border-left:5px solid #40a84b;
+.safe{
+  border-left:4px solid #00ff9d;
 }
 
 .warning{
-    background:#fff3dc;
-    border-left:5px solid #d49120;
+  border-left:4px solid #ffca3a;
 }
 
-.exercise{
-    background:#f0edff;
-    border-left:5px solid #6b55c7;
-}
-
-.code-title{
-    background:#14222d;
-    color:#79ffff;
-    padding:10px 15px;
-    margin-top:20px;
-    border-radius:10px 10px 0 0;
-    font-family:Arial;
+.danger{
+  border-left:4px solid #ff4d6d;
 }
 
 .code{
-    background:#060c12;
-    color:#d9f5ff;
-    padding:20px;
-    overflow-x:auto;
-    font-family:Consolas,monospace;
-    font-size:14px;
-    line-height:1.7;
-    border-radius:0 0 10px 10px;
-    white-space:pre;
+  background:#020811;
+  padding:15px;
+  border-radius:10px;
+  overflow:auto;
+  color:#8fffd1;
+  font-family:monospace;
+  margin-top:10px;
 }
 
-.tool{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-    gap:15px;
-    margin:20px 0;
+button.action{
+  background:#00c987;
+  border:0;
+  padding:11px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:10px;
 }
 
-.tool-card{
-    background:#edfafa;
-    border:1px solid #c5e3e3;
-    border-radius:15px;
-    padding:18px;
+button.action:hover{
+  background:#00ff9d;
 }
 
-.tool-card b{
-    color:#126b6c;
-    display:block;
-    margin-bottom:8px;
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid #31516d;
+  background:#07111f;
+  color:white;
 }
 
-/* NAV */
-
-.navigation{
-    display:flex;
-    gap:15px;
-    margin-top:25px;
+.result{
+  margin-top:10px;
+  padding:12px;
+  border-radius:8px;
+  background:#091522;
 }
 
-.navigation button{
-    flex:1;
-    border:0;
-    padding:16px;
-    border-radius:35px;
-    background:#126d70;
-    color:white;
-    cursor:pointer;
-    font-size:16px;
-    font-weight:bold;
-    box-shadow:0 8px 20px #0006;
+.quiz-option{
+  display:block;
+  width:100%;
+  text-align:left;
+  margin:8px 0;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #31516d;
+  background:#102238;
+  color:white;
+  cursor:pointer;
 }
 
-.navigation button:hover{
-    background:#19908e;
+.quiz-option:hover{
+  background:#183653;
 }
 
-.navigation button:disabled{
-    opacity:.35;
-    cursor:not-allowed;
+.progress{
+  height:12px;
+  background:#17293b;
+  border-radius:20px;
+  overflow:hidden;
 }
 
-.home{
-    width:100%;
-    margin-top:12px;
-    padding:14px;
-    border:0;
-    border-radius:30px;
-    background:#101c27;
-    color:#78eeee;
-    cursor:pointer;
+.progress div{
+  height:100%;
+  width:0%;
+  background:#00ff9d;
+  transition:.4s;
 }
 
-/* MOBILE */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#8196aa;
+  border-top:1px solid #19354e;
+}
+
+.hidden{
+  display:none;
+}
 
 @media(max-width:600px){
+  header{
+    padding:25px 12px;
+  }
 
-    .content{
-        font-size:17px;
-        line-height:1.9;
-    }
-
-    .content p{
-        text-indent:22px;
-    }
-
-    .book{
-        padding:28px 20px;
-    }
-
-    .navigation button{
-        font-size:14px;
-    }
+  .card{
+    padding:16px;
+  }
 }
 </style>
 </head>
@@ -323,1251 +227,848 @@ header p{
 <body>
 
 <header>
-
-<div class="logo">🛡️</div>
-
-<h1>Ethical Hacking</h1>
-
-<p>Cybersecurity Learning Book — Beginner to Advanced</p>
-
-<div class="badges">
-<span>🔐 Security</span>
-<span>🐧 Linux</span>
-<span>🌐 Networking</span>
-<span>💻 Web Security</span>
-<span>🧪 Safe Labs</span>
-</div>
-
+  <h1>🛡️ CyberLab Nepal</h1>
+  <p>Ethical Hacking & Cyber Security Learning Lab</p>
 </header>
+
+<nav>
+  <button onclick="showSection('home')">🏠 Home</button>
+  <button onclick="showSection('learn')">📚 Learn</button>
+  <button onclick="showSection('wifi')">📡 Wi-Fi</button>
+  <button onclick="showSection('web')">🌐 Web Security</button>
+  <button onclick="showSection('password')">🔑 Password</button>
+  <button onclick="showSection('network')">🖥️ Network</button>
+  <button onclick="showSection('quiz')">🧠 Quiz</button>
+  <button onclick="showSection('ctf')">🚩 CTF</button>
+</nav>
 
 <main class="container">
 
-<section class="menu">
+<!-- HOME -->
+<section id="home">
 
-<h2>📚 Classes</h2>
+<div class="card safe">
+<h2>👋 Welcome</h2>
+<p>
+यो वेबसाइट Ethical Hacking र Cyber Security सिक्नका लागि बनाइएको
+interactive learning lab हो।
+</p>
+<p>
+यहाँ सिकेका कुरा केवल आफ्नै device, आफ्नो network वा अनुमति प्राप्त
+lab मा प्रयोग गर्नुहोस्।
+</p>
+</div>
 
-<div class="class-buttons" id="classButtons"></div>
+<div class="grid">
+
+<div class="card topic" onclick="showSection('learn')">
+<span class="badge">01</span>
+<h2>📚 Hacking Basics</h2>
+<p>Ethical hacking, vulnerabilities र security concepts सिक्नुहोस्।</p>
+</div>
+
+<div class="card topic" onclick="showSection('wifi')">
+<span class="badge">02</span>
+<h2>📡 Wi-Fi Security</h2>
+<p>WPA2/WPA3, passwords र सुरक्षित router configuration बुझ्नुहोस्।</p>
+</div>
+
+<div class="card topic" onclick="showSection('web')">
+<span class="badge">03</span>
+<h2>🌐 Web Security</h2>
+<p>SQL Injection, XSS र authentication का concepts सिक्नुहोस्।</p>
+</div>
+
+<div class="card topic" onclick="showSection('network')">
+<span class="badge">04</span>
+<h2>🖥️ Network Security</h2>
+<p>IP, ports, protocols र firewall concepts बुझ्नुहोस्।</p>
+</div>
+
+</div>
+
+<div class="card">
+<h2>📈 Your Progress</h2>
+<div class="progress">
+<div id="progressBar"></div>
+</div>
+<p id="progressText">0% Complete</p>
+</div>
 
 </section>
 
-<article class="book">
 
-<div class="class-number" id="classNumber"></div>
+<!-- LEARN -->
+<section id="learn" class="hidden">
 
-<h2 id="classTitle"></h2>
+<div class="card">
+<h2>📚 Ethical Hacking Basics</h2>
 
-<div class="subtitle">
-Ethical Hacking & Cybersecurity Course
+<h3>Ethical Hacker भनेको के हो?</h3>
+<p>
+अनुमति लिएर computer system, website वा network मा security कमजोरी
+पत्ता लगाउने cybersecurity professional लाई ethical hacker भनिन्छ।
+</p>
+
+<h3>🔄 सामान्य Security Methodology</h3>
+<ol>
+<li>Scope र permission निर्धारण</li>
+<li>Information gathering</li>
+<li>Security weaknesses पहिचान</li>
+<li>Controlled testing</li>
+<li>Evidence/documentation</li>
+<li>Fix र remediation</li>
+<li>Final security report</li>
+</ol>
 </div>
 
-<div class="content" id="content"></div>
+<div class="card">
+<h2>🧪 सुरक्षित Demo: Encoding</h2>
+<p>
+यो केवल educational encoding demo हो। Encoding encryption होइन।
+</p>
 
-</article>
+<input id="textInput" placeholder="कुनै text लेख्नुहोस्">
 
-<div class="navigation">
+<button class="action" onclick="encodeText()">Encode</button>
+<button class="action" onclick="decodeText()">Decode</button>
 
-<button id="backBtn" onclick="previousClass()">
-← Back
+<div id="encodingResult" class="result"></div>
+</div>
+
+<div class="card warning">
+<h2>⚠️ Golden Rule</h2>
+<p>
+कुनै website, account, Wi-Fi वा device मा owner को स्पष्ट अनुमति बिना
+security testing गर्नु हुँदैन।
+</p>
+</div>
+
+</section>
+
+
+<!-- WIFI -->
+<section id="wifi" class="hidden">
+
+<div class="card">
+<h2>📡 Wi-Fi Security</h2>
+
+<h3>Wi-Fi security मा मुख्य कुरा</h3>
+
+<ul>
+<li>WPA3 प्रयोग गर्नु राम्रो हुन्छ।</li>
+<li>WPA2-AES पनि supported devices मा सुरक्षित विकल्प हो।</li>
+<li>Router administrator password परिवर्तन गर्नुहोस्।</li>
+<li>WPS आवश्यक नभए disable गर्न सकिन्छ।</li>
+<li>Router firmware update राख्नुहोस्।</li>
+<li>Guest network प्रयोग गर्न सकिन्छ।</li>
+</ul>
+</div>
+
+<div class="card safe">
+<h2>🔐 Wi-Fi Password Strength Demo</h2>
+
+<input
+id="wifiPassword"
+type="password"
+placeholder="आफ्नो test password लेख्नुहोस्">
+
+<button class="action" onclick="checkPassword()">
+Check Strength
 </button>
 
-<button id="nextBtn" onclick="nextClass()">
-Next →
-</button>
-
+<div id="passwordResult" class="result"></div>
 </div>
 
-<button class="home" onclick="goHome()">
-🏠 Home
-</button>
+<div class="card">
+<h2>WPA2 vs WPA3</h2>
 
-</main>
+<div class="grid">
 
-<script>
-
-/* =====================================================
-   COURSE DATA
-===================================================== */
-
-const classes = [
-
-{
-title:"Cybersecurity र Ethical Hacking के हो?",
-
-content:`
-
-<p>
-Cybersecurity भनेको computer, mobile, network, server,
-website र data लाई unauthorized access तथा विभिन्न
-digital threats बाट सुरक्षित राख्ने क्षेत्र हो।
-</p>
-
-<p>
-Ethical Hacking भनेको अनुमति लिएर कुनै system को
-security कमजोर पक्ष खोज्ने र त्यसलाई सुधार गर्न
-सहयोग गर्ने अभ्यास हो।
-</p>
-
-<div class="info">
-<b>महत्त्वपूर्ण नियम:</b><br>
-Practice आफ्नो computer, आफ्नो lab वा स्पष्ट अनुमति
-भएको system मा मात्र गर्नुहोस्।
+<div class="card">
+<h3>WPA2</h3>
+<p>पुरानो तर व्यापक रूपमा प्रयोग हुने Wi-Fi security standard।</p>
 </div>
 
-<h3>आज सिक्ने कुरा</h3>
+<div class="card">
+<h3>WPA3</h3>
+<p>नयाँ security improvements सहितको Wi-Fi protection standard।</p>
+</div>
 
+</div>
+</div>
+
+<div class="card danger">
+<h2>🚫 अनुमति बिना Wi-Fi testing नगर्नुहोस्</h2>
+<p>
+अरूको Wi-Fi password प्राप्त गर्ने वा network मा unauthorized access
+गर्ने practical attack instructions यो lab मा राखिएको छैन।
+</p>
+</div>
+
+</section>
+
+
+<!-- WEB SECURITY -->
+<section id="web" class="hidden">
+
+<div class="card">
+<h2>🌐 Web Security</h2>
+
+<h3>SQL Injection के हो?</h3>
+<p>
+Application ले user input लाई सुरक्षित रूपमा handle नगर्दा database query
+मा unintended behavior हुन सक्ने vulnerability हो।
+</p>
+
+<h3>🛡️ बच्ने तरिका</h3>
 <ul>
-<li>Cybersecurity को अर्थ</li>
-<li>Ethical Hacker को काम</li>
-<li>Authorization किन आवश्यक छ?</li>
-<li>Defensive security को महत्व</li>
+<li>Parameterized queries प्रयोग गर्ने</li>
+<li>Input validation गर्ने</li>
+<li>Least-privilege database accounts प्रयोग गर्ने</li>
+<li>Errors मा sensitive database information नदेखाउने</li>
 </ul>
-
-`
-},
-
-{
-title:"Hacker का प्रकार",
-
-content:`
-
-<p>
-“Hacker” शब्दको अर्थ सधैं अपराधी भन्ने हुँदैन। Security
-क्षेत्रमा hackers लाई उनीहरूको उद्देश्य र अनुमति अनुसार
-विभिन्न प्रकारमा बुझिन्छ।
-</p>
-
-<ul>
-<li><b>White Hat:</b> अनुमति लिएर security testing गर्ने।</li>
-<li><b>Black Hat:</b> unauthorized वा malicious activity गर्ने।</li>
-<li><b>Gray Hat:</b> अनुमति बिना कमजोरी खोज्न सक्ने, त्यसैले कानुनी जोखिम हुन सक्छ।</li>
-<li><b>Security Researcher:</b> vulnerability र defensive technology अध्ययन गर्ने।</li>
-</ul>
-
-<div class="warning">
-Ethical hacking को मुख्य आधार permission, scope र responsible disclosure हो।
 </div>
 
-`
-},
-
-{
-title:"Computer Basics",
-
-content:`
+<div class="card">
+<h2>🧪 XSS Concept</h2>
 
 <p>
-Hacking सिक्नुभन्दा पहिले computer कसरी काम गर्छ भन्ने
-बुझ्नुपर्छ।
-</p>
-
-<h3>मुख्य भाग</h3>
-
-<ul>
-<li>CPU</li>
-<li>RAM</li>
-<li>Storage</li>
-<li>Operating System</li>
-<li>File System</li>
-<li>Processes</li>
-<li>Users</li>
-</ul>
-
-<p>
-Security testing गर्दा operating system, files, users,
-processes र permissions को ज्ञान धेरै उपयोगी हुन्छ।
-</p>
-
-<div class="exercise">
-<b>Exercise:</b><br>
-आफ्नो computer मा कुन operating system छ, RAM कति छ,
-र storage कति छ भनेर पत्ता लगाउनुहोस्।
-</div>
-
-`
-},
-
-{
-title:"Linux को परिचय",
-
-content:`
-
-<p>
-Cybersecurity मा Linux को ज्ञान धेरै उपयोगी हुन्छ।
-Linux मा command line प्रयोग गरेर files, users,
-processes र network सम्बन्धी काम गर्न सकिन्छ।
-</p>
-
-<h3>Basic Commands</h3>
-
-<div class="code-title">Linux Terminal</div>
-
-<div class="code">
-pwd
-ls
-cd
-mkdir
-touch
-cp
-mv
-cat
-clear
-</div>
-
-<p>
-यी commands लाई आफ्नै local Linux environment वा
-training lab मा practice गर्नुहोस्।
-</p>
-
-`
-},
-
-{
-title:"Linux Files र Permissions",
-
-content:`
-
-<p>
-Linux मा प्रत्येक file र directory का permissions हुन्छन्।
-यसले कसले file पढ्न, लेख्न वा execute गर्न पाउने
-भन्ने नियन्त्रण गर्छ।
-</p>
-
-<div class="code-title">Permission हेर्ने</div>
-
-<div class="code">
-ls -l
-</div>
-
-<p>
-Security का लागि unnecessary permissions नदिनु महत्वपूर्ण हुन्छ।
-</p>
-
-<div class="tip">
-Principle of Least Privilege: user वा application लाई
-आवश्यक पर्ने न्यूनतम permission मात्र दिनुहोस्।
-</div>
-
-`
-},
-
-{
-title:"Networking Basics",
-
-content:`
-
-<p>
-Ethical hacking सिक्न networking राम्रोसँग बुझ्नुपर्छ।
-Computer हरू network मार्फत कसरी communicate गर्छन्
-भन्ने कुरा आधारभूत ज्ञान हो।
-</p>
-
-<ul>
-<li>IP Address</li>
-<li>MAC Address</li>
-<li>Router</li>
-<li>Switch</li>
-<li>DNS</li>
-<li>Port</li>
-<li>Protocol</li>
-</ul>
-
-<div class="info">
-Network security बुझ्न पहिले normal network कसरी
-काम गर्छ भन्ने बुझ्नु आवश्यक हुन्छ।
-</div>
-
-`
-},
-
-{
-title:"IP Address, Ports र Protocols",
-
-content:`
-
-<p>
-IP address ले network मा device पहिचान गर्न मद्दत गर्छ।
-Port ले particular network service को endpoint जनाउँछ।
-</p>
-
-<div class="tool">
-<div class="tool-card">
-<b>HTTP</b>
-Web communication
-</div>
-
-<div class="tool-card">
-<b>HTTPS</b>
-Encrypted web communication
-</div>
-
-<div class="tool-card">
-<b>DNS</b>
-Domain name resolution
-</div>
-
-<div class="tool-card">
-<b>SSH</b>
-Secure remote administration
-</div>
-</div>
-
-<p>
-यी concept हरूलाई आफ्नै lab मा network diagram बनाएर
-अभ्यास गर्नुहोस्।
-</p>
-
-`
-},
-
-{
-title:"DNS कसरी काम गर्छ?",
-
-content:`
-
-<p>
-जब browser मा domain name लेखिन्छ, computer ले त्यस
-domain को IP address पत्ता लगाउन DNS प्रयोग गर्छ।
+Cross-Site Scripting (XSS) मा unsafe user input browser मा executable
+content का रूपमा प्रस्तुत हुन सक्छ।
 </p>
 
 <div class="code">
-Browser
-   ↓
-DNS Resolver
-   ↓
-DNS Server
-   ↓
-IP Address
-   ↓
-Web Server
+Safe practice:
+User Input → Validation → Sanitization → Safe Output
 </div>
 
-<div class="exercise">
-<b>Exercise:</b><br>
-आफ्नो domain को DNS records हेर्नुहोस् र A, AAAA,
-CNAME तथा MX records को अर्थ अध्ययन गर्नुहोस्।
-</div>
-
-`
-},
-
-{
-title:"HTTP र HTTPS",
-
-content:`
-
-<p>
-Web browser र web server बीच communication गर्न HTTP
-protocol प्रयोग हुन्छ। HTTPS ले encryption प्रयोग गरेर
-communication लाई सुरक्षित बनाउँछ।
-</p>
-
-<h3>Request र Response</h3>
-
-<div class="code">
-Browser
-   ↓
-HTTP Request
-   ↓
-Web Server
-   ↓
-HTTP Response
-   ↓
-Browser
-</div>
-
-<p>
-Web security अध्ययन गर्दा request, response, headers,
-cookies र status codes बुझ्नु आवश्यक हुन्छ।
-</p>
-
-`
-},
-
-{
-title:"Authentication र Authorization",
-
-content:`
-
-<p>
-Authentication ले “तपाईं को हुनुहुन्छ?” भन्ने प्रश्नको
-उत्तर दिन्छ। Authorization ले “तपाईंलाई के गर्न अनुमति
-छ?” भन्ने निर्धारण गर्छ।
-</p>
-
-<div class="info">
-Authentication ≠ Authorization
-</div>
-
+<h3>🛡️ Protection</h3>
 <ul>
-<li>Password</li>
-<li>Multi-Factor Authentication</li>
-<li>Session</li>
-<li>Roles</li>
-<li>Permissions</li>
+<li>Output encoding</li>
+<li>Input validation</li>
+<li>Content Security Policy</li>
+<li>Safe DOM APIs</li>
 </ul>
-
-<div class="tip">
-आफ्नो online accounts मा MFA enable गर्नु राम्रो security practice हो।
 </div>
 
-`
-},
+<div class="card">
+<h2>🔒 HTTPS</h2>
+<p>
+HTTPS ले browser र server बीचको communication लाई TLS मार्फत सुरक्षित
+बनाउँछ।
+</p>
+</div>
 
-{
-title:"Password Security",
+</section>
 
-content:`
+
+<!-- PASSWORD -->
+<section id="password" class="hidden">
+
+<div class="card">
+<h2>🔑 Password Security</h2>
 
 <p>
 सुरक्षित password लामो, unique र अनुमान गर्न कठिन हुनुपर्छ।
-एउटै password धेरै websites मा प्रयोग गर्नु जोखिमपूर्ण हुन्छ।
+एउटै password धेरै ठाउँमा प्रयोग नगर्नु राम्रो हुन्छ।
 </p>
 
-<h3>राम्रो अभ्यास</h3>
+<input
+id="passTest"
+type="password"
+placeholder="Test password">
 
-<ul>
-<li>Unique password प्रयोग गर्ने</li>
-<li>Password manager प्रयोग गर्ने</li>
-<li>MFA enable गर्ने</li>
-<li>Password अरूलाई नदिने</li>
-<li>Leaked password भए तुरुन्त परिवर्तन गर्ने</li>
-</ul>
+<button class="action" onclick="strengthTest()">
+Test
+</button>
+
+<div id="strengthResult" class="result"></div>
+</div>
+
+<div class="card">
+<h2>🧂 Hashing Concept</h2>
 
 <p>
-Ethical hacking मा password security अध्ययन गर्दा
-आफ्नै test accounts र legal lab प्रयोग गर्नुहोस्।
-</p>
-
-`
-},
-
-{
-title:"Hashing, Encryption र Encoding",
-
-content:`
-
-<p>
-यी तीनवटा concept एउटै कुरा होइनन्।
-</p>
-
-<div class="tool">
-
-<div class="tool-card">
-<b>Hashing</b>
-Data को one-way representation बनाउन प्रयोग हुन्छ।
-</div>
-
-<div class="tool-card">
-<b>Encryption</b>
-Secret key प्रयोग गरेर data protect गर्छ।
-</div>
-
-<div class="tool-card">
-<b>Encoding</b>
-Data लाई अर्को representation मा बदल्छ।
-</div>
-
-</div>
-
-<p>
-Security system design गर्दा यी concept को सही प्रयोग
-बुझ्नु आवश्यक हुन्छ।
-</p>
-
-`
-},
-
-{
-title:"Python for Cybersecurity",
-
-content:`
-
-<p>
-Python cybersecurity automation, log analysis, data
-processing र defensive tooling मा धेरै उपयोगी हुन्छ।
-</p>
-
-<div class="code-title">Basic Python</div>
-
-<div class="code">
-name = "Security Student"
-
-print("Hello", name)
-
-for number in range(1, 6):
-    print(number)
-</div>
-
-<div class="exercise">
-<b>Exercise:</b><br>
-Python प्रयोग गरेर आफ्नै computer मा एउटा simple
-log file पढ्ने program बनाउनुहोस्।
-</div>
-
-`
-},
-
-{
-title:"JavaScript Security Basics",
-
-content:`
-
-<p>
-Web security सिक्दा JavaScript बुझ्नु पनि महत्वपूर्ण हुन्छ।
-Browser मा JavaScript चल्छ र webpage को behavior control गर्छ।
+Password लाई database मा plain text रूपमा राख्नु हुँदैन।
+व्यवहारिक systems मा password hashing का लागि Argon2id, bcrypt जस्ता
+purpose-built algorithms प्रयोग गरिन्छ।
 </p>
 
 <div class="code">
-const button =
-document.querySelector("button");
-
-button.addEventListener(
-    "click",
-    function(){
-        console.log("Clicked");
-    }
-);
+Password
+   ↓
+Password Hashing Algorithm
+   ↓
+Salt + Hash
+   ↓
+Database
+</div>
 </div>
 
+</section>
+
+
+<!-- NETWORK -->
+<section id="network" class="hidden">
+
+<div class="card">
+<h2>🖥️ Network Security Basics</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>IP Address</h3>
+<p>Network मा device/interface पहिचान गर्न प्रयोग हुने address।</p>
+</div>
+
+<div class="card">
+<h3>Port</h3>
+<p>Network services को logical endpoint।</p>
+</div>
+
+<div class="card">
+<h3>Firewall</h3>
+<p>Network traffic लाई rules अनुसार allow वा block गर्न प्रयोग हुन्छ।</p>
+</div>
+
+<div class="card">
+<h3>VPN</h3>
+<p>Network communication लाई protected tunnel मार्फत पठाउन प्रयोग गर्न सकिन्छ।</p>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2>🛡️ Defensive Checklist</h2>
+
+<label>
+<input type="checkbox" class="check">
+ Strong administrator password
+</label>
+
+<label>
+<input type="checkbox" class="check">
+ Software updated
+</label>
+
+<label>
+<input type="checkbox" class="check">
+ Firewall enabled
+</label>
+
+<label>
+<input type="checkbox" class="check">
+ Multi-factor authentication
+</label>
+
+<label>
+<input type="checkbox" class="check">
+ Regular backups
+</label>
+
+<button class="action" onclick="securityScore()">
+Calculate Security Score
+</button>
+
+<div id="securityResult" class="result"></div>
+</div>
+
+</section>
+
+
+<!-- QUIZ -->
+<section id="quiz" class="hidden">
+
+<div class="card">
+<h2>🧠 Cyber Security Quiz</h2>
+
+<div id="quizBox"></div>
+
+<p id="quizScore"></p>
+
+<button class="action" onclick="nextQuestion()">
+Next Question
+</button>
+</div>
+
+</section>
+
+
+<!-- CTF -->
+<section id="ctf" class="hidden">
+
+<div class="card">
+<h2>🚩 Beginner CTF Lab</h2>
+
 <p>
-Client-side validation मात्रमा भर पर्नु हुँदैन। महत्वपूर्ण
-validation server-side मा पनि हुनुपर्छ।
+यो local educational challenge हो। कुनै बाहिरी website वा server मा
+attack गर्दैन।
 </p>
 
-`
-},
-
-{
-title:"OWASP Top 10 को परिचय",
-
-content:`
-
+<h3>Challenge 1</h3>
 <p>
-OWASP Web Application Security को अध्ययनका लागि प्रसिद्ध
-open security community हो। OWASP Top 10 ले web application
-मा देखिने महत्वपूर्ण security risk हरू बुझ्न मद्दत गर्छ।
+तलको string हेर्नुहोस्:
 </p>
-
-<h3>अध्ययन गर्ने विषय</h3>
-
-<ul>
-<li>Broken Access Control</li>
-<li>Cryptographic Failures</li>
-<li>Injection</li>
-<li>Security Misconfiguration</li>
-<li>Authentication Failures</li>
-<li>Vulnerable Components</li>
-<li>Logging and Monitoring</li>
-</ul>
-
-<p>
-हरेक विषयलाई आफ्नो vulnerable training application मा
-अभ्यास गर्नुहोस्।
-</p>
-
-`
-},
-
-{
-title:"सुरक्षित Hacking Lab बनाउने",
-
-content:`
-
-<p>
-Real website वा अरूको computer मा testing गर्नुको सट्टा
-आफ्नै isolated lab बनाउनु ethical hacking सिक्ने सुरक्षित
-तरिका हो।
-</p>
-
-<h3>Lab Structure</h3>
 
 <div class="code">
-Your Computer
-      |
-      +-- Virtual Machine
-      |
-      +-- Training Web App
-      |
-      +-- Practice Network
-</div>
-
-<div class="warning">
-Lab लाई isolated राख्नुहोस्। वास्तविक मानिस वा
-organization को system मा testing नगर्नुहोस् जबसम्म
-स्पष्ट permission र defined scope छैन।
-</div>
-
-`
-},
-
-{
-title:"Vulnerability के हो?",
-
-content:`
-
-<p>
-Vulnerability भनेको system वा application मा भएको यस्तो
-कमजोरी हो जसले security risk उत्पन्न गर्न सक्छ।
-</p>
-
-<h3>Risk बुझ्ने Formula</h3>
-
-<div class="code">
-Risk =
-Likelihood × Impact
+Q1RGLU5FUEFM
 </div>
 
 <p>
-Security researcher ले vulnerability भेटेपछि त्यसको
-impact, evidence र remediation पनि बुझ्नुपर्छ।
+Hint: यो Base64 encoding हो।
 </p>
 
-`
-},
+<input id="ctfAnswer" placeholder="Decoded answer">
 
-{
-title:"Security Testing Methodology",
+<button class="action" onclick="checkCTF()">
+Submit
+</button>
 
-content:`
+<div id="ctfResult" class="result"></div>
+</div>
 
-<p>
-Professional security testing random रूपमा गरिँदैन।
-पहिले scope र authorization स्पष्ट गरिन्छ।
-</p>
+<div class="card">
+<h2>🏆 Learning Path</h2>
 
 <ol>
-<li>Authorization</li>
-<li>Scope Definition</li>
-<li>Information Gathering</li>
-<li>Assessment</li>
-<li>Validation</li>
-<li>Documentation</li>
-<li>Remediation</li>
-<li>Retesting</li>
+<li>Computer Fundamentals</li>
+<li>Networking</li>
+<li>Linux Basics</li>
+<li>Web Fundamentals</li>
+<li>Authentication & Cryptography</li>
+<li>Secure Coding</li>
+<li>Defensive Security</li>
+<li>CTF / Authorized Labs</li>
 </ol>
-
-<div class="info">
-पहिलो चरणमै permission र scope स्पष्ट नभए testing
-अगाडि नबढाउनुहोस्।
 </div>
 
-`
+</section>
+
+</main>
+
+
+<footer>
+<p>🛡️ CyberLab Nepal — Learn Cyber Security Responsibly</p>
+<p>For authorized educational use only.</p>
+</footer>
+
+
+<script>
+
+/* SECTION NAVIGATION */
+
+const sections = [
+  "home",
+  "learn",
+  "wifi",
+  "web",
+  "password",
+  "network",
+  "quiz",
+  "ctf"
+];
+
+function showSection(id){
+
+  sections.forEach(section=>{
+    document.getElementById(section).classList.add("hidden");
+  });
+
+  document.getElementById(id).classList.remove("hidden");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* ENCODING DEMO */
+
+function encodeText(){
+
+  const text =
+    document.getElementById("textInput").value;
+
+  if(!text){
+    document.getElementById("encodingResult").innerText =
+      "पहिले text लेख्नुहोस्।";
+    return;
+  }
+
+  const encoded =
+    btoa(unescape(encodeURIComponent(text)));
+
+  document.getElementById("encodingResult").innerText =
+    "Encoded: " + encoded;
+}
+
+function decodeText(){
+
+  const text =
+    document.getElementById("textInput").value;
+
+  try{
+
+    const decoded =
+      decodeURIComponent(
+        escape(atob(text))
+      );
+
+    document.getElementById("encodingResult").innerText =
+      "Decoded: " + decoded;
+
+  }catch{
+
+    document.getElementById("encodingResult").innerText =
+      "Valid Base64 text राख्नुहोस्।";
+  }
+}
+
+
+/* WIFI PASSWORD DEMO */
+
+function checkPassword(){
+
+  const p =
+    document.getElementById("wifiPassword").value;
+
+  let score = 0;
+
+  if(p.length >= 8) score++;
+  if(p.length >= 12) score++;
+  if(/[A-Z]/.test(p)) score++;
+  if(/[a-z]/.test(p)) score++;
+  if(/[0-9]/.test(p)) score++;
+  if(/[^A-Za-z0-9]/.test(p)) score++;
+
+  let message = "";
+
+  if(score <= 2){
+    message = "🔴 Weak password";
+  }else if(score <= 4){
+    message = "🟡 Medium password";
+  }else{
+    message = "🟢 Strong password";
+  }
+
+  document.getElementById("passwordResult").innerText =
+    message + " — Score: " + score + "/6";
+}
+
+
+/* PASSWORD TEST */
+
+function strengthTest(){
+
+  const p =
+    document.getElementById("passTest").value;
+
+  let points = 0;
+
+  if(p.length >= 12) points += 2;
+  else if(p.length >= 8) points++;
+
+  if(/[A-Z]/.test(p)) points++;
+  if(/[a-z]/.test(p)) points++;
+  if(/[0-9]/.test(p)) points++;
+  if(/[^A-Za-z0-9]/.test(p)) points++;
+
+  let result;
+
+  if(points <= 2)
+    result = "🔴 Weak";
+  else if(points <= 4)
+    result = "🟡 Moderate";
+  else
+    result = "🟢 Strong";
+
+  document.getElementById("strengthResult").innerText =
+    result + " | Score: " + points + "/7";
+}
+
+
+/* SECURITY CHECKLIST */
+
+function securityScore(){
+
+  const checks =
+    document.querySelectorAll(".check");
+
+  let completed = 0;
+
+  checks.forEach(c=>{
+    if(c.checked) completed++;
+  });
+
+  const percent =
+    Math.round((completed / checks.length) * 100);
+
+  document.getElementById("securityResult").innerText =
+    "Security checklist: " + percent + "% complete";
+}
+
+
+/* QUIZ */
+
+const quizQuestions = [
+
+{
+ question:"Ethical hacking सुरु गर्नुअघि सबैभन्दा महत्वपूर्ण कुरा के हो?",
+ options:[
+   "Permission/authorization",
+   "Password guess गर्नु",
+   "Website बन्द गर्नु",
+   "Data delete गर्नु"
+ ],
+ answer:0
 },
 
 {
-title:"Information Gathering",
-
-content:`
-
-<p>
-Security assessment को प्रारम्भिक भागमा target बारे
-अनुमति भएको information बुझिन्छ।
-</p>
-
-<p>
-आफ्नै domain वा lab मा DNS records, technology stack,
-public documentation र configuration review गर्न सकिन्छ।
-</p>
-
-<div class="exercise">
-<b>Safe Exercise:</b><br>
-आफ्नै website को technology inventory बनाउनुहोस्:
-Domain, hosting, framework, SSL/TLS, DNS र public services।
-</div>
-
-`
+ question:"HTTPS मा मुख्य security protocol कुन हो?",
+ options:[
+   "FTP",
+   "TLS",
+   "SMTP",
+   "DNS"
+ ],
+ answer:1
 },
 
 {
-title:"Logs र Monitoring",
-
-content:`
-
-<p>
-Security केवल attack testing होइन। Attack वा suspicious
-activity पत्ता लगाउन logs र monitoring पनि आवश्यक हुन्छ।
-</p>
-
-<ul>
-<li>Login logs</li>
-<li>Web server logs</li>
-<li>Application logs</li>
-<li>System logs</li>
-<li>Authentication events</li>
-</ul>
-
-<p>
-Unexpected login, repeated failures र unusual requests
-जस्ता संकेतहरू monitoring गर्न सकिन्छ।
-</p>
-
-`
+ question:"Password database मा plain text मा राख्नु किन खराब हो?",
+ options:[
+   "Database ठूलो हुन्छ",
+   "Compromise हुँदा password सीधै खुल्न सक्छ",
+   "Website slow हुन्छ",
+   "Internet बन्द हुन्छ"
+ ],
+ answer:1
 },
 
 {
-title:"Phishing बाट बच्ने र बुझ्ने",
-
-content:`
-
-<p>
-Phishing मा attacker ले fake message, website वा identity
-प्रयोग गरेर sensitive information लिन खोज्न सक्छ।
-</p>
-
-<h3>चिन्ने संकेत</h3>
-
-<ul>
-<li>अचानक आएको urgent message</li>
-<li>Suspicious domain</li>
-<li>असामान्य attachment</li>
-<li>Password माग्ने message</li>
-<li>अविश्वसनीय offer</li>
-</ul>
-
-<div class="tip">
-कुनै suspicious link खोल्नु अघि domain, sender र context
-verify गर्नुहोस्।
-</div>
-
-`
+ question:"WPA3 कुन प्रकारको security technology हो?",
+ options:[
+   "Wi-Fi security",
+   "Video compression",
+   "Image format",
+   "Programming language"
+ ],
+ answer:0
 },
 
 {
-title:"Social Engineering Awareness",
-
-content:`
-
-<p>
-Social engineering ले technical कमजोरीभन्दा मानिसको
-विश्वास, डर वा हतारको फाइदा उठाउन सक्छ।
-</p>
-
-<p>
-Security professional ले employees लाई suspicious calls,
-messages र requests कसरी verify गर्ने भनेर सिकाउनुपर्छ।
-</p>
-
-<div class="exercise">
-आफ्नो लागि एउटा security checklist बनाउनुहोस्:
-“Who is asking?”, “Why?”, “Can I verify it?”
-</div>
-
-`
+ question:"Firewall को मुख्य उद्देश्य के हो?",
+ options:[
+   "Music बजाउनु",
+   "Network traffic नियन्त्रण गर्नु",
+   "Photo edit गर्नु",
+   "Password बनाउनु"
+ ],
+ answer:1
 },
 
 {
-title:"Wi-Fi Security",
-
-content:`
-
-<p>
-Wi-Fi security मा router configuration, encryption,
-strong password र firmware updates महत्वपूर्ण हुन्छन्।
-</p>
-
-<h3>आफ्नो Router मा</h3>
-
-<ul>
-<li>Strong Wi-Fi password</li>
-<li>Modern encryption</li>
-<li>Router admin password परिवर्तन</li>
-<li>Firmware update</li>
-<li>Unnecessary remote administration बन्द</li>
-<li>Guest network आवश्यक भए प्रयोग</li>
-</ul>
-
-<p>
-Wi-Fi testing गर्दा आफ्नो network वा authorized lab मात्र प्रयोग गर्नुहोस्।
-</p>
-
-`
+ question:"XSS मुख्यतः कुन क्षेत्रमा सम्बन्धित vulnerability हो?",
+ options:[
+   "Web applications",
+   "Printer ink",
+   "Battery",
+   "Keyboard"
+ ],
+ answer:0
 },
 
 {
-title:"Web Application Security Lab",
-
-content:`
-
-<p>
-Web security अभ्यास गर्न intentionally vulnerable training
-applications प्रयोग गर्न सकिन्छ। यस्ता lab हरू सिकाइका लागि
-बनाइएका हुन्छन्।
-</p>
-
-<h3>अभ्यास गर्ने विषय</h3>
-
-<ul>
-<li>Authentication</li>
-<li>Access Control</li>
-<li>Input Validation</li>
-<li>Session Security</li>
-<li>Security Headers</li>
-<li>Error Handling</li>
-</ul>
-
-<div class="warning">
-Training application मा मात्र vulnerability testing गर्नुहोस्।
-Random public website मा vulnerability खोज्नु हुँदैन।
-</div>
-
-`
+ question:"SQL Injection बाट बच्न कुन practice महत्वपूर्ण छ?",
+ options:[
+   "Parameterized queries",
+   "Weak passwords",
+   "Plain text passwords",
+   "Disable updates"
+ ],
+ answer:0
 },
 
 {
-title:"Capture The Flag (CTF)",
-
-content:`
-
-<p>
-CTF cybersecurity सिक्ने game-जस्तो अभ्यास हो। विभिन्न
-challenge solve गरेर security concepts बुझिन्छ।
-</p>
-
-<div class="tool">
-<div class="tool-card">
-<b>Web</b>
-Web security puzzles
-</div>
-
-<div class="tool-card">
-<b>Crypto</b>
-Cryptography challenges
-</div>
-
-<div class="tool-card">
-<b>Forensics</b>
-Digital evidence analysis
-</div>
-
-<div class="tool-card">
-<b>Reverse Engineering</b>
-Program behavior study
-</div>
-</div>
-
-<p>
-CTF platform मा दिएको challenge र rules भित्र रहेर मात्र अभ्यास गर्नुहोस्।
-</p>
-
-`
-},
-
-{
-title:"Security Tools को सुरक्षित प्रयोग",
-
-content:`
-
-<p>
-Cybersecurity मा धेरै tools हुन्छन्। Tool भन्दा पहिले
-concept बुझ्नु अझ महत्वपूर्ण हुन्छ।
-</p>
-
-<div class="tool">
-
-<div class="tool-card">
-<b>Wireshark</b>
-Network traffic analysis
-</div>
-
-<div class="tool-card">
-<b>Burp Suite</b>
-Web application testing
-</div>
-
-<div class="tool-card">
-<b>Nmap</b>
-Network discovery and security auditing
-</div>
-
-<div class="tool-card">
-<b>OWASP ZAP</b>
-Web security testing
-</div>
-
-</div>
-
-<div class="warning">
-यी tools आफ्नै lab वा स्पष्ट authorization भएको environment
-मा मात्र प्रयोग गर्नुहोस्।
-</div>
-
-`
-},
-
-{
-title:"Incident Response",
-
-content:`
-
-<p>
-System मा security incident भयो भने केवल attacker खोज्ने
-होइन, system लाई सुरक्षित बनाउने र भविष्यमा दोहोरिन
-नदिने प्रक्रिया पनि आवश्यक हुन्छ।
-</p>
-
-<ol>
-<li>Prepare</li>
-<li>Identify</li>
-<li>Contain</li>
-<li>Eradicate</li>
-<li>Recover</li>
-<li>Learn</li>
-</ol>
-
-<p>
-Logs सुरक्षित राख्नु, affected systems isolate गर्नु र
-incident document गर्नु महत्वपूर्ण हुन्छ।
-</p>
-
-`
-},
-
-{
-title:"आफ्नो Website कसरी सुरक्षित बनाउने?",
-
-content:`
-
-<p>
-तपाईं website developer पनि हुनुहुन्छ भने security लाई
-website बनाइसकेपछि मात्र सोच्नु हुँदैन। सुरुबाटै
-security-by-design अपनाउनुहोस्।
-</p>
-
-<ul>
-<li>HTTPS प्रयोग गर्नुहोस्।</li>
-<li>Strong authentication राख्नुहोस्।</li>
-<li>Server-side validation गर्नुहोस्।</li>
-<li>Dependencies update गर्नुहोस्।</li>
-<li>Secrets code मा hard-code नगर्नुहोस्।</li>
-<li>Least privilege अपनाउनुहोस्।</li>
-<li>Backup राख्नुहोस्।</li>
-<li>Security logs monitor गर्नुहोस्।</li>
-</ul>
-
-`
-},
-
-{
-title:"Security Report कसरी लेख्ने?",
-
-content:`
-
-<p>
-Professional security testing पछि report लेख्नु महत्वपूर्ण
-हुन्छ। Report developer वा organization ले समस्या बुझेर
-fix गर्न सक्ने गरी स्पष्ट हुनुपर्छ।
-</p>
-
-<h3>Report Structure</h3>
-
-<ol>
-<li>Title</li>
-<li>Summary</li>
-<li>Affected Component</li>
-<li>Risk / Impact</li>
-<li>Evidence</li>
-<li>Reproduction in Authorized Lab</li>
-<li>Recommended Fix</li>
-<li>Retest Result</li>
-</ol>
-
-<div class="tip">
-राम्रो security report ले समस्या मात्र होइन, समाधान पनि स्पष्ट गर्छ।
-</div>
-
-`
-},
-
-{
-title:"Final Project — आफ्नो Cybersecurity Lab",
-
-content:`
-
-<p>
-अब course को final project सुरु गर्नुहोस्। आफ्नो computer
-मा isolated training environment तयार गरेर security
-concept हरू अभ्यास गर्नुहोस्।
-</p>
-
-<h3>Project Plan</h3>
-
-<ol>
-<li>Virtual training environment तयार गर्ने</li>
-<li>Networking concepts review गर्ने</li>
-<li>Linux commands practice गर्ने</li>
-<li>Training web application प्रयोग गर्ने</li>
-<li>Logs हेर्ने</li>
-<li>Security issues identify गर्ने</li>
-<li>Risk explain गर्ने</li>
-<li>Fix लागू गर्ने</li>
-<li>फेरि test गर्ने</li>
-<li>Final report तयार गर्ने</li>
-</ol>
-
-<div class="exercise">
-<b>Final Goal:</b><br>
-“मैले system तोड्न सक्छु” भन्दा महत्वपूर्ण लक्ष्य
-“मैले system किन vulnerable भयो र कसरी सुरक्षित बनाउने?”
-भन्ने कुरा बुझ्नु हो।
-</div>
-
-`
-},
-
-{
-title:"🎓 Final Roadmap — अब कहाँ जाने?",
-
-content:`
-
-<p>
-अब तपाईंले Ethical Hacking र Cybersecurity का आधारभूत
-concept हरू सिक्नुभयो। अब practical skill development
-का लागि क्रम मिलाएर अगाडि बढ्नुहोस्।
-</p>
-
-<h3>Learning Path</h3>
-
-<div class="tool">
-
-<div class="tool-card">
-<b>Step 1</b>
-Computer fundamentals
-</div>
-
-<div class="tool-card">
-<b>Step 2</b>
-Linux
-</div>
-
-<div class="tool-card">
-<b>Step 3</b>
-Networking
-</div>
-
-<div class="tool-card">
-<b>Step 4</b>
-Python
-</div>
-
-<div class="tool-card">
-<b>Step 5</b>
-Web Development
-</div>
-
-<div class="tool-card">
-<b>Step 6</b>
-Web Security
-</div>
-
-<div class="tool-card">
-<b>Step 7</b>
-CTF / Legal Labs
-</div>
-
-<div class="tool-card">
-<b>Step 8</b>
-Security Reporting
-</div>
-
-</div>
-
-<h3>कहाँ Practice गर्ने?</h3>
-
-<p>
-Practice गर्दा intentionally vulnerable applications,
-CTF challenges र आफ्नो local lab जस्ता authorized
-environment रोज्नुहोस्।
-</p>
-
-<h3>Career मा जाने बाटो</h3>
-
-<ul>
-<li>Cybersecurity Fundamentals</li>
-<li>Network Security</li>
-<li>Web Application Security</li>
-<li>SOC / Blue Team</li>
-<li>Security Testing</li>
-<li>Digital Forensics</li>
-<li>Cloud Security</li>
-<li>Application Security</li>
-</ul>
-
-<div class="info">
-
-<b>Golden Rule:</b><br><br>
-
-Permission → Scope → Test → Document → Fix → Retest
-
-</div>
-
-<div class="quote">
-
-🔐 Learn Security to Protect, Not to Harm.
-
-</div>
-
-<p>
-Ethical hacker को सबैभन्दा ठूलो skill केवल tools चलाउनु
-होइन। समस्या बुझ्ने, सुरक्षित रूपमा परीक्षण गर्ने,
-evidence राख्ने र system लाई अझ सुरक्षित बनाउने क्षमता हो।
-</p>
-
-<h3>Course Complete 🎓</h3>
-
-<p>
-अब तपाईंले आफ्नो learning journey लाई आफ्नै projects,
-legal labs र CTF अभ्यासमार्फत अगाडि बढाउन सक्नुहुन्छ।
-बिस्तारै networking, Linux, programming, web security
-र defensive security मा गहिरो ज्ञान थप्दै जानुहोस्।
-</p>
-
-`
+ question:"MFA को अर्थ के हो?",
+ options:[
+   "Multi-Factor Authentication",
+   "Main File Access",
+   "Multiple Firewall Address",
+   "Manual File Authentication"
+ ],
+ answer:0
 }
 
 ];
 
+let currentQuestion = 0;
+let quizPoints = 0;
 
-/* =====================================================
-   VARIABLES
-===================================================== */
+function loadQuiz(){
 
-let current = 0;
+  const q =
+    quizQuestions[currentQuestion];
 
-const classNumber =
-document.getElementById("classNumber");
+  let html =
+    "<h3>" +
+    (currentQuestion + 1) +
+    ". " +
+    q.question +
+    "</h3>";
 
-const classTitle =
-document.getElementById("classTitle");
+  q.options.forEach((option,index)=>{
 
-const content =
-document.getElementById("content");
+    html += `
+      <button
+        class="quiz-option"
+        onclick="answerQuiz(${index})">
+        ${option}
+      </button>
+    `;
 
-const classButtons =
-document.getElementById("classButtons");
+  });
 
-const backBtn =
-document.getElementById("backBtn");
+  document.getElementById("quizBox").innerHTML = html;
 
-const nextBtn =
-document.getElementById("nextBtn");
+  document.getElementById("quizScore").innerText =
+    "Score: " + quizPoints;
+}
+
+function answerQuiz(index){
+
+  const q =
+    quizQuestions[currentQuestion];
+
+  if(index === q.answer){
+
+    quizPoints++;
+
+    alert("✅ Correct!");
+
+  }else{
+
+    alert(
+      "❌ Wrong!\nCorrect answer: " +
+      q.options[q.answer]
+    );
+  }
+
+  updateProgress();
+}
+
+function nextQuestion(){
+
+  currentQuestion++;
+
+  if(currentQuestion >= quizQuestions.length){
+
+    document.getElementById("quizBox").innerHTML =
+      "<h2>🎉 Quiz Completed!</h2>";
+
+    document.getElementById("quizScore").innerText =
+      "Final Score: " +
+      quizPoints +
+      "/" +
+      quizQuestions.length;
+
+    return;
+  }
+
+  loadQuiz();
+}
 
 
-/* =====================================================
-   CREATE CLASS BUTTONS
-===================================================== */
+/* CTF */
 
-classes.forEach((item,index)=>{
+function checkCTF(){
 
-    const button =
-    document.createElement("button");
-
-    button.textContent =
-    index === classes.length - 1
-    ? "FINAL"
-    : index + 1;
-
-    button.onclick = () => {
-        loadClass(index);
-    };
-
-    classButtons.appendChild(button);
-
-});
-
-
-/* =====================================================
-   LOAD CLASS
-===================================================== */
-
-function loadClass(index){
-
-    current = index;
-
-    classNumber.textContent =
-    index === classes.length - 1
-    ? "FINAL LESSON"
-    : "CLASS " + (index + 1);
-
-    classTitle.textContent =
-    classes[index].title;
-
-    content.innerHTML =
-    classes[index].content;
-
+  const answer =
     document
-    .querySelectorAll(".class-buttons button")
-    .forEach((button,i)=>{
+      .getElementById("ctfAnswer")
+      .value
+      .trim()
+      .toUpperCase();
 
-        button.classList.toggle(
-            "active",
-            i === current
-        );
+  if(answer === "CTF-NEPAL"){
 
-    });
+    document.getElementById("ctfResult").innerText =
+      "🏆 Correct! Challenge completed.";
 
-    backBtn.disabled =
-    current === 0;
+    localStorage.setItem("ctfCompleted","true");
 
-    nextBtn.disabled =
-    current === classes.length - 1;
+    updateProgress();
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+  }else{
+
+    document.getElementById("ctfResult").innerText =
+      "❌ Try again. Hint: Base64 decode गर्नुहोस्।";
+  }
 }
 
 
-/* =====================================================
-   NEXT
-===================================================== */
+/* PROGRESS */
 
-function nextClass(){
+function updateProgress(){
 
-    if(current < classes.length - 1){
+  let progress = 0;
 
-        loadClass(current + 1);
+  if(localStorage.getItem("ctfCompleted"))
+    progress += 20;
 
-    }
+  if(quizPoints > 0)
+    progress += 20;
 
+  const checks =
+    document.querySelectorAll(".check");
+
+  let completed = 0;
+
+  checks.forEach(c=>{
+    if(c.checked) completed++;
+  });
+
+  if(completed >= 3)
+    progress += 20;
+
+  if(document.getElementById("passTest").value.length >= 8)
+    progress += 20;
+
+  if(document.getElementById("wifiPassword").value.length >= 8)
+    progress += 20;
+
+  document.getElementById("progressBar").style.width =
+    progress + "%";
+
+  document.getElementById("progressText").innerText =
+    progress + "% Complete";
 }
 
 
-/* =====================================================
-   BACK
-===================================================== */
+/* INITIALIZE */
 
-function previousClass(){
+loadQuiz();
 
-    if(current > 0){
+document
+  .getElementById("passTest")
+  .addEventListener("input",updateProgress);
 
-        loadClass(current - 1);
+document
+  .getElementById("wifiPassword")
+  .addEventListener("input",updateProgress);
 
-    }
+document
+  .querySelectorAll(".check")
+  .forEach(c=>{
+    c.addEventListener("change",updateProgress);
+  });
 
-}
-
-
-/* =====================================================
-   HOME
-===================================================== */
-
-function goHome(){
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-
-}
-
-
-/* START */
-
-loadClass(0);
+updateProgress();
 
 </script>
 
 </body>
 </html>
-```
