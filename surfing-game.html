@@ -1,37 +1,63 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
 
 <title>Gyan Nepal - Surfing Game</title>
 
+
 <style>
+
+/* =====================================================
+   BASIC
+===================================================== */
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
+
     user-select:none;
     -webkit-user-select:none;
+
     touch-action:none;
 }
 
-html,body{
+
+html,
+body{
+
     width:100%;
     height:100%;
+
     overflow:hidden;
+
     font-family:Arial,sans-serif;
+
     background:#05294a;
 }
 
-/* GAME SCREEN */
+
+/* =====================================================
+   GAME
+===================================================== */
 
 .game{
+
     position:relative;
+
     width:100vw;
     height:100vh;
+
     overflow:hidden;
 
     background:
@@ -44,64 +70,105 @@ html,body{
         );
 }
 
-/* SUN */
+
+/* =====================================================
+   SUN
+===================================================== */
 
 .sun{
+
     position:absolute;
+
     width:75px;
     height:75px;
+
     border-radius:50%;
+
     background:#fff2a3;
+
     top:55px;
     right:25px;
-    box-shadow:0 0 35px #fff2a3;
+
+    box-shadow:
+        0 0 35px #fff2a3;
 }
 
-/* CLOUDS */
+
+/* =====================================================
+   CLOUDS
+===================================================== */
 
 .cloud{
+
     position:absolute;
+
     width:110px;
     height:32px;
+
     border-radius:40px;
+
     background:white;
+
     opacity:.75;
-    animation:cloudMove 24s linear infinite;
+
+    animation:
+        cloudMove 24s linear infinite;
 }
 
+
 .cloud::before{
+
     content:"";
+
     position:absolute;
+
     width:45px;
     height:45px;
+
     border-radius:50%;
+
     background:white;
+
     left:15px;
     top:-22px;
 }
 
+
 .cloud::after{
+
     content:"";
+
     position:absolute;
+
     width:55px;
     height:55px;
+
     border-radius:50%;
+
     background:white;
+
     right:10px;
     top:-30px;
 }
 
+
 .cloud1{
+
     top:90px;
     left:-150px;
 }
 
+
 .cloud2{
+
     top:150px;
     left:-300px;
+
     transform:scale(.7);
+
     animation-delay:8s;
 }
+
 
 @keyframes cloudMove{
 
@@ -110,16 +177,25 @@ html,body{
     }
 
     to{
-        transform:translateX(calc(100vw + 300px));
+        transform:
+            translateX(
+                calc(100vw + 300px)
+            );
     }
 
 }
 
-/* SEA */
+
+/* =====================================================
+   SEA
+===================================================== */
 
 .sea{
+
     position:absolute;
+
     top:25%;
+
     left:0;
     right:0;
     bottom:0;
@@ -133,31 +209,50 @@ html,body{
         );
 }
 
-/* WAVES */
+
+/* =====================================================
+   WAVES
+===================================================== */
 
 .wave{
+
     position:absolute;
+
     width:180%;
     height:100px;
+
     left:-40%;
+
     border-radius:50%;
-    background:rgba(255,255,255,.16);
-    animation:waveMove 4s ease-in-out infinite;
+
+    background:
+        rgba(255,255,255,.16);
+
+    animation:
+        waveMove 4s ease-in-out infinite;
 }
+
 
 .wave1{
     top:29%;
 }
 
+
 .wave2{
+
     top:47%;
+
     animation-delay:1s;
 }
 
+
 .wave3{
+
     top:68%;
+
     animation-delay:2s;
 }
+
 
 @keyframes waveMove{
 
@@ -171,52 +266,82 @@ html,body{
 
 }
 
-/* HEADER */
+
+/* =====================================================
+   HUD
+===================================================== */
 
 .hud{
+
     position:absolute;
+
     z-index:50;
+
     top:12px;
+
     left:12px;
     right:12px;
 
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 }
 
+
 .scoreBox{
+
     padding:9px 14px;
+
     border-radius:15px;
 
     color:white;
+
     font-size:16px;
+
     font-weight:bold;
 
-    background:rgba(0,0,0,.35);
-    backdrop-filter:blur(8px);
+    background:
+        rgba(0,0,0,.35);
+
+    backdrop-filter:
+        blur(8px);
 }
 
+
 .title{
+
     position:absolute;
+
     z-index:50;
+
     top:65px;
+
     width:100%;
 
     text-align:center;
 
     color:white;
+
     font-size:20px;
+
     font-weight:800;
 
     text-shadow:
-        0 3px 8px rgba(0,0,0,.6);
+        0 3px 8px
+        rgba(0,0,0,.6);
 }
 
-/* PLAYER */
+
+/* =====================================================
+   PLAYER
+===================================================== */
 
 .player{
+
     position:absolute;
+
     z-index:30;
 
     width:120px;
@@ -225,16 +350,47 @@ html,body{
     left:50%;
     top:62%;
 
-    transform:translate(-50%,-50%);
+    transform:
+        translate(-50%,-50%);
 
     transition:
         left .08s linear,
         top .08s linear;
 }
 
-/* LARGE SURFER */
+
+/* =====================================================
+   HEAD AREA
+===================================================== */
+
+.headHitbox{
+
+    position:absolute;
+
+    /*
+       यो visible हुँदैन।
+       केवल collision check का लागि हो।
+    */
+
+    width:58px;
+    height:62px;
+
+    left:31px;
+    top:-5px;
+
+    pointer-events:none;
+
+    background:transparent;
+
+}
+
+
+/* =====================================================
+   SURFER
+===================================================== */
 
 .surfer{
+
     position:absolute;
 
     left:18px;
@@ -242,17 +398,23 @@ html,body{
 
     font-size:78px;
 
-    transform:rotate(-8deg);
+    transform:
+        rotate(-8deg);
 
     filter:
         drop-shadow(
-            0 5px 3px rgba(0,0,0,.25)
+            0 5px 3px
+            rgba(0,0,0,.25)
         );
 }
 
-/* BOARD */
+
+/* =====================================================
+   BOARD
+===================================================== */
 
 .board{
+
     position:absolute;
 
     bottom:10px;
@@ -271,16 +433,24 @@ html,body{
             #06d6a0
         );
 
-    transform:rotate(-3deg);
+    transform:
+        rotate(-3deg);
 
     box-shadow:
-        0 6px 0 rgba(0,0,0,.18),
-        0 0 15px rgba(255,255,255,.4);
+        0 6px 0
+        rgba(0,0,0,.18),
+
+        0 0 15px
+        rgba(255,255,255,.4);
 }
 
-/* PLAYER WAVE */
+
+/* =====================================================
+   PLAYER WAVE
+===================================================== */
 
 .playerWave{
+
     position:absolute;
 
     bottom:-2px;
@@ -290,15 +460,21 @@ html,body{
     height:20px;
 
     border-bottom:
-        5px solid rgba(255,255,255,.65);
+        5px solid
+        rgba(255,255,255,.65);
 
     border-radius:50%;
 }
 
-/* OBSTACLE */
+
+/* =====================================================
+   OBSTACLE
+===================================================== */
 
 .obstacle{
+
     position:absolute;
+
     z-index:20;
 
     right:-100px;
@@ -307,14 +483,20 @@ html,body{
 
     filter:
         drop-shadow(
-            0 5px 3px rgba(0,0,0,.25)
+            0 5px 3px
+            rgba(0,0,0,.25)
         );
 }
 
-/* COIN */
+
+/* =====================================================
+   COIN
+===================================================== */
 
 .coin{
+
     position:absolute;
+
     z-index:21;
 
     right:-60px;
@@ -325,6 +507,7 @@ html,body{
     border-radius:50%;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
@@ -333,14 +516,17 @@ html,body{
     background:#ffd700;
 
     border:
-        3px solid #fff4a3;
+        3px solid
+        #fff4a3;
 
     box-shadow:
-        0 0 20px #ffd700;
+        0 0 20px
+        #ffd700;
 
     animation:
         coinSpin .6s linear infinite;
 }
+
 
 @keyframes coinSpin{
 
@@ -350,16 +536,23 @@ html,body{
 
 }
 
-/* TOUCH MESSAGE */
+
+/* =====================================================
+   TOUCH MESSAGE
+===================================================== */
 
 .touchMessage{
+
     position:absolute;
+
     z-index:40;
 
     bottom:25px;
+
     left:50%;
 
-    transform:translateX(-50%);
+    transform:
+        translateX(-50%);
 
     width:90%;
 
@@ -373,14 +566,20 @@ html,body{
 
     border-radius:20px;
 
-    background:rgba(0,0,0,.25);
+    background:
+        rgba(0,0,0,.25);
 
-    backdrop-filter:blur(5px);
+    backdrop-filter:
+        blur(5px);
 }
 
-/* GAME OVER */
+
+/* =====================================================
+   GAME OVER
+===================================================== */
 
 .gameOver{
+
     position:absolute;
 
     z-index:100;
@@ -390,16 +589,21 @@ html,body{
     display:none;
 
     justify-content:center;
+
     align-items:center;
 
     background:
         rgba(0,20,40,.75);
 
-    backdrop-filter:blur(7px);
+    backdrop-filter:
+        blur(7px);
 }
 
+
 .panel{
+
     width:88%;
+
     max-width:360px;
 
     padding:30px 20px;
@@ -414,20 +618,29 @@ html,body{
         rgba(4,28,50,.95);
 
     box-shadow:
-        0 20px 60px rgba(0,0,0,.5);
+        0 20px 60px
+        rgba(0,0,0,.5);
 }
 
+
 .panel h1{
+
     font-size:36px;
+
     margin-bottom:12px;
 }
 
+
 .panel p{
+
     margin:8px;
+
     font-size:19px;
 }
 
+
 .restart{
+
     border:none;
 
     margin-top:15px;
@@ -439,6 +652,7 @@ html,body{
     color:white;
 
     font-size:17px;
+
     font-weight:bold;
 
     background:
@@ -451,22 +665,38 @@ html,body{
     cursor:pointer;
 }
 
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="game" id="game">
+
+
+    <!-- SKY -->
 
     <div class="sun"></div>
 
     <div class="cloud cloud1"></div>
+
     <div class="cloud cloud2"></div>
+
+
+    <!-- SEA -->
 
     <div class="sea"></div>
 
+
+    <!-- WAVES -->
+
     <div class="wave wave1"></div>
+
     <div class="wave wave2"></div>
+
     <div class="wave wave3"></div>
 
 
@@ -475,20 +705,35 @@ html,body{
     <div class="hud">
 
         <div class="scoreBox">
+
             🏆 Score:
-            <span id="score">0</span>
+
+            <span id="score">
+                0
+            </span>
+
         </div>
 
+
         <div class="scoreBox">
+
             🪙
-            <span id="coins">0</span>
+
+            <span id="coins">
+                0
+            </span>
+
         </div>
 
     </div>
 
 
+    <!-- TITLE -->
+
     <div class="title">
+
         🏄 Gyan Nepal Surfing
+
     </div>
 
 
@@ -496,13 +741,33 @@ html,body{
 
     <div class="player" id="player">
 
-        <div class="surfer">
-            🏄
+
+        <!-- HEAD ONLY HITBOX -->
+
+        <div
+            class="headHitbox"
+            id="headHitbox">
         </div>
+
+
+        <!-- SURFER -->
+
+        <div class="surfer">
+
+            🏄
+
+        </div>
+
+
+        <!-- BOARD -->
 
         <div class="board"></div>
 
+
+        <!-- WAVE -->
+
         <div class="playerWave"></div>
+
 
     </div>
 
@@ -510,33 +775,54 @@ html,body{
     <!-- TOUCH INSTRUCTION -->
 
     <div class="touchMessage">
+
         👆 Touch & Drag to Move
+
     </div>
 
 
     <!-- GAME OVER -->
 
-    <div class="gameOver" id="gameOver">
+    <div
+        class="gameOver"
+        id="gameOver">
+
 
         <div class="panel">
 
+
             <h1>
+
                 🌊 Game Over
+
             </h1>
 
-            <p>
-                🏆 Score:
-                <strong id="finalScore">
-                    0
-                </strong>
-            </p>
 
             <p>
-                🪙 Coins:
-                <strong id="finalCoins">
+
+                🏆 Score:
+
+                <strong id="finalScore">
+
                     0
+
                 </strong>
+
             </p>
+
+
+            <p>
+
+                🪙 Coins:
+
+                <strong id="finalCoins">
+
+                    0
+
+                </strong>
+
+            </p>
+
 
             <button
                 class="restart"
@@ -546,64 +832,101 @@ html,body{
 
             </button>
 
+
         </div>
 
     </div>
 
+
 </div>
+
 
 
 <script>
 
-/* ============================================
+
+/* =====================================================
    GAME VARIABLES
-============================================ */
+===================================================== */
 
 const game =
-    document.getElementById("game");
+    document.getElementById(
+        "game"
+    );
+
 
 const player =
-    document.getElementById("player");
+    document.getElementById(
+        "player"
+    );
+
+
+const headHitbox =
+    document.getElementById(
+        "headHitbox"
+    );
+
 
 const scoreText =
-    document.getElementById("score");
+    document.getElementById(
+        "score"
+    );
+
 
 const coinsText =
-    document.getElementById("coins");
+    document.getElementById(
+        "coins"
+    );
+
 
 const gameOver =
-    document.getElementById("gameOver");
+    document.getElementById(
+        "gameOver"
+    );
+
 
 const finalScore =
-    document.getElementById("finalScore");
+    document.getElementById(
+        "finalScore"
+    );
+
 
 const finalCoins =
-    document.getElementById("finalCoins");
+    document.getElementById(
+        "finalCoins"
+    );
 
 
 let score = 0;
+
 let coins = 0;
 
 let running = true;
 
 
-/* PLAYER POSITION */
+/* =====================================================
+   PLAYER POSITION
+===================================================== */
 
 let playerX = 50;
+
 let playerY = 62;
 
 
-/* TOUCH VARIABLES */
+/* =====================================================
+   TOUCH VARIABLES
+===================================================== */
 
 let dragging = false;
 
 let touchOffsetX = 0;
+
 let touchOffsetY = 0;
 
 
-/* ============================================
-   SET PLAYER POSITION
-============================================ */
+/* =====================================================
+   SET PLAYER
+===================================================== */
 
 function setPlayerPosition(){
 
@@ -620,58 +943,71 @@ setPlayerPosition();
 
 
 
-/* ============================================
+/* =====================================================
    TOUCH START
-============================================ */
+===================================================== */
 
 game.addEventListener(
     "touchstart",
+
     function(e){
 
-        if(!running) return;
+        if(!running)
+            return;
+
 
         const touch =
             e.touches[0];
+
 
         const rect =
             player.getBoundingClientRect();
 
 
-        const playerCenterX =
+        const centerX =
             rect.left +
             rect.width / 2;
 
-        const playerCenterY =
+
+        const centerY =
             rect.top +
             rect.height / 2;
 
 
         touchOffsetX =
             touch.clientX -
-            playerCenterX;
+            centerX;
+
 
         touchOffsetY =
             touch.clientY -
-            playerCenterY;
+            centerY;
 
 
         dragging = true;
 
     },
-    {passive:false}
+
+    {
+        passive:false
+    }
 );
 
 
 
-/* ============================================
+/* =====================================================
    TOUCH MOVE
-============================================ */
+===================================================== */
 
 game.addEventListener(
     "touchmove",
+
     function(e){
 
-        if(!dragging || !running)
+        if(
+            !dragging ||
+            !running
+        )
             return;
 
 
@@ -681,61 +1017,80 @@ game.addEventListener(
         const touch =
             e.touches[0];
 
+
         const width =
             window.innerWidth;
+
 
         const height =
             window.innerHeight;
 
 
         let newX =
-            ((touch.clientX -
-              touchOffsetX) /
-             width) * 100;
+            (
+                (
+                    touch.clientX -
+                    touchOffsetX
+                ) / width
+            ) * 100;
 
 
         let newY =
-            ((touch.clientY -
-              touchOffsetY) /
-             height) * 100;
+            (
+                (
+                    touch.clientY -
+                    touchOffsetY
+                ) / height
+            ) * 100;
 
 
         /*
-          PLAYER LIMITS
+           PLAYER LIMITS
         */
 
         newX =
             Math.max(
                 10,
-                Math.min(90,newX)
+                Math.min(
+                    90,
+                    newX
+                )
             );
 
 
         newY =
             Math.max(
                 35,
-                Math.min(82,newY)
+                Math.min(
+                    82,
+                    newY
+                )
             );
 
 
         playerX = newX;
+
         playerY = newY;
 
 
         setPlayerPosition();
 
     },
-    {passive:false}
+
+    {
+        passive:false
+    }
 );
 
 
 
-/* ============================================
+/* =====================================================
    TOUCH END
-============================================ */
+===================================================== */
 
 game.addEventListener(
     "touchend",
+
     function(){
 
         dragging = false;
@@ -745,18 +1100,20 @@ game.addEventListener(
 
 
 
-/* ============================================
-   MOUSE DRAG FOR COMPUTER
-============================================ */
+/* =====================================================
+   MOUSE DRAG
+===================================================== */
 
 let mouseDown = false;
 
 
 game.addEventListener(
     "mousedown",
-    function(e){
 
-        if(!running) return;
+    function(){
+
+        if(!running)
+            return;
 
         mouseDown = true;
 
@@ -766,38 +1123,55 @@ game.addEventListener(
 
 game.addEventListener(
     "mousemove",
+
     function(e){
 
-        if(!mouseDown || !running)
+        if(
+            !mouseDown ||
+            !running
+        )
             return;
 
 
         const width =
             window.innerWidth;
 
+
         const height =
             window.innerHeight;
 
 
         playerX =
-            (e.clientX / width) * 100;
+            (
+                e.clientX /
+                width
+            ) * 100;
 
 
         playerY =
-            (e.clientY / height) * 100;
+            (
+                e.clientY /
+                height
+            ) * 100;
 
 
         playerX =
             Math.max(
                 10,
-                Math.min(90,playerX)
+                Math.min(
+                    90,
+                    playerX
+                )
             );
 
 
         playerY =
             Math.max(
                 35,
-                Math.min(82,playerY)
+                Math.min(
+                    82,
+                    playerY
+                )
             );
 
 
@@ -809,6 +1183,7 @@ game.addEventListener(
 
 game.addEventListener(
     "mouseup",
+
     function(){
 
         mouseDown = false;
@@ -818,33 +1193,100 @@ game.addEventListener(
 
 
 
-/* ============================================
-   COLLISION FUNCTION
-============================================ */
+/* =====================================================
+   HEAD-ONLY COLLISION
+===================================================== */
 
-function collision(a,b){
+function headCollision(
+    playerElement,
+    obstacle
+){
 
-    const r1 =
-        a.getBoundingClientRect();
+    /*
+       IMPORTANT:
 
-    const r2 =
-        b.getBoundingClientRect();
+       हामी पूरा player को collision
+       check गर्दैनौँ।
 
+       केवल headHitbox को collision
+       check गर्छौँ।
+    */
+
+
+    const head =
+        headHitbox.getBoundingClientRect();
+
+
+    const obstacleRect =
+        obstacle.getBoundingClientRect();
+
+
+    /*
+       केवल टाउको र obstacle
+       overlap भएमा true।
+    */
 
     return !(
-        r1.right < r2.left ||
-        r1.left > r2.right ||
-        r1.bottom < r2.top ||
-        r1.top > r2.bottom
+        head.right <
+            obstacleRect.left ||
+
+        head.left >
+            obstacleRect.right ||
+
+        head.bottom <
+            obstacleRect.top ||
+
+        head.top >
+            obstacleRect.bottom
     );
 
 }
 
 
 
-/* ============================================
+/* =====================================================
+   COIN COLLISION
+===================================================== */
+
+function coinCollision(
+    playerElement,
+    coin
+){
+
+    /*
+       Coin को लागि पूरा player
+       प्रयोग गरिएको छ।
+    */
+
+    const playerRect =
+        playerElement.getBoundingClientRect();
+
+
+    const coinRect =
+        coin.getBoundingClientRect();
+
+
+    return !(
+        playerRect.right <
+            coinRect.left ||
+
+        playerRect.left >
+            coinRect.right ||
+
+        playerRect.bottom <
+            coinRect.top ||
+
+        playerRect.top >
+            coinRect.bottom
+    );
+
+}
+
+
+
+/* =====================================================
    CREATE OBSTACLE
-============================================ */
+===================================================== */
 
 function createObstacle(){
 
@@ -853,7 +1295,9 @@ function createObstacle(){
 
 
     const obstacle =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     obstacle.className =
@@ -861,11 +1305,17 @@ function createObstacle(){
 
 
     const objects = [
+
         "🪨",
+
         "🪵",
+
         "🌴",
+
         "🦀",
+
         "🐙"
+
     ];
 
 
@@ -878,13 +1328,21 @@ function createObstacle(){
         ];
 
 
+    /*
+       Obstacle को height
+       random बनाउने
+    */
+
     obstacle.style.top =
-        (35 +
-         Math.random() * 45)
-        + "%";
+        (
+            35 +
+            Math.random() * 45
+        ) + "%";
 
 
-    game.appendChild(obstacle);
+    game.appendChild(
+        obstacle
+    );
 
 
     let position = -100;
@@ -892,11 +1350,14 @@ function createObstacle(){
 
     const timer =
         setInterval(
+
             function(){
 
                 if(!running){
 
-                    clearInterval(timer);
+                    clearInterval(
+                        timer
+                    );
 
                     obstacle.remove();
 
@@ -912,36 +1373,58 @@ function createObstacle(){
                     position + "px";
 
 
+                /*
+                   ⭐ IMPORTANT ⭐
+
+                   यहाँ अब पूरा character
+                   होइन, केवल HEAD collision।
+                */
+
                 if(
-                    collision(
+                    headCollision(
                         player,
                         obstacle
                     )
                 ){
 
-                    clearInterval(timer);
+                    clearInterval(
+                        timer
+                    );
+
 
                     obstacle.remove();
 
+
                     endGame();
+
 
                     return;
 
                 }
 
 
+                /*
+                   Screen बाट बाहिर गएपछि
+                   हटाउने
+                */
+
                 if(
                     position >
-                    window.innerWidth + 150
+                    window.innerWidth +
+                    150
                 ){
 
-                    clearInterval(timer);
+                    clearInterval(
+                        timer
+                    );
+
 
                     obstacle.remove();
 
                 }
 
             },
+
             30
         );
 
@@ -949,9 +1432,9 @@ function createObstacle(){
 
 
 
-/* ============================================
+/* =====================================================
    CREATE COIN
-============================================ */
+===================================================== */
 
 function createCoin(){
 
@@ -960,7 +1443,9 @@ function createCoin(){
 
 
     const coin =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     coin.className =
@@ -972,12 +1457,15 @@ function createCoin(){
 
 
     coin.style.top =
-        (35 +
-         Math.random() * 45)
-        + "%";
+        (
+            35 +
+            Math.random() * 45
+        ) + "%";
 
 
-    game.appendChild(coin);
+    game.appendChild(
+        coin
+    );
 
 
     let position = -60;
@@ -985,11 +1473,14 @@ function createCoin(){
 
     const timer =
         setInterval(
+
             function(){
 
                 if(!running){
 
-                    clearInterval(timer);
+                    clearInterval(
+                        timer
+                    );
 
                     coin.remove();
 
@@ -1005,8 +1496,14 @@ function createCoin(){
                     position + "px";
 
 
+                /*
+                   Coin उठाउन
+                   character को जुनसुकै
+                   भागले छोए पनि हुन्छ।
+                */
+
                 if(
-                    collision(
+                    coinCollision(
                         player,
                         coin
                     )
@@ -1014,13 +1511,18 @@ function createCoin(){
 
                     coins++;
 
+
                     coinsText.textContent =
                         coins;
 
 
-                    clearInterval(timer);
+                    clearInterval(
+                        timer
+                    );
+
 
                     coin.remove();
+
 
                     return;
 
@@ -1029,16 +1531,21 @@ function createCoin(){
 
                 if(
                     position >
-                    window.innerWidth + 100
+                    window.innerWidth +
+                    100
                 ){
 
-                    clearInterval(timer);
+                    clearInterval(
+                        timer
+                    );
+
 
                     coin.remove();
 
                 }
 
             },
+
             30
         );
 
@@ -1046,9 +1553,9 @@ function createCoin(){
 
 
 
-/* ============================================
-   CREATE OBJECTS
-============================================ */
+/* =====================================================
+   SPAWN OBJECTS
+===================================================== */
 
 setInterval(
     createObstacle,
@@ -1063,11 +1570,12 @@ setInterval(
 
 
 
-/* ============================================
+/* =====================================================
    SCORE
-============================================ */
+===================================================== */
 
 setInterval(
+
     function(){
 
         if(!running)
@@ -1076,18 +1584,21 @@ setInterval(
 
         score++;
 
+
         scoreText.textContent =
             score;
 
     },
+
     400
+
 );
 
 
 
-/* ============================================
+/* =====================================================
    GAME OVER
-============================================ */
+===================================================== */
 
 function endGame(){
 
@@ -1095,11 +1606,14 @@ function endGame(){
 
     dragging = false;
 
+
     finalScore.textContent =
         score;
 
+
     finalCoins.textContent =
         coins;
+
 
     gameOver.style.display =
         "flex";
@@ -1108,9 +1622,9 @@ function endGame(){
 
 
 
-/* ============================================
-   RESTART GAME
-============================================ */
+/* =====================================================
+   RESTART
+===================================================== */
 
 function restartGame(){
 
@@ -1120,6 +1634,9 @@ function restartGame(){
 
     running = true;
 
+    dragging = false;
+
+
     playerX = 50;
 
     playerY = 62;
@@ -1128,6 +1645,7 @@ function restartGame(){
     scoreText.textContent =
         "0";
 
+
     coinsText.textContent =
         "0";
 
@@ -1135,17 +1653,28 @@ function restartGame(){
     finalScore.textContent =
         "0";
 
+
     finalCoins.textContent =
         "0";
 
 
+    /*
+       सबै पुराना obstacles
+       र coins हटाउने
+    */
+
     document
         .querySelectorAll(
-            ".obstacle,.coin"
+            ".obstacle, .coin"
         )
         .forEach(
-            element =>
-                element.remove()
+
+            function(element){
+
+                element.remove();
+
+            }
+
         );
 
 
@@ -1159,6 +1688,8 @@ function restartGame(){
 
 </script>
 
+
 </body>
+
 </html>
 ```
