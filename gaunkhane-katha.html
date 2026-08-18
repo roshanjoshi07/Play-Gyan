@@ -2,1197 +2,303 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1.0">
-
-<title>गाउँखाने कथा | GameBook GK Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>गाउँ खाने कथा - Quiz</title>
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-body{
-    font-family:
-    system-ui,
-    "Noto Sans Devanagari",
-    sans-serif;
-
-    min-height:100vh;
-
-    color:white;
-
-    background:
-    radial-gradient(
-        circle at 15% 20%,
-        #164e63,
-        transparent 35%
-    ),
-    radial-gradient(
-        circle at 85% 80%,
-        #581c87,
-        transparent 35%
-    ),
-    linear-gradient(
-        135deg,
-        #020617,
-        #0f172a,
-        #170b2b
-    );
-
-    overflow-x:hidden;
+body {
+    font-family: Arial, "Noto Sans Devanagari", sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    color: white;
 }
 
-
-/* =========================
-   FLOATING BACKGROUND
-========================= */
-
-.bg{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:-1;
+.game {
+    width: 100%;
+    max-width: 650px;
+    background: rgba(255,255,255,0.10);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 
-.orb{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(5px);
-    opacity:.18;
-    animation:float 8s infinite ease-in-out;
+h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 8px;
 }
 
-.orb1{
-    width:220px;
-    height:220px;
-    background:#22d3ee;
-    left:-80px;
-    top:10%;
+.subtitle {
+    text-align: center;
+    color: #d8e7ff;
+    margin-bottom: 20px;
 }
 
-.orb2{
-    width:280px;
-    height:280px;
-    background:#a855f7;
-    right:-100px;
-    bottom:5%;
-    animation-delay:2s;
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-.orb3{
-    width:150px;
-    height:150px;
-    background:#f59e0b;
-    left:45%;
-    top:60%;
-    animation-delay:4s;
+.info {
+    flex: 1;
+    background: rgba(0,0,0,0.20);
+    padding: 12px;
+    border-radius: 14px;
+    text-align: center;
 }
 
-@keyframes float{
+.info small {
+    display: block;
+    color: #cbd5e1;
+    margin-bottom: 4px;
+}
 
-    0%,100%{
-        transform:translateY(0) scale(1);
+.info strong {
+    font-size: 20px;
+}
+
+#lives {
+    letter-spacing: 3px;
+}
+
+.progress-box {
+    width: 100%;
+    height: 9px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 22px;
+}
+
+#progress {
+    height: 100%;
+    width: 0%;
+    background: #22c55e;
+    transition: width 0.3s;
+}
+
+.question-box {
+    background: rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: 25px 20px;
+    margin-bottom: 20px;
+}
+
+.question-number {
+    color: #93c5fd;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.question {
+    font-size: 23px;
+    line-height: 1.6;
+    font-weight: bold;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+}
+
+.option {
+    border: none;
+    border-radius: 15px;
+    padding: 17px 12px;
+    background: #f8fafc;
+    color: #172033;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    min-height: 60px;
+}
+
+.option:hover {
+    transform: translateY(-3px);
+    background: #dbeafe;
+}
+
+.option.correct {
+    background: #22c55e;
+    color: white;
+}
+
+.option.wrong {
+    background: #ef4444;
+    color: white;
+}
+
+.option.disabled {
+    pointer-events: none;
+}
+
+.feedback {
+    min-height: 45px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 18px;
+}
+
+.next-btn,
+.restart-btn {
+    display: none;
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #3b82f6;
+    color: white;
+    margin-top: 10px;
+}
+
+.next-btn:hover,
+.restart-btn:hover {
+    background: #2563eb;
+}
+
+.game-over {
+    display: none;
+    text-align: center;
+}
+
+.game-over h2 {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.game-over p {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.restart-btn {
+    display: block;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media(max-width: 550px) {
+
+    .game {
+        padding: 18px;
+        border-radius: 20px;
     }
 
-    50%{
-        transform:translateY(-35px) scale(1.08);
+    h1 {
+        font-size: 27px;
     }
 
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.header{
-
-    width:min(1000px,94%);
-
-    margin:auto;
-
-    padding:20px 0;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:15px;
-
-}
-
-.logo{
-
-    font-size:22px;
-
-    font-weight:800;
-
-}
-
-.home{
-
-    text-decoration:none;
-
-    color:white;
-
-    padding:10px 16px;
-
-    border-radius:20px;
-
-    background:
-    rgba(255,255,255,.08);
-
-    border:
-    1px solid rgba(255,255,255,.1);
-
-    transition:.25s;
-
-}
-
-.home:hover{
-
-    background:
-    rgba(255,255,255,.16);
-
-    transform:translateY(-2px);
-
-}
-
-
-/* =========================
-   GAME CONTAINER
-========================= */
-
-.game{
-
-    width:min(850px,94%);
-
-    margin:15px auto 40px;
-
-}
-
-
-/* =========================
-   TITLE
-========================= */
-
-.title{
-
-    text-align:center;
-
-    margin:15px 0 25px;
-
-}
-
-.title .emoji{
-
-    font-size:60px;
-
-    animation:
-    bounce 2s infinite;
-
-}
-
-@keyframes bounce{
-
-    0%,100%{
-        transform:translateY(0)
+    .question {
+        font-size: 19px;
     }
 
-    50%{
-        transform:translateY(-12px)
+    .options {
+        grid-template-columns: 1fr;
     }
 
-}
-
-.title h1{
-
-    font-size:
-    clamp(32px,7vw,52px);
-
-    margin-top:5px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #67e8f9,
-        #c084fc,
-        #facc15
-    );
-
-    -webkit-background-clip:text;
-
-    color:transparent;
-
-}
-
-.title p{
-
-    color:#94a3b8;
-
-    margin-top:8px;
-
-}
-
-
-/* =========================
-   STATS
-========================= */
-
-.stats{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(4,1fr);
-
-    gap:10px;
-
-    margin-bottom:18px;
-
-}
-
-.stat{
-
-    padding:14px 8px;
-
-    text-align:center;
-
-    border-radius:18px;
-
-    background:
-    rgba(15,23,42,.75);
-
-    border:
-    1px solid rgba(255,255,255,.08);
-
-    backdrop-filter:
-    blur(12px);
-
-}
-
-.stat small{
-
-    display:block;
-
-    color:#94a3b8;
-
-    font-size:11px;
-
-    margin-bottom:4px;
-
-}
-
-.stat strong{
-
-    font-size:22px;
-
-}
-
-
-/* =========================
-   CARD
-========================= */
-
-.question-card{
-
-    position:relative;
-
-    padding:
-    clamp(22px,5vw,40px);
-
-    border-radius:30px;
-
-    background:
-    linear-gradient(
-        145deg,
-        rgba(15,23,42,.94),
-        rgba(30,41,59,.86)
-    );
-
-    border:
-    1px solid
-    rgba(255,255,255,.1);
-
-    box-shadow:
-    0 30px 80px
-    rgba(0,0,0,.4);
-
-    overflow:hidden;
-
-    transition:.3s;
-
-}
-
-.question-card.change{
-
-    animation:
-    questionIn .45s ease;
-
-}
-
-@keyframes questionIn{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        translateY(20px)
-        scale(.97);
-
+    .option {
+        min-height: 55px;
     }
 
-    to{
-
-        opacity:1;
-
-        transform:
-        translateY(0)
-        scale(1);
-
+    .topbar {
+        flex-wrap: wrap;
     }
 
-}
-
-
-/* =========================
-   QUESTION
-========================= */
-
-.question-label{
-
-    color:#67e8f9;
-
-    font-weight:bold;
-
-    margin-bottom:14px;
-
-}
-
-.question{
-
-    font-size:
-    clamp(23px,5vw,34px);
-
-    line-height:1.6;
-
-    text-align:center;
-
-    margin-bottom:28px;
-
-}
-
-
-/* =========================
-   ANSWERS
-========================= */
-
-.answers{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-    gap:13px;
-
-}
-
-.answer{
-
-    padding:17px;
-
-    border:1px solid
-    rgba(255,255,255,.1);
-
-    border-radius:18px;
-
-    color:white;
-
-    background:
-    rgba(255,255,255,.055);
-
-    font-size:16px;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-.answer:hover{
-
-    transform:
-    translateY(-3px);
-
-    background:
-    rgba(103,232,249,.12);
-
-    border-color:
-    rgba(103,232,249,.5);
-
-}
-
-.answer.correct{
-
-    background:
-    rgba(34,197,94,.22);
-
-    border-color:#22c55e;
-
-    animation:
-    correct .45s;
-
-}
-
-.answer.wrong{
-
-    background:
-    rgba(239,68,68,.2);
-
-    border-color:#ef4444;
-
-    animation:
-    shake .4s;
-
-}
-
-.answer.disabled{
-
-    pointer-events:none;
-
-    opacity:.75;
-
-}
-
-@keyframes correct{
-
-    50%{
-        transform:scale(1.04);
+    .info {
+        min-width: 30%;
     }
-
 }
-
-@keyframes shake{
-
-    25%{
-        transform:translateX(-8px);
-    }
-
-    50%{
-        transform:translateX(8px);
-    }
-
-    75%{
-        transform:translateX(-5px);
-    }
-
-}
-
-
-/* =========================
-   BOTTOM CONTROLS
-========================= */
-
-.controls{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:12px;
-
-    margin-top:22px;
-
-    flex-wrap:wrap;
-
-}
-
-.btn{
-
-    border:0;
-
-    padding:13px 22px;
-
-    border-radius:25px;
-
-    color:white;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-.btn:hover{
-
-    transform:
-    translateY(-2px);
-
-}
-
-.hint{
-
-    background:
-    linear-gradient(
-        135deg,
-        #d97706,
-        #ea580c
-    );
-
-}
-
-.next{
-
-    background:
-    linear-gradient(
-        135deg,
-        #2563eb,
-        #7c3aed
-    );
-
-}
-
-.next:disabled{
-
-    opacity:.4;
-
-    cursor:not-allowed;
-
-}
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-.message{
-
-    min-height:30px;
-
-    margin-top:18px;
-
-    text-align:center;
-
-    font-weight:bold;
-
-}
-
-.message.good{
-
-    color:#4ade80;
-
-}
-
-.message.bad{
-
-    color:#fb7185;
-
-}
-
-
-/* =========================
-   HINT BOX
-========================= */
-
-.hint-box{
-
-    display:none;
-
-    margin-top:16px;
-
-    padding:15px;
-
-    border-radius:16px;
-
-    background:
-    rgba(245,158,11,.1);
-
-    border:
-    1px solid
-    rgba(245,158,11,.25);
-
-    color:#fde68a;
-
-    text-align:center;
-
-}
-
-.hint-box.show{
-
-    display:block;
-
-    animation:
-    questionIn .3s;
-
-}
-
-
-/* =========================
-   PROGRESS
-========================= */
-
-.progress-wrap{
-
-    margin-top:22px;
-
-}
-
-.progress-info{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    color:#94a3b8;
-
-    font-size:12px;
-
-    margin-bottom:7px;
-
-}
-
-.progress{
-
-    height:7px;
-
-    border-radius:10px;
-
-    background:#1e293b;
-
-    overflow:hidden;
-
-}
-
-.progress-bar{
-
-    height:100%;
-
-    width:0%;
-
-    background:
-    linear-gradient(
-        90deg,
-        #22d3ee,
-        #a855f7
-    );
-
-    transition:.4s;
-
-}
-
-
-/* =========================
-   START / RESULT SCREEN
-========================= */
-
-.overlay{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:100;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:20px;
-
-    background:
-    rgba(0,0,0,.7);
-
-    backdrop-filter:
-    blur(12px);
-
-}
-
-.overlay.hide{
-
-    display:none;
-
-}
-
-.modal{
-
-    width:min(460px,100%);
-
-    padding:35px 25px;
-
-    text-align:center;
-
-    border-radius:28px;
-
-    background:
-    linear-gradient(
-        145deg,
-        #0f172a,
-        #1e293b
-    );
-
-    border:
-    1px solid
-    rgba(255,255,255,.1);
-
-    box-shadow:
-    0 30px 100px
-    rgba(0,0,0,.7);
-
-    animation:
-    modalIn .5s ease;
-
-}
-
-.modal .big{
-
-    font-size:70px;
-
-    margin-bottom:10px;
-
-}
-
-.modal h2{
-
-    font-size:32px;
-
-}
-
-.modal p{
-
-    color:#94a3b8;
-
-    line-height:1.7;
-
-    margin:12px 0 22px;
-
-}
-
-.start{
-
-    width:100%;
-
-    padding:16px;
-
-    border:0;
-
-    border-radius:18px;
-
-    color:white;
-
-    font-size:17px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    background:
-    linear-gradient(
-        135deg,
-        #0891b2,
-        #7c3aed
-    );
-
-}
-
-@keyframes modalIn{
-
-    from{
-
-        opacity:0;
-
-        transform:
-        scale(.8)
-        translateY(25px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-        scale(1)
-        translateY(0);
-
-    }
-
-}
-
-
-/* =========================
-   CONFETTI
-========================= */
-
-.confetti{
-
-    position:fixed;
-
-    width:8px;
-
-    height:12px;
-
-    top:-20px;
-
-    z-index:200;
-
-    animation:
-    fall 1.5s linear forwards;
-
-}
-
-@keyframes fall{
-
-    to{
-
-        transform:
-        translateY(110vh)
-        rotate(720deg);
-
-        opacity:0;
-
-    }
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:600px){
-
-    .stats{
-
-        grid-template-columns:
-        repeat(2,1fr);
-
-    }
-
-    .answers{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .question-card{
-
-        border-radius:22px;
-
-    }
-
-    .header{
-
-        padding-top:12px;
-
-    }
-
-    .logo{
-
-        font-size:17px;
-
-    }
-
-}
-
 </style>
 </head>
 
-
 <body>
 
+<div class="game">
 
-<div class="bg">
+    <h1>🧠 गाउँ खाने कथा</h1>
+    <p class="subtitle">सोच्नुहोस्, उत्तर छान्नुहोस् र आफ्नो बुद्धि परीक्षण गर्नुहोस्!</p>
 
-    <div class="orb orb1"></div>
+    <div id="quiz">
 
-    <div class="orb orb2"></div>
+        <div class="topbar">
 
-    <div class="orb orb3"></div>
-
-</div>
-
-
-<header class="header">
-
-    <div class="logo">
-        🧠 GameBook GK Hub
-    </div>
-
-    <a
-        href="index.html"
-        class="home">
-        🏠 Home
-    </a>
-
-</header>
-
-
-<main class="game">
-
-
-    <section class="title">
-
-        <div class="emoji">
-            🤔
-        </div>
-
-        <h1>
-            गाउँखाने कथा
-        </h1>
-
-        <p>
-            सोच्नुहोस् • अनुमान गर्नुहोस् • जित्नुहोस्!
-        </p>
-
-    </section>
-
-
-    <!-- STATS -->
-
-    <div class="stats">
-
-        <div class="stat">
-
-            <small>
-                SCORE
-            </small>
-
-            <strong id="score">
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="stat">
-
-            <small>
-                LIFE
-            </small>
-
-            <strong id="life">
-                ❤️❤️❤️
-            </strong>
-
-        </div>
-
-
-        <div class="stat">
-
-            <small>
-                COMBO
-            </small>
-
-            <strong id="combo">
-                0
-            </strong>
-
-        </div>
-
-
-        <div class="stat">
-
-            <small>
-                BEST
-            </small>
-
-            <strong id="best">
-                0
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <!-- QUESTION -->
-
-    <section
-        class="question-card"
-        id="questionCard">
-
-
-        <div class="question-label">
-            🏮 गाउँखाने कथा
-        </div>
-
-
-        <div
-            class="question"
-            id="question">
-
-            प्रश्न तयार हुँदैछ...
-
-        </div>
-
-
-        <div
-            class="answers"
-            id="answers">
-        </div>
-
-
-        <div
-            class="message"
-            id="message">
-        </div>
-
-
-        <div
-            class="hint-box"
-            id="hintBox">
-        </div>
-
-
-        <div class="controls">
-
-            <button
-                class="btn hint"
-                id="hintBtn">
-
-                💡 Hint
-
-            </button>
-
-
-            <button
-                class="btn next"
-                id="nextBtn"
-                disabled>
-
-                अर्को कथा ➜
-
-            </button>
-
-        </div>
-
-
-        <div class="progress-wrap">
-
-            <div class="progress-info">
-
-                <span>
-                    प्रगति
-                </span>
-
-                <span id="progressText">
-                    1 / 20
-                </span>
-
+            <div class="info">
+                <small>प्रश्न</small>
+                <strong id="questionCount">1 / 100</strong>
             </div>
 
+            <div class="info">
+                <small>स्कोर</small>
+                <strong id="score">0</strong>
+            </div>
 
-            <div class="progress">
-
-                <div
-                    class="progress-bar"
-                    id="progressBar">
-                </div>
-
+            <div class="info">
+                <small>जीवन</small>
+                <strong id="lives">❤️❤️❤️</strong>
             </div>
 
         </div>
 
-    </section>
-
-</main>
-
-
-<!-- START -->
-
-<div
-    class="overlay"
-    id="startOverlay">
-
-    <div class="modal">
-
-        <div class="big">
-            🏮
+        <div class="progress-box">
+            <div id="progress"></div>
         </div>
 
-        <h2>
-            गाउँखाने कथा
-        </h2>
+        <div class="question-box">
 
-        <p>
-            यहाँ तपाईंलाई अलि अप्ठ्यारा
-            र रमाइला गाउँखाने कथाहरू
-            दिइनेछन्।
-            <br><br>
-            लगातार ३ वटा गलत उत्तर
-            भएमा ❤️ १ Life घट्नेछ।
-        </p>
+            <div class="question-number" id="questionNumber">
+                प्रश्न नं. 1
+            </div>
 
-        <button
-            class="start"
-            id="startBtn">
+            <div class="question" id="question">
+                प्रश्न यहाँ आउनेछ।
+            </div>
 
-            🎮 खेल सुरु गर्नुहोस्
+        </div>
 
+        <div class="options" id="options"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+            अर्को प्रश्न ➜
         </button>
 
     </div>
 
-</div>
+    <div class="game-over" id="gameOver">
 
+        <h2>💀 Game Over</h2>
 
-<!-- RESULT -->
+        <p>तपाईंको खेल सकियो!</p>
 
-<div
-    class="overlay hide"
-    id="resultOverlay">
+        <p>अन्तिम स्कोर: <strong id="finalScore">0</strong></p>
 
-    <div class="modal">
+        <p>सही उत्तर: <strong id="finalCorrect">0</strong></p>
 
-        <div
-            class="big"
-            id="resultEmoji">
-            🏆
-        </div>
-
-        <h2>
-            खेल सकियो!
-        </h2>
-
-        <p>
-
-            तपाईंको Score:
-
-            <strong
-                id="finalScore">
-                0
-            </strong>
-
-            <br>
-
-            सही उत्तर:
-
-            <strong
-                id="correctCount">
-                0
-            </strong>
-
-        </p>
-
-        <button
-            class="start"
-            id="restartBtn">
-
+        <button class="restart-btn" onclick="restartGame()">
             🔄 फेरि खेल्नुहोस्
-
         </button>
 
     </div>
@@ -1202,1051 +308,944 @@ body{
 
 <script>
 
-/* =====================================================
-   QUESTION BANK
-===================================================== */
-
 const questions = [
 
 {
-q:"मुख छैन तर बोल्छ, कान छैन तर सुन्छ। त्यो के हो?",
-a:["रेडियो","प्रतिध्वनि","टेलिफोन","घडी"],
-correct:1,
-hint:"आवाज फर्किएर आउँछ।"
+question:"बिहान चार खुट्टा, दिउँसो दुई खुट्टा र साँझ तीन खुट्टा भएर हिँड्ने को हो?",
+options:["मानिस","कुकुर","बिरालो","घोडा"],
+answer:"मानिस"
 },
 
 {
-q:"जति निकाल्यो उति ठूलो हुन्छ। त्यो के हो?",
-a:["खाल्डो","ढुंगा","रुख","बाटो"],
-correct:0,
-hint:"जमिनसँग सम्बन्धित छ।"
+question:"जति निकाल्दै गयो, उति ठूलो हुँदै जान्छ। त्यो के हो?",
+options:["खाडल","पहाड","नदी","घर"],
+answer:"खाडल"
 },
 
 {
-q:"खुट्टा चार वटा छन् तर हिँड्न सक्दैन। त्यो के हो?",
-a:["कुकुर","कुर्सी","घोडा","बाख्रा"],
-correct:1,
-hint:"यसमा मानिस बस्छ।"
+question:"जति दौडिए पनि आफ्नै ठाउँबाट अगाडि बढ्दैन। त्यो के हो?",
+options:["घडीको काँटा","घोडा","गाडी","मानिस"],
+answer:"घडीको काँटा"
 },
 
 {
-q:"आफू भिज्छ तर अरूलाई सुकाउँछ। त्यो के हो?",
-a:["छाता","तौलिया","पानी","घाम"],
-correct:1,
-hint:"नुहाएपछि प्रयोग हुन्छ।"
+question:"मुख छैन तर बोल्छ, कान छैन तर जवाफ दिन्छ। त्यो के हो?",
+options:["प्रतिध्वनि","हावा","बादल","छाया"],
+answer:"प्रतिध्वनि"
 },
 
 {
-q:"दिनभरि दौडिन्छ तर एक पाइला पनि अगाडि बढ्दैन। त्यो के हो?",
-a:["घडी","नदी","हावा","मानिस"],
-correct:0,
-hint:"यसमा काँटा हुन्छ।"
+question:"पखेटा छैन तर आकाशमा उड्छ, आँखा छैन तर पानी झार्छ। त्यो के हो?",
+options:["बादल","पतंग","चरा","हवाईजहाज"],
+answer:"बादल"
 },
 
 {
-q:"टाउको र पुच्छर छ तर शरीर छैन। त्यो के हो?",
-a:["सर्प","सिक्का","चराचुरुङ्गी","माछा"],
-correct:1,
-hint:"पैसासँग सम्बन्धित छ।"
+question:"आफू हिँड्दैन तर संसारभरि घुमेको देखिन्छ। त्यो के हो?",
+options:["नक्सा","नदी","हावा","छाया"],
+answer:"नक्सा"
 },
 
 {
-q:"जति धेरै तान्यो उति छोटो हुँदै जान्छ। त्यो के हो?",
-a:["डोरी","सिगरेट","रबर","बाटो"],
-correct:1,
-hint:"जलाउँदा सानो हुन्छ।"
+question:"आफू देखिँदैन तर रूखका पात हल्लाउँछ। त्यो के हो?",
+options:["हावा","पानी","घाम","धुवाँ"],
+answer:"हावा"
 },
 
 {
-q:"कालो हुँदा सफा गर्छ, सेतो हुँदा फोहोर गर्छ। त्यो के हो?",
-a:["ब्ल्याकबोर्ड","कपडा","कागज","कोइला"],
-correct:0,
-hint:"स्कुलमा धेरै प्रयोग हुन्छ।"
+question:"जति पुछ्यो, उति भिज्दै जान्छ। त्यो के हो?",
+options:["तौलिया","कपडा","कागज","रुमाल"],
+answer:"तौलिया"
 },
 
 {
-q:"पखेटा छैन तर उड्छ, आँखा छैन तर रुन्छ। त्यो के हो?",
-a:["बादल","चराचुरुङ्गी","हावा","पतंग"],
-correct:0,
-hint:"आकाशमा देखिन्छ।"
+question:"आफू जल्छ र अरूलाई उज्यालो दिन्छ। त्यो के हो?",
+options:["दियो","ऐना","ढुंगा","पानी"],
+answer:"दियो"
 },
 
 {
-q:"मुखमा दाँत धेरै छन् तर खान सक्दैन। त्यो के हो?",
-a:["गोही","काँगियो","कंघी","आरी"],
-correct:2,
-hint:"कपालसँग सम्बन्धित छ।"
+question:"आफ्नो शरीर छैन तर छायाँ बनाउँछ। त्यो के हो?",
+options:["प्रकाश","हावा","ध्वनि","पानी"],
+answer:"प्रकाश"
 },
 
 {
-q:"जति दौडियो उति ठाउँमै रहन्छ। त्यो के हो?",
-a:["साइकल","ट्रेडमिल","घोडा","गाडी"],
-correct:1,
-hint:"व्यायाम गर्ने ठाउँमा हुन्छ।"
+question:"राति आउँछ, बिहान हराउँछ, तर ढोका खोलेर आउँदैन। त्यो के हो?",
+options:["अँध्यारो","हावा","वर्षा","धुवाँ"],
+answer:"अँध्यारो"
 },
 
 {
-q:"घर छ तर ढोका छैन, मानिस छैन तर कोठा धेरै छन्। त्यो के हो?",
-a:["अण्डा","मौरीको घार","आलु","किताब"],
-correct:1,
-hint:"सानो जीवहरूले बनाउँछन्।"
+question:"दिनभरि आकाशमा हिँड्छ, साँझ पर्दा हराउँछ। त्यो के हो?",
+options:["सूर्य","बादल","चन्द्रमा","तारा"],
+answer:"सूर्य"
 },
 
 {
-q:"आफू नचलिकन संसार घुमाउँछ। त्यो के हो?",
-a:["नक्सा","हवाईजहाज","पृथ्वी","किताब"],
-correct:0,
-hint:"यसले ठाउँहरू देखाउँछ।"
+question:"राति देखिन्छ, तर आफैं उज्यालो निकाल्दैन। त्यो के हो?",
+options:["चन्द्रमा","सूर्य","दियो","आगो"],
+answer:"चन्द्रमा"
 },
 
 {
-q:"एक खुट्टामा उभिन्छ, वर्षामा काम लाग्छ। त्यो के हो?",
-a:["छाता","रुख","लठ्ठी","टेबल"],
-correct:0,
-hint:"वर्षा पर्दा खोलिन्छ।"
+question:"लाखौँ हुन्छन् तर दिनमा प्रायः देखिँदैनन्। ती के हुन्?",
+options:["तारा","बादल","चरा","पतंग"],
+answer:"तारा"
 },
 
 {
-q:"आफ्नै घरमा बसेर संसार देखाउँछ। त्यो के हो?",
-a:["झ्याल","टेलिभिजन","ढोका","ऐना"],
-correct:1,
-hint:"स्क्रिन हुन्छ।"
+question:"वर्षापछि आकाशमा सात रङको पुल देखिन्छ। त्यो के हो?",
+options:["इन्द्रेणी","बादल","कुहिरो","धुवाँ"],
+answer:"इन्द्रेणी"
 },
 
 {
-q:"आफू कालो, बच्चा सेतो; पढ्ने मानिसको साथी। त्यो के हो?",
-a:["पेन्सिल","कलम","कापी","चस्मा"],
-correct:0,
-hint:"लेख्दा प्रयोग हुन्छ।"
+question:"आकाशबाट आउँछ, जमिनमा पुग्दा भिजाउँछ। त्यो के हो?",
+options:["वर्षा","हावा","घाम","धुलो"],
+answer:"वर्षा"
 },
 
 {
-q:"दिनमा लुच्छ, रातमा फुल्छ। त्यो के हो?",
-a:["सूर्यमुखी","चन्द्रमा","फूल","तारा"],
-correct:2,
-hint:"वनस्पति हो।"
+question:"सेतो भएर आकाशबाट झर्छ र हातमा राख्दा हराउँछ। त्यो के हो?",
+options:["हिउँ","कागज","कपास","कुहिरो"],
+answer:"हिउँ"
 },
 
 {
-q:"न पानीमा डुब्छ, न आगोमा जल्छ। त्यो के हो?",
-a:["छायाँ","कागज","फलाम","काठ"],
-correct:0,
-hint:"प्रकाशसँग यसको सम्बन्ध छ।"
+question:"जाडोमा जमिनमाथि सेतो पर्दा जस्तो बस्छ, तर हातले समात्न सकिँदैन। त्यो के हो?",
+options:["कुहिरो","हिउँ","धुवाँ","बादल"],
+answer:"कुहिरो"
 },
 
 {
-q:"आफू अँध्यारोमा जन्मिन्छ, उज्यालोमा मर्छ। त्यो के हो?",
-a:["छायाँ","अन्धकार","मैनबत्ती","बिरुवा"],
-correct:0,
-hint:"प्रकाश परेपछि देखिन्छ।"
+question:"आगोबाट निस्कन्छ, माथितिर जान्छ तर हातले समात्न सकिँदैन। त्यो के हो?",
+options:["धुवाँ","बाफ","कुहिरो","बादल"],
+answer:"धुवाँ"
 },
 
 {
-q:"हात छैन तर ढोका खोल्छ, खुट्टा छैन तर घर पस्छ। त्यो के हो?",
-a:["हावा","मानिस","पानी","धुवाँ"],
-correct:0,
-hint:"झ्यालबाट पनि आउँछ।"
+question:"चिसो हुँदा जम्छ, तातो हुँदा बग्छ। त्यो के हो?",
+options:["पानी","तेल","बालुवा","माटो"],
+answer:"पानी"
+},
+
+{
+question:"पानीमा जन्मिन्छ, पानीमै बस्छ, पानीबाट निकाल्दा बाँच्न गाह्रो हुन्छ। त्यो के हो?",
+options:["माछा","भ्यागुता","कछुवा","सर्प"],
+answer:"माछा"
+},
+
+{
+question:"जरा जमिनमा, शरीर माथि र टुप्पो आकाशतिर हुन्छ। त्यो के हो?",
+options:["रुख","पहाड","घर","बाँस"],
+answer:"रुख"
+},
+
+{
+question:"जति पानी खायो, उति ठूलो हुँदै जान्छ। त्यो के हो?",
+options:["बिरुवा","ढुंगा","घर","बाटो"],
+answer:"बिरुवा"
+},
+
+{
+question:"माटोभित्र जन्मिन्छ र माटोबाट निकालेर खान्छौँ। त्यो के हो?",
+options:["आलु","स्याउ","केरा","अङ्गुर"],
+answer:"आलु"
+},
+
+{
+question:"छाला फुकाल्दा आँसु आउँछ। त्यो के हो?",
+options:["प्याज","आलु","गाजर","मुला"],
+answer:"प्याज"
+},
+
+{
+question:"बाहिर काँडैकाँडा, भित्र मीठो। त्यो के हो?",
+options:["भुइँकटहर","स्याउ","केरा","सुन्तला"],
+answer:"भुइँकटहर"
+},
+
+{
+question:"बाहिर हरियो, भित्र रातो र कालो दाना धेरै। त्यो के हो?",
+options:["तरबुजा","आँप","स्याउ","नासपाती"],
+answer:"तरबुजा"
+},
+
+{
+question:"एउटै गुच्छामा धेरै साना दाना हुन्छन्। त्यो के हो?",
+options:["अङ्गुर","केरा","स्याउ","नरिवल"],
+answer:"अङ्गुर"
+},
+
+{
+question:"पहिले हरियो, पाकेपछि पहेँलो हुन्छ। त्यो के हो?",
+options:["केरा","स्याउ","अङ्गुर","तरबुजा"],
+answer:"केरा"
+},
+
+{
+question:"बाहिर कडा खोल, भित्र पानी र सेतो गुदी। त्यो के हो?",
+options:["नरिवल","अण्डा","आलु","सुन्तला"],
+answer:"नरिवल"
+},
+
+{
+question:"बाहिर खोल हुन्छ, भित्र पहेँलो र सेतो भाग हुन्छ। त्यो के हो?",
+options:["अण्डा","नरिवल","आलु","प्याज"],
+answer:"अण्डा"
+},
+
+{
+question:"मुख छ तर बोल्दैन, दाँत छन् तर खान्दैन। त्यो के हो?",
+options:["आरी","मानिस","कुकुर","बाघ"],
+answer:"आरी"
+},
+
+{
+question:"दाँत धेरै छन् तर खाना खान सक्दैन। त्यो के हो?",
+options:["काइँयो","कुकुर","बाघ","मानिस"],
+answer:"काइँयो"
+},
+
+{
+question:"आँखा छ तर देख्दैन। त्यो के हो?",
+options:["सुई","मानिस","चरा","बिरालो"],
+answer:"सुई"
+},
+
+{
+question:"घाँटी छ तर टाउको छैन। त्यो के हो?",
+options:["बोतल","मानिस","कुखुरा","घोडा"],
+answer:"बोतल"
+},
+
+{
+question:"हात छन् तर ताली बजाउन सक्दैन। त्यो के हो?",
+options:["घडी","मानिस","बाँदर","पुतली"],
+answer:"घडी"
+},
+
+{
+question:"खुट्टा छन् तर हिँड्न सक्दैन। त्यो के हो?",
+options:["टेबल","कुकुर","घोडा","मानिस"],
+answer:"टेबल"
+},
+
+{
+question:"मुख छ तर खान सक्दैन। त्यो के हो?",
+options:["नदी","मानिस","बाघ","कुकुर"],
+answer:"नदी"
+},
+
+{
+question:"टाउको र पुच्छर हुन्छ तर शरीर हुँदैन। त्यो के हो?",
+options:["सिक्का","सर्प","माछा","कुकुर"],
+answer:"सिक्का"
+},
+
+{
+question:"खुट्टा नभए पनि दौडिरहन्छ। त्यो के हो?",
+options:["नदी","घोडा","कुकुर","मानिस"],
+answer:"नदी"
+},
+
+{
+question:"पखेटा छैन तर उड्छ, मुख छैन तर गीत गाउँछ। त्यो के हो?",
+options:["हावा","चरा","पतंग","बादल"],
+answer:"हावा"
+},
+
+{
+question:"आफू हिँड्दैन, तर घरघरमा पुग्छ। त्यो के हो?",
+options:["हावा","ढुंगा","पहाड","बाटो"],
+answer:"हावा"
+},
+
+{
+question:"जति टाढा गए पनि सँगसँगै आउँछ। त्यो के हो?",
+options:["छाया","नदी","हावा","बाटो"],
+answer:"छाया"
+},
+
+{
+question:"उज्यालोमा देखिन्छ, अँध्यारोमा हराउँछ। त्यो के हो?",
+options:["छाया","आवाज","हावा","गन्ध"],
+answer:"छाया"
+},
+
+{
+question:"आफ्नो आवाज आफैं फर्काएर सुनाउँछ। त्यो के हो?",
+options:["प्रतिध्वनि","हावा","बादल","नदी"],
+answer:"प्रतिध्वनि"
+},
+
+{
+question:"आफूलाई देख्न ऐनामा जानुपर्छ। त्यो को हो?",
+options:["मानिस","छाया","हावा","बादल"],
+answer:"मानिस"
+},
+
+{
+question:"आफ्नै अनुहार देखाउँछ तर आफूले अनुहार राख्दैन। त्यो के हो?",
+options:["ऐना","झ्याल","ढोका","पानी"],
+answer:"ऐना"
+},
+
+{
+question:"टुटेपछि हजार टुक्रा हुन्छ तर जोड्दा फेरि अनुहार देखाउँछ। त्यो के हो?",
+options:["ऐना","कागज","काठ","ढुंगा"],
+answer:"ऐना"
+},
+
+{
+question:"जति हे¥यो उति आफ्नै अनुहार देखाउँछ। त्यो के हो?",
+options:["ऐना","पानीको बोतल","ढोका","झोला"],
+answer:"ऐना"
+},
+
+{
+question:"दिनभरि हिँड्छ तर राति एउटै ठाउँमा रोकिन्छ। त्यो के हो?",
+options:["सूर्य","नदी","हावा","बादल"],
+answer:"सूर्य"
+},
+
+{
+question:"पूर्वमा जन्मिएजस्तो देखिन्छ र पश्चिममा मरेजस्तो देखिन्छ। त्यो के हो?",
+options:["सूर्य","चन्द्रमा","तारा","बादल"],
+answer:"सूर्य"
+},
+
+{
+question:"राति आकाशमा देखिन्छ, आकार बदलिरहन्छ। त्यो के हो?",
+options:["चन्द्रमा","सूर्य","बादल","इन्द्रेणी"],
+answer:"चन्द्रमा"
+},
+
+{
+question:"आकाशमा हजारौँ हुन्छन्, तर हातले एउटा पनि समात्न सकिँदैन। ती के हुन्?",
+options:["तारा","चरा","बादल","पतंग"],
+answer:"तारा"
+},
+
+{
+question:"आकाशमा हुन्छ, पानी परेपछि सात रङ देखाउँछ। त्यो के हो?",
+options:["इन्द्रेणी","चन्द्रमा","सूर्य","बादल"],
+answer:"इन्द्रेणी"
+},
+
+{
+question:"आकाशमा तैरिन्छ, पानीले भरिएको हुन्छ। त्यो के हो?",
+options:["बादल","चन्द्रमा","तारा","पतंग"],
+answer:"बादल"
+},
+
+{
+question:"आफैं पानी होइन तर पानी बोकेर हिँड्छ। त्यो के हो?",
+options:["बादल","नदी","समुद्र","कुवा"],
+answer:"बादल"
+},
+
+{
+question:"आकाशमा ठूलो आवाज गर्छ तर हातले समात्न सकिँदैन। त्यो के हो?",
+options:["गर्जन","ढोल","घण्टी","सिठी"],
+answer:"गर्जन"
+},
+
+{
+question:"एकछिन आकाश चम्काउँछ अनि तुरुन्त हराउँछ। त्यो के हो?",
+options:["बिजुली","तारा","दियो","चन्द्रमा"],
+answer:"बिजुली"
+},
+
+{
+question:"पहिले चम्किन्छ, त्यसपछि ठूलो गर्जन सुनिन सक्छ। त्यो के हो?",
+options:["चट्याङ","इन्द्रेणी","कुहिरो","हिउँ"],
+answer:"चट्याङ"
+},
+
+{
+question:"जति काट्यो उति छोटो हुन्छ। त्यो के हो?",
+options:["डोरी","खाडल","छाया","नदी"],
+answer:"डोरी"
+},
+
+{
+question:"जति तान्यो उति लामो हुन्छ। त्यो के हो?",
+options:["रबर","ढुंगा","काठ","काँच"],
+answer:"रबर"
+},
+
+{
+question:"जति काट्दै गयो, उति सानो हुँदै जान्छ। त्यो के हो?",
+options:["काठ","खाडल","बाटो","नदी"],
+answer:"काठ"
+},
+
+{
+question:"जति खन्यो उति गहिरो हुँदै जान्छ। त्यो के हो?",
+options:["कुवा","पहाड","रुख","घर"],
+answer:"कुवा"
+},
+
+{
+question:"जति खन्यो उति ठूलो हुन्छ। त्यो के हो?",
+options:["खाडल","ढुंगा","रुख","घर"],
+answer:"खाडल"
+},
+
+{
+question:"आफू घट्दै जान्छ, तर उज्यालो बढाउँदै जान्छ। त्यो के हो?",
+options:["मैनबत्ती","ढुंगा","पानी","ऐना"],
+answer:"मैनबत्ती"
+},
+
+{
+question:"आफू सानो हुँदै जान्छ तर वरिपरि उज्यालो बढ्छ। त्यो के हो?",
+options:["मैनबत्ती","चन्द्रमा","ऐना","बादल"],
+answer:"मैनबत्ती"
+},
+
+{
+question:"पानीमाथि बाटो बनाउँछ तर आफैं हिँड्दैन। त्यो के हो?",
+options:["पुल","डुंगा","नदी","रुख"],
+answer:"पुल"
+},
+
+{
+question:"दुई किनारालाई जोड्छ तर आफैं नदी होइन। त्यो के हो?",
+options:["पुल","डुंगा","बाटो","पहाड"],
+answer:"पुल"
+},
+
+{
+question:"आकाश र जमिनको बीचमा झुण्डिएर बस्छ, तर डोरीले बाँधिएको हुँदैन। त्यो के हो?",
+options:["बादल","पतंग","चरा","हवाईजहाज"],
+answer:"बादल"
+},
+
+{
+question:"डोरीले बाँधिएको हुन्छ, हावासँगै माथि उड्छ। त्यो के हो?",
+options:["पतंग","बादल","चरा","पात"],
+answer:"पतंग"
+},
+
+{
+question:"पखेटा मानिसले बनाएको हुन्छ, तर आकाशमा उड्छ। त्यो के हो?",
+options:["हवाईजहाज","बादल","चरा","पतंग"],
+answer:"हवाईजहाज"
+},
+
+{
+question:"पानीमाथि चल्छ तर बाटो चाहिँदैन। त्यो के हो?",
+options:["डुंगा","गाडी","साइकल","रेल"],
+answer:"डुंगा"
+},
+
+{
+question:"चार पाङ्ग्रा छन्, पेट्रोल खाएजस्तो लाग्छ तर खाना खाँदैन। त्यो के हो?",
+options:["गाडी","घोडा","साइकल","डुंगा"],
+answer:"गाडी"
+},
+
+{
+question:"दुई पाङ्ग्रा छन्, खुट्टाले चलाइन्छ। त्यो के हो?",
+options:["साइकल","गाडी","बस","रेल"],
+answer:"साइकल"
+},
+
+{
+question:"सानो शरीर हुन्छ, तर ठूलो ताल्चा खोल्छ। त्यो के हो?",
+options:["चाबी","सिक्का","सुई","काइँयो"],
+answer:"चाबी"
+},
+
+{
+question:"घरभित्र आउन र बाहिर जान बाटो दिन्छ। त्यो के हो?",
+options:["ढोका","छानो","भुइँ","भित्ता"],
+answer:"ढोका"
+},
+
+{
+question:"घरमा उज्यालो र हावा आउन बाटो दिन्छ। त्यो के हो?",
+options:["झ्याल","ढोका","छानो","भुइँ"],
+answer:"झ्याल"
+},
+
+{
+question:"घरलाई माथिबाट छोपेर राख्छ। त्यो के हो?",
+options:["छानो","भित्ता","झ्याल","ढोका"],
+answer:"छानो"
+},
+
+{
+question:"आफू हाँस्दैन तर तिम्रो अनुहार हँसिलो देखाउँछ। त्यो के हो?",
+options:["ऐना","छाया","पानी","झ्याल"],
+answer:"ऐना"
+},
+
+{
+question:"तिमी जहाँ जान्छौ, उज्यालोमा तिमीसँगै जान्छ। त्यो के हो?",
+options:["छाया","हावा","प्रतिध्वनि","गन्ध"],
+answer:"छाया"
+},
+
+{
+question:"तिमी रोकिन्छौ भने रोकिन्छ, तिमी दौडिन्छौ भने दौडिन्छ। त्यो के हो?",
+options:["छाया","हावा","नदी","बादल"],
+answer:"छाया"
+},
+
+{
+question:"आफ्नो शरीर छैन, तर तिम्रो शरीरको आकार पछ्याउँछ। त्यो के हो?",
+options:["छाया","हावा","धुवाँ","आवाज"],
+answer:"छाया"
+},
+
+{
+question:"आफूलाई समात्न खोज्दा भाग्छ, तर वास्तवमा कतै जाँदैन। त्यो के हो?",
+options:["छाया","ढुंगा","घर","रुख"],
+answer:"छाया"
+},
+
+{
+question:"आफू सुनिँदैन तर तिम्रो आवाजको नक्कल गरेर सुनिन्छ। त्यो के हो?",
+options:["प्रतिध्वनि","हावा","पानी","बादल"],
+answer:"प्रतिध्वनि"
+},
+
+{
+question:"पहाडतिर कराउँदा आफ्नै आवाज फेरि फर्केर आउँछ। त्यो के हो?",
+options:["प्रतिध्वनि","हावा","गर्जन","धुवाँ"],
+answer:"प्रतिध्वनि"
+},
+
+{
+question:"रुखलाई नचाउँछ तर आफैंको हात हुँदैन। त्यो के हो?",
+options:["हावा","पानी","घाम","माटो"],
+answer:"हावा"
+},
+
+{
+question:"झण्डा फहराउँछ तर झण्डालाई छोएको देखिँदैन। त्यो के हो?",
+options:["हावा","पानी","घाम","धुवाँ"],
+answer:"हावा"
+},
+
+{
+question:"आफू गन्ध होइन तर फूलको गन्ध चारैतिर पुर्‍याउँछ। त्यो के हो?",
+options:["हावा","पानी","माटो","घाम"],
+answer:"हावा"
+},
+
+{
+question:"सूर्यबाट आउँछ, तर हातले समात्न सकिँदैन। त्यो के हो?",
+options:["प्रकाश","ढुंगा","पानी","माटो"],
+answer:"प्रकाश"
+},
+
+{
+question:"आफू देखिँदैन तर अँध्यारो हटाउँछ। त्यो के हो?",
+options:["प्रकाश","हावा","ध्वनि","गन्ध"],
+answer:"प्रकाश"
+},
+
+{
+question:"बत्ती निभाउँदा तुरुन्तै हराउँछ। त्यो के हो?",
+options:["उज्यालो","हावा","ध्वनि","गन्ध"],
+answer:"उज्यालो"
+},
+
+{
+question:"कुनै भाँडोमा राख्न सकिँदैन, तर ठाउँभरि फैलिन्छ। त्यो के हो?",
+options:["गन्ध","ढुंगा","काठ","फलाम"],
+answer:"गन्ध"
+},
+
+{
+question:"आफू देखिँदैन, तर नाकले चिनिन्छ। त्यो के हो?",
+options:["गन्ध","हावा","ध्वनि","छाया"],
+answer:"गन्ध"
+},
+
+{
+question:"आफू देखिँदैन, तर कानले सुन्छ। त्यो के हो?",
+options:["ध्वनि","गन्ध","हावा","छाया"],
+answer:"ध्वनि"
+},
+
+{
+question:"आफू नदेखिए पनि कानसम्म पुग्छ। त्यो के हो?",
+options:["ध्वनि","छाया","गन्ध","प्रकाश"],
+answer:"ध्वनि"
+},
+
+{
+question:"बन्द कोठामा पनि फैलिन सक्छ तर आँखाले देखिँदैन। त्यो के हो?",
+options:["गन्ध","ढुंगा","काठ","पानी"],
+answer:"गन्ध"
+},
+
+{
+question:"फूलबाट निस्कन्छ तर फूलजस्तो देखिँदैन। त्यो के हो?",
+options:["गन्ध","छाया","प्रकाश","ध्वनि"],
+answer:"गन्ध"
+},
+
+{
+question:"घण्टी बज्दा जन्मिन्छ र केही समयपछि हराउँछ। त्यो के हो?",
+options:["ध्वनि","छाया","गन्ध","प्रकाश"],
+answer:"ध्वनि"
+},
+
+{
+question:"ढोल बजाउँदा फैलिन्छ तर हातले समात्न सकिँदैन। त्यो के हो?",
+options:["ध्वनि","हावा","छाया","गन्ध"],
+answer:"ध्वनि"
+},
+
+{
+question:"आफू आउँदा कानले थाहा पाउँछ, तर आँखाले देख्न सक्दैन। त्यो के हो?",
+options:["ध्वनि","प्रकाश","छाया","पानी"],
+answer:"ध्वनि"
+},
+
+{
+question:"जति बाँड्यो उति बढ्छ। त्यो के हो?",
+options:["ज्ञान","पानी","ढुंगा","माटो"],
+answer:"ज्ञान"
+},
+
+{
+question:"जति सिक्यो उति बढ्दै जान्छ, तर तौल बढ्दैन। त्यो के हो?",
+options:["ज्ञान","शरीर","ढुंगा","पानी"],
+answer:"ज्ञान"
+},
+
+{
+question:"चोरी गर्न सकिँदैन, बाँड्दा घट्दैन। त्यो के हो?",
+options:["ज्ञान","धन","अन्न","पानी"],
+answer:"ज्ञान"
+},
+
+{
+question:"आँखाले देख्दैन, तर बुद्धिले बुझ्छ। त्यो के हो?",
+options:["विचार","छाया","हावा","धुवाँ"],
+answer:"विचार"
+},
+
+{
+question:"जति सोच्यो उति नयाँ कुरा निकाल्न सक्छ। त्यो के हो?",
+options:["दिमाग","ढुंगा","पानी","रुख"],
+answer:"दिमाग"
+},
+
+{
+question:"शरीरमा छैन तर निर्णय गराउँछ। त्यो के हो?",
+options:["बुद्धि","रगत","हड्डी","छाला"],
+answer:"बुद्धि"
+},
+
+{
+question:"गल्तीबाट सिकेपछि बढ्दै जाने कुरा के हो?",
+options:["अनुभव","तौल","उचाइ","छाया"],
+answer:"अनुभव"
+},
+
+{
+question:"उमेरसँगै बढ्न सक्छ, तर पसलमा किन्न सकिँदैन। त्यो के हो?",
+options:["अनुभव","कपडा","खाना","खेलौना"],
+answer:"अनुभव"
 }
 
 ];
 
 
-/* =====================================================
-   VARIABLES
-===================================================== */
+// ================================
+// GAME VARIABLES
+// ================================
 
-let current=0;
+let currentQuestion = 0;
+let score = 0;
+let lives = 3;
+let correctAnswers = 0;
 
-let score=0;
-
-let lives=3;
-
-let combo=0;
-
-let wrongStreak=0;
-
-let correctCount=0;
-
-let answered=false;
-
-let hintUsed=false;
+let shuffledQuestions = [];
 
 
-/* =====================================================
-   DOM
-===================================================== */
+// ================================
+// SHUFFLE
+// ================================
 
-const question =
-document.getElementById(
-    "question"
-);
+function shuffle(array) {
 
-const answers =
-document.getElementById(
-    "answers"
-);
+    return array
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a,b) => a.sort - b.sort)
+        .map(({value}) => value);
 
-const scoreEl =
-document.getElementById(
-    "score"
-);
-
-const lifeEl =
-document.getElementById(
-    "life"
-);
-
-const comboEl =
-document.getElementById(
-    "combo"
-);
-
-const bestEl =
-document.getElementById(
-    "best"
-);
-
-const message =
-document.getElementById(
-    "message"
-);
-
-const hintBox =
-document.getElementById(
-    "hintBox"
-);
-
-const nextBtn =
-document.getElementById(
-    "nextBtn"
-);
-
-const hintBtn =
-document.getElementById(
-    "hintBtn"
-);
-
-const progressBar =
-document.getElementById(
-    "progressBar"
-);
-
-const progressText =
-document.getElementById(
-    "progressText"
-);
-
-const card =
-document.getElementById(
-    "questionCard"
-);
+}
 
 
-/* =====================================================
-   BEST SCORE
-===================================================== */
+// ================================
+// START GAME
+// ================================
 
-let best =
-Number(
-    localStorage.getItem(
-        "gaunkhaneBest"
-    ) || 0
-);
+function startGame() {
 
-bestEl.textContent =
-best;
+    shuffledQuestions = shuffle([...questions]);
+
+    currentQuestion = 0;
+    score = 0;
+    lives = 3;
+    correctAnswers = 0;
+
+    document.getElementById("quiz").classList.remove("hidden");
+    document.getElementById("gameOver").style.display = "none";
+
+    updateLives();
+    showQuestion();
+
+}
 
 
-/* =====================================================
-   LOAD QUESTION
-===================================================== */
+// ================================
+// SHOW QUESTION
+// ================================
 
-function loadQuestion(){
+function showQuestion() {
 
-    if(
-        current>=questions.length
-    ){
+    const q = shuffledQuestions[currentQuestion];
+
+    document.getElementById("questionCount").textContent =
+        `${currentQuestion + 1} / ${shuffledQuestions.length}`;
+
+    document.getElementById("questionNumber").textContent =
+        `प्रश्न नं. ${currentQuestion + 1}`;
+
+    document.getElementById("question").textContent =
+        q.question;
+
+    document.getElementById("score").textContent =
+        score;
+
+    document.getElementById("feedback").textContent = "";
+
+    document.getElementById("nextBtn").style.display = "none";
+
+    const progress =
+        ((currentQuestion) / shuffledQuestions.length) * 100;
+
+    document.getElementById("progress").style.width =
+        progress + "%";
+
+    const optionsContainer =
+        document.getElementById("options");
+
+    optionsContainer.innerHTML = "";
+
+    const shuffledOptions = shuffle([...q.options]);
+
+    shuffledOptions.forEach(option => {
+
+        const button = document.createElement("button");
+
+        button.className = "option";
+
+        button.textContent = option;
+
+        button.onclick = () =>
+            checkAnswer(button, option, q.answer);
+
+        optionsContainer.appendChild(button);
+
+    });
+
+}
+
+
+// ================================
+// CHECK ANSWER
+// ================================
+
+function checkAnswer(button, selected, correct) {
+
+    const allOptions =
+        document.querySelectorAll(".option");
+
+    allOptions.forEach(btn => {
+        btn.classList.add("disabled");
+    });
+
+
+    if (selected === correct) {
+
+        button.classList.add("correct");
+
+        score += 10;
+
+        correctAnswers++;
+
+        document.getElementById("score").textContent =
+            score;
+
+        document.getElementById("feedback").innerHTML =
+            "🎉 सही उत्तर! +10 अंक";
+
+        document.getElementById("feedback").style.color =
+            "#4ade80";
+
+    }
+
+    else {
+
+        button.classList.add("wrong");
+
+        lives--;
+
+        updateLives();
+
+        allOptions.forEach(btn => {
+
+            if (btn.textContent === correct) {
+                btn.classList.add("correct");
+            }
+
+        });
+
+        document.getElementById("feedback").innerHTML =
+            `❌ गलत उत्तर! सही उत्तर: <b>${correct}</b>`;
+
+        document.getElementById("feedback").style.color =
+            "#f87171";
+
+
+        if (lives <= 0) {
+
+            setTimeout(gameOver, 1200);
+
+            return;
+        }
+
+    }
+
+
+    document.getElementById("nextBtn").style.display =
+        "block";
+
+}
+
+
+// ================================
+// NEXT QUESTION
+// ================================
+
+function nextQuestion() {
+
+    currentQuestion++;
+
+    if (currentQuestion >= shuffledQuestions.length) {
 
         finishGame();
 
         return;
-
     }
 
-
-    const item =
-        questions[current];
-
-
-    answered=false;
-
-    hintUsed=false;
-
-
-    message.textContent="";
-
-    message.className=
-        "message";
-
-
-    hintBox.classList.remove(
-        "show"
-    );
-
-
-    hintBtn.disabled=false;
-
-    nextBtn.disabled=true;
-
-
-    question.textContent =
-        item.q;
-
-
-    answers.innerHTML="";
-
-
-    item.a.forEach(
-        (answer,index)=>{
-
-            const btn =
-                document.createElement(
-                    "button"
-                );
-
-
-            btn.className=
-                "answer";
-
-
-            btn.textContent =
-                answer;
-
-
-            btn.onclick =
-                ()=>{
-                    checkAnswer(
-                        index,
-                        btn
-                    );
-                };
-
-
-            answers.appendChild(
-                btn
-            );
-
-        }
-    );
-
-
-    progressText.textContent =
-        `${current+1} / ${questions.length}`;
-
-
-    progressBar.style.width =
-        `${
-            (
-                current /
-                questions.length
-            )*100
-        }%`;
-
-
-    card.classList.remove(
-        "change"
-    );
-
-    void card.offsetWidth;
-
-    card.classList.add(
-        "change"
-    );
+    showQuestion();
 
 }
 
 
-/* =====================================================
-   CHECK ANSWER
-===================================================== */
+// ================================
+// UPDATE LIVES
+// ================================
 
-function checkAnswer(
-    selected,
-    clicked
-){
+function updateLives() {
 
-    if(answered)
-        return;
+    let hearts = "";
 
-
-    answered=true;
-
-
-    const item =
-        questions[current];
-
-
-    const all =
-        document.querySelectorAll(
-            ".answer"
-        );
-
-
-    all.forEach(
-        btn=>{
-            btn.classList.add(
-                "disabled"
-            );
-        }
-    );
-
-
-    if(
-        selected===
-        item.correct
-    ){
-
-        /* =====================
-           CORRECT
-        ===================== */
-
-        clicked.classList.add(
-            "correct"
-        );
-
-
-        correctCount++;
-
-
-        wrongStreak=0;
-
-
-        combo++;
-
-
-        const points =
-            10+
-            combo*5;
-
-
-        score += points;
-
-
-        message.textContent =
-            `🎉 सही! +${points} अंक`;
-
-
-        message.className =
-            "message good";
-
-
-        successSound();
-
-
-        showConfetti();
-
-
-        if(
-            combo>=2
-        ){
-
-            message.textContent +=
-                ` 🔥 ${combo} Combo!`;
-
-        }
-
-
-        updateUI();
-
-
-    }else{
-
-        /* =====================
-           WRONG
-        ===================== */
-
-        clicked.classList.add(
-            "wrong"
-        );
-
-
-        all[
-            item.correct
-        ].classList.add(
-            "correct"
-        );
-
-
-        wrongStreak++;
-
-
-        combo=0;
-
-
-        message.textContent =
-            "❌ गलत उत्तर!";
-
-
-        message.className =
-            "message bad";
-
-
-        wrongSound();
-
-
-        /*
-         * लगातार 3 गलत भएमा
-         * LIFE -1
-         */
-
-        if(
-            wrongStreak>=3
-        ){
-
-            lives--;
-
-            wrongStreak=0;
-
-
-            message.textContent =
-                "💔 लगातार ३ गलत! १ Life घट्यो";
-
-
-            lifeLostSound();
-
-
-            updateUI();
-
-
-            if(
-                lives<=0
-            ){
-
-                setTimeout(
-                    finishGame,
-                    700
-                );
-
-                return;
-
-            }
-
-        }
-
-
-        updateUI();
-
+    for (let i = 0; i < lives; i++) {
+        hearts += "❤️";
     }
 
-
-    nextBtn.disabled=false;
-
-}
-
-
-/* =====================================================
-   NEXT
-===================================================== */
-
-nextBtn.onclick =
-()=>{
-
-    current++;
-
-    loadQuestion();
-
-};
-
-
-/* =====================================================
-   HINT
-===================================================== */
-
-hintBtn.onclick =
-()=>{
-
-    if(
-        hintUsed ||
-        answered
-    )
-        return;
-
-
-    hintUsed=true;
-
-
-    const item =
-        questions[current];
-
-
-    hintBox.textContent =
-        `💡 Hint: ${item.hint}`;
-
-
-    hintBox.classList.add(
-        "show"
-    );
-
-
-    hintBtn.disabled=true;
-
-
-    hintSound();
-
-};
-
-
-/* =====================================================
-   UI UPDATE
-===================================================== */
-
-function updateUI(){
-
-    scoreEl.textContent =
-        score;
-
-
-    lifeEl.textContent =
-        "❤️".repeat(
-            Math.max(
-                0,
-                lives
-            )
-        );
-
-
-    comboEl.textContent =
-        combo;
-
-
-    if(
-        score>best
-    ){
-
-        best=
-            score;
-
-        bestEl.textContent=
-            best;
-
-        localStorage.setItem(
-            "gaunkhaneBest",
-            best
-        );
-
+    for (let i = lives; i < 3; i++) {
+        hearts += "🖤";
     }
 
-}
-
-
-/* =====================================================
-   FINISH GAME
-===================================================== */
-
-function finishGame(){
-
-    document.getElementById(
-        "finalScore"
-    ).textContent =
-        score;
-
-
-    document.getElementById(
-        "correctCount"
-    ).textContent =
-        `${correctCount}/${questions.length}`;
-
-
-    document.getElementById(
-        "resultEmoji"
-    ).textContent =
-        score>=150
-        ? "🏆"
-        : score>=80
-        ? "🎉"
-        : "💪";
-
-
-    document.getElementById(
-        "resultOverlay"
-    ).classList.remove(
-        "hide"
-    );
-
-
-    finishSound();
+    document.getElementById("lives").textContent =
+        hearts;
 
 }
 
 
-/* =====================================================
-   START
-===================================================== */
+// ================================
+// GAME OVER
+// ================================
 
-function startGame(){
+function gameOver() {
 
-    current=0;
+    document.getElementById("quiz")
+        .classList.add("hidden");
 
-    score=0;
+    document.getElementById("gameOver")
+        .style.display = "block";
 
-    lives=3;
+    document.getElementById("finalScore")
+        .textContent = score;
 
-    combo=0;
-
-    wrongStreak=0;
-
-    correctCount=0;
-
-
-    updateUI();
-
-
-    document.getElementById(
-        "startOverlay"
-    ).classList.add(
-        "hide"
-    );
-
-
-    document.getElementById(
-        "resultOverlay"
-    ).classList.add(
-        "hide"
-    );
-
-
-    startSound();
-
-
-    loadQuestion();
+    document.getElementById("finalCorrect")
+        .textContent = correctAnswers;
 
 }
 
 
-/* =====================================================
-   RESTART
-===================================================== */
+// ================================
+// FINISH GAME
+// ================================
 
-document.getElementById(
-    "startBtn"
-).onclick =
-startGame;
+function finishGame() {
 
+    document.getElementById("quiz")
+        .classList.add("hidden");
 
-document.getElementById(
-    "restartBtn"
-).onclick =
-startGame;
+    document.getElementById("gameOver")
+        .style.display = "block";
 
+    document.querySelector("#gameOver h2")
+        .textContent = "🏆 खेल पूरा भयो!";
 
-/* =====================================================
-   SOUND ENGINE
-===================================================== */
+    document.querySelector("#gameOver p")
+        .textContent =
+        "तपाईंले सबै गाउँ खाने कथा पूरा गर्नुभयो!";
 
-let audioCtx=null;
+    document.getElementById("finalScore")
+        .textContent = score;
 
-
-function audio(){
-
-    if(!audioCtx){
-
-        audioCtx=
-        new(
-            window.AudioContext ||
-            window.webkitAudioContext
-        )();
-
-    }
-
-
-    if(
-        audioCtx.state==="suspended"
-    ){
-
-        audioCtx.resume();
-
-    }
+    document.getElementById("finalCorrect")
+        .textContent = correctAnswers;
 
 }
 
 
-function tone(
-    frequency,
-    duration,
-    type="sine",
-    volume=.07
-){
+// ================================
+// RESTART
+// ================================
 
-    audio();
+function restartGame() {
 
+    document.querySelector("#gameOver h2")
+        .textContent = "💀 Game Over";
 
-    const osc =
-        audioCtx.createOscillator();
-
-
-    const gain =
-        audioCtx.createGain();
-
-
-    osc.type=type;
-
-    osc.frequency.value=
-        frequency;
-
-
-    gain.gain.setValueAtTime(
-        .001,
-        audioCtx.currentTime
-    );
-
-
-    gain.gain.exponentialRampToValueAtTime(
-        volume,
-        audioCtx.currentTime+.02
-    );
-
-
-    gain.gain.exponentialRampToValueAtTime(
-        .001,
-        audioCtx.currentTime+
-        duration
-    );
-
-
-    osc.connect(gain);
-
-    gain.connect(
-        audioCtx.destination
-    );
-
-
-    osc.start();
-
-    osc.stop(
-        audioCtx.currentTime+
-        duration+
-        .03
-    );
+    startGame();
 
 }
 
 
-/* =====================
-   SOUNDS
-===================== */
+// ================================
+// START
+// ================================
 
-function successSound(){
-
-    tone(
-        600,
-        .08,
-        "sine",
-        .08
-    );
-
-    setTimeout(
-        ()=>{
-            tone(
-                850,
-                .1,
-                "sine",
-                .08
-            );
-        },
-        90
-    );
-
-    setTimeout(
-        ()=>{
-            tone(
-                1100,
-                .15,
-                "sine",
-                .08
-            );
-        },
-        180
-    );
-
-}
-
-
-function wrongSound(){
-
-    tone(
-        180,
-        .2,
-        "sawtooth",
-        .07
-    );
-
-}
-
-
-function lifeLostSound(){
-
-    tone(
-        150,
-        .3,
-        "square",
-        .1
-    );
-
-    setTimeout(
-        ()=>{
-            tone(
-                80,
-                .4,
-                "sawtooth",
-                .08
-            );
-        },
-        120
-    );
-
-}
-
-
-function hintSound(){
-
-    tone(
-        700,
-        .08
-    );
-
-    setTimeout(
-        ()=>{
-            tone(
-                900,
-                .12
-            );
-        },
-        100
-    );
-
-}
-
-
-function startSound(){
-
-    tone(
-        500,
-        .1
-    );
-
-    setTimeout(
-        ()=>{
-            tone(
-                700,
-                .1
-            );
-        },
-        100
-    );
-
-    setTimeout(
-        ()=>{
-            tone(
-                1000,
-                .2
-            );
-        },
-        200
-    );
-
-}
-
-
-function finishSound(){
-
-    tone(
-        400,
-        .1
-    );
-
-    setTimeout(
-        ()=>{
-            tone(
-                300,
-                .15
-            );
-        },
-        130
-    );
-
-}
-
-
-/* =====================================================
-   CONFETTI
-===================================================== */
-
-function showConfetti(){
-
-    for(
-        let i=0;
-        i<25;
-        i++
-    ){
-
-        const c =
-            document.createElement(
-                "div"
-            );
-
-
-        c.className=
-            "confetti";
-
-
-        c.style.left=
-            Math.random()*100+
-            "%";
-
-
-        c.style.background=
-            [
-                "#22d3ee",
-                "#a855f7",
-                "#facc15",
-                "#4ade80",
-                "#fb7185"
-            ][
-                Math.floor(
-                    Math.random()*5
-                )
-            ];
-
-
-        c.style.animationDuration=
-            (
-                1+
-                Math.random()*
-                .8
-            )+
-            "s";
-
-
-        document.body.appendChild(c);
-
-
-        setTimeout(
-            ()=>{
-                c.remove();
-            },
-            2000
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   INITIAL
-===================================================== */
-
-updateUI();
+startGame();
 
 </script>
 
